@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><!-- don't edit start --><title>Seasar - DI Container with AOP -</title><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen"><link href="seasar_p.css" type="text/css" rel="stylesheet" media="print"><script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script></head>
+
+
+<body onload="preload('ja')"><table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+<td align="left" valign="top" width="780"><table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
+<tbody><tr><td colspan="7"><img src="images/top01_b.gif" alt="" height="5" width="780"></td></tr>
+<tr><td width="235"><img src="images/top02_b.gif" alt="Seasar" height="117" width="235"></td>
+<td colspan="3"><img src="images/top03.gif" alt="DI Container with AOP" height="117" width="289"></td>
+<td colspan="3"><img src="images/spacer.gif" alt="" height="117" width="256"></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)" border="0" height="30" width="78"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)" border="0" height="30" width="101"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)" border="0" height="30" width="110"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)" border="0" height="30" width="113"></a></td>
+<td><img src="images/menu05_b_ja.gif" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)" border="0" height="30" width="109"></td>
+<td width="34"><img src="images/menu06.gif" alt="" height="30" width="34"></td></tr><tr>
+<td colspan="6"><img src="images/spacer.gif" alt="" height="19" width="545"></td></tr></tbody></table>
+<table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
+<tbody><tr align="left" valign="top"><td width="18"><img src="images/spacer.gif" alt="" height="14" width="18"></td><td class="main" width="744">
+<!-- don't edit end -->
+<!-- document start -->
+
+<ul>
+<li><a href="#setup">セットアップ</a></li>
+  <ul>
+    <li><a href="#install">S2Base.PHP5 のインストール</a></li>
+    <li><a href="#db">データベース接続設定</a></li>
+    <li><a href="#versionup">S2Container.PHP5 と S2Dao.PHP5 のバージョンアップ</a></li>
+  </ul>
+</ul>
+<br>
+
+<h2><a name="setup">セットアップ</a></h2>
+
+<p>
+S2Base.PHP5では、<a href="http://phing.info/trac/">Phing</a> と <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a> が<font color="red">必要</font>です。各ツールのドキュメントに従いインストールして下さい。
+</p>
+<ul>
+<li><a href="http://pear.php.net/manual/ja/installation.cli.php">PEARマニュアル インストール</a></li>
+<li><a href="http://phing.info/trac/wiki/Users/Download">Phing ダウンロードページ</a></li>
+<li><a href="http://pear.php.net/package/PHPUnit2/download">PHPUnit2 ダウンロードページ</a></li>
+</ul>
+<br>
+<h3><a name="install">S2Base.PHP5 のインストール</a></h3>
+<p>
+s2base.php5-version.zip を取得し、任意のディレクトリに解凍して下さい。s2base.php5 ディレクトリが作成されます。
+</p>
+
+<pre>
+% pwd
+/seasar.php/workspace
+%
+% jar xvf s2base.php5-version.zip
+% cd s2base.php5
+% ls
+app  build.xml  config  lib  public  test  var
+%
+</pre>
+<br>
+s2base.php5 ディレクトリにて phing コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
+<pre>
+% pwd
+/seasar.php/workspace/s2base.php5
+%
+% phing
+Buildfile: /seasar.php/workspace/s2base.php5/build.xml
+
+project > prepare:
+      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
+      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
+
+project > com:
+
+[ Command list ]
+0 : [ EXIT ]
+1 : command
+2 : dao
+3 : dicon
+4 : entity
+5 : goya
+6 : interceptor
+7 : module
+8 : service
+choice ? : 0
+
+BUILD FINISHED
+
+Total time: 3.3343 seconds
+%
+</pre>
+
+
+<br>
+<h3><a name="db">データベース接続設定</a></h3>
+<p>
+データベースへの接続設定は、<a href="http://s2dao.php5.sandbox.seasar.org/setup.html#pdo_dicon">S2Dao の pdo.dicon </a>で行います。pdo.dicon は、app/commons/daoディレクトリにあります。ご使用のデータベースへの接続設定を行って下さい。
+</p>
+
+<br>
+<h3><a name="versionup">S2Container.PHP5 と S2Dao.PHP5 のバージョンアップ</a></h3>
+<p>
+S2Container.PHP5 と S2Dao.PHP5 のバージョンアップは、lib ディレクトリにアーカイブを解凍するだけです。
+</p>
+<ul>
+<li>S2Container.PHP5 <br>
+PEAR パッケージまたはフルパッケージを取得し、s2base.php5/lib/S2Container として解凍して下さい。
+</li>
+<li>S2Dao.PHP5 <br>
+フルパッケージを取得し、s2base.php5/lib/S2Dao として解凍して下さい。
+</li>
+</ul>
+
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
+</tr><tr>
+<td width="14"><img src="images/spacer.gif" alt="" height="30" width="14"></td>
+<td width="766"><img src="images/spacer.gif" alt="" height="30" width="592"></td>
+</tr><tr>
+<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
+<td class="copyright" width="766">&#169; Copyright The Seasar Project and the others 2005-2006, all rights reserved.</td>
+</tr></tbody></table>
+</td><td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left" height="16" valign="top" width="780">&nbsp;</td>
+<td class="backcorner" align="left" height="16" valign="top">&nbsp;</td>
+</tr></tbody></table><!-- don't edit end -->
+</body></html>
