@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><!-- don't edit start --><title>Seasar - DI Container with AOP -</title><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen"><link href="seasar_p.css" type="text/css" rel="stylesheet" media="print"><script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script></head>
+
+
+<body onload="preload('ja')"><table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+<td align="left" valign="top" width="780"><table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
+<tbody><tr><td colspan="7"><img src="images/top01_b.gif" alt="" height="5" width="780"></td></tr>
+<tr><td width="235"><img src="images/top02_b.gif" alt="Seasar" height="117" width="235"></td>
+<td colspan="3"><img src="images/top03.gif" alt="DI Container with AOP" height="117" width="289"></td>
+<td colspan="3"><img src="images/spacer.gif" alt="" height="117" width="256"></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)" border="0" height="30" width="78"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)" border="0" height="30" width="101"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)" border="0" height="30" width="110"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)" border="0" height="30" width="113"></a></td>
+<td><img src="images/menu05_b_ja.gif" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)" border="0" height="30" width="109"></td>
+<td width="34"><img src="images/menu06.gif" alt="" height="30" width="34"></td></tr><tr>
+<td colspan="6"><img src="images/spacer.gif" alt="" height="19" width="545"></td></tr></tbody></table>
+<table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
+<tbody><tr align="left" valign="top"><td width="18"><img src="images/spacer.gif" alt="" height="14" width="18"></td><td class="main" width="744">
+<!-- don't edit end -->
+<!-- document start -->
+
+<ul>
+<li><a href="#cmd-ref">with Smarty - コマンドリファレンス</a></li>
+  <ul>
+    <li><a href="#module">module コマンド</a></li>
+    <li><a href="#action">action コマンド</a></li>
+    <li><a href="#interceptor">interceptor コマンド</a></li>
+  </ul>
+</ul>
+<br>
+
+<h2><a name="cmd-ref">with Smarty - コマンドリファレンス</a></h2>
+
+<h3><a name="module">module コマンド</a></h3>
+<h4>説明</h4>
+<p>
+Smarty と組合わせる場合、module コマンドは<a href="dir.html">モジュールディレクトリ</a>に action ディレクトリと view ディレクトリを追加します。
+</p>
+<h4>実行例</h4>
+<pre>
+% phing
+Buildfile: /seasar.php/workspace/s2base.php5/build.xml
+
+project &gt; prepare:
+      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
+      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
+
+project &gt; com:
+
+[ Command list ]
+0 : [ EXIT ]
+1 : action
+2 : interceptor
+3 : module
+4 : command
+5 : dao
+6 : dicon
+7 : entity
+8 : goya
+9 : service
+choice ? : 3               &lt;--- 3 : module を選択
+
+module name ? : smarty     &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+[INFO ] create : /data/seasar.php/workspace/s2base.php5/app/modules/smarty
+[INFO ] create : /data/seasar.php/workspace/s2base.php5/app/modules/smarty/action/
+[INFO ] create : /data/seasar.php/workspace/s2base.php5/app/modules/smarty/dao/
+[INFO ] create : /data/seasar.php/workspace/s2base.php5/app/modules/smarty/dicon/
+[INFO ] create : /data/seasar.php/workspace/s2base.php5/app/modules/smarty/entity/
+[INFO ] create : /data/seasar.php/workspace/s2base.php5/app/modules/smarty/interceptor/
+[INFO ] create : /data/seasar.php/workspace/s2base.php5/app/modules/smarty/service/
+[INFO ] create : /data/seasar.php/workspace/s2base.php5/app/modules/smarty/view/
+[INFO ] create : /data/seasar.php/workspace/s2base.php5/test/modules/smarty
+[INFO ] create : /data/seasar.php/workspace/s2base.php5/test/modules/smarty/dao/
+[INFO ] create : /data/seasar.php/workspace/s2base.php5/test/modules/smarty/service/
+[INFO ] create : /data/seasar.php/workspace/s2base.php5/app/modules/smarty/smarty.inc.php
+[INFO ] create : /data/seasar.php/workspace/s2base.php5/app/modules/smarty/view/index.tpl
+
+BUILD FINISHED
+
+Total time: 8.1588 seconds
+% ls app/modules/smarty
+action  dao  dicon  entity  interceptor  service  smarty.inc.php  view     &lt;--- action と view を追加
+%
+</pre>
+
+<br>
+<h3><a name="action">action コマンド</a></h3>
+<h4>説明</h4>
+<p>
+action コマンドは、アクション名に対して命名規則に従いアクションクラス、設定INIファイル、ダイコンファイル、html テンプレートを作成します。
+アクション名が「 hello 」の場合、アクションクラスは HelloAction、設定INIファイルは HelloAction.inc.php、ダイコンファイルは HelloAction.dicon、html テンプレートは hello.tpl となります。
+</p>
+<h4>実行例</h4>
+<pre>
+% phing
+Buildfile: /seasar.php/workspace/s2base.php5/build.xml
+
+project &gt; prepare:
+      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
+      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
+
+project &gt; com:
+
+[ Command list ]
+0 : [ EXIT ]
+1 : action
+2 : interceptor
+3 : module
+4 : command
+5 : dao
+6 : dicon
+7 : entity
+8 : goya
+9 : service
+choice ? : 1              &lt;--- 1 : action を選択
+
+[ Module list ]
+0 : [ EXIT ]
+1 : Default
+2 : smarty
+choice ? : 2              &lt;--- 2 : smarty モジュールを選択
+
+action name ? : hello     &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/action/HelloAction.class.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/action/HelloAction.inc.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/view/hello.tpl
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/dicon/HelloAction.dicon
+
+BUILD FINISHED
+
+Total time: 10.9976 seconds
+%
+</pre>
+
+<br>
+<h3><a name="interceptor">interceptor コマンド</a></h3>
+<h4>説明</h4>
+<p>
+アクションやサービスに適用するインターセプターを作成します。インターセプターは5種類あります。
+<table border="1" class="main">
+<tr bgcolor="#d1f3f4" align="center">
+<th>タイプ</th>
+<th>説明</th>
+</tr>
+
+<tr>
+<td>default</td>
+<td><a href="cmdRef.html#interceptor">interceptor コマンド</a>と同じものです。S2Container_AbstractInterceptor を継承した interceptor を生成します。</td>
+</tr>
+
+<tr>
+<td>arround</td>
+<td>主にアクションに適用するフィルタになります。S2Base_AbstractFilterInterceptor を継承し、before メソッドと after メソッドを実装します。</td>
+</tr>
+
+<tr>
+<td>before</td>
+<td>主にアクションに適用するフィルタになります。S2Base_AbstractBeforeFilter を継承し、before メソッドを実装します。</td>
+</tr>
+
+<tr>
+<td>after</td>
+<td>主にアクションに適用するフィルタになります。S2Base_AbstractAfterFilter を継承し、after メソッドを実装します。</td>
+</tr>
+
+<tr>
+<td>validate</td>
+<td>
+主にアクションに適用する before フィルタになります。S2Base_AbstractValidateFilter を継承し、validateメソッド と getSuffix メソッドを実装します。
+<br>validate フィルタは、validate メソッドを実行する前に rule プロパティを設定します。設定ファイルは、モジュールディレクトリ/validate/アクション名.Suffix名.ini です。rule プロパティには、<a href="http://jp2.php.net/manual/ja/function.parse-ini-file.php">parse_ini_file関数</a>の戻り値が設定されます。( process_sections : true )
+<br>例えばモジュール名が smarty 、アクション名が hello、getSuffix メソッドが「 test 」を返す場合の validator 設定ファイルは、[ app/modules/smarty/validate/hello.test.ini ] となります。( validate ディレクトリは手動にて作成下さい。)
+</td>
+</tr>
+
+</table>
+
+</p>
+<h4>実行例</h4>
+<pre>
+% phing
+Buildfile: /seasar.php/workspace/s2base.php5/build.xml
+
+project &gt; prepare:
+      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
+      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
+
+project &gt; com:
+
+[ Command list ]
+0 : [ EXIT ]
+1 : action
+2 : interceptor
+3 : module
+4 : command
+5 : dao
+6 : dicon
+7 : entity
+8 : goya
+9 : service
+choice ? : 2              &lt;--- 2 : interceptor を選択
+
+[ Module list ]
+0 : [ EXIT ]
+1 : Default
+2 : smarty
+choice ? : 2              &lt;--- 2 : smarty モジュールを選択
+
+[ Type list ]
+0 : [ EXIT ]
+1 : default
+2 : arround
+3 : before
+4 : after
+5 : validate
+choice ? : 3                        &lt;--- 3 : before を選択
+
+class name ? : TestBeforeFilter     &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/interceptor/TestBeforeFilter.class.php
+
+BUILD FINISHED
+
+Total time: 36.2075 seconds
+%
+% more app/modules/smarty/interceptor/TestBeforeFilter.class.php
+&lt;?php
+/**
+ * available properties.
+ *    protected $invocation;     &lt;--- S2Container_MethodInvocation オブジェクト
+ *    protected $request;        &lt;--- S2Base_Request オブジェクト
+ *    protected $moduleName;     &lt;--- モジュール名 ( string )
+ *    protected $actionName;     &lt;--- アクション名 ( string )
+ *    protected $action;         &lt;--- アクションオブジェクト
+ *    protected $view;           &lt;--- S2Base_SmartyController オブジェクト
+ *    protected $controller;     &lt;--- S2Base_SmartyController オブジェクト ( $view と同じです)
+ */
+class TestBeforeFilter extends S2Base_AbstractBeforeFilter {
+    public function before(){
+        return null;
+    }
+}
+?&gt;
+%
+</pre>
+
+
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
+</tr><tr>
+<td width="14"><img src="images/spacer.gif" alt="" height="30" width="14"></td>
+<td width="766"><img src="images/spacer.gif" alt="" height="30" width="592"></td>
+</tr><tr>
+<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
+<td class="copyright" width="766">&#169; Copyright The Seasar Project and the others 2005-2006, all rights reserved.</td>
+</tr></tbody></table>
+</td><td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left" height="16" valign="top" width="780">&nbsp;</td>
+<td class="backcorner" align="left" height="16" valign="top">&nbsp;</td>
+</tr></tbody></table><!-- don't edit end -->
+</body></html>
