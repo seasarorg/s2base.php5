@@ -28,9 +28,7 @@ require_once('S2Dao/S2Dao.php');
 /**
  * autoload setting
  */
-S2ContainerClassLoader::import(S2CONTAINER_PHP5);
 function __autoload($class = null){
-    if(S2ContainerClassLoader::load($class)){return;}
     if($class != null){include_once("$class.class.php");}
 }
 
