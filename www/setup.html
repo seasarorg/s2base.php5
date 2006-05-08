@@ -23,68 +23,94 @@
 <!-- don't edit end -->
 <!-- document start -->
 
-<h2>S2Base.PHP5 プロジェクトへようこそ！</h2>
+<ul>
+<li><a href="#setup">セットアップ</a></li>
+  <ul>
+    <li><a href="#install">S2Base.PHP5 のインストール</a></li>
+    <li><a href="#db">データベース接続設定</a></li>
+    <li><a href="#versionup">S2Container.PHP5 と S2Dao.PHP5 のバージョンアップ</a></li>
+  </ul>
+</ul>
+<br>
+
+<h2><a name="setup">セットアップ</a></h2>
+
 <p>
-S2Base.PHP5プロジェクトでは、<a href="http://s2container.php5.sandbox.seasar.org/">S2Container.PHP5</a> と <a href="http://s2dao.php5.sandbox.seasar.org/">S2Dao.PHP5</a> を用いた開発を支援するコマンドツールを作成します。
+S2Base.PHP5では、<a href="http://phing.info/trac/">Phing</a> と <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a> が<font color="red">必要</font>です。各ツールのドキュメントに従いインストールして下さい。
+</p>
+<ul>
+<li><a href="http://pear.php.net/manual/ja/installation.cli.php">PEARマニュアル インストール</a></li>
+<li><a href="http://phing.info/trac/wiki/Users/Download">Phing ダウンロードページ</a></li>
+<li><a href="http://pear.php.net/package/PHPUnit2/download">PHPUnit2 ダウンロードページ</a></li>
+</ul>
+<br>
+<h3><a name="install">S2Base.PHP5 のインストール</a></h3>
+<p>
+s2base.php5-version.zip を取得し、任意のディレクトリに解凍して下さい。s2base.php5 ディレクトリが作成されます。
 </p>
 
-<h3>ダウンロード</h3>
+<pre>
+% pwd
+/seasar.php/workspace
+%
+% jar xvf s2base.php5-version.zip
+% cd s2base.php5
+% ls
+app  build.xml  config  lib  public  test  var
+%
+</pre>
+<br>
+s2base.php5 ディレクトリにて phing コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
+<pre>
+% pwd
+/seasar.php/workspace/s2base.php5
+%
+% phing
+Buildfile: /seasar.php/workspace/s2base.php5/build.xml
 
-<table>
+project > prepare:
+      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
+      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
 
-<tr><td align="center" valign="top" width="120">
-<a href="https://www.seasar.org/svn/sandbox/s2base.php5/">
-リポジトリ
-</a> or 
+project > com:
 
-<a href="http://www.seasar.org/websvn/listing.php?repname=sandbox.s2base.php5">WebSVN</a>
-</td><td>
-</td></tr>
+[ Command list ]
+0 : [ EXIT ]
+1 : command
+2 : dao
+3 : dicon
+4 : entity
+5 : goya
+6 : interceptor
+7 : module
+8 : service
+choice ? : 0
 
-<tr>
-<td align="right" valign="top" width="120">2006-05-08</td>
-<td width="10"></td>
-<td>
-<a href="download/s2base.php5-1.0.0-rc1.zip">s2base.php5-1.0.0-rc1.zip</a><br>
-s2container.php5-1.1.0 と s2dao-1.1.0-rc2 を含めています。
-</td>
-</tr>
+BUILD FINISHED
 
-</table>
+Total time: 3.3343 seconds
+%
+</pre>
 
 
-<h3>ドキュメント</h3>
+<br>
+<h3><a name="db">データベース接続設定</a></h3>
+<p>
+データベースへの接続設定は、<a href="http://s2dao.php5.sandbox.seasar.org/setup.html#pdo_dicon">S2Dao の pdo.dicon </a>で行います。pdo.dicon は、app/commons/daoディレクトリにあります。ご使用のデータベースへの接続設定を行って下さい。
+</p>
+
+<br>
+<h3><a name="versionup">S2Container.PHP5 と S2Dao.PHP5 のバージョンアップ</a></h3>
+<p>
+S2Container.PHP5 と S2Dao.PHP5 のバージョンアップは、lib ディレクトリにアーカイブを解凍するだけです。
+</p>
 <ul>
-<li><a href="setup.html">セットアップ</a></li>
-<li><a href="dir.html">ディレクトリ構成</a></li>
-<li><a href="cmdRef.html">コマンドリファレンス</a></li>
-<li>with Maple</li>
-  <ul>
-  <li><a href="withMaple-setup.html">セットアップ</a></li>
-  <li><a href="withMaple-cmdRef.html">コマンドリファレンス</a></li>
-  </ul>
-<li>with Smarty</li>
-  <ul>
-  <li><a href="withSmarty-setup.html">セットアップ</a></li>
-  <li><a href="withSmarty-cmdRef.html">コマンドリファレンス</a></li>
-  <li><a href="withSmarty-fw.html">フレームワーク概要</a></li>
-  </ul>
-</ul>
-
-<h3>メーリングリスト</h3>
-<ul>
-<li>
-<a href="https://www.seasar.org/mailman/listinfo/s2container-php5">
-S2Container-PHP5 メーリングリスト
-</a><br>
-S2Container.PHP5/S2Dao.PHP5/S2Base.PHP5を使っていて困ったこと・質問・要望などはこちらへ．
+<li>S2Container.PHP5 <br>
+PEAR パッケージまたはフルパッケージを取得し、s2base.php5/lib/S2Container として解凍して下さい。
 </li>
-</ul>
-
-<h3>動作環境</h3>
-<ul>
-<li>WindowsXP : php-5.1.4-Win32</li>
-<li>Debian GNU/Linux 3.1 : php-5.1.4</li>
+<li>S2Dao.PHP5 <br>
+フルパッケージを取得し、s2base.php5/lib/S2Dao として解凍して下さい。
+</li>
 </ul>
 
 <!-- document end -->
