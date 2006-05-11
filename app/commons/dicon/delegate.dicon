@@ -10,6 +10,7 @@
                     <arg>@@DaoComponent@@</arg>
                 </initMethod>
                 <initMethod name="addMethodNameMap">
+                    <!-- from service::getAllcd() to dao::findAllArray() -->
                     <arg>"getAllCd"</arg>
                     <arg>"findAllArray"</arg>
                 </initMethod>
