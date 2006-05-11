@@ -7,7 +7,6 @@
 
     <component class="S2Dao_BasicResultSetFactory" />
     <component class="S2Dao_BasicStatementFactory" />
-
     <component class="S2Dao_FieldAnnotationReaderFactory" />   
     <component class="S2Dao_DaoMetaDataFactoryImpl" />
     <component name="interceptor" class="S2DaoInterceptor" />
