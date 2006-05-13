@@ -382,6 +382,7 @@ class NumericValidator extends S2Base_AbstractValidateFilter {
             }                        ↑
         }             コントローラに登録したエラーメッセージは、テンプレートファイルでは {$errors} で参照できます。
 
+        $this-&gt;rule = null;          &lt;--- rule 配列は保持されるので初期化
         return $page;
     }
 }
