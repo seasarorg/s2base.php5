@@ -6,7 +6,7 @@
 </head>
 <body>
 
-This is index.php
+This is index.tpl
 
 </body>
 </html>
