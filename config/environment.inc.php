@@ -29,7 +29,7 @@ require_once('S2Dao/S2Dao.php');
  * autoload setting
  */
 function __autoload($class = null){
-    if($class != null){include_once("$class.class.php");}
+    if($class != null){@include_once("$class.class.php");}
 }
 
 /**
