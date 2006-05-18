@@ -9,12 +9,18 @@
         <property name="cmd.dir" value="${project.basedir}/app/commands" />
         <property name="td" value="" />
 
-        <php expression="require_once('config/environment.inc.php')"/>
+        <!-- with maple -->
+        <php expression="require_once('d:/tmp/maple/webapp/config/maple.inc.php')"/>
         <php expression="require_once('lib/S2Base/S2Base.cmd.php')"/>
     </target>
 
     <target name="com" depends="prepare">
         <command>
+            <!-- with maple -->
+            <fileset dir="${cmd.dir}/maple">
+                <include name="*Command.class.php"/>
+            </fileset>
+
             <!-- default -->
             <fileset dir="${cmd.dir}">
                 <include name="*Command.class.php"/>

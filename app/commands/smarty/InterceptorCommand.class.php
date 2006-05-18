@@ -2,8 +2,9 @@
 class InterceptorCommand implements S2Base_GenerateCommand {
 
     private $moduleName;
-    private $interceptorName;
-    
+    private $interceptorClassName;
+    private $type;
+
     public function getName(){
         return "interceptor";
     }
@@ -21,16 +22,35 @@ class InterceptorCommand implements S2Base_GenerateCommand {
             return;
         }
 
-        $this->interceptorName = S2Base_StdinManager::getValue('class name ? : ');
-        $this->validate($this->interceptorName);
+        $this->interceptorClassName = S2Base_StdinManager::getValue('interceptor class name ? : ');
+        $this->validate($this->interceptorClassName);
 
+        if (!$this->finalConfirm()){
+            return;
+        }
         $this->prepareFiles();
     }        
 
     private function validate($name){
         S2Base_CommandUtil::validate($name,"Invalid interceptor name. [ $name ]");
     }
-    
+
+    private function finalConfirm(){
+        print "\n[ generate information ] \n";
+        print "  module name            : {$this->moduleName} \n";
+        print "  type                   : {$this->type} \n";
+        print "  interceptor class name : {$this->interceptorClassName} \n";
+        $types = array('yes','no');
+        $rep = S2Base_StdinManager::getValueFromArray($types,
+                                        "confirmation");
+        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
+            $rep == 'no'){
+            return false;
+        }
+
+        return true;
+    }
+
     private function prepareFiles(){
         $this->prepareInterceptorFile();
     }
@@ -40,14 +60,13 @@ class InterceptorCommand implements S2Base_GenerateCommand {
         $srcFile = S2BASE_PHP5_MODULES_DIR . 
                    $this->moduleName . 
                    S2BASE_PHP5_INTERCEPTOR_DIR . 
-                   "{$this->interceptorName}.class.php";
+                   "{$this->interceptorClassName}.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                  "interceptor_{$this->type}.php");
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
-                             $this->interceptorName,
+                             $this->interceptorClassName,
                              $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 }
 ?>

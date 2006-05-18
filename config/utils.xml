@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<project name="utils" default="" basedir=".">
+
+    <taskdef name="gdao" 
+             classname="lib.S2Dao.src.phing.task.S2DaoSkeletonTask" />
+
+    <target name="gen-dao" depends="">
+        <property name="dsn" value="mysql:host=localhost; dbname=s2container" />
+        <property name="user" value="root" />
+        <property name="password" value="test" />
+        <gdao toDir="app/commons/dao" />
+    </target>
+
+    <target name="test" depends="">
+        <echo>test directory : test/${td}</echo>
+        <phpunit2 haltonfailure="false" haltonerror="false">
+            <formatter type="plain" usefile="false"/>
+            <batchtest>
+                <fileset dir="test/${td}">
+                    <include name="**/*Test.class.php"/>
+                </fileset>
+            </batchtest>
+        </phpunit2>
+    </target>
+
+</project>

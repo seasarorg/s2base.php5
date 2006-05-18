@@ -2,6 +2,7 @@
 $pwd = dirname(__FILE__);
 $packages = array(
     $pwd,
+    $pwd . '/action',
     $pwd . '/dao',
     $pwd . '/entity',
     $pwd . '/interceptor',

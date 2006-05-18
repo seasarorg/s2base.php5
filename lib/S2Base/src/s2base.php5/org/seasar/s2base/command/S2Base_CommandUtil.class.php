@@ -47,7 +47,7 @@ class S2Base_CommandUtil {
 
     public static function writeFile($filename,$content){
         if (file_exists($filename)) {
-            throw new Exception("Already exists. [ $filename ]");
+            throw new S2Base_FileExistsException("Already exists. [ $filename ]");
         }
 
         if(!file_put_contents($filename,$content,LOCK_EX)){

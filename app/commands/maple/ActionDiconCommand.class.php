@@ -4,7 +4,8 @@ class ActionDiconCommand implements S2Base_GenerateCommand {
 
     private $moduleName;
     private $actionPath;
-    
+    private $diconPath;
+
     public function getName(){
         return "action dicon";
     }
@@ -19,7 +20,25 @@ class ActionDiconCommand implements S2Base_GenerateCommand {
             return;
         }
         $this->diconPath = preg_replace("/\.class\.php$/",S2BASE_PHP5_DICON_SUFFIX,$this->actionPath);
+        if (!$this->finalConfirm()){
+            return;
+        }
         $this->prepareFiles();
+    }
+
+    private function finalConfirm(){
+        print "\n[ generate information ] \n";
+        print "  module name : {$this->moduleName} \n";
+        print "  action path : {$this->actionPath} \n";
+        print "  dicon path  : {$this->diconPath} \n";
+        $types = array('yes','no');
+        $rep = S2Base_StdinManager::getValueFromArray($types,
+                                        "confirmation");
+        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
+            $rep == 'no'){
+            return false;
+        }
+        return true;
     }
 
     private function prepareFiles(){
@@ -31,8 +50,7 @@ class ActionDiconCommand implements S2Base_GenerateCommand {
                    $this->diconPath;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                  'maple/dicon.php');
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 }
 ?>

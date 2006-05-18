@@ -5,7 +5,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
     private $serviceName;
     private $serviceClassName;
     private $serviceInterfaceName;
-    private $daoClassName;
+    private $daoInterfaceName;
     private $entityClassName;
     private $tableName;
     private $cols;
@@ -35,21 +35,26 @@ class GoyaCommand implements S2Base_GenerateCommand {
                 return;
             }
             $this->setServiceNameWithCommonsDao($name,$daoName);
+            if (!$this->finalConfirm()){
+                return;
+            }
             $this->prepareFilesWithCommonsDao();
-            return;
-        }
+        }else{
+            $this->setServiceName($name);
+            $this->tableName = S2Base_StdinManager::getValue("table name ? [{$name}] : ");
+            if(trim($this->tableName) == ''){
+                $this->tableName = $name;
+            } 
+            $this->validate($this->tableName);
 
-        $this->setServiceName($name);
-        $this->tableName = S2Base_StdinManager::getValue("table name ? [{$name}] : ");
-        if(trim($this->tableName) == ''){
-            $this->tableName = $name;
+            $cols = S2Base_StdinManager::getValue("columns ? [id,name,--, , ] : ");
+            $this->cols = explode(',',$cols);
+            if (!$this->finalConfirm()){
+                return;
+            }
+            $this->prepareFiles();
         }
-        $this->validate($this->tableName);
-
-        $cols = S2Base_StdinManager::getValue("columns ? [id,name,--, , ] : ");
-        $this->cols = explode(',',$cols);
-        $this->prepareFiles();
-    }        
+    }
 
     private function getDaoFromCommonsDao(){
         $commonsDaoDir = S2BASE_PHP5_ROOT . '/app/commons/dao';
@@ -77,7 +82,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
         $name = ucfirst($name);
         $this->serviceInterfaceName = $name . "Service";
         $this->serviceClassName = $name . "ServiceImpl";
-        $this->daoClassName = $name . "Dao";
+        $this->daoInterfaceName = $name . "Dao";
         $this->entityClassName = $name . "Entity";
     }
 
@@ -86,14 +91,42 @@ class GoyaCommand implements S2Base_GenerateCommand {
         $name = ucfirst($name);
         $this->serviceInterfaceName = $name . "Service";
         $this->serviceClassName = $name . "ServiceImpl";
-        $this->daoClassName = $daoName;
+        $this->daoInterfaceName = $daoName;
         $this->entityClassName = preg_replace("/Dao$/","Entity",$daoName);
+        $this->tableName = 'auto defined';
+        $this->cols = array('auto defined');
     }
     
     private function validate($name){
-        S2Base_CommandUtil::validate($name,"Invalid service name. [ $name ]");
+        S2Base_CommandUtil::validate($name,"Invalid value. [ $name ]");
     }
-    
+
+    private function finalConfirm(){
+
+        print "\n[ generate information ] \n";
+        print "  module name             : {$this->moduleName} \n";
+        print "  service name            : {$this->serviceName} \n";
+        print "  service interface name  : {$this->serviceInterfaceName} \n";
+        print "  service class name      : {$this->serviceClassName} \n";
+        print "  service test class name : {$this->serviceClassName}Test \n";
+        print "  dao interface name      : {$this->daoInterfaceName} \n";
+        print "  dao test class name     : {$this->daoInterfaceName}Test \n";
+        print "  entity class name       : {$this->entityClassName} \n";
+        print "  table name              : {$this->tableName} \n";
+        $cols = implode(', ',$this->cols);
+        print "  columns                 : $cols \n";
+        print "  service dicon file name : {$this->serviceInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
+
+        $types = array('yes','no');
+        $rep = S2Base_StdinManager::getValueFromArray($types,
+                                        "confirmation");
+        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
+            $rep == 'no'){
+            return false;
+        }
+        return true;
+    }
+
     private function prepareFiles(){
         $this->prepareServiceClassFile();
         $this->prepareServiceInterfaceFile();
@@ -120,17 +153,10 @@ class GoyaCommand implements S2Base_GenerateCommand {
                    "{$this->serviceClassName}.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                  'goya_service.php');
-        $tempContent = preg_replace("/@@CLASS_NAME@@/",
-                             $this->serviceClassName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@INTERFACE_NAME@@/",
-                             $this->serviceInterfaceName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@DAO_NAME@@/",
-                             $this->daoClassName,
-                             $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+        $patterns = array("/@@CLASS_NAME@@/","/@@INTERFACE_NAME@@/","/@@DAO_NAME@@/");
+        $replacements = array($this->serviceClassName,$this->serviceInterfaceName,$this->daoInterfaceName);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     private function prepareServiceInterfaceFile(){
@@ -143,32 +169,22 @@ class GoyaCommand implements S2Base_GenerateCommand {
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
                              $this->serviceInterfaceName,
                              $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     private function prepareServiceTestFile(){
         $testName = $this->serviceClassName . "Test";
-        $testFile = S2BASE_PHP5_TEST_MODULES_DIR . 
+        $srcFile = S2BASE_PHP5_TEST_MODULES_DIR . 
                     $this->moduleName . 
                     S2BASE_PHP5_SERVICE_DIR . 
                     "$testName.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                  'goya_service_test.php');
-        $tempContent = preg_replace("/@@CLASS_NAME@@/",
-                             $testName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@MODULE_NAME@@/",
-                             $this->moduleName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@SERVICE_NAME@@/",
-                             $this->serviceName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@SERVICE_INTERFACE@@/",
-                             $this->serviceInterfaceName,
-                             $tempContent);   
-        S2Base_CommandUtil::writeFile($testFile,$tempContent);       
-        print "[INFO ] create : $testFile\n";
+
+        $patterns = array("/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@SERVICE_NAME@@/","/@@SERVICE_INTERFACE@@/");
+        $replacements = array($testName,$this->moduleName,$this->serviceName,$this->serviceInterfaceName);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     private function prepareDaoFile(){
@@ -176,44 +192,29 @@ class GoyaCommand implements S2Base_GenerateCommand {
         $srcFile = S2BASE_PHP5_MODULES_DIR . 
                    $this->moduleName . 
                    S2BASE_PHP5_DAO_DIR . 
-                   "{$this->daoClassName}.class.php";
+                   "{$this->daoInterfaceName}.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                  'goya_dao.php');
-        $tempContent = preg_replace("/@@CLASS_NAME@@/",
-                             $this->daoClassName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@ENTITY_NAME@@/",
-                             $this->entityClassName,
-                             $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+
+        $patterns = array("/@@CLASS_NAME@@/","/@@ENTITY_NAME@@/");
+        $replacements = array($this->daoInterfaceName,$this->entityClassName);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     private function prepareDaoTestFile(){
-        $testClassName = $this->daoClassName . "Test";
-        $testFile = S2BASE_PHP5_TEST_MODULES_DIR . 
+        $testClassName = $this->daoInterfaceName . "Test";
+        $srcFile = S2BASE_PHP5_TEST_MODULES_DIR . 
                     $this->moduleName . 
                     S2BASE_PHP5_DAO_DIR . 
                     "$testClassName.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                  'goya_dao_test.php');
-        $tempContent = preg_replace("/@@CLASS_NAME@@/",
-                             $testClassName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@MODULE_NAME@@/",
-                             $this->moduleName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@DAO_CLASS@@/",
-                             $this->daoClassName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@SERVICE_INTERFACE@@/",
-                             $this->serviceInterfaceName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@SERVICE_NAME@@/",
-                             $this->serviceName,
-                             $tempContent);   
-        S2Base_CommandUtil::writeFile($testFile,$tempContent);       
-        print "[INFO ] create : $testFile\n";
+
+        $patterns = array("/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@DAO_CLASS@@/","/@@SERVICE_INTERFACE@@/","/@@SERVICE_NAME@@/");
+        $replacements = array($testClassName,$this->moduleName,$this->daoInterfaceName,$this->serviceInterfaceName,$this->serviceName);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     private function prepareEntityFile(){
@@ -223,18 +224,13 @@ class GoyaCommand implements S2Base_GenerateCommand {
                    "{$this->entityClassName}.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                  'entity.php');
-        $tempContent = preg_replace("/@@CLASS_NAME@@/",
-                             $this->entityClassName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@TABLE_NAME@@/",
-                             $this->tableName,
-                             $tempContent);   
         $src = EntityCommand::getAccessorSrc($this->cols);
-        $tempContent = preg_replace("/@@ACCESSOR@@/",
-                             $src,
-                             $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+
+        $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/");
+        $replacements = array($this->entityClassName,$this->tableName,$src);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     private function prepareDiconFile(){
@@ -244,17 +240,11 @@ class GoyaCommand implements S2Base_GenerateCommand {
                    "{$this->serviceInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                  'goya_dicon.php');
-        $tempContent = preg_replace("/@@SERVICE_NAME@@/",
-                                    $this->serviceName,
-                                    $tempContent);   
-        $tempContent = preg_replace("/@@SERVICE_CLASS@@/",
-                                    $this->serviceClassName,
-                                    $tempContent);   
-        $tempContent = preg_replace("/@@DAO_CLASS@@/",
-                                    $this->daoClassName,
-                                    $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+
+        $patterns = array("/@@SERVICE_NAME@@/","/@@SERVICE_CLASS@@/","/@@DAO_CLASS@@/");
+        $replacements = array( $this->serviceName,$this->serviceClassName,$this->daoInterfaceName);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 }
 ?>

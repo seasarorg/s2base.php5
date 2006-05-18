@@ -26,13 +26,34 @@ class EntityCommand implements S2Base_GenerateCommand {
 
         $cols = S2Base_StdinManager::getValue("columns ? [id,name,--, , ] : ");
         $this->cols = explode(',',$cols);
+        if (!$this->finalConfirm()){
+            return;
+        }
         $this->prepareFiles();
     }        
 
     private function validate($name){
-        S2Base_CommandUtil::validate($name,"Invalid entity name. [ $name ]");
+        S2Base_CommandUtil::validate($name,"Invalid value. [ $name ]");
     }
-    
+
+    private function finalConfirm(){
+        print "\n[ generate information ] \n";
+        print "  module name       : {$this->moduleName} \n";
+        print "  entity class name : {$this->entityClassName} \n";
+        print "  table name        : {$this->tableName} \n";
+        $cols = implode(', ',$this->cols);
+        print "  columns           : $cols \n";
+
+        $types = array('yes','no');
+        $rep = S2Base_StdinManager::getValueFromArray($types,
+                                        "confirmation");
+        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
+            $rep == 'no'){
+            return false;
+        }
+        return true;
+    }
+
     private function prepareFiles(){
         $this->prepareEntityFile();
     }
@@ -45,20 +66,13 @@ class EntityCommand implements S2Base_GenerateCommand {
                    "{$this->entityClassName}.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                  'entity.php');
-        $tempContent = preg_replace("/@@CLASS_NAME@@/",
-                             $this->entityClassName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@TABLE_NAME@@/",
-                             $this->tableName,
-                             $tempContent);   
-
         $src = $this->getAccessorSrc($this->cols);
-        $tempContent = preg_replace("/@@ACCESSOR@@/",
-                             $src,
-                             $tempContent);   
 
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+        $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/");
+        $replacements = array($this->entityClassName,$this->tableName,$src);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     public static function getAccessorSrc($cols){
