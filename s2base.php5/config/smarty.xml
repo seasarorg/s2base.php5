@@ -15,6 +15,11 @@
 
     <target name="com" depends="prepare">
         <command>
+            <!-- with smarty -->
+            <fileset dir="${cmd.dir}/smarty">
+                <include name="*Command.class.php"/>
+            </fileset>
+
             <!-- default -->
             <fileset dir="${cmd.dir}">
                 <include name="*Command.class.php"/>

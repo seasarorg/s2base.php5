@@ -3,3 +3,4 @@ S2Base_CommandLauncher
 S2Base_CommandUtil
 S2Base_GenerateCommand
 S2Base_StdinManager
+S2Base_FileExistsException

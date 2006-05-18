@@ -18,11 +18,32 @@ class ServiceCommand implements S2Base_GenerateCommand {
         $this->serviceInterfaceName = S2Base_StdinManager::getValue('service interface name ? : ');
         $this->validate($this->serviceInterfaceName);
         $this->serviceClassName = $this->serviceInterfaceName . "Impl";
+        if (!$this->finalConfirm()){
+            return;
+        }
         $this->prepareFiles();
     }        
 
     private function validate($name){
         S2Base_CommandUtil::validate($name,"Invalid service name. [ $name ]");
+    }
+
+    private function finalConfirm(){
+        print "\n[ generate information ] \n";
+        print "  module name             : {$this->moduleName} \n";
+        print "  service interface name  : {$this->serviceInterfaceName} \n";
+        print "  service class name      : {$this->serviceClassName} \n";
+        print "  service test class name : {$this->serviceClassName}Test \n";
+        print "  service dicon file name : {$this->serviceInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
+        $types = array('yes','no');
+        $rep = S2Base_StdinManager::getValueFromArray($types,
+                                        "confirmation");
+        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
+            $rep == 'no'){
+            return false;
+        }
+
+        return true;
     }
 
     private function prepareFiles(){
@@ -39,14 +60,11 @@ class ServiceCommand implements S2Base_GenerateCommand {
                    "{$this->serviceClassName}.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                  'service_impl.php');
-        $tempContent = preg_replace("/@@CLASS_NAME@@/",
-                             $this->serviceClassName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@INTERFACE_NAME@@/",
-                             $this->serviceInterfaceName,
-                             $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+
+        $patterns = array("/@@CLASS_NAME@@/","/@@INTERFACE_NAME@@/");
+        $replacements = array($this->serviceClassName,$this->serviceInterfaceName);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     private function prepareServiceInterfaceFile(){
@@ -59,29 +77,22 @@ class ServiceCommand implements S2Base_GenerateCommand {
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
                              $this->serviceInterfaceName,
                              $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     private function prepareServiceTestFile(){
         $testName = $this->serviceClassName . "Test";
-        $testFile = S2BASE_PHP5_TEST_MODULES_DIR . 
+        $srcFile = S2BASE_PHP5_TEST_MODULES_DIR . 
                     $this->moduleName . 
                     S2BASE_PHP5_SERVICE_DIR . 
                     "$testName.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                  'service_test.php');
-        $tempContent = preg_replace("/@@CLASS_NAME@@/",
-                             $testName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@MODULE_NAME@@/",
-                             $this->moduleName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@SERVICE_INTERFACE@@/",
-                             $this->serviceInterfaceName,
-                             $tempContent);   
-        S2Base_CommandUtil::writeFile($testFile,$tempContent);       
-        print "[INFO ] create : $testFile\n";
+
+        $patterns = array("/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@SERVICE_INTERFACE@@/");
+        $replacements = array($testName,$this->moduleName,$this->serviceInterfaceName);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     private function prepareDiconFile(){
@@ -94,8 +105,7 @@ class ServiceCommand implements S2Base_GenerateCommand {
         $tempContent = preg_replace("/@@SERVICE_CLASS@@/",
                                     $this->serviceClassName,
                                     $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 }
 ?>

@@ -15,12 +15,29 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $this->moduleName = $modName;
         $this->srcDirectory = S2BASE_PHP5_MODULES_DIR . $modName;
         $this->testDirectory = S2BASE_PHP5_TEST_MODULES_DIR . $modName;
+        if (!$this->finalConfirm()){
+            return;
+        }
         $this->createDirectory();
         $this->prepareFiles();
     }
 
     private function validate($name){
         S2Base_CommandUtil::validate($name,"Invalid module name. [ $name ]");
+    }
+
+    private function finalConfirm(){
+        print "\n[ generate information ] \n";
+        print "  module name : {$this->moduleName} \n";
+        $types = array('yes','no');
+        $rep = S2Base_StdinManager::getValueFromArray($types,
+                                        "confirmation");
+        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
+            $rep == 'no'){
+            return false;
+        }
+
+        return true;
     }
 
     private function createDirectory(){
@@ -62,13 +79,13 @@ class ModuleCommand implements S2Base_GenerateCommand {
     }
 
     private function prepareModuleIncFile(){
-        $incFile = S2BASE_PHP5_MODULES_DIR . 
+        $srcFile = S2BASE_PHP5_MODULES_DIR . 
                    $this->moduleName . S2BASE_PHP5_DS .
                    "{$this->moduleName}.inc.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
-                                                 'maple/module_inc.php');
-        S2Base_CommandUtil::writeFile($incFile,$tempContent);       
-        print "[INFO ] create : $incFile\n";
+                                                 'module_inc.php');
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
+
 }
 ?>
