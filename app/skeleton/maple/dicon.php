@@ -3,6 +3,6 @@
 "http://www.seasar.org/dtd/components21.dtd">
 <components>
     <!-- 
-    <include path="%S2BASE_PHP5_ROOT%/app/modules/MosuleName/dicon/ServiceName.dicon"/>
+    <include path="%S2BASE_PHP5_ROOT%/app/modules/ModuleName/dicon/ServiceName.dicon"/>
     -->
 </components>
