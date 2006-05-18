@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# -------------------------------------------------------------------------
+# Replace S2BASE_INSTALLATION to your S2Base.PHP5 directory full path name.
+# -------------------------------------------------------------------------
+export S2BASE_INSTALLATION="/path/to/s2base.php5"
+
+export PHING_COMMAND="phing"
+if (test -z "$PHING_COMMAND") ; then
+	echo "WARNING: PHP_COMMAND environment not set."
+	export PHING_COMMAND=php
+fi
+
+$PHING_COMMAND -f ${S2BASE_INSTALLATION}/build.xml $1 -Dtd=$2

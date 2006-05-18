@@ -1,0 +1,9 @@
+@echo off
+
+REM e.g.) set PHING_COMMAND=c:\php\bin\phing.bat
+set PHING_COMMAND=phing
+
+REM e.g.) set S2BASE_INSTALLATION=c:/workspace/s2base.php5
+set S2BASE_INSTALLATION=c:/path/to/s2base.php5
+
+%PHING_COMMAND% -f "%S2BASE_INSTALLATION%/build.xml" %1 -Dtd="%2"
