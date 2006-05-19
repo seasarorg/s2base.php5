@@ -23,11 +23,11 @@
     </target>
 
     <target name="gen-dao" depends="prepare">
-        <phing phingfile="config/utils.xml" inheritRefs="true" target="gen-dao" />
+        <phing phingfile="config/utils.xml" target="gen-dao" />
     </target>
 
     <target name="test" depends="prepare">
-        <phing phingfile="config/utils.xml" inheritRefs="true" target="test" />
+        <phing phingfile="config/utils.xml" target="test" />
     </target>
 
 </project>
