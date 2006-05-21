@@ -340,19 +340,9 @@ class JavelinTraceInterceptor extends S2Container_AbstractInterceptor
     
     private function logOut($msg)
     {
-        $fp = fopen($this->logFile_, "ab");
-        if($fp === false){
-            throw new Exception("Couldn't open file {$this->logFile_}");
+        if(!file_put_contents($this->logFile_, $msg, FILE_APPEND | LOCK_EX)){
+            throw new Exception("can not write file. [{$this->logFile_}]");
         }
-        
-        if (flock($fp, LOCK_EX)) {
-            fwrite($fp, $msg);
-            flock($fp, LOCK_UN);
-        } else {
-            fclose($fp);
-            throw new Exception("Couldn't lock the file {$this->logFile_}");
-        }
-        fclose($fp);
     }
 
     private function getTime()
