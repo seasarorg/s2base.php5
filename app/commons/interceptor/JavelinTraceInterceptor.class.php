@@ -298,7 +298,7 @@ class JavelinTraceInterceptor extends S2Container_AbstractInterceptor
                      $calleeMethodName . self::DELIM .
                      $calleeClassName  . self::DELIM .
                      $objectID         . self::DELIM .
-                     $threadInfo       . self::DELIM;
+                     $threadInfo       . PHP_EOL;
         return $throwBuff;
     }
 
