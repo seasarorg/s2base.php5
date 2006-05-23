@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<project name="project" default="commoand" basedir=".">
+    <target name="commoand">
+        <php expression="require_once('vendor/plugins/smarty/config/environment.inc.php')"/>
+        <command>
+            <fileset dir="${plugins.dir}/smarty/commands">
+               <include name="*Command.class.php"/>
+            </fileset>
+
+            <!-- default -->
+            <fileset dir="${cmd.dir}">
+                <include name="*Command.class.php"/>
+            </fileset>
+        </command>
+    </target>
+</project>
