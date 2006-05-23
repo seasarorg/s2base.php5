@@ -23,8 +23,7 @@ class AgaviModuleCommand implements S2Base_GenerateCommand
         $values['moduleName'] = AgaviCommandUtil::getValueFromType(S2BASE_PHP5_AG_TYPE_MODULE);
         $values['actionName'] = AgaviCommandUtil::getValueFromType(S2BASE_PHP5_AG_TYPE_ACTION);
         $values['viewName']   = AgaviCommandUtil::getValueFromType(S2BASE_PHP5_AG_TYPE_VIEW);
-		foreach( $values as $key => $value )
-		{
+		foreach ($values as $key => $value) {
 			strlen($value) > 0 ? $this->$key = $value : null;
 		}
         
@@ -32,6 +31,10 @@ class AgaviModuleCommand implements S2Base_GenerateCommand
         $this->moduleDir = $this->webappDir . '/modules/' . $this->moduleName;
         
         AgaviCommandUtil::validateProjectDir($this->webappDir);
+        
+        if (!$this->finalConfirm()){
+            return;
+        }
         
         print "[INFO ] generate agavi module : " . $this->moduleName . "\n";
         AgaviCommandUtil::execAgaviCmd('module',
@@ -49,6 +52,23 @@ class AgaviModuleCommand implements S2Base_GenerateCommand
         $this->prepareDiconFile();
     }
     
+    private function finalConfirm(){
+        print "\n[ generate information ] \n";
+        print "  project path        : {$this->pathName} \n";
+        print "  module name         : {$this->moduleName} \n";
+        print "  action name         : {$this->actionName} \n";
+        print "  view name           : {$this->viewName} \n";
+
+        $types = array('yes','no');
+        $rep = S2Base_StdinManager::getValueFromArray($types,
+                                        "confirmation");
+        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
+            $rep == 'no'){
+            return false;
+        }
+        return true;
+    }
+    
     private function prepareDiconFile ()
     {
         $incFile = $this->moduleDir . S2BASE_PHP5_DICON_DIR
@@ -56,7 +76,6 @@ class AgaviModuleCommand implements S2Base_GenerateCommand
         AgaviCommandUtil::writeDiconFile($incFile,
                                          $this->moduleName,
                                          $this->actionName);
-        print "[INFO ] create : $incFile\n";
     }
     
     private function prepareAutoloadIniFile ()

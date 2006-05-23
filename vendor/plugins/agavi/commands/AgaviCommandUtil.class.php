@@ -25,30 +25,29 @@ class AgaviCommandUtil
     
     public static function getValueFromType ($type)
     {
-        switch ($type)
-        {
-            case S2BASE_PHP5_AG_TYPE_PATH:
-                $msg = 'ProjectFullPath[' .
-                       S2BASE_PHP5_AG_DEFAULT_PATH .
-                       '] ? : ';
-            break;
-            case S2BASE_PHP5_AG_TYPE_MODULE:
-                $msg = 'ModuleName[' .
-                       S2BASE_PHP5_AG_DEFAULT_MODULE .
-                       '] ? : ';
-            break;
-            case S2BASE_PHP5_AG_TYPE_ACTION:
-                $msg = 'ActionName[' .
-                       S2BASE_PHP5_AG_DEFAULT_ACTION .
-                       '] ? : ';
-            break;
-            case S2BASE_PHP5_AG_TYPE_VIEW:
-                $msg = 'ViewName[' .
-                       S2BASE_PHP5_AG_DEFAULT_VIEW .
-                       '] ? : ';
-            break;
-            default:
-                throw new Exception("Type not found");
+        switch ($type) {
+        case S2BASE_PHP5_AG_TYPE_PATH:
+            $msg = 'ProjectFullPath[' .
+                   S2BASE_PHP5_AG_DEFAULT_PATH .
+                   '] ? : ';
+        break;
+        case S2BASE_PHP5_AG_TYPE_MODULE:
+            $msg = 'ModuleName[' .
+                   S2BASE_PHP5_AG_DEFAULT_MODULE .
+                   '] ? : ';
+        break;
+        case S2BASE_PHP5_AG_TYPE_ACTION:
+            $msg = 'ActionName[' .
+                   S2BASE_PHP5_AG_DEFAULT_ACTION .
+                   '] ? : ';
+        break;
+        case S2BASE_PHP5_AG_TYPE_VIEW:
+            $msg = 'ViewName[' .
+                   S2BASE_PHP5_AG_DEFAULT_VIEW .
+                   '] ? : ';
+        break;
+        default:
+            throw new Exception("Type not found");
         }
         return S2Base_StdinManager::getValue($msg);
     }
@@ -69,8 +68,7 @@ class AgaviCommandUtil
                                          $pathName,
                                          $moduleName,
                                          $actionName,
-                                         $viewName)
-    {
+                                         $viewName) {
         $descriptorspec = array(
            0 => array("pipe", "r"),
            1 => array("pipe", "w"),
@@ -82,17 +80,14 @@ class AgaviCommandUtil
         $cmd = preg_match('/windows/i', $os->getSysname()) ? 'agavi.bat' : 'agavi';
         
         $process = proc_open("$cmd $mode", $descriptorspec, $pipes, $cwd);
-        if (is_resource($process))
-        {
-            if ($mode == self::AG_CMD_PROJECT)
-            {
+        if (is_resource($process)) {
+            if ($mode == self::AG_CMD_PROJECT) {
                 fwrite($pipes[0], $pathName . "\n");
             }
             fwrite($pipes[0], $moduleName . "\n");
             fwrite($pipes[0], $actionName . "\n");
             fwrite($pipes[0], $viewName . "\n");
-            if ($mode != self::AG_CMD_ACTION)
-            {
+            if ($mode != self::AG_CMD_ACTION) {
                 fwrite($pipes[0], "\n");
             }
             fclose($pipes[0]);
@@ -110,8 +105,7 @@ class AgaviCommandUtil
             S2BASE_PHP5_DICON_DIR,
             S2BASE_PHP5_INTERCEPTOR_DIR,
             S2BASE_PHP5_SERVICE_DIR,);
-        foreach ($dirs as $dir)
-        {
+        foreach ($dirs as $dir) {
             self::createDirectory($modulePath . $dir);
         }
     }
@@ -122,8 +116,7 @@ class AgaviCommandUtil
         $dirs = array(
             S2BASE_PHP5_DAO_DIR,
             S2BASE_PHP5_SERVICE_DIR);
-        foreach ($dirs as $dir)
-        {
+        foreach ($dirs as $dir) {
             self::createDirectory($testDirPath . $dir);
         }
     }
@@ -148,7 +141,7 @@ class AgaviCommandUtil
         $tempContent = preg_replace("/@@ACTION_NAME@@/",
                                     $actionName,
                                     $tempContent);
-        S2Base_CommandUtil::writeFile($incFile,$tempContent);
+        CmdCommand::writeFile($incFile,$tempContent);
     }
     
     public static function writeModuleIncFile4Test ($pathName, $moduleName)
@@ -160,15 +153,15 @@ class AgaviCommandUtil
                    "test.inc.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_AG_SKELETON_DIR .
                                                     'agavi_module_inc.php');
+        $webappDir = $pathName . S2BASE_PHP5_AG_WEBAPP_DIR;
         $modDir = $pathName .
                   S2BASE_PHP5_AG_MODULE_DIR .
                   S2BASE_PHP5_DS .
                   $moduleName;
-        $tempContent = preg_replace("/@@MODULE_DIR@@/",
-                                    $modDir,
-                                    $tempContent);
-        S2Base_CommandUtil::writeFile($incFile,$tempContent);
-        print "[INFO ] create : $incFile\n";
+        $patterns = array("/@@MODULE_DIR@@/","/@@AG_WEBAPP_DIR@@/");
+        $replacements = array($modDir, $webappDir);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        CmdCommand::writeFile($incFile,$tempContent);
     }
 }
 ?>

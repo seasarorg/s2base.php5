@@ -1,9 +1,10 @@
 <?php
 class @@CLASS_NAME@@ extends PHPUnit2_Framework_TestCase {
     private $module = "@@MODULE_NAME@@";
+    private $serviceName = "@@SERVICE_NAME@@";
     private $container;
     private $dao;
-
+    
     function __construct($name) {
         parent::__construct($name);
     }
@@ -15,7 +16,7 @@ class @@CLASS_NAME@@ extends PHPUnit2_Framework_TestCase {
     function setUp(){
         print "\n";
         $moduleDir = "@@AG_PROJECT_DIR@@/webapp/modules/{$this->module}";
-        $dicon = $moduleDir . "/dicon/@@DAO_CLASS@@" . S2BASE_PHP5_DICON_SUFFIX;
+        $dicon = $moduleDir . "/dicon/@@SERVICE_INTERFACE@@" . S2BASE_PHP5_DICON_SUFFIX;
         include_once('@@AG_PROJECT_DIR@@/tests/modules/@@MODULE_NAME@@/test.inc.php');
         $this->container = S2ContainerFactory::create($dicon);
         $this->dao = $this->container->getComponent("@@DAO_CLASS@@");

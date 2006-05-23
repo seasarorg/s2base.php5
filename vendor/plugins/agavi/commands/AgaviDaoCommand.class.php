@@ -17,8 +17,7 @@ class AgaviDaoCommand implements S2Base_GenerateCommand
     public function execute ()
     {
         $pathName = AgaviCommandUtil::getValueFromType(S2BASE_PHP5_AG_TYPE_PATH);
-        if (strlen($pathName) > 0)
-        {
+        if (strlen($pathName) > 0) {
             $this->pathName = $pathName;
         }
         $targetDir = $this->pathName . S2BASE_PHP5_AG_MODULE_DIR;
@@ -42,9 +41,32 @@ class AgaviDaoCommand implements S2Base_GenerateCommand
 
         $cols = S2Base_StdinManager::getValue("columns ? [id,name,--, , ] : ");
         $this->cols = explode(',',$cols);
-
+        if (!$this->finalConfirm()){
+            return;
+        }
         $this->prepareFiles();
 
+    }
+
+    private function finalConfirm(){
+        print "\n[ generate information ] \n";
+        print "  module name         : {$this->moduleName} \n";
+        print "  dao interface name  : {$this->daoInterfaceName} \n";
+        print "  dao test class name : {$this->daoInterfaceName}Test \n";
+        print "  entity class name   : {$this->entityClassName} \n";
+        print "  table name          : {$this->tableName} \n";
+        $cols = implode(', ',$this->cols);
+        print "  columns             : $cols \n";
+        print "  dao dicon file name : {$this->daoInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
+
+        $types = array('yes','no');
+        $rep = S2Base_StdinManager::getValueFromArray($types,
+                                        "confirmation");
+        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
+            $rep == 'no'){
+            return false;
+        }
+        return true;
     }
 
     private function getCmdMessage(){
@@ -76,14 +98,10 @@ class AgaviDaoCommand implements S2Base_GenerateCommand
                    "{$this->daoInterfaceName}.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                  'dao.php');
-        $tempContent = preg_replace("/@@CLASS_NAME@@/",
-                             $this->daoInterfaceName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@ENTITY_NAME@@/",
-                             $this->entityClassName,
-                             $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+        $patterns = array("/@@CLASS_NAME@@/","/@@ENTITY_NAME@@/");
+        $replacements = array($this->daoInterfaceName,$this->entityClassName);
+        $tempContent = preg_replace($patterns, $replacements, $tempContent);
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     private function prepareDaoTestFile(){
@@ -95,20 +113,13 @@ class AgaviDaoCommand implements S2Base_GenerateCommand
                     "$testName.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_AG_SKELETON_DIR .
                                                  'agavi_dao_test.php');
+        $patterns = array("/@@AG_PROJECT_DIR@@/","/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@DAO_CLASS@@/");
+        $replacements = array($this->pathName,$testName,$this->moduleName,$this->daoInterfaceName);
         $tempContent = preg_replace("/@@AG_PROJECT_DIR@@/",
                                     $this->pathName,
                                     $tempContent); 
-        $tempContent = preg_replace("/@@CLASS_NAME@@/",
-                             $testName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@MODULE_NAME@@/",
-                             $this->moduleName,
-                             $tempContent);   
-        $tempContent = preg_replace("/@@DAO_CLASS@@/",
-                             $this->daoInterfaceName,
-                             $tempContent);   
-        S2Base_CommandUtil::writeFile($testFile,$tempContent);       
-        print "[INFO ] create : $testFile\n";
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        CmdCommand::writeFile($testFile,$tempContent);
     }
 
     private function prepareDiconFile(){
@@ -117,14 +128,13 @@ class AgaviDaoCommand implements S2Base_GenerateCommand
                    S2BASE_PHP5_DS .
                    $this->moduleName . 
                    S2BASE_PHP5_DICON_DIR . 
-                   "{$this->daoInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX;
+                   $this->daoInterfaceName . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                  'dao_dicon.php');
         $tempContent = preg_replace("/@@DAO_CLASS@@/",
                                     $this->daoInterfaceName,
                                     $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     private function prepareEntityFile(){
@@ -149,8 +159,7 @@ class AgaviDaoCommand implements S2Base_GenerateCommand
                              $src,
                              $tempContent);   
 
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 }
 ?>

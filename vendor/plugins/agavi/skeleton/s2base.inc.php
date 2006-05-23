@@ -1,3 +1,4 @@
+
 define('S2BASE_PHP5_ROOT','@@S2BASE_PHP5_ROOT@@');
 define('S2BASE_PHP5_VAR_DIR',S2BASE_PHP5_ROOT . '/var');
 define('S2BASE_PHP5_DICON_SUFFIX','.dicon');

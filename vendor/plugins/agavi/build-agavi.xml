@@ -15,7 +15,7 @@
       		 defaultValue="${projectPath}" message="ProjectFullPath "/>
 	  <input propertyname="module.dir" promptChar="?" message="ModuleName "/>
 	  <input propertyname="test.dirs"
-	  		 defaultValue="service,dao" promptChar="?" message="TestDirectory "/>
+	  		 defaultValue="dao,service" promptChar="?" message="TestDirectory "/>
 	  <foreach list="${test.dirs}" param="test.dir" target="doTest" />
     </target>
     

@@ -1,5 +1,5 @@
 <?php
-define('S2BASE_PHP5_AG_ROOT', S2BASE_PHP5_ROOT . '/vendor/plugins/agavi');
+define('S2BASE_PHP5_AG_ROOT', dirname(dirname(__FILE__)));
 
 define('S2BASE_PHP5_AG_TYPE_PATH',   'path');
 define('S2BASE_PHP5_AG_TYPE_MODULE', 'module');

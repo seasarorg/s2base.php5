@@ -15,8 +15,7 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
     public function execute ()
     {
         $pathName = AgaviCommandUtil::getValueFromType(S2BASE_PHP5_AG_TYPE_PATH);
-        if (strlen($pathName) > 0)
-        {
+        if (strlen($pathName) > 0) {
             $this->pathName = $pathName;
         }
         $targetDir = $this->pathName . S2BASE_PHP5_AG_MODULE_DIR;
@@ -30,7 +29,28 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
         $this->validate($iface);
         $this->serviceInterfaceName = $iface;
         $this->serviceClassName     = $iface . 'Impl';
+        if (!$this->finalConfirm()){
+            return;
+        }
         $this->prepareFiles();
+    }
+
+    private function finalConfirm(){
+        print "\n[ generate information ] \n";
+        print "  module name             : {$this->moduleName} \n";
+        print "  service interface name  : {$this->serviceInterfaceName} \n";
+        print "  service class name      : {$this->serviceClassName} \n";
+        print "  service test class name : {$this->serviceClassName}Test \n";
+        print "  service dicon file name : {$this->serviceInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
+        $types = array('yes','no');
+        $rep = S2Base_StdinManager::getValueFromArray($types,
+                                        "confirmation");
+        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
+            $rep == 'no'){
+            return false;
+        }
+
+        return true;
     }
 
     private function validate($name){
@@ -50,14 +70,10 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
                    "{$this->serviceClassName}.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                     'service_impl.php');
-        $tempContent = preg_replace("/@@CLASS_NAME@@/",
-                                    $this->serviceClassName,
-                                    $tempContent);   
-        $tempContent = preg_replace("/@@INTERFACE_NAME@@/",
-                                    $this->serviceInterfaceName,
-                                    $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+        $patterns = array("/@@CLASS_NAME@@/","/@@INTERFACE_NAME@@/");
+        $replacements = array($this->serviceClassName,$this->serviceInterfaceName);
+        $tempContent = preg_replace($patterns, $replacements, $tempContent);
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     private function prepareServiceInterfaceFile(){
@@ -69,8 +85,7 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
                                     $this->serviceInterfaceName,
                                     $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     private function prepareServiceTestFile(){
@@ -82,20 +97,10 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
                     "$testName.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_AG_SKELETON_DIR .
                                                     'agavi_service_test.php');
-        $tempContent = preg_replace("/@@AG_PROJECT_DIR@@/",
-                                    $this->pathName,
-                                    $tempContent); 
-        $tempContent = preg_replace("/@@CLASS_NAME@@/",
-                                    $testName,
-                                    $tempContent);   
-        $tempContent = preg_replace("/@@MODULE_NAME@@/",
-                                    $this->moduleName,
-                                    $tempContent);
-        $tempContent = preg_replace("/@@SERVICE_INTERFACE@@/",
-                                    $this->serviceInterfaceName,
-                                    $tempContent);
-        S2Base_CommandUtil::writeFile($testFile,$tempContent);
-        print "[INFO ] create : $testFile\n";
+        $patterns = array("/@@AG_PROJECT_DIR@@/","/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@SERVICE_INTERFACE@@/");
+        $replacements = array($this->pathName,$testName,$this->moduleName,$this->serviceInterfaceName);
+        $tempContent = preg_replace($patterns, $replacements, $tempContent);
+        CmdCommand::writeFile($testFile,$tempContent);
     }
 
     private function prepareDiconFile(){
@@ -107,8 +112,7 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
         $tempContent = preg_replace("/@@SERVICE_CLASS@@/",
                                     $this->serviceClassName,
                                     $tempContent);   
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-        print "[INFO ] create : $srcFile\n";      
+        CmdCommand::writeFile($srcFile,$tempContent);
     }
 }
 ?>
