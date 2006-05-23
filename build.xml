@@ -10,7 +10,8 @@
         <property name="project.name" value="${phing.project.name}" />
         <property name="cmd.dir" value="${project.basedir}/app/commands" />
         <property name="plugins.dir" value="${project.basedir}/vendor/plugins" />
-        <property name="td" value="" />
+        <property name="td" value="" />        <!-- test directory -->
+        <property name="st" value="command" /> <!-- sub task       -->
 
         <php expression="require_once('config/environment.inc.php')"/>
         <php expression="require_once('lib/S2Base/S2Base.cmd.php')"/>
@@ -34,13 +35,13 @@
     <target name="smarty" depends="prepare">
         <available file="${plugins.dir}/smarty" type="dir" property="plugin.available" />
         <fail unless="plugin.available" message="Invalid : [ Smarty plugin ]" />
-        <phing phingfile="${plugins.dir}/smarty/build.xml" inheritRefs="true"/>
+        <phing phingfile="${plugins.dir}/smarty/build.xml" inheritRefs="true" target="${st}"/>
     </target>
 
     <target name="maple" depends="prepare">
         <available file="${plugins.dir}/maple" type="dir" property="plugin.available" />
         <fail unless="plugin.available" message="Invalid : [ Maple plugin ]" />
-        <phing phingfile="${plugins.dir}/maple/build.xml" inheritRefs="true"/>
+        <phing phingfile="${plugins.dir}/maple/build.xml" inheritRefs="true" target="${st}"/>
     </target>
 
     <target name="gen-dao" depends="">
