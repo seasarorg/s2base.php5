@@ -1,19 +1,22 @@
 <?xml version="1.0"?>
-<project name="project" default="com" basedir=".">
+<project name="project" default="command" basedir=".">
 
     <taskdef name="command" 
              classname="lib.S2Base.src.phing.task.S2Base_CommandTask" />
+    <taskdef name="gdao" 
+             classname="lib.S2Dao.src.phing.task.S2DaoSkeletonTask" />
 
     <target name="prepare">
         <property name="project.name" value="${phing.project.name}" />
         <property name="cmd.dir" value="${project.basedir}/app/commands" />
+        <property name="plugins.dir" value="${project.basedir}/vendor/plugins" />
         <property name="td" value="" />
 
         <php expression="require_once('config/environment.inc.php')"/>
         <php expression="require_once('lib/S2Base/S2Base.cmd.php')"/>
     </target>
 
-    <target name="com" depends="prepare">
+    <target name="command" depends="prepare">
         <command>
             <!-- default -->
             <fileset dir="${cmd.dir}">
@@ -22,12 +25,41 @@
         </command>
     </target>
 
-    <target name="gen-dao" depends="prepare">
-        <phing phingfile="config/utils.xml" target="gen-dao" />
+    <target name="agavi" depends="prepare">
+        <available file="${plugins.dir}/agavi" type="dir" property="plugin.available" />
+        <fail unless="plugin.available" message="Invalid : [ Agavi plugin ]" />
+        <phing phingfile="${plugins.dir}/agavi/build-agavi.xml" inheritRefs="true" target="${td}"/>
     </target>
 
-    <target name="test" depends="prepare">
-        <phing phingfile="config/utils.xml" target="test" />
+    <target name="smarty" depends="prepare">
+        <available file="${plugins.dir}/smarty" type="dir" property="plugin.available" />
+        <fail unless="plugin.available" message="Invalid : [ Smarty plugin ]" />
+        <phing phingfile="${plugins.dir}/smarty/build.xml" inheritRefs="true"/>
+    </target>
+
+    <target name="maple" depends="prepare">
+        <available file="${plugins.dir}/maple" type="dir" property="plugin.available" />
+        <fail unless="plugin.available" message="Invalid : [ Maple plugin ]" />
+        <phing phingfile="${plugins.dir}/maple/build.xml" inheritRefs="true"/>
+    </target>
+
+    <target name="gen-dao" depends="">
+        <property name="dsn" value="mysql:host=localhost; dbname=s2container" />
+        <property name="user" value="root" />
+        <property name="password" value="test" />
+        <gdao toDir="app/commons/dao" />
+    </target>
+
+    <target name="test" depends="">
+        <echo>test directory : test/${td}</echo>
+        <phpunit2 haltonfailure="false" haltonerror="false">
+            <formatter type="plain" usefile="false"/>
+            <batchtest>
+                <fileset dir="test/${td}">
+                    <include name="**/*Test.class.php"/>
+                </fileset>
+            </batchtest>
+        </phpunit2>
     </target>
 
 </project>

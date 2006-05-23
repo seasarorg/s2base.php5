@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<project name="project" default="command" basedir=".">
+    <target name="command">
+        <php expression="require_once('d:/tmp/maple/webapp/config/maple.inc.php')"/>
+        <php expression="require_once('vendor/plugins/maple/config/environment.inc.php')"/>
+        <command>
+            <fileset dir="${plugins.dir}/maple/commands">
+               <include name="*Command.class.php"/>
+            </fileset>
+
+            <!-- default -->
+            <fileset dir="${cmd.dir}">
+                <include name="*Command.class.php"/>
+            </fileset>
+        </command>
+    </target>
+</project>
