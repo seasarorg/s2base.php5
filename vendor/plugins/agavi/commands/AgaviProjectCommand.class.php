@@ -87,6 +87,7 @@ class AgaviProjectCommand implements S2Base_GenerateCommand
 						  'config_handlers.ini',
 						  'contexts.ini');
         $this->prepareIniFiles($iniNames);
+        AgaviCommandUtil::appendSection2AutoloadIni($this->webappDir, $this->moduleName);
         AgaviCommandUtil::writeModuleIncFile4Test($this->pathName,
                                                   $this->moduleName);
     }
@@ -165,9 +166,11 @@ class AgaviProjectCommand implements S2Base_GenerateCommand
             
             $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_AG_SKELETON_CORE_DIR .
                                                         $iniName);
+            /*
             $tempContent = preg_replace("/@@MODULE_NAME@@/",
                                         $this->moduleName,
                                         $tempContent);  
+            */
             CmdCommand::writeFile($incFile,$tempContent);
         }
     }

@@ -144,6 +144,15 @@ class AgaviCommandUtil
         CmdCommand::writeFile($incFile,$tempContent);
     }
     
+    public static function appendSection2AutoloadIni ($webappDir, $moduleName)
+    {
+        $autoloadIni = $webappDir . '/config/autoload.ini';
+        $alSkel = S2Base_CommandUtil::readFile(S2BASE_PHP5_AG_SKELETON_DIR .
+                                               'append_autoload.php');
+        $alSkel = preg_replace('/@@MODULE_NAME@@/', $moduleName, $alSkel);
+        file_put_contents($autoloadIni, $alSkel, FILE_APPEND);
+    }
+    
     public static function writeModuleIncFile4Test ($pathName, $moduleName)
     {
         $incFile = $pathName .

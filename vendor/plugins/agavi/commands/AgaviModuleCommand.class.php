@@ -1,5 +1,4 @@
 <?php
-require_once('AgaviCommandUtil.class.php');
 class AgaviModuleCommand implements S2Base_GenerateCommand 
 {
     private $pathName   = S2BASE_PHP5_AG_DEFAULT_PATH;
@@ -46,6 +45,7 @@ class AgaviModuleCommand implements S2Base_GenerateCommand
         AgaviCommandUtil::createLogicDirectories($this->moduleDir);
         AgaviCommandUtil::createTestDirectory($this->pathName,
                                               $this->moduleName);
+        AgaviCommandUtil::appendSection2AutoloadIni($this->webappDir, $this->moduleName);
         AgaviCommandUtil::writeModuleIncFile4Test($this->pathName,
                                                   $this->moduleName);
         
@@ -76,14 +76,6 @@ class AgaviModuleCommand implements S2Base_GenerateCommand
         AgaviCommandUtil::writeDiconFile($incFile,
                                          $this->moduleName,
                                          $this->actionName);
-    }
-    
-    private function prepareAutoloadIniFile ()
-    {
-    }
-    
-    private function appendSections2AutoloadIniFile ()
-    {
     }
 }
 ?>
