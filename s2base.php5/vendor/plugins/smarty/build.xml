@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<project name="project" default="commoand" basedir=".">
-    <target name="commoand">
+<project name="project" default="command" basedir=".">
+    <target name="command">
         <php expression="require_once('vendor/plugins/smarty/config/environment.inc.php')"/>
         <command>
             <fileset dir="${plugins.dir}/smarty/commands">
