@@ -6,7 +6,7 @@ function microtime_float(){
 $time_start = microtime_float();
 
 require_once(dirname(dirname(__FILE__)).'/config/environment.inc.php');
-require_once(dirname(dirname(__FILE__)).'/config/smarty.inc.php');
+require_once(dirname(dirname(__FILE__)).'/vendor/pugins/smarty/config/environment.inc.php');
 define('S2BASE_PHP5_REQUEST_MODULE_KEY','mod');
 define('S2BASE_PHP5_REQUEST_ACTION_KEY','act');
 define('S2BASE_PHP5_DEFAULT_MODULE_NAME','Default');
