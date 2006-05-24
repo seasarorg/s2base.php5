@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<project name="project" default="" basedir=".">
-    <target name="">
+<project name="project" default="command" basedir=".">
+    <target name="command">
       <php expression="require_once('vendor/plugins/agavi/config/environment.inc.php')"/>
       <command>
 	    <fileset dir="${plugins.dir}/agavi/commands">
