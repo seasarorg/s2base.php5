@@ -177,7 +177,7 @@ class JavelinTraceInterceptor extends S2Container_AbstractInterceptor
                                 $exp);
 
             // Catch ログ出力。
-            $this->logOUT($throwBuff);
+            $this->logOut($throwBuff);
         }
 
         // Return詳細ログ生成。
