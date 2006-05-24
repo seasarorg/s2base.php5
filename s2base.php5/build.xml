@@ -29,7 +29,7 @@
     <target name="agavi" depends="prepare">
         <available file="${plugins.dir}/agavi" type="dir" property="plugin.available" />
         <fail unless="plugin.available" message="Invalid : [ Agavi plugin ]" />
-        <phing phingfile="${plugins.dir}/agavi/build-agavi.xml" inheritRefs="true" target="${td}"/>
+        <phing phingfile="${plugins.dir}/agavi/build.xml" inheritRefs="true" target="${st}"/>
     </target>
 
     <target name="smarty" depends="prepare">
