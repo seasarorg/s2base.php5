@@ -50,7 +50,7 @@ class InterceptorCommand implements S2Base_GenerateCommand {
         print "  module name            : {$this->moduleName} \n";
         print "  type                   : {$this->type} \n";
         print "  interceptor class name : {$this->interceptorClassName} \n";
-        return S2Base_StdinManager::isYes('ok ?');
+        return S2Base_StdinManager::isYes('confirm ?');
     }
 
     private function prepareFiles(){

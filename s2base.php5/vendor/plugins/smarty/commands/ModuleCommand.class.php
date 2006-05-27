@@ -34,7 +34,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
     private function finalConfirm(){
         print "\n[ generate information ] \n";
         print "  module name : {$this->moduleName} \n";
-        return S2Base_StdinManager::isYes('ok ?');
+        return S2Base_StdinManager::isYes('confirm ?');
     }
 
     private function createDirectory(){
