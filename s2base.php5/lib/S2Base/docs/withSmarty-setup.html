@@ -36,7 +36,7 @@
 <a href="http://smarty.php.net/">Smarty</a>‚ğƒ_ƒEƒ“ƒ[ƒh‚µA”CˆÓ‚ÌƒfƒBƒŒƒNƒgƒŠ‚É‰ğ“€‚µ‚Ä‰º‚³‚¢B
 </li>
 <li>
-s2base.php5/config/smarty.inc.php ‚É‚ÄASmarty-version/libs/Smarty.class.php ‚ğ require ‚µ‚Ä‰º‚³‚¢B
+s2base.php5/vendor/plugins/smarty/config/environment.inc.php ‚É‚ÄASmarty-version/libs/Smarty.class.php ‚ğ require ‚µ‚Ä‰º‚³‚¢B
 </li>
 </ol>
 </p>
@@ -52,38 +52,14 @@ WEBƒT[ƒo‚ÌÀsƒ†[ƒU‚ªAs2base.php5/var ƒfƒBƒŒƒNƒgƒŠˆÈ‰º‚ÉƒAƒNƒZƒX(read/write)‚
 
 <h3>5 - build.xml ‚Ì•ÒW</h3>
 <p>
-ƒfƒtƒHƒ‹ƒg‚Å‚ÍASmarty—p‚ÌƒRƒ}ƒ“ƒh‚ğ“Ç‚İ‚Şİ’è‚ªƒRƒƒ“ƒgƒAƒEƒg‚³‚ê‚Ä‚¢‚Ü‚·Bbuild.xml ‚ğ•ÒW‚µƒRƒƒ“ƒgƒAƒEƒg‚ğ‰ğœ‚µ‚Ü‚·B
+build.xml ‚ÅƒfƒtƒHƒ‹ƒgƒ^ƒXƒN‚É [ smarty ] ‚ğİ’è‚µ‚Ü‚·B
 </p>
 
 <pre>
 &lt;?xml version="1.0"?&gt;
-&lt;project name="project" default="com" basedir="."&gt;
-
-    EEE
-
-    &lt;target name="com" depends="prepare"&gt;
-        &lt;command&gt;
-            &lt;!-- with smarty --&gt;
-            &lt;fileset dir="${cmd.dir}/smarty"&gt;        &lt;--- ƒfƒtƒHƒ‹ƒg‚Å‚ÍƒRƒƒ“ƒgƒAƒEƒg‚³‚ê‚Ä‚¢‚é‚Ì‚Å‰ğœ‚µ‚Ü‚·B
-                &lt;include name="*Command.class.php"/&gt;
-            &lt;/fileset&gt;
-
-            &lt;!-- with maple
-            &lt;fileset dir="${cmd.dir}/maple"&gt;
-                &lt;include name="*Command.class.php"/&gt;
-            &lt;/fileset&gt;
-            --&gt;
-
-            &lt;!-- default --&gt;
-            &lt;fileset dir="${cmd.dir}"&gt;
-                &lt;include name="*Command.class.php"/&gt;
-            &lt;/fileset&gt;
-        &lt;/command&gt;
-    &lt;/target&gt;
-
-    EEE
-
-&lt;/project&gt;
+&lt;project name="project" default="smarty" basedir="."&gt;
+    EEE                             ª
+&lt;/project&gt;                     smarty ‚Éİ’è
 </pre>
 
 s2base.php5 ƒfƒBƒŒƒNƒgƒŠ‚É‚Ä phing ƒRƒ}ƒ“ƒh‚ğÀs‚µ‚Ü‚·BƒRƒ}ƒ“ƒhƒŠƒXƒg‚ª•\¦‚³‚ê‚é‚ÆƒCƒ“ƒXƒg[ƒ‹‚ªŠ®—¹‚Å‚·B
@@ -91,11 +67,15 @@ s2base.php5 ƒfƒBƒŒƒNƒgƒŠ‚É‚Ä phing ƒRƒ}ƒ“ƒh‚ğÀs‚µ‚Ü‚·BƒRƒ}ƒ“ƒhƒŠƒXƒg‚ª•\¦‚³‚
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
 
-project &gt; prepare:
+project > prepare:
       [php] Evaluating PHP expression: require_once('config/environment.inc.php')
       [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
 
-project &gt; com:
+project > smarty:
+    [phing] Calling Buildfile '/seasar.php/workspace/s2base.php5/vendor/plugins/smarty/build.xml' with target 'command'
+
+project > command:
+      [php] Evaluating PHP expression: require_once('vendor/plugins/smarty/config/environment.inc.php')
 
 [ Command list ]
 0 : [ EXIT ]

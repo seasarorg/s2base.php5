@@ -51,7 +51,7 @@ project &gt; prepare:
 project &gt; com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : action dicon
 2 : generate.php
 3 : command
@@ -95,7 +95,7 @@ project &gt; prepare:
 project &gt; com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : action dicon
 2 : generate.php
 3 : command
@@ -109,17 +109,29 @@ project &gt; com:
 choice ? : 1     &lt;--- 1 : action dicon を選択
 
 [ Maple module list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : examples
 2 : maple
 3 : sample
 choice ? : 3     &lt;--- 3 : sample モジュールを選択
 
 [ Action list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : /sample/Sample.class.php
 choice ? : 1     &lt;--- 1 : sample モジュールのアクションリストよりアクションを選択
+
+[ generate information ]
+  module name : sample
+  action path : /sample/Sample.class.php
+  dicon path  : /sample/Sample.dicon
+
+confirm ? (y/n) : y       &lt;--- 表示される情報を確認
 [INFO ] create : /seasar.php/workspace/maple/webapp/modules/sample/Sample.dicon
+
+[ Command list ]
+0 : (exit)
+1 : action dicon
+・・・
 
 BUILD FINISHED
 
