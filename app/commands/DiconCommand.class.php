@@ -40,7 +40,7 @@ class DiconCommand implements S2Base_GenerateCommand {
         print "\n[ generate information ] \n";
         print "  module name     : {$this->moduleName} \n";
         print "  dicon file name : {$this->diconName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
-        return S2Base_StdinManager::isYes('ok ?');
+        return S2Base_StdinManager::isYes('confirm ?');
     }
 
     private function prepareFiles(){

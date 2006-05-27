@@ -46,7 +46,7 @@ class ActionCommand implements S2Base_GenerateCommand {
         print "  action dicon file name : {$this->actionClassName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
         print "  action inc file name   : {$this->actionClassName}.inc.php \n";
         print "  action tpl file name   : {$this->actionName}.tpl \n";
-        return S2Base_StdinManager::isYes('ok ?');
+        return S2Base_StdinManager::isYes('confirm ?');
     }
 
     private function prepareFiles(){

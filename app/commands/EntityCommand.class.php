@@ -54,7 +54,7 @@ class EntityCommand implements S2Base_GenerateCommand {
         $cols = implode(', ',$this->cols);
         print "  columns           : $cols \n";
 
-        return S2Base_StdinManager::isYes('ok ?');
+        return S2Base_StdinManager::isYes('confirm ?');
     }
 
     private function prepareFiles(){

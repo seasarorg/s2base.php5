@@ -29,7 +29,7 @@ class CmdCommand implements S2Base_GenerateCommand {
     private function finalConfirm(){
         print "\n[ generate information ] \n";
         print "  command name : {$this->cmdName} \n";
-        return S2Base_StdinManager::isYes('ok ?');
+        return S2Base_StdinManager::isYes('confirm ?');
     }
 
     private function prepareFiles(){

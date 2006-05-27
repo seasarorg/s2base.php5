@@ -31,7 +31,7 @@ class ActionDiconCommand implements S2Base_GenerateCommand {
         print "  module name : {$this->moduleName} \n";
         print "  action path : {$this->actionPath} \n";
         print "  dicon path  : {$this->diconPath} \n";
-        return S2Base_StdinManager::isYes('ok ?');
+        return S2Base_StdinManager::isYes('confirm ?');
     }
 
     private function prepareFiles(){

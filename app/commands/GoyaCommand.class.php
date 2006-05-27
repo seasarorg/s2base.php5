@@ -131,7 +131,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
         print "  columns                 : $cols \n";
         print "  service dicon file name : {$this->serviceInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
 
-        return S2Base_StdinManager::isYes('ok ?');
+        return S2Base_StdinManager::isYes('confirm ?');
     }
 
     private function prepareFiles(){
