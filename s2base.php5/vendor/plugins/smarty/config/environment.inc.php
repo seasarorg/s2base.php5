@@ -2,6 +2,8 @@
 require_once('Smarty/libs/Smarty.class.php');
 require_once('S2Base/S2Base.web.php');
 
+define('S2BASE_PHP5_PLUGIN_SMARTY',S2BASE_PHP5_ROOT . '/vendor/plugins/smarty');
+
 /**
  * php log setting
  */

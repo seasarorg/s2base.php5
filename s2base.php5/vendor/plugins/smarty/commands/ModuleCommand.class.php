@@ -82,8 +82,8 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $srcFile = S2BASE_PHP5_MODULES_DIR . 
                    $this->moduleName . S2BASE_PHP5_DS .
                    "{$this->moduleName}.inc.php";
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
-                                                 'smarty/module_inc.php');
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY .
+                                                 '/skeleton/module_inc.php');
         CmdCommand::writeFile($srcFile,$tempContent);
     }
 
