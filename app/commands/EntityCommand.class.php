@@ -10,19 +10,29 @@ class EntityCommand implements S2Base_GenerateCommand {
     }
 
     public function execute(){
-        $this->moduleName = S2Base_CommandUtil::getModuleName();
+        try{
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
+        }
         if($this->moduleName == S2Base_StdinManager::EXIT_LABEL){
             return;
         }
 
-        $this->entityClassName = S2Base_StdinManager::getValue('entity class name ? : ');
-        $this->validate($this->entityClassName);
+        try{
+            $this->entityClassName = S2Base_StdinManager::getValue('entity class name ? : ');
+            $this->validate($this->entityClassName);
 
-        $this->tableName = S2Base_StdinManager::getValue("table name ? [{$this->entityClassName}] : ");
-        if(trim($this->tableName) == ''){
-            $this->tableName = $this->entityClassName;
+            $this->tableName = S2Base_StdinManager::getValue("table name ? [{$this->entityClassName}] : ");
+            if(trim($this->tableName) == ''){
+                $this->tableName = $this->entityClassName;
+            }
+            $this->validate($this->tableName);
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
         }
-        $this->validate($this->tableName);
 
         $cols = S2Base_StdinManager::getValue("columns ? [id,name,--, , ] : ");
         $this->cols = explode(',',$cols);
@@ -44,14 +54,7 @@ class EntityCommand implements S2Base_GenerateCommand {
         $cols = implode(', ',$this->cols);
         print "  columns           : $cols \n";
 
-        $types = array('yes','no');
-        $rep = S2Base_StdinManager::getValueFromArray($types,
-                                        "confirmation");
-        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
-            $rep == 'no'){
-            return false;
-        }
-        return true;
+        return S2Base_StdinManager::isYes('ok ?');
     }
 
     private function prepareFiles(){

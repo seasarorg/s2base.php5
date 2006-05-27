@@ -15,22 +15,35 @@ class GoyaCommand implements S2Base_GenerateCommand {
     }
 
     public function execute(){
-        $this->moduleName = S2Base_CommandUtil::getModuleName();
+        try{
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
+        }
+
         if($this->moduleName == S2Base_StdinManager::EXIT_LABEL){
             return;
         }
 
         $name = S2Base_StdinManager::getValue('service name ? : ');
-        $this->validate($name);
-
-        $types = array('yes','no');
-        $rep = S2Base_StdinManager::getValueFromArray($types,
-                                        "use commons dao ?");
-        if ($rep == S2Base_StdinManager::EXIT_LABEL){
+        try{
+            $this->validate($name);
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
             return;
         }
-        if($rep == 'yes'){
-            $daoName = $this->getDaoFromCommonsDao();
+
+        $rep = S2Base_StdinManager::isYes('use commons dao ?');
+
+        if($rep){
+            try{
+                $daoName = $this->getDaoFromCommonsDao();
+            } catch(Exception $e) {
+                CmdCommand::showException($e);
+                return;
+            }
+                
             if ($daoName == S2Base_StdinManager::EXIT_LABEL){
                 return;
             }
@@ -64,6 +77,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
         }
         $daos = array();
         foreach($entries as $entry){
+            $maches = array();
             if(preg_match("/(\w+Dao)\.class\.php$/",$entry,$maches)){
                 $daos[] = $maches[1];
             }
@@ -117,14 +131,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
         print "  columns                 : $cols \n";
         print "  service dicon file name : {$this->serviceInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
 
-        $types = array('yes','no');
-        $rep = S2Base_StdinManager::getValueFromArray($types,
-                                        "confirmation");
-        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
-            $rep == 'no'){
-            return false;
-        }
-        return true;
+        return S2Base_StdinManager::isYes('ok ?');
     }
 
     private function prepareFiles(){

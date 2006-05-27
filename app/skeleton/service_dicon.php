@@ -2,5 +2,9 @@
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
 "http://www.seasar.org/dtd/components21.dtd">
 <components>
-    <component class="@@SERVICE_CLASS@@"/>
+    <component class="@@SERVICE_CLASS@@">
+        <!--
+        <aspect></aspect>
+        -->
+    </component>    
 </components>

@@ -9,7 +9,13 @@ class CmdCommand implements S2Base_GenerateCommand {
 
     public function execute(){
         $this->cmdName = S2Base_StdinManager::getValue('command name ? : ');
-        $this->validate($this->cmdName);
+        try{
+            $this->validate($this->cmdName);
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
+        }
+
         if (!$this->finalConfirm()){
             return;
         }
@@ -23,14 +29,7 @@ class CmdCommand implements S2Base_GenerateCommand {
     private function finalConfirm(){
         print "\n[ generate information ] \n";
         print "  command name : {$this->cmdName} \n";
-        $types = array('yes','no');
-        $rep = S2Base_StdinManager::getValueFromArray($types,
-                                        "confirmation");
-        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
-            $rep == 'no'){
-            return false;
-        }
-        return true;
+        return S2Base_StdinManager::isYes('ok ?');
     }
 
     private function prepareFiles(){
@@ -64,5 +63,10 @@ class CmdCommand implements S2Base_GenerateCommand {
             }
         }
     }
+
+    public static function showException(Exception $e){
+        print "\n!!! Exception\n!!! {$e->getMessage()}\n\n";
+    }
+    
 }
 ?>

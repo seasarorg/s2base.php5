@@ -10,13 +10,23 @@ class ServiceCommand implements S2Base_GenerateCommand {
     }
 
     public function execute(){
-        $this->moduleName = S2Base_CommandUtil::getModuleName();
+        try{
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
+        }
         if($this->moduleName == S2Base_StdinManager::EXIT_LABEL){
             return;
         }
 
         $this->serviceInterfaceName = S2Base_StdinManager::getValue('service interface name ? : ');
-        $this->validate($this->serviceInterfaceName);
+        try{
+            $this->validate($this->serviceInterfaceName);
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
+        }
         $this->serviceClassName = $this->serviceInterfaceName . "Impl";
         if (!$this->finalConfirm()){
             return;
@@ -35,15 +45,7 @@ class ServiceCommand implements S2Base_GenerateCommand {
         print "  service class name      : {$this->serviceClassName} \n";
         print "  service test class name : {$this->serviceClassName}Test \n";
         print "  service dicon file name : {$this->serviceInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
-        $types = array('yes','no');
-        $rep = S2Base_StdinManager::getValueFromArray($types,
-                                        "confirmation");
-        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
-            $rep == 'no'){
-            return false;
-        }
-
-        return true;
+        return S2Base_StdinManager::isYes('ok ?');
     }
 
     private function prepareFiles(){

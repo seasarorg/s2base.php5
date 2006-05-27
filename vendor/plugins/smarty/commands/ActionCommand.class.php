@@ -10,12 +10,23 @@ class ActionCommand implements S2Base_GenerateCommand {
     }
 
     public function execute(){
-        $this->moduleName = S2Base_CommandUtil::getModuleName();
+        try{
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
+        }
+
         if($this->moduleName == S2Base_StdinManager::EXIT_LABEL){
             return;
         }
         $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
-        $this->validate($this->actionName);
+        try{
+            $this->validate($this->actionName);
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
+        }
         $this->actionClassName = ucfirst($this->actionName) . "Action";
         if (!$this->finalConfirm()){
             return;
@@ -35,15 +46,7 @@ class ActionCommand implements S2Base_GenerateCommand {
         print "  action dicon file name : {$this->actionClassName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
         print "  action inc file name   : {$this->actionClassName}.inc.php \n";
         print "  action tpl file name   : {$this->actionName}.tpl \n";
-        $types = array('yes','no');
-        $rep = S2Base_StdinManager::getValueFromArray($types,
-                                        "confirmation");
-        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
-            $rep == 'no'){
-            return false;
-        }
-
-        return true;
+        return S2Base_StdinManager::isYes('ok ?');
     }
 
     private function prepareFiles(){

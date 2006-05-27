@@ -11,7 +11,12 @@ class ModuleCommand implements S2Base_GenerateCommand {
     public function execute(){
         $modName = S2Base_StdinManager::getValue('module name ? : ');
 
-        $this->validate($modName);
+        try{
+            $this->validate($modName);
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
+        }
         $this->moduleName = $modName;
         $this->srcDirectory = S2BASE_PHP5_MODULES_DIR . $modName;
         $this->testDirectory = S2BASE_PHP5_TEST_MODULES_DIR . $modName;
@@ -29,6 +34,9 @@ class ModuleCommand implements S2Base_GenerateCommand {
     private function finalConfirm(){
         print "\n[ generate information ] \n";
         print "  module name : {$this->moduleName} \n";
+
+        return S2Base_StdinManager::isYes('ok ?');
+/*
         $types = array('yes','no');
         $rep = S2Base_StdinManager::getValueFromArray($types,
                                         "confirmation");
@@ -36,8 +44,8 @@ class ModuleCommand implements S2Base_GenerateCommand {
             $rep == 'no'){
             return false;
         }
-
         return true;
+*/
     }
 
     private function createDirectory(){
