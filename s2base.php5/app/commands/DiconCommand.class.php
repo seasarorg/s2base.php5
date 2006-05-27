@@ -9,13 +9,23 @@ class DiconCommand implements S2Base_GenerateCommand {
     }
 
     public function execute(){
-        $this->moduleName = S2Base_CommandUtil::getModuleName();
+        try{
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
+        }
         if($this->moduleName == S2Base_StdinManager::EXIT_LABEL){
             return;
         }
 
         $this->diconName = S2Base_StdinManager::getValue('dicon name ? : ');
-        $this->validate($this->diconName);
+        try{
+            $this->validate($this->diconName);
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
+        }
         if (!$this->finalConfirm()){
             return;
         }
@@ -30,14 +40,7 @@ class DiconCommand implements S2Base_GenerateCommand {
         print "\n[ generate information ] \n";
         print "  module name     : {$this->moduleName} \n";
         print "  dicon file name : {$this->diconName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
-        $types = array('yes','no');
-        $rep = S2Base_StdinManager::getValueFromArray($types,
-                                        "confirmation");
-        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
-            $rep == 'no'){
-            return false;
-        }
-        return true;
+        return S2Base_StdinManager::isYes('ok ?');
     }
 
     private function prepareFiles(){

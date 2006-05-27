@@ -10,7 +10,12 @@ class InterceptorCommand implements S2Base_GenerateCommand {
     }
 
     public function execute(){
-        $this->moduleName = S2Base_CommandUtil::getModuleName();
+        try{
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
+        }
         if($this->moduleName == S2Base_StdinManager::EXIT_LABEL){
             return;
         }
@@ -23,7 +28,12 @@ class InterceptorCommand implements S2Base_GenerateCommand {
         }
 
         $this->interceptorClassName = S2Base_StdinManager::getValue('interceptor class name ? : ');
-        $this->validate($this->interceptorClassName);
+        try{
+            $this->validate($this->interceptorClassName);
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
+        }
 
         if (!$this->finalConfirm()){
             return;
@@ -40,15 +50,7 @@ class InterceptorCommand implements S2Base_GenerateCommand {
         print "  module name            : {$this->moduleName} \n";
         print "  type                   : {$this->type} \n";
         print "  interceptor class name : {$this->interceptorClassName} \n";
-        $types = array('yes','no');
-        $rep = S2Base_StdinManager::getValueFromArray($types,
-                                        "confirmation");
-        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
-            $rep == 'no'){
-            return false;
-        }
-
-        return true;
+        return S2Base_StdinManager::isYes('ok ?');
     }
 
     private function prepareFiles(){

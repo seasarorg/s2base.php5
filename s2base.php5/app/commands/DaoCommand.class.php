@@ -11,22 +11,32 @@ class DaoCommand implements S2Base_GenerateCommand {
     }
 
     public function execute(){
-        $this->moduleName = S2Base_CommandUtil::getModuleName();
+        try{
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
+        }
         if($this->moduleName == S2Base_StdinManager::EXIT_LABEL){
             return;
         }
 
-        $this->daoInterfaceName = S2Base_StdinManager::getValue('dao interface name ? : ');
-        $this->validate($this->daoInterfaceName);
+        try{
+            $this->daoInterfaceName = S2Base_StdinManager::getValue('dao interface name ? : ');
+            $this->validate($this->daoInterfaceName);
 
-        $this->entityClassName = S2Base_StdinManager::getValue('entity class name ? : ');
-        $this->validate($this->entityClassName);
+            $this->entityClassName = S2Base_StdinManager::getValue('entity class name ? : ');
+            $this->validate($this->entityClassName);
 
-        $this->tableName = S2Base_StdinManager::getValue("table name ? [{$this->entityClassName}] : ");
-        if(trim($this->tableName) == ''){
-            $this->tableName = $this->entityClassName;
+            $this->tableName = S2Base_StdinManager::getValue("table name ? [{$this->entityClassName}] : ");
+            if(trim($this->tableName) == ''){
+                $this->tableName = $this->entityClassName;
+            }
+            $this->validate($this->tableName);
+        } catch(Exception $e) {
+            CmdCommand::showException($e);
+            return;
         }
-        $this->validate($this->tableName);
 
         $cols = S2Base_StdinManager::getValue("columns ? [id,name,--, , ] : ");
         $this->cols = explode(',',$cols);
@@ -61,14 +71,7 @@ class DaoCommand implements S2Base_GenerateCommand {
         print "  columns             : $cols \n";
         print "  dao dicon file name : {$this->daoInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
 
-        $types = array('yes','no');
-        $rep = S2Base_StdinManager::getValueFromArray($types,
-                                        "confirmation");
-        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
-            $rep == 'no'){
-            return false;
-        }
-        return true;
+        return S2Base_StdinManager::isYes('ok ?');
     }
 
     private function prepareFiles(){

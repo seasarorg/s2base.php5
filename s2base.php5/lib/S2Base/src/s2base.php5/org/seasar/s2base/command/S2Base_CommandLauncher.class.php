@@ -35,11 +35,14 @@ class S2Base_CommandLauncher {
 
     public function main(){
         $cmds = array_keys($this->commands);
-        $cmd = S2Base_StdinManager::getValueFromArray($cmds,"Command list");
-        if($cmd == S2Base_StdinManager::EXIT_LABEL){
-            return;
+        while(true){
+            $cmd = S2Base_StdinManager::getValueFromArray($cmds,"Command list");
+            if($cmd == S2Base_StdinManager::EXIT_LABEL){
+                break;
+            }else{
+                $this->commands[$cmd]->execute();
+            }
         }
-        $this->commands[$cmd]->execute();
     }
 }
 ?>

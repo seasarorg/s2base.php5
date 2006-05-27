@@ -26,7 +26,7 @@
  * @author klove
  */
 class S2Base_StdinManager {
-    const EXIT_LABEL = "[ EXIT ]";
+    const EXIT_LABEL = "(exit)";
     
     public static function getValueFromArray($cmds, $title){
         $cmds = array_merge(array(self::EXIT_LABEL),$cmds);
@@ -51,6 +51,25 @@ class S2Base_StdinManager {
         print "\n$msg";
         $val = trim(fgets(STDIN));
         return $val;
+    }
+
+    public static function isYes($msg){
+        $ret = false;
+
+        while(true){
+            print "\n$msg (y/n) : ";
+            $val = trim(fgets(STDIN));
+
+            if(strcasecmp($val,'y') == 0){
+                $ret = true;
+                break;
+            }else if (strcasecmp($val,'n') == 0){
+                $ret = false;
+                break;
+            }
+        }
+
+        return $ret;
     }
 }
 ?>
