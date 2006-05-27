@@ -38,7 +38,7 @@
 <ol>
   <li>
     maple.inc.php の編集<br>
-    maple/webapp/config/maple.inc.php の 最後で [ s2base.php5/config/maple.inc.php ] を require して下さい。
+    maple/webapp/config/maple.inc.php の 最後で [ s2base.php5/vendor/plugins/maple/config/environment.inc.php ] を require して下さい。
 <pre>
  % tail -7 maple/webapp/config/maple.inc.php
 //
@@ -46,7 +46,7 @@
 //
 require_once 'core/Controller.class.php';
 
-require_once '/seasar.php/workspace/s2base.php5/config/maple.inc.php';
+require_once '/seasar.php/workspace/s2base.php5/vendor/plugins/maple/config/environment.inc.php';
 ?&gt;
 %
 </pre>
@@ -57,70 +57,39 @@ require_once '/seasar.php/workspace/s2base.php5/config/maple.inc.php';
 <pre>
 [ActionChain]
 name = S2Base_MapleActionChain
-path = /path/to/s2base.php5/lib/S2Base_MapleActionChain.class.php
+path = /path/to/s2base.php5/vendor/plugins/maple/S2Base_MapleActionChain.class.php
 </pre><br>
   </li>
 </ol>
 
 <h3>4 - S2Base.PHP5 の設定 (build.xml の編集)</h3>
 <p>
-maple.inc.php の読み込み設定、Maple用のコマンドを読み込む設定を行います。(デフォルトではコメントアウトされています。)
+build.xml でデフォルトタスクを [ maple ] に設定します。
 </p>
 
 <pre>
 &lt;?xml version="1.0"?&gt;
-&lt;project name="project" default="com" basedir="."&gt;
-
-    &lt;target name="prepare"&gt;
-        &lt;property name="project.name" value="${phing.project.name}" /&gt;
-        &lt;property name="cmd.dir" value="${project.basedir}/app/commands" /&gt;
-        &lt;property name="td" value="" /&gt;
-
-        &lt;!-- default and with smarty               &lt;--- コメントアウトします。
-        &lt;php expression="require_once('config/environment.inc.php')"/&gt;
-        --&gt;
-
-        &lt;!-- with maple --&gt;                        &lt;--- コメントアウトを解除します。
-        &lt;php expression="require_once('/path/to/maple/webapp/config/maple.inc.php')"/&gt;
-
-        &lt;php expression="require_once('lib/S2Base/S2Base.cmd.php')"/&gt;
-    &lt;/target&gt;
-
-    &lt;target name="com" depends="prepare"&gt;
-        &lt;command&gt;
-            &lt;!-- with smarty
-            &lt;fileset dir="${cmd.dir}/smarty"&gt;
-                &lt;include name="*Command.class.php"/&gt;
-            &lt;/fileset&gt;
-            --&gt;
-
-            &lt;!-- with maple --&gt;
-            &lt;fileset dir="${cmd.dir}/maple"&gt;       &lt;--- デフォルトではコメントアウトされているので解除します。
-                &lt;include name="*Command.class.php"/&gt;
-            &lt;/fileset&gt;
-
-            &lt;!-- default --&gt;
-            &lt;fileset dir="${cmd.dir}"&gt;
-                &lt;include name="*Command.class.php"/&gt;
-            &lt;/fileset&gt;
-        &lt;/command&gt;
-    &lt;/target&gt;
-
-    ・・・
-
-&lt;/project&gt;
+&lt;project name="project" default="maple" basedir="."&gt;
+    ・・・                             ↑
+&lt;/project&gt;                     maple に設定
 </pre>
 
 s2base.php5 ディレクトリにて phing コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
 <pre>
 % phing
+
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
 
 project > prepare:
-      [php] Evaluating PHP expression: require_once('../maple/webapp/config/maple.inc.php')
+      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
       [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
 
-project > com:
+project > maple:
+    [phing] Calling Buildfile '/seasar.php/workspace/s2base.php5/vendor/plugins/maple/build.xml' with target 'command'
+
+project > command:
+      [php] Evaluating PHP expression: require_once('/seasar.php/workspace/maple/webapp/config/maple.inc.php')
+      [php] Evaluating PHP expression: require_once('vendor/plugins/maple/config/environment.inc.php')
 
 [ Command list ]
 0 : [ EXIT ]

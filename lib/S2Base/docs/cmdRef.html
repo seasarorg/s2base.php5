@@ -61,7 +61,7 @@ project > prepare:
 project > com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : command
 2 : dao
 3 : dicon
@@ -70,12 +70,23 @@ project > com:
 6 : interceptor
 7 : module
 8 : service
-choice ? : 1     &lt;--- 1 : command ‚ğ‘I‘ğ
+choice ? : 1            &lt;--- 1 : command ‚ğ‘I‘ğ
 
 command name ? : sample
+
+[ generate information ]
+  command name : sample
+
+confirm ? (y/n) : y     &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/commands/SampleCommand.class.php
                                                                   ª
-BUILD FINISHED                                            ƒNƒ‰ƒXƒtƒ@ƒCƒ‹‚ªì¬‚³‚ê‚Ü‚·B
+[ Command list ]                                          ƒNƒ‰ƒXƒtƒ@ƒCƒ‹‚ªì¬‚³‚ê‚Ü‚·B
+0 : (exit)
+1 : command
+EEE
+
+BUILD FINISHED
 
 Total time: 18.0426 seconds
 %
@@ -113,7 +124,7 @@ project > prepare:
 project > com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : command
 2 : dao
 3 : dicon
@@ -177,7 +188,7 @@ project &gt; prepare:
 project &gt; com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : command
 2 : dao
 3 : dicon
@@ -189,7 +200,7 @@ project &gt; com:
 choice ? : 2     &lt;--- 2 : dao ‚ğ‘I‘ğ
 
 [ Module list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : Default
 choice ? : 1     &lt;--- 1 : Default ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
 
@@ -200,10 +211,26 @@ entity class name ? : CdEntity                      &lt;--- ‰p”š [_a-zA-Z0-9] 
 table name ? [CdEntity] : CD                        &lt;--- ƒf[ƒ^ƒx[ƒX‚Ìƒe[ƒuƒ‹–¼‚ğİ’èB
 
 columns ? [id,name,--, , ] : id,title,content       &lt;--- ƒJƒ“ƒ}‹æØ‚è‚ÅƒJƒ‰ƒ€–¼‚ğ“ü—Í
+
+[ generate information ]
+  module name         : Default
+  dao interface name  : CdDao
+  dao test class name : CdDaoTest
+  entity class name   : CdEntity
+  table name          : CD
+  columns             : id, title, content
+  dao dicon file name : CdDao.dicon
+
+confirm ? (y/n) : y                                 &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dao/CdDao.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/dao/CdDaoTest.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon/CdDao.dicon
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity/CdEntity.class.php
+
+[ Command list ]
+0 : (exit)
+1 : command
+EEE
 
 BUILD FINISHED
 
@@ -338,7 +365,7 @@ project &gt; prepare:
 project &gt; com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : command
 2 : dao
 3 : dicon
@@ -350,12 +377,23 @@ project &gt; com:
 choice ? : 3     &lt;--- 3 : dicon ‚ğ‘I‘ğ
 
 [ Module list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : Default
 choice ? : 1     &lt;--- 1 : Default ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
 
 dicon name ? : sample    &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+
+[ generate information ]
+  module name     : Default
+  dicon file name : sample.dicon
+
+confirm ? (y/n) : y      &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon/sample.dicon
+
+[ Command list ]
+0 : (exit)
+1 : command
+EEE
 
 BUILD FINISHED
 
@@ -393,7 +431,7 @@ project &gt; prepare:
 project &gt; com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : command
 2 : dao
 3 : dicon
@@ -405,7 +443,7 @@ project &gt; com:
 choice ? : 4     &lt;--- 4 : entity ‚ğ‘I‘ğ
 
 [ Module list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : Default
 choice ? : 1     &lt;--- 1 : Default ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
 
@@ -414,7 +452,20 @@ entity class name ? : DvdEntity                   &lt;--- ‰p”š [_a-zA-Z0-9] ‚ª
 table name ? [DvdEntity] : DVD                    &lt;--- ƒf[ƒ^ƒx[ƒX‚Ìƒe[ƒuƒ‹–¼‚ğİ’è
 
 columns ? [id,name,--, , ] : id,title,content     &lt;--- ƒJƒ“ƒ}‹æØ‚è‚ÅƒJƒ‰ƒ€–¼‚ğ“ü—Í
+
+[ generate information ]
+  module name       : Default
+  entity class name : DvdEntity
+  table name        : DVD
+  columns           : id, title, content
+
+confirm ? (y/n) : y                               &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity/DvdEntity.class.php
+
+[ Command list ]
+0 : (exit)
+1 : command
+EEE
 
 BUILD FINISHED
 
@@ -468,7 +519,7 @@ project &gt; prepare:
 project &gt; com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : command
 2 : dao
 3 : dicon
@@ -480,14 +531,14 @@ project &gt; com:
 choice ? : 5             &lt;--- 5 : goya ‚ğ‘I‘ğ
 
 [ Module list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : Default
 choice ? : 1             &lt;--- 1 : Default ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
 
 service name ? : emp     &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
 
 [ use commons dao ? ]
-0 : [ EXIT ]
+0 : (exit)
 1 : yes
 2 : no
 choice ? : 2
@@ -495,6 +546,21 @@ choice ? : 2
 table name ? [emp] : EMP                      &lt;--- ƒf[ƒ^ƒx[ƒX‚Ìƒe[ƒuƒ‹–¼‚ğİ’è
 
 columns ? [id,name,--, , ] : id,name,dept     &lt;--- ƒJƒ“ƒ}‹æØ‚è‚ÅƒJƒ‰ƒ€–¼‚ğ“ü—Í
+
+[ generate information ]
+  module name             : Default
+  service name            : emp
+  service interface name  : EmpService
+  service class name      : EmpServiceImpl
+  service test class name : EmpServiceImplTest
+  dao interface name      : EmpDao
+  dao test class name     : EmpDaoTest
+  entity class name       : EmpEntity
+  table name              : EMP
+  columns                 : id, name, dept
+  service dicon file name : EmpService.dicon
+
+confirm ? (y/n) : y                           &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/EmpServiceImpl.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/EmpService.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service/EmpServiceImplTest.class.php
@@ -502,6 +568,11 @@ columns ? [id,name,--, , ] : id,name,dept     &lt;--- ƒJƒ“ƒ}‹æØ‚è‚ÅƒJƒ‰ƒ€–¼‚ğ“ü
 [INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/dao/EmpDaoTest.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity/EmpEntity.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon/EmpService.dicon
+
+[ Command list ]
+0 : (exit)
+1 : command
+EEE
 
 BUILD FINISHED
 
@@ -562,7 +633,7 @@ project &gt; prepare:
 project &gt; com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : command
 2 : dao
 3 : dicon
@@ -574,11 +645,17 @@ project &gt; com:
 choice ? : 6     &lt;--- 6 : interceptor ‚ğ‘I‘ğ
 
 [ Module list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : Default
 choice ? : 1     &lt;--- 1 : Default ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
 
 interceptor class name ? : HogeInterceptor     &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+
+[ generate information ]
+  module name            : Default
+  interceptor class name : HogeInterceptor
+
+confirm ? (y/n) : y                            &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/interceptor/HogeInterceptor.class.php
 
 BUILD FINISHED
@@ -629,7 +706,7 @@ project > prepare:
 project > com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : command
 2 : dao
 3 : dicon
@@ -641,6 +718,11 @@ project > com:
 choice ? : 7               &lt;--- 7 : module ‚ğ‘I‘ğ
 
 module name ? : Default    &lt;--- ƒ‚ƒWƒ…[ƒ‹–¼‚ğ“ü—ÍB‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+
+[ generate information ]
+  module name : Default    &lt;--- ƒ‚ƒWƒ…[ƒ‹î•ñ‚ğŠm”F
+
+confirm ? (y/n) : y
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dao/
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon/
@@ -651,6 +733,11 @@ module name ? : Default    &lt;--- ƒ‚ƒWƒ…[ƒ‹–¼‚ğ“ü—ÍB‰p”š [_a-zA-Z0-9] ‚ªg—
 [INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/dao/
 [INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service/
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/Default.inc.php
+
+[ Command list ]
+0 : (exit)
+1 : command
+EEE
 
 BUILD FINISHED
 
@@ -686,7 +773,7 @@ project > prepare:
 project > com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : command
 2 : dao
 3 : dicon
@@ -698,15 +785,29 @@ project > com:
 choice ? : 8     &lt;--- 8 : service ‚ğ‘I‘ğ
 
 [ Module list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : Default
 choice ? : 1     &lt;--- 1 : Default ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
 
 service interface name ? : CulcService     &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+
+[ generate information ]
+  module name             : Default
+  service interface name  : CulcService
+  service class name      : CulcServiceImpl
+  service test class name : CulcServiceImplTest
+  service dicon file name : CulcService.dicon
+
+confirm ? (y/n) : y                        &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/CulcServiceImpl.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/CulcService.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service/CulcServiceImplTest.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon/CulcService.dicon
+
+[ Command list ]
+0 : (exit)
+1 : command
+EEE
 
 BUILD FINISHED
 
