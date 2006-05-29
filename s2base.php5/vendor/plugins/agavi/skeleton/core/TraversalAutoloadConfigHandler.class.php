@@ -59,7 +59,16 @@ class TraversalAutoloadConfigHandler extends AutoloadConfigHandler
 		// init our data array
 		$data = array();
 
+		// let's do our fancy work
         $tmp    = "\$classes['%s'] = '%s';";
+		foreach ($ini['autoload'] as $class => &$file)
+		{
+			$file = $this->replaceConstants($file);
+            $this->chkReadable($config, $class, $file);
+			$data[] = sprintf($tmp, $class, $file);
+		}
+        
+        array_shift($ini);
         foreach ($ini as $cate => $values)
         {
             $classes = $this->traverse($values['dirPath'], $values['fileExt']);
