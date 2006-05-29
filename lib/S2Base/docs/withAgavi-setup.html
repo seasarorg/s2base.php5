@@ -23,85 +23,74 @@
 <!-- don't edit end -->
 <!-- document start -->
 
-<h2>S2Base.PHP5 プロジェクトへようこそ！</h2>
+<h2>with Agavi - セットアップ</h2>
+
+<h3>1 - S2Base.PHP5 のインストール</h3>
 <p>
-S2Base.PHP5プロジェクトでは、<a href="http://s2container.php5.sandbox.seasar.org/">S2Container.PHP5</a> と <a href="http://s2dao.php5.sandbox.seasar.org/">S2Dao.PHP5</a> を用いた開発を支援するコマンドツールを作成します。
+<a href="setup.html">セットアップ</a>に従って S2Base.PHP5 をインストールして下さい。
+</p>
+<h3>2 - Agavi のインストール</h3>
+<p>
+<ol>
+<li>
+<a href="http://agavi.org/">Agavi(0.10.2)</a>をPEARコマンドでインストールして下さい。<a href="#1">[*1]</a>
+</li>
+<li>
+@PHP-DIR@/bin/agaviにPATHが通っていることを確認して下さい。
+</li>
+</ol>
+</p>
+<h3>3 - var ディレクトリのアクセス権限設定</h3>
+<p>
+コマンドの実行ユーザが、s2base.php5/var ディレクトリ以下にアクセス(read/write)できる設定として下さい。
 </p>
 
-<h3>ダウンロード</h3>
+<h3>4 - build.xml の編集</h3>
+<p>
+build.xml でデフォルトタスクに [ agavi ] を設定します。
+</p>
 
-<table>
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;project name="project" default="agavi" basedir="."&gt;
+    ・・・                             ↑
+&lt;/project&gt;                     agavi に設定
+</pre>
 
-<tr><td align="center" valign="top" width="120">
-<a href="https://www.seasar.org/svn/sandbox/s2base.php5/">
-リポジトリ
-</a> or 
+s2base.php5 ディレクトリにて phing コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
+<pre>
+% phing
+Buildfile: /seasar.php/workspace/s2base.php5/build.xml
 
-<a href="http://www.seasar.org/websvn/listing.php?repname=sandbox.s2base.php5">WebSVN</a>
-</td><td>
-</td></tr>
+project > prepare:
+      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
+      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
 
-<tr>
+project > agavi:
+    [phing] Calling Buildfile '/seasar.php/workspace/s2base.php5/vendor/plugins/agavi/build.xml' with target 'command'
 
-<td align="right" valign="top" width="120">2006-06-03</td>
-<td width="10"></td>
-<td>
-<a href="download/s2base.php5-1.0.0-rc2.zip">s2base.php5-1.0.0-rc2.zip</a><br>
-s2container.php5-1.1.0 と s2dao-1.1.0-rc3 を含めています。
-</td>
-</tr>
+project > command:
+      [php] Evaluating PHP expression: require_once('vendor/plugins/agavi/config/environment.inc.php')
 
-<td align="right" valign="top" width="120">2006-05-08</td>
-<td width="10"></td>
-<td>
-<a href="download/s2base.php5-1.0.0-rc1.zip">s2base.php5-1.0.0-rc1.zip</a><br>
-s2container.php5-1.1.0 と s2dao-1.1.0-rc2 を含めています。
-</td>
-</tr>
+[ Command list ]
+0 : [ EXIT ]
+1 : dao
+2 : service
+3 : action
+4 : module
+5 : project
+6 : goya
+choice ? : 0
 
-</table>
+BUILD FINISHED
 
-
-<h3>ドキュメント</h3>
-<ul>
-<li><a href="setup.html">セットアップ</a></li>
-<li><a href="dir.html">ディレクトリ構成</a></li>
-<li><a href="cmdRef.html">コマンドリファレンス</a></li>
-<li>with Maple</li>
-  <ul>
-  <li><a href="withMaple-setup.html">セットアップ</a></li>
-  <li><a href="withMaple-cmdRef.html">コマンドリファレンス</a></li>
-  </ul>
-<li>with Agavi</li>
-  <ul>
-  <li><a href="withAgavi-setup.html">セットアップ</a></li>
-  <li><a href="withAgavi-cmdRef.html">コマンドリファレンス</a></li>
-  <li><a href="withAgavi-changes.html">連携時に自動で変更される設定</a></li>
-  </ul>
-<li>with Smarty</li>
-  <ul>
-  <li><a href="withSmarty-setup.html">セットアップ</a></li>
-  <li><a href="withSmarty-cmdRef.html">コマンドリファレンス</a></li>
-  <li><a href="withSmarty-fw.html">フレームワーク概要</a></li>
-  </ul>
-</ul>
-
-<h3>メーリングリスト</h3>
-<ul>
-<li>
-<a href="https://www.seasar.org/mailman/listinfo/s2container-php5">
-S2Container-PHP5 メーリングリスト
-</a><br>
-S2Container.PHP5/S2Dao.PHP5/S2Base.PHP5を使っていて困ったこと・質問・要望などはこちらへ．
-</li>
-</ul>
-
-<h3>動作環境</h3>
-<ul>
-<li>WindowsXP : php-5.1.4-Win32</li>
-<li>Debian GNU/Linux 3.1 : php-5.1.4</li>
-</ul>
-
+Total time: 2.3441 seconds
+%
+</pre>
+<p>
+<a name="1"></a>
+[*1] PEARインストール時、環境によっては@PEAR-DIR@/data/agaviにbuild.xml及びbuildtoolsディレクトリが生成されることがあります。その際はこれらを@PEAR-DIR@/agavi以下に上書きコピーして下さい。
+</p>
 <!-- document end -->
 <!-- don't edit start -->
 </td>

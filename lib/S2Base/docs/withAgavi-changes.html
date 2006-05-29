@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><!-- don't edit start --><title>Seasar - DI Container with AOP -</title><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen"><link href="seasar_p.css" type="text/css" rel="stylesheet" media="print"><script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script></head>
+
+
+<body onload="preload('ja')"><table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+<td align="left" valign="top" width="780"><table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
+<tbody><tr><td colspan="7"><img src="images/top01_b.gif" alt="" height="5" width="780"></td></tr>
+<tr><td width="235"><img src="images/top02_b.gif" alt="Seasar" height="117" width="235"></td>
+<td colspan="3"><img src="images/top03.gif" alt="DI Container with AOP" height="117" width="289"></td>
+<td colspan="3"><img src="images/spacer.gif" alt="" height="117" width="256"></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)" border="0" height="30" width="78"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)" border="0" height="30" width="101"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)" border="0" height="30" width="110"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)" border="0" height="30" width="113"></a></td>
+<td><img src="images/menu05_b_ja.gif" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)" border="0" height="30" width="109"></td>
+<td width="34"><img src="images/menu06.gif" alt="" height="30" width="34"></td></tr><tr>
+<td colspan="6"><img src="images/spacer.gif" alt="" height="19" width="545"></td></tr></tbody></table>
+<table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
+<tbody><tr align="left" valign="top"><td width="18"><img src="images/spacer.gif" alt="" height="14" width="18"></td><td class="main" width="744">
+<!-- don't edit end -->
+<!-- document start -->
+
+<h2>with Agavi - 連携時に自動で変更される設定</h2>
+<p>
+agaviタスクではAgaviとS2Container.PHP5の連携に必要なファイルの追加や書き換え作業を全て自動で行います。通常のプロジェクトとの相違点は下記になります。
+</p>
+<ul>
+<li><a href="#index_php">index.php</a></li>
+<li><a href="#config_php">config.php</a></li>
+<li><a href="#webapp_config">webapp/config</a></li>
+    <ul>
+        <li><a href="#autoload_ini">autoload.ini</a></li>
+        <li><a href="#config_handlers_ini">config_handlers.ini</a></li>
+        <li><a href="#contexts_ini">contexts.ini</a></li>
+    </ul>
+<li><a href="#webapp_lib_s2agavi">webapp/lib/s2agavi</a></li>
+</ul>
+<br>
+<h3><a name="index_php">index.php</a></h3>
+<h4>変更点：書き換え</h4>
+<p>
+__autoloadメソッドにてS2Containerのクラスファイルを呼び出せるように変更された「 s2agavi.php 」をrequire_onceするように書き換えを行います。
+</p>
+変更前
+<pre>
+// +---------------------------------------------------------------------------+
+// | An absolute filesystem path to the agavi/agavi.php script.                |
+// +---------------------------------------------------------------------------+
+require_once('/path/to/php/lib/php/agavi/agavi.php');
+</pre>
+変更後
+<pre>
+// +---------------------------------------------------------------------------+
+// | An absolute filesystem path to the agavi/agavi.php script.                |
+// +---------------------------------------------------------------------------+
+require_once('/your/project/webapp/lib/s2agavi/s2agavi.php');
+</pre>
+<br>
+<h3><a name="config_php">config.php</a></h3>
+<h4>変更点：追記</h4>
+<p>
+S2Container.phpの呼び出しやinclude_pathの変更、定数宣言などを追記します。
+</p>
+変更後
+<pre>
+// +---------------------------------------------------------------------------+
+// | You may also modify the following other constants in this file:           |
+// |  - AG_CONFIG_DIR   (defaults to <AG_WEBAPP_DIR . '/config'>)              |
+// |  - AG_LIB_DIR      (defaults to <AG_WEBAPP_DIR . '/lib'>)                 |
+// |  - AG_MODULE_DIR   (defaults to <AG_WEBAPP_DIR . '/modules'>)             |
+// |  - AG_TEMPLATE_DIR (defaults to <AG_WEBAPP_DIR . '/templates'>)           |
+// +---------------------------------------------------------------------------+
+define('S2BASE_PHP5_ROOT','/work/web/s2base.php5');
+
+～省略～
+
+/**
+ * library setting
+ */
+require_once('S2Container/S2Container.php');
+require_once('S2Dao/S2Dao.php');
+
+/**
+ */
+define('S2DAO_PHP5_USE_COMMENT',false);
+//define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::DEBUG);
+?>
+</pre>
+
+<br>
+<h3><a name="webapp_config">webapp/config</a></h3>
+<h4>変更点：書き換え</h4>
+<p>
+webapp/configではS2Containerを利用するためにいくつかの設定ファイルの書き換えを行います。
+</p>
+
+<br>
+<h3><a name="autoload_ini">autoload.ini</a></h3>
+<h4>変更点：追記・仕様変更</h4>
+<p>
+autoload.iniにはAgaviで使用するクラスファイルを列記しキャッシュ化しますが、DIベースのアプリケーションはファイル数が増えるため記述作業に掛かるコストが高くなります。その対策としてディレクトリと拡張子を指定して再帰的にファイル名を取得し、キャッシュ化する機構を用意しています。
+</p>
+
+記述方法
+<pre>
+[autoload]
+
+    ; +------------------------------------------------------------------------+
+    ; | Agavi Interfaces                                                       |
+    ; +------------------------------------------------------------------------+
+
+～省略～
+	
+    ; +------------------------------------------------------------------------+
+    ; | Custom Classes                                                         |
+    ; | ---------------------------------------------------------------------- |
+    ; | Any classes you see fit that might be of use, such as classes that     |
+    ; | used in a session that must exist when the session unserializes its    |
+    ; | data. Another good example is a custom factory implementation such as  |
+    ; | a controller or user.                                                  |
+    ; +------------------------------------------------------------------------+
+
+    ; example
+    ; MyCustomClass = "%AG_WEBAPP_DIR%/lib/MyCustomClass.class.php"
+    
+    単体で読み込むクラスファイルはここに記述するようにして下さい。
+    
+; +------------------------------------------------------------------------+
+; | Traversing File System                                                 |
+; +------------------------------------------------------------------------+
+
+    ディレクトリを指定してファイルを読み込む場合はここに記述して下さい。
+    dirPathでディレクトリを指定し、fileExtで読み込む拡張子を指定します。
+    ファイル名は必ず 「 クラス名(.class).php 」 になるようにして下さい。
+
+    projectコマンド及びmoduleコマンドを使用した場合、
+    modules/MODULE_NAME以下 service/、interceptor/、dao/、entity/が自動で追記されます。
+    
+[DefaultService]
+dirPath = "%AG_WEBAPP_DIR%/modules/Default/service"
+fileExt = ".class.php"
+
+[DefaultInterceptor]
+dirPath = "%AG_WEBAPP_DIR%/modules/Default/interceptor"
+fileExt = ".class.php"
+
+[DefaultDao]
+dirPath = "%AG_WEBAPP_DIR%/modules/Default/dao"
+fileExt = ".class.php"
+
+[DefaultEntity]
+dirPath = "%AG_WEBAPP_DIR%/modules/Default/entity"
+fileExt = ".class.php"
+</pre>
+
+<br>
+<h3><a name="config_handlers_ini">config_handlers.ini</a></h3>
+<h4>変更点：書き換え</h4>
+<p>
+autoloadをTraversalAutoloadConfigHandlerを使用するように書き換えます。
+</p>
+変更前
+<pre>
+[config/autoload.ini]
+    class = "AutoloadConfigHandler"
+</pre>
+変更後
+<pre>
+[config/autoload.ini]
+    class = "TraversalAutoloadConfigHandler"
+</pre>
+
+<br>
+<h3><a name="contexts_ini">contexts.ini</a></h3>
+<h4>変更点：追記・書き換え</h4>
+<p>
+アプリケーションで使用するコントローラをS2Base_AgaviControllerに変更し、デフォルトにセットするように書き換えます。
+</p>
+変更前
+<pre>
+[contexts]
+	default = "web"
+	
+; Web context	
+[web]
+	action_stack               = "ActionStack"
+	controller                 = "FrontWebController"
+	execution_filter           = "ExecutionFilter"
+	database_manager           = "DatabaseManager"
+	request                    = "WebRequest"
+	security_filter            = "BasicSecurityFilter"
+	storage                    = "SessionStorage"
+	user                       = "BasicSecurityUser"
+</pre>
+変更後
+<pre>
+[contexts]
+	default = "s2agavi"
+	
+; Web context	
+[web]
+	action_stack               = "ActionStack"
+	controller                 = "FrontWebController"
+	execution_filter           = "ExecutionFilter"
+	database_manager           = "DatabaseManager"
+	request                    = "WebRequest"
+	security_filter            = "BasicSecurityFilter"
+	storage                    = "SessionStorage"
+	user                       = "BasicSecurityUser"
+
+; S2Agavi context	
+[s2agavi]
+	action_stack               = "ActionStack"
+	controller                 = "S2Base_AgaviController"
+	execution_filter           = "ExecutionFilter"
+	database_manager           = "DatabaseManager"
+	request                    = "WebRequest"
+	security_filter            = "BasicSecurityFilter"
+	storage                    = "SessionStorage"
+	user                       = "BasicSecurityUser"
+</pre>
+
+<br>
+<h3><a name="webapp_lib_s2agavi">webapp/lib/s2agavi</a></h3>
+<h4>変更点：追加</h4>
+<p>
+AgaviとS2Containerを連携させるために必要なファイルを追加します。追加されるファイルは「 s2agavi.php 」「 S2Base_AgaviController.class.php 」「 TraversalAutoloadConfigHandler.class.php 」の3点です。
+</p>
+
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
+</tr><tr>
+<td width="14"><img src="images/spacer.gif" alt="" height="30" width="14"></td>
+<td width="766"><img src="images/spacer.gif" alt="" height="30" width="592"></td>
+</tr><tr>
+<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
+<td class="copyright" width="766">&#169; Copyright The Seasar Project and the others 2005-2006, all rights reserved.</td>
+</tr></tbody></table>
+</td><td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left" height="16" valign="top" width="780">&nbsp;</td>
+<td class="backcorner" align="left" height="16" valign="top">&nbsp;</td>
+</tr></tbody></table><!-- don't edit end -->
+</body></html>
