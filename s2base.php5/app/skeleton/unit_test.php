@@ -6,15 +6,14 @@ class @@CLASS_NAME@@ extends PHPUnit2_Framework_TestCase {
         parent::__construct($name);
     }
 
-    function testA() {
-        print __METHOD__ . "\n";
-    }
+    function testA() {}
 
     function setUp(){
-        print "\n";
+        print get_class($this) . "::{$this->getName()}\n";
     }
 
     function tearDown() {
+        print "\n";
     }
 
 }

@@ -26,7 +26,7 @@
  */
 define('ROOT_DIR',dirname(dirname(dirname(dirname(dirname(__FILE__))))));
 require_once(ROOT_DIR . '/config/environment.inc.php');
-require_once(ROOT_DIR . '/config/smarty.inc.php');
+require_once(ROOT_DIR . '/vendor/plugins/smarty/config/environment.inc.php');
 
 define('S2BASE_PHP5_REQUEST_MODULE_KEY','mod');
 define('S2BASE_PHP5_REQUEST_ACTION_KEY','act');
@@ -34,4 +34,3 @@ define('S2BASE_PHP5_DEFAULT_MODULE_NAME','Default');
 define('S2BASE_PHP5_DEFAULT_ACTION_NAME','index');
 $_SERVER['REQUEST_METHOD'] = 'GET';
 ?>
-

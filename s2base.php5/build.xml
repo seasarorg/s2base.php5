@@ -44,14 +44,14 @@
         <phing phingfile="${plugins.dir}/maple/build.xml" inheritRefs="true" target="${st}"/>
     </target>
 
-    <target name="gen-dao" depends="">
+    <target name="gen-dao" depends="prepare">
         <property name="dsn" value="mysql:host=localhost; dbname=s2container" />
         <property name="user" value="root" />
         <property name="password" value="test" />
         <gdao toDir="app/commons/dao" />
     </target>
 
-    <target name="test" depends="">
+    <target name="test" depends="prepare">
         <echo>test directory : test/${td}</echo>
         <phpunit2 haltonfailure="false" haltonerror="false">
             <formatter type="plain" usefile="false"/>
