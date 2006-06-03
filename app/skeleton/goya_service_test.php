@@ -10,11 +10,10 @@ class @@CLASS_NAME@@ extends PHPUnit2_Framework_TestCase {
     }
 
     function testA() {
-        print __METHOD__ . "\n";
     }
 
     function setUp(){
-        print "\n";
+        print get_class($this) . "::{$this->getName()}\n";
         $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this->module}";
         $dicon = $moduleDir . "/dicon/@@SERVICE_INTERFACE@@" . S2BASE_PHP5_DICON_SUFFIX;
         include_once($moduleDir . "/{$this->module}.inc.php");
@@ -23,6 +22,7 @@ class @@CLASS_NAME@@ extends PHPUnit2_Framework_TestCase {
     }
 
     function tearDown() {
+        print "\n";
         $this->container = null;
         $this->service = null;
     }
