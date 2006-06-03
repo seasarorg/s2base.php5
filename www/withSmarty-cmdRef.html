@@ -52,7 +52,7 @@ project &gt; prepare:
 project &gt; com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : action
 2 : interceptor
 3 : module
@@ -65,6 +65,11 @@ project &gt; com:
 choice ? : 3               &lt;--- 3 : module を選択
 
 module name ? : smarty     &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+
+[ generate information ]
+  module name : Hoge       &lt;--- モジュール情報を確認
+
+confirm ? (y/n) : y
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/action/
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/dao/
@@ -78,6 +83,11 @@ module name ? : smarty     &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
 [INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/smarty/service/
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/smarty.inc.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/view/index.tpl
+
+[ Command list ]
+0 : (exit)
+1 : action
+・・・
 
 BUILD FINISHED
 
@@ -106,7 +116,7 @@ project &gt; prepare:
 project &gt; com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : action
 2 : interceptor
 3 : module
@@ -119,16 +129,32 @@ project &gt; com:
 choice ? : 1              &lt;--- 1 : action を選択
 
 [ Module list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : Default
 2 : smarty
 choice ? : 2              &lt;--- 2 : smarty モジュールを選択
 
 action name ? : hello     &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+
+[ generate information ]
+  module name            : smarty
+  action name            : hello
+  action class name      : HelloAction
+  action dicon file name : HelloAction.dicon
+  action inc file name   : HelloAction.inc.php
+  action tpl file name   : hello.tpl
+
+confirm ? (y/n) : y       &lt;--- 表示される情報を確認
+
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/action/HelloAction.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/action/HelloAction.inc.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/view/hello.tpl
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/dicon/HelloAction.dicon
+
+[ Command list ]
+0 : (exit)
+1 : action
+・・・
 
 BUILD FINISHED
 
@@ -191,7 +217,7 @@ project &gt; prepare:
 project &gt; com:
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : action
 2 : interceptor
 3 : module
@@ -204,13 +230,13 @@ project &gt; com:
 choice ? : 2              &lt;--- 2 : interceptor を選択
 
 [ Module list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : Default
 2 : smarty
 choice ? : 2              &lt;--- 2 : smarty モジュールを選択
 
 [ Type list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : default
 2 : arround
 3 : before
@@ -219,7 +245,19 @@ choice ? : 2              &lt;--- 2 : smarty モジュールを選択
 choice ? : 3                        &lt;--- 3 : before を選択
 
 class name ? : TestBeforeFilter     &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+
+[ generate information ]
+  module name            : smarty
+  type                   : before
+  interceptor class name : TestBeforeFilter
+
+confirm ? (y/n) : y                 &lt;--- 表示される情報を確認
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/interceptor/TestBeforeFilter.class.php
+
+[ Command list ]
+0 : (exit)
+1 : action
+・・・
 
 BUILD FINISHED
 

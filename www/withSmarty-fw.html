@@ -131,10 +131,10 @@ class HelloAction
 
 <h4><a name="layout">レイアウトの指定</a></h4>
 <p>
-レイアウトの指定は S2BASE_PHP5_LAYOUT 定数で行います。config/smarty.inc.php で定義します。
+レイアウトの指定は S2BASE_PHP5_LAYOUT 定数で行います。vendor/plugins/smarty/config/environment.inc.php で定義します。
 </p>
 <pre>
-% more config/smarty.inc.php
+% more vendor/plugins/smarty/config/environment.inc.php
 ・・・
 
 /**
@@ -190,7 +190,7 @@ Smarty オブジェクトです。リクエストの処理結果やサービス結果等をテンプレートに as
 <li>config/environment.inc.php (必須)<br>
 ディスパッチページ( public/d.php )の先頭で読み込まれます。
 </li>
-<li>config/smarty.inc.php (必須)<br>
+<li>vendor/plugins/smarty/config/environment.inc.php (必須)<br>
 ディスパッチページ( public/d.php )の先頭で environment.inc.php に続いて読み込まれます。
 </li>
 <li>app/modules/モジュール名/モジュール名.inc.php<br>
@@ -206,7 +206,7 @@ Smarty オブジェクトです。リクエストの処理結果やサービス結果等をテンプレートに as
 <br>
 <h3><a name="smarty-conf">Smarty の環境設定</a></h3>
 <p>
-Smarty の環境設定は、config/smarty.inc.php で行います。
+Smarty の環境設定は、vendor/plugins/smarty/config/environment.inc.php で行います。
 </p>
 
 <pre>
@@ -382,6 +382,7 @@ class NumericValidator extends S2Base_AbstractValidateFilter {
             }                        ↑
         }             コントローラに登録したエラーメッセージは、テンプレートファイルでは {$errors} で参照できます。
 
+        $this-&gt;rule = null;          &lt;--- rule 配列は保持されるので初期化
         return $page;
     }
 }

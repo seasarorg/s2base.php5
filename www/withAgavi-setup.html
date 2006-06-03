@@ -23,95 +23,74 @@
 <!-- don't edit end -->
 <!-- document start -->
 
-<h2>with Maple - セットアップ</h2>
+<h2>with Agavi - セットアップ</h2>
 
 <h3>1 - S2Base.PHP5 のインストール</h3>
 <p>
 <a href="setup.html">セットアップ</a>に従って S2Base.PHP5 をインストールして下さい。
 </p>
-<h3>2 - Maple のインストール</h3>
+<h3>2 - Agavi のインストール</h3>
 <p>
-<a href="http://kunit.jp/maple/">Maple</a> をダウンロードし、任意のディレクトリに解凍して下さい。
+<ol>
+<li>
+<a href="http://agavi.org/">Agavi(0.10.2)</a>をPEARコマンドでインストールして下さい。<a href="#1">[*1]</a>
+</li>
+<li>
+@PHP-DIR@/bin/agaviにPATHが通っていることを確認して下さい。
+</li>
+</ol>
+</p>
+<h3>3 - var ディレクトリのアクセス権限設定</h3>
+<p>
+コマンドの実行ユーザが、s2base.php5/var ディレクトリ以下にアクセス(read/write)できる設定として下さい。
 </p>
 
-<h3>3 - Maple の設定</h3>
-<ol>
-  <li>
-    maple.inc.php の編集<br>
-    maple/webapp/config/maple.inc.php の 最後で [ s2base.php5/vendor/plugins/maple/config/environment.inc.php ] を require して下さい。
-<pre>
- % tail -7 maple/webapp/config/maple.inc.php
-//
-// Controllerの読込み
-//
-require_once 'core/Controller.class.php';
-
-require_once '/seasar.php/workspace/s2base.php5/vendor/plugins/maple/config/environment.inc.php';
-?&gt;
-%
-</pre>
-  </li>
-  <li>
-    base.ini の設定<br>
-    maple/webapp/config/base.ini で、ActionChain の設定を行います。
-<pre>
-[ActionChain]
-name = S2Base_MapleActionChain
-path = /path/to/s2base.php5/vendor/plugins/maple/S2Base_MapleActionChain.class.php
-</pre><br>
-  </li>
-</ol>
-
-<h3>4 - S2Base.PHP5 の設定 (build.xml の編集)</h3>
+<h3>4 - build.xml の編集</h3>
 <p>
-build.xml でデフォルトタスクを [ maple ] に設定します。
+build.xml でデフォルトタスクに [ agavi ] を設定します。
 </p>
 
 <pre>
 &lt;?xml version="1.0"?&gt;
-&lt;project name="project" default="maple" basedir="."&gt;
+&lt;project name="project" default="agavi" basedir="."&gt;
     ・・・                             ↑
-&lt;/project&gt;                     maple に設定
+&lt;/project&gt;                     agavi に設定
 </pre>
 
 s2base.php5 ディレクトリにて phing コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
 <pre>
 % phing
-
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
 
 project > prepare:
       [php] Evaluating PHP expression: require_once('config/environment.inc.php')
       [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
 
-project > maple:
-    [phing] Calling Buildfile '/seasar.php/workspace/s2base.php5/vendor/plugins/maple/build.xml' with target 'command'
+project > agavi:
+    [phing] Calling Buildfile '/seasar.php/workspace/s2base.php5/vendor/plugins/agavi/build.xml' with target 'command'
 
 project > command:
-      [php] Evaluating PHP expression: require_once('/seasar.php/workspace/maple/webapp/config/maple.inc.php')
-      [php] Evaluating PHP expression: require_once('vendor/plugins/maple/config/environment.inc.php')
+      [php] Evaluating PHP expression: require_once('vendor/plugins/agavi/config/environment.inc.php')
 
 [ Command list ]
 0 : [ EXIT ]
-1 : action dicon
-2 : generate.php
-3 : command
-4 : dao
-5 : dicon
-6 : entity
-7 : goya
-8 : interceptor
-9 : module
-10 : service
+1 : dao
+2 : service
+3 : action
+4 : module
+5 : project
+6 : goya
 choice ? : 0
 
 BUILD FINISHED
 
-Total time: 3.3999 seconds
+Total time: 2.3441 seconds
 %
 </pre>
-
-
+<p>
+<a name="1"></a>
+[*1] PEARインストール時、環境によっては@PEAR-DIR@/data/agaviにbuild.xml及びbuildtoolsディレクトリが生成されることがあります。その際はこれらを@PEAR-DIR@/agavi以下に上書きコピーして下さい。
+</p>
 <!-- document end -->
 <!-- don't edit start -->
 </td>
