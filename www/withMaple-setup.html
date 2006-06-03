@@ -62,7 +62,10 @@ path = /path/to/s2base.php5/vendor/plugins/maple/S2Base_MapleActionChain.class.p
   </li>
 </ol>
 
-<h3>4 - S2Base.PHP5 の設定 (build.xml の編集)</h3>
+<h3>4 - S2Base.PHP5 の設定</h3>
+
+<ol>
+<li>build.xml の編集<br>
 <p>
 build.xml でデフォルトタスクを [ maple ] に設定します。
 </p>
@@ -74,7 +77,29 @@ build.xml でデフォルトタスクを [ maple ] に設定します。
 &lt;/project&gt;                     maple に設定
 </pre>
 
+</li>
+
+<li>vendor/plugins/maple/build.xml の編集<br>
+<p>
+maple 用の build.xml で maple.inc.php へのパスを設定します。
+</p>
+
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;project name="project" default="command" basedir="."&gt;
+    &lt;target name="command"&gt;
+        &lt;php expression="require_once('/path/to/maple/webapp/config/maple.inc.php')"/&gt;
+        ・・・
+    &lt;/target&gt;
+&lt;/project&gt;
+</pre>
+
+</li>
+
+<li>phing コマンドを実行<br>
+<p>
 s2base.php5 ディレクトリにて phing コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
+</p>
 <pre>
 % phing
 
@@ -110,7 +135,8 @@ BUILD FINISHED
 Total time: 3.3999 seconds
 %
 </pre>
-
+</li>
+</ol>
 
 <!-- document end -->
 <!-- don't edit start -->
