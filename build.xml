@@ -10,8 +10,15 @@
         <property name="project.name" value="${phing.project.name}" />
         <property name="cmd.dir" value="${project.basedir}/app/commands" />
         <property name="plugins.dir" value="${project.basedir}/vendor/plugins" />
-        <property name="td" value="" />        <!-- test directory -->
-        <property name="st" value="command" /> <!-- sub task       -->
+
+    	<!-- test directory -->
+        <property name="td" value="" />
+
+    	<!-- test target -->
+        <property name="tt" value="**/*Test.class.php" />
+
+    	<!-- sub task -->
+    	<property name="st" value="command" /> 
 
         <php expression="require_once('config/environment.inc.php')"/>
         <php expression="require_once('lib/S2Base/S2Base.cmd.php')"/>
@@ -53,11 +60,12 @@
 
     <target name="test" depends="prepare">
         <echo>test directory : test/${td}</echo>
+        <echo>test target : ${tt}</echo>
         <phpunit2 haltonfailure="false" haltonerror="false">
             <formatter type="plain" usefile="false"/>
             <batchtest>
                 <fileset dir="test/${td}">
-                    <include name="**/*Test.class.php"/>
+                    <include name="${tt}"/>
                 </fileset>
             </batchtest>
         </phpunit2>
