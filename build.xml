@@ -3,8 +3,11 @@
 
     <taskdef name="command" 
              classname="lib.S2Base.src.phing.task.S2Base_CommandTask" />
+    <php expression="require_once('lib/S2Dao/src/phing/task/S2DaoSkeletonTask.php')" />
     <taskdef name="gdao" 
-             classname="lib.S2Dao.src.phing.task.S2DaoSkeletonTask" />
+             classname="lib.S2Base.src.phing.task.S2Base_S2DaoSkeletonTask" />
+    <!--<taskdef name="gdao" 
+             classname="lib.S2Dao.src.phing.task.S2DaoSkeletonTask" />-->
 
     <target name="prepare">
         <property name="project.name" value="${phing.project.name}" />
