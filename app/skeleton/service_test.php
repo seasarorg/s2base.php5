@@ -12,7 +12,7 @@ class @@CLASS_NAME@@ extends PHPUnit2_Framework_TestCase {
     function testA(){}
 
     function setUp(){
-        print get_class($this) . "::{$this->getName()}\n";
+        print __CLASS__ . "::{$this->getName()}\n";
         $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this->module}";
         $dicon = $moduleDir . "/dicon/@@SERVICE_INTERFACE@@" . S2BASE_PHP5_DICON_SUFFIX;
         include_once($moduleDir . "/{$this->module}.inc.php");

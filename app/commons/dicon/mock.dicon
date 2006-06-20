@@ -9,10 +9,10 @@
                     <arg>"getAll"</arg>
                     <arg><![CDATA[
                         array(
-                            array(id => 1,
-                                  name => 'foo'),
-                            array(id => 2,
-                                  name => 'bar')
+                            array('id'   => 1,
+                                  'name' => 'foo'),
+                            array('id'   => 2,
+                                  'name' => 'bar')
                         )
                     ]]></arg>
                 </initMethod>
