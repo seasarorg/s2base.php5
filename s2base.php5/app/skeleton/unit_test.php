@@ -9,7 +9,7 @@ class @@CLASS_NAME@@ extends PHPUnit2_Framework_TestCase {
     function testA() {}
 
     function setUp(){
-        print get_class($this) . "::{$this->getName()}\n";
+        print __CLASS__ . "::{$this->getName()}\n";
     }
 
     function tearDown() {
