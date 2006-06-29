@@ -80,8 +80,9 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $srcFile = S2BASE_PHP5_MODULES_DIR . 
                    $this->moduleName . S2BASE_PHP5_DS .
                    "{$this->moduleName}.inc.php";
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
-                                                 'module_inc.php');
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+                     . 'module' . S2BASE_PHP5_DS
+                     . 'include.php');
         CmdCommand::writeFile($srcFile,$tempContent);
     }
 

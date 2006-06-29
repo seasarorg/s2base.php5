@@ -72,7 +72,6 @@ class ModuleCommand implements S2Base_GenerateCommand {
         }
     }
 
-
     private function prepareFiles(){
         $this->prepareModuleIncFile();
         $this->prepareIndexFile();
@@ -82,8 +81,8 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $srcFile = S2BASE_PHP5_MODULES_DIR . 
                    $this->moduleName . S2BASE_PHP5_DS .
                    "{$this->moduleName}.inc.php";
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY .
-                                                 '/skeleton/module_inc.php');
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+                     . '/skeleton/module/include.php');
         CmdCommand::writeFile($srcFile,$tempContent);
     }
 
@@ -93,8 +92,10 @@ class ModuleCommand implements S2Base_GenerateCommand {
                      S2BASE_PHP5_VIEW_DIR . 
                      "index" .
                      S2Base_GenerateCommand::TPL_SUFFIX; 
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
-                                                 'index.php');
+
+        $htmlFile = defined('S2BASE_PHP5_LAYOUT') ? 'index_layout.php' : 'index.php';
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+                     . "/skeleton/module/$htmlFile");
         $tempContent = preg_replace("/@@MODULE_NAME@@/",
                                     $this->moduleName,
                                     $tempContent);   

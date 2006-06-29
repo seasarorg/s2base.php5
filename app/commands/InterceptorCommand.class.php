@@ -53,8 +53,8 @@ class InterceptorCommand implements S2Base_GenerateCommand {
                    $this->moduleName . 
                    S2BASE_PHP5_INTERCEPTOR_DIR . 
                    "{$this->interceptorClassName}.class.php";
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
-                                                 "interceptor_default.php");
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+                     . "interceptor/default.php");
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
                              $this->interceptorClassName,
                              $tempContent);   
