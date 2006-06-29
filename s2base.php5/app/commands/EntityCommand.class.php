@@ -34,7 +34,7 @@ class EntityCommand implements S2Base_GenerateCommand {
             return;
         }
 
-        $cols = S2Base_StdinManager::getValue("columns ? [id,name,--, , ] : ");
+        $cols = S2Base_StdinManager::getValue("columns ? (id,name,--,) : ");
         $this->cols = explode(',',$cols);
         if (!$this->finalConfirm()){
             return;
@@ -67,8 +67,8 @@ class EntityCommand implements S2Base_GenerateCommand {
                    $this->moduleName . 
                    S2BASE_PHP5_ENTITY_DIR . 
                    "{$this->entityClassName}.class.php";
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
-                                                 'entity.php');
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+                     . 'entity/entity.php');
         $src = $this->getAccessorSrc($this->cols);
 
         $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/");
