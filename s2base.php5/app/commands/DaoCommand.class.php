@@ -4,6 +4,8 @@ class DaoCommand implements S2Base_GenerateCommand {
     private $moduleName;
     private $daoInterfaceName;
     private $entityClassName;
+    private $extendsEntityClassName;
+    private $isEntityExtends;
     private $cols;
 
     public function getName(){
@@ -21,15 +23,15 @@ class DaoCommand implements S2Base_GenerateCommand {
             return;
         }
 
-        $rep = S2Base_StdinManager::isYes('use commons dao ?');
+        $daos = self::getAllDaoFromCommonsDao();
+        $useCommonsDao = false;
+        if(count($daos) > 0){
+            $useCommonsDao = S2Base_StdinManager::isYes('use commons dao ?');
+        }
 
-        if($rep){
-            try{
-                $daoName = GoyaCommand::getDaoFromCommonsDao();
-            } catch(Exception $e) {
-                CmdCommand::showException($e);
-                return;
-            }
+        if($useCommonsDao){
+            $daoName = S2Base_StdinManager::getValueFromArray($daos,
+                                        "dao list");
                 
             if ($daoName == S2Base_StdinManager::EXIT_LABEL){
                 return;
@@ -37,6 +39,7 @@ class DaoCommand implements S2Base_GenerateCommand {
             
             $this->daoInterfaceName = $daoName;
             $this->entityClassName = preg_replace("/Dao$/","Entity",$daoName);
+            $this->extendsEntityClassName = "none";
             $this->tableName = 'auto defined';
             $this->cols = array('auto defined');
             
@@ -49,19 +52,54 @@ class DaoCommand implements S2Base_GenerateCommand {
                 $this->daoInterfaceName = S2Base_StdinManager::getValue('dao interface name ? : ');
                 $this->validate($this->daoInterfaceName);
 
-                $this->entityClassName = S2Base_StdinManager::getValue('entity class name ? : ');
+                $entityClassNameTmp = self::guessDaoName($this->daoInterfaceName);
+                $this->entityClassName = S2Base_StdinManager::getValue("entity class name ? [$entityClassNameTmp] : ");
+                if(trim($this->entityClassName) == ''){
+                    $this->entityClassName = $entityClassNameTmp;
+                }
                 $this->validate($this->entityClassName);
-
+/*
                 $this->tableName = S2Base_StdinManager::getValue("table name ? [{$this->entityClassName}] : ");
                 if(trim($this->tableName) == ''){
                     $this->tableName = $this->entityClassName;
                 }
                 $this->validate($this->tableName);
+*/
             } catch(Exception $e) {
                 CmdCommand::showException($e);
                 return;
             }
-            $cols = S2Base_StdinManager::getValue("columns ? (id,name,--,) : ");
+
+            $entitys = EntityCommand::getAllEntityFromCommonsDao();
+            $this->isEntityExtends = false;
+            if(count($entitys) > 0){
+                $this->isEntityExtends = S2Base_StdinManager::isYes('extends commons entity ?');
+            }
+
+            $this->extendsEntityClassName = "none";
+            if ($this->isEntityExtends) {
+                $this->extendsEntityClassName = S2Base_StdinManager::getValueFromArray($entitys,
+                                                "entity list");
+                if ($this->extendsEntityClassName == S2Base_StdinManager::EXIT_LABEL){
+                    return;
+                }
+                $this->tableName = "extended";
+            } else {
+                $tableNameTmp = EntityCommand::guessTableName($this->entityClassName);
+                $this->tableName = S2Base_StdinManager::getValue("table name ? [{$tableNameTmp}] : ");
+                if(trim($this->tableName) == ''){
+                    $this->tableName = $tableNameTmp;
+                }
+                
+                try{
+                    $this->validate($this->tableName);
+                } catch(Exception $e) {
+                    CmdCommand::showException($e);
+                    return;
+                }
+            }
+            
+            $cols = S2Base_StdinManager::getValue("columns ? (id,name,--,,) : ");
             $this->cols = explode(',',$cols);
 
             if (!$this->finalConfirm()){
@@ -69,6 +107,22 @@ class DaoCommand implements S2Base_GenerateCommand {
             }
             $this->prepareFiles();
         }
+    }
+
+    public static function getAllDaoFromCommonsDao(){
+        $commonsDaoDir = S2BASE_PHP5_ROOT . '/app/commons/dao';
+        $entries = scandir($commonsDaoDir);
+        if(!$entries){
+            throw new Exception("invalid dir : [ $commonsDaoDir ]");
+        }
+        $daos = array();
+        foreach($entries as $entry){
+            $maches = array();
+            if(preg_match("/(\w+Dao)\.class\.php$/",$entry,$maches)){
+                $daos[] = $maches[1];
+            }
+        }
+        return $daos;
     }
 
     private function getCmdMessage(){
@@ -85,14 +139,15 @@ class DaoCommand implements S2Base_GenerateCommand {
 
     private function finalConfirm(){
         print "\n[ generate information ] \n";
-        print "  module name         : {$this->moduleName} \n";
-        print "  dao interface name  : {$this->daoInterfaceName} \n";
-        print "  dao test class name : {$this->daoInterfaceName}Test \n";
-        print "  entity class name   : {$this->entityClassName} \n";
-        print "  table name          : {$this->tableName} \n";
+        print "  module name          : {$this->moduleName} \n";
+        print "  dao interface name   : {$this->daoInterfaceName} \n";
+        print "  dao test class name  : {$this->daoInterfaceName}Test \n";
+        print "  entity class name    : {$this->entityClassName} \n";
+        print "  entity class extends : {$this->extendsEntityClassName} \n";
+        print "  table name           : {$this->tableName} \n";
         $cols = implode(', ',$this->cols);
-        print "  columns             : $cols \n";
-        print "  dao dicon file name : {$this->daoInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
+        print "  columns              : $cols \n";
+        print "  dao dicon file name  : {$this->daoInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
 
         return S2Base_StdinManager::isYes('confirm ?');
     }
@@ -158,15 +213,29 @@ class DaoCommand implements S2Base_GenerateCommand {
                    $this->moduleName . 
                    S2BASE_PHP5_ENTITY_DIR . 
                    "{$this->entityClassName}.class.php";
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                     . 'dao/entity.php');
-        $src = EntityCommand::getAccessorSrc($this->cols);
+        $accessorSrc = EntityCommand::getAccessorSrc($this->cols);
+        $toStringSrc = EntityCommand::getToStringSrc($this->cols);
+        if ($this->isEntityExtends) {
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+                         . 'entity/entity_extends.php');
+            $patterns = array("/@@CLASS_NAME@@/","/@@ACCESSOR@@/","/@@EXTENDS_CLASS@@/","/@@TO_STRING@@/");
+            $replacements = array($this->entityClassName,$accessorSrc,$this->extendsEntityClassName,$toStringSrc);
+        }else{
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+                         . 'entity/entity.php');
+            $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/","/@@TO_STRING@@/");
+            $replacements = array($this->entityClassName,$this->tableName,$accessorSrc,$toStringSrc);
+        }
 
-        $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/");
-        $replacements = array($this->entityClassName,$this->tableName,$src);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-
         CmdCommand::writeFile($srcFile,$tempContent);
+    }
+    
+    public static function guessDaoName($name){
+        $patterns = array("/Dao$/");
+        $replacements = array('Entity');
+        $guess = preg_replace($patterns,$replacements,$name);
+        return $guess == $name ? $name . 'Entity' : $guess;
     }
 }
 ?>

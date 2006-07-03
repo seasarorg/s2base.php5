@@ -8,6 +8,8 @@ class GoyaCommand implements S2Base_GenerateCommand {
     private $serviceInterfaceName;
     private $daoInterfaceName;
     private $entityClassName;
+    private $extendsEntityClassName;
+    private $isEntityExtends;
     private $tableName;
     private $cols;
     
@@ -44,16 +46,15 @@ class GoyaCommand implements S2Base_GenerateCommand {
             $this->prepareFilesWithoutDao();   
             return;         
         }
+        $daos = DaoCommand::getAllDaoFromCommonsDao();
+        $useCommonsDao = false;
+        if(count($daos) > 0){
+            $useCommonsDao = S2Base_StdinManager::isYes('use commons dao ?');
+        }
 
-        $rep = S2Base_StdinManager::isYes('use commons dao ?');
-
-        if($rep){
-            try{
-                $daoName = $this->getDaoFromCommonsDao();
-            } catch(Exception $e) {
-                CmdCommand::showException($e);
-                return;
-            }
+        if($useCommonsDao){
+            $daoName = S2Base_StdinManager::getValueFromArray($daos,
+                                        "dao list");
                 
             if ($daoName == S2Base_StdinManager::EXIT_LABEL){
                 return;
@@ -65,11 +66,33 @@ class GoyaCommand implements S2Base_GenerateCommand {
             $this->prepareFilesWithCommonsDao();
         }else{
             $this->setNames($name);
-            $this->tableName = S2Base_StdinManager::getValue("table name ? [{$name}] : ");
-            if(trim($this->tableName) == ''){
-                $this->tableName = $name;
-            } 
-            $this->validate($this->tableName);
+
+            $entitys = EntityCommand::getAllEntityFromCommonsDao();
+            $this->isEntityExtends = false;
+            if(count($entitys) > 0){
+                $this->isEntityExtends = S2Base_StdinManager::isYes('extends commons entity ?');
+            }
+
+            if ($this->isEntityExtends) {
+                $this->extendsEntityClassName = S2Base_StdinManager::getValueFromArray($entitys,
+                                                "entity list");
+                if ($this->extendsEntityClassName == S2Base_StdinManager::EXIT_LABEL){
+                    return;
+                }
+                $this->tableName = "extended";
+            } else {
+                $tableNameTmp = EntityCommand::guessTableName($this->entityClassName);
+                $this->tableName = S2Base_StdinManager::getValue("table name ? [{$tableNameTmp}] : ");
+                if(trim($this->tableName) == ''){
+                    $this->tableName = $tableNameTmp;
+                }
+                try{
+                    $this->validate($this->tableName);
+                } catch(Exception $e) {
+                    CmdCommand::showException($e);
+                    return;
+                }
+            }
 
             $cols = S2Base_StdinManager::getValue("columns ? (id,name,--,) : ");
             $this->cols = explode(',',$cols);
@@ -80,28 +103,6 @@ class GoyaCommand implements S2Base_GenerateCommand {
         }
     }
 
-    public static function getDaoFromCommonsDao(){
-        $commonsDaoDir = S2BASE_PHP5_ROOT . '/app/commons/dao';
-        $entries = scandir($commonsDaoDir);
-        if(!$entries){
-            throw new Exception("invalid dir : [ $commonsDaoDir ]");
-        }
-        $daos = array();
-        foreach($entries as $entry){
-            $maches = array();
-            if(preg_match("/(\w+Dao)\.class\.php$/",$entry,$maches)){
-                $daos[] = $maches[1];
-            }
-        }
-        if(count($daos) == 0){
-            throw new Exception("dao not found at all in [ $commonsDaoDir ]");
-        }
-
-        $daoName = S2Base_StdinManager::getValueFromArray($daos,
-                                        "dao list");
-        return $daoName;
-    }
-
     private function setNames($name){
         $this->actionName = $name;
         $name = ucfirst($name);
@@ -110,6 +111,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
         $this->serviceClassName = $name . "ServiceImpl";
         $this->daoInterfaceName = $name . "Dao";
         $this->entityClassName = $name . "Entity";
+        $this->extendsEntityClassName = "none";
     }
 
     private function setNamesWithoutDao($name){
@@ -118,6 +120,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
         $this->actionClassName = $name . "Action";
         $this->serviceInterfaceName = $name . "Service";
         $this->serviceClassName = $name . "ServiceImpl";
+        $this->extendsEntityClassName = "none";
     }
 
     private function setNamesWithCommonsDao($name,$daoName){
@@ -130,6 +133,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
         $this->entityClassName = preg_replace("/Dao$/","Entity",$daoName);
         $this->tableName = 'auto defined';
         $this->cols = array('auto defined');
+        $this->extendsEntityClassName = "none";        
     }
     
     private function validate($name){
@@ -150,6 +154,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
         print "  dao interface name      : {$this->daoInterfaceName} \n";
         print "  dao test class name     : {$this->daoInterfaceName}Test \n";
         print "  entity class name       : {$this->entityClassName} \n";
+        print "  entity class extends    : {$this->extendsEntityClassName} \n";
         print "  table name              : {$this->tableName} \n";
         $cols = implode(', ',$this->cols);
         print "  columns                 : $cols \n";
@@ -338,15 +343,22 @@ class GoyaCommand implements S2Base_GenerateCommand {
                    $this->moduleName . 
                    S2BASE_PHP5_ENTITY_DIR . 
                    "{$this->entityClassName}.class.php";
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $accessorSrc = EntityCommand::getAccessorSrc($this->cols);
+        $toStringSrc = EntityCommand::getToStringSrc($this->cols);
+        if ($this->isEntityExtends) {
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+                     . '/skeleton/goya/entity_extends.php');
+            $patterns = array("/@@CLASS_NAME@@/","/@@ACCESSOR@@/","/@@EXTENDS_CLASS@@/","/@@TO_STRING@@/");
+            $replacements = array($this->entityClassName,$accessorSrc,$this->extendsEntityClassName,$toStringSrc);
+        }else{
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/entity.php');
-        $src = EntityCommand::getAccessorSrc($this->cols);
+            $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/","/@@TO_STRING@@/");
+            $replacements = array($this->entityClassName,$this->tableName,$accessorSrc,$toStringSrc);
+        }
 
-        $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/");
-        $replacements = array($this->entityClassName,$this->tableName,$src);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-
-        CmdCommand::writeFile($srcFile,$tempContent);
+        CmdCommand::writeFile($srcFile,$tempContent);     
     }
 
     private function prepareServiceDiconFile(){
