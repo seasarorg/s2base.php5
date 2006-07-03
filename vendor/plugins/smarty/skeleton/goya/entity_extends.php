@@ -1,6 +1,5 @@
 <?php
-class @@CLASS_NAME@@ {
-    const TABLE = "@@TABLE_NAME@@";
+class @@CLASS_NAME@@ extends @@EXTENDS_CLASS@@{
     public function __construct(){}
 
 @@ACCESSOR@@
