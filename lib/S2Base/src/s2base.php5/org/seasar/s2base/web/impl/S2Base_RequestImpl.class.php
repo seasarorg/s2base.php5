@@ -27,9 +27,9 @@
  */
 class S2Base_RequestImpl implements S2Base_Request {
 
-    private $request = array();
-    private $module;
-    private $action;
+    protected $request = array();
+    protected $module;
+    protected $action;
     
     public function __construct() {
         //$this->request = $_REQUEST;
@@ -97,7 +97,7 @@ class S2Base_RequestImpl implements S2Base_Request {
         }
     }
 
-    private function isValidName($name){
+    protected function isValidName($name){
         if(!preg_match("/^\w+$/",$name)){
             return false;
         }
