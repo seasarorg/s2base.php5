@@ -6,11 +6,6 @@ define('S2BASE_PHP5_ROOT',dirname(dirname(__FILE__)));
 define('S2BASE_PHP5_VAR_DIR',S2BASE_PHP5_ROOT . '/var');
 
 /**
- * Log level setting
- */
-//define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::WARN);
-
-/**
  * dicon file suffix setting
  */
 define('S2BASE_PHP5_DICON_SUFFIX','.dicon');
@@ -50,5 +45,17 @@ require_once('S2Dao/S2Dao.php');
 function __autoload($class = null){
     if($class != null){@include_once("$class.class.php");}
 }
+
+/**
+ * Log setting
+ */
+//define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::DEBUG);
+//define('S2CONTAINER_PHP5_SIMPLE_LOG_FILE',S2BASE_PHP5_VAR_DIR . '/logs/s2.log');
+//define('S2CONTAINER_PHP5_DEBUG_EVAL',false);
+
+//define('LOG4PHP_DIR', S2BASE_PHP5_ROOT . '/lib/log4php-0.9/src/log4php');
+//define('LOG4PHP_CONFIGURATION', S2BASE_PHP5_ROOT . '/config/log4php.properties');
+//require_once(LOG4PHP_DIR . '/LoggerManager.php');
+//S2Container_S2LogFactory::$LOGGER = S2Container_S2LogFactory::LOG4PHP;
 
 ?>
