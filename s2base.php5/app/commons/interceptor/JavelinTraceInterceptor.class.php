@@ -340,8 +340,12 @@ class JavelinTraceInterceptor extends S2Container_AbstractInterceptor
     
     private function logOut($msg)
     {
-        if(!file_put_contents($this->logFile_, $msg, FILE_APPEND | LOCK_EX)){
-            throw new Exception("can not write file. [{$this->logFile_}]");
+        if(S2Container_S2LogFactory::$LOGGER == S2Container_S2LogFactory::LOG4PHP){
+            S2Container_S2Logger::getLogger(__CLASS__)->debug($msg); 	
+        } else {
+            if(!file_put_contents($this->logFile_, $msg, FILE_APPEND | LOCK_EX)){
+                throw new Exception("can not write file. [{$this->logFile_}]");
+            }
         }
     }
 
