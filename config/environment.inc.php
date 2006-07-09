@@ -49,7 +49,7 @@ function __autoload($class = null){
 /**
  * Log setting
  */
-//define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::DEBUG);
+define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::WARN);
 //define('S2CONTAINER_PHP5_SIMPLE_LOG_FILE',S2BASE_PHP5_VAR_DIR . '/logs/s2.log');
 //define('S2CONTAINER_PHP5_DEBUG_EVAL',false);
 

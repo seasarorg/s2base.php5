@@ -159,17 +159,14 @@ class EntityCommand implements S2Base_GenerateCommand {
             return "";
         }
         
-        $src    = '    public function __toString() {' . "\n";
-        $src   .= '        $buf = array();' . "\n";
-        $src   .= '        foreach ($this as $key => $val) {' . "\n";
-        $src   .= '            if (is_array($val)) {' . "\n";
-        $src   .= '            } else if (is_object($val)) {' . "\n";
-        $src   .= '            } else {' . "\n";
-        $src   .= '                $buf[] = "$key => $val";' . "\n";
-        $src   .= '            }' . "\n";
-        $src   .= '        }' . "\n";
-        $src   .= '        return "{" . implode(", ",$buf) . "}";' . "\n";
-        $src   .= '    }' . "\n";
+        $src      = '    public function __toString() {' . "\n";
+        $src     .= '        $buf = array();' . "\n";
+        foreach($cols as $col){
+            $getter = '" . $this->get' . ucfirst($col) . '();';            
+            $src .= '        $buf[] = "' . "$col => " . $getter . "\n";
+        }
+        $src     .= '        return "{" . implode(", ",$buf) . "}";' . "\n";
+        $src     .= '    }' . "\n";
         return $src;
     }
     
