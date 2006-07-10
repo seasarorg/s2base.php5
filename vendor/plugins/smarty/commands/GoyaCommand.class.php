@@ -95,7 +95,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
             }
 
             $cols = S2Base_StdinManager::getValue("columns ? (id,name,--,) : ");
-            $this->cols = explode(',',$cols);
+            $this->cols = EntityCommand::validateCols($cols);
             if (!$this->finalConfirm()){
                 return;
             }
