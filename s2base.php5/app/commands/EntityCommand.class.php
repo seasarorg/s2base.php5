@@ -61,13 +61,25 @@ class EntityCommand implements S2Base_GenerateCommand {
             return;
         }
 
-        $cols = S2Base_StdinManager::getValue("columns ? (id,name,--,,) : ");
-        $this->cols = explode(',',$cols);
+        $cols = S2Base_StdinManager::getValue("columns ? (id,name,--,) : ");
+        $this->cols = self::validateCols($cols);
         if (!$this->finalConfirm()){
             return;
         }
         $this->prepareFiles();
     }        
+
+    public static function validateCols($colsStr){
+        $colsTmp = array_unique(explode(',',$colsStr));
+        $cols = array();
+        foreach($colsTmp as $col){
+            $col = trim($col);
+            if(preg_match("/^\w+$/",$col)){
+                $cols[] = $col;
+            }
+        }
+        return $cols;
+    }
 
     public static function getAllEntityFromCommonsDao(){
         $commonsDaoDir = S2BASE_PHP5_ROOT . '/app/commons/dao';
@@ -134,13 +146,8 @@ class EntityCommand implements S2Base_GenerateCommand {
                         '    const @@PROP_NAME@@_COLUMN = "@@COL_NAME@@";' . "\n" .
                         '    public function set@@UC_PROP_NAME@@($val){$this->@@PROP_NAME@@ = $val;}' . "\n" . 
                         '    public function get@@UC_PROP_NAME@@(){return $this->@@PROP_NAME@@;}' . "\n\n";
-        $cols = array_unique($cols);
         $retSrc = "";
         foreach($cols as $col){
-            $col = trim($col);
-            if(!preg_match("/^\w+$/",$col)){
-                continue;
-            }
             $prop = preg_replace("/_/"," ",strtolower($col));
             $prop = ucwords($prop);
             $prop = preg_replace("/\s+/","",$prop);
