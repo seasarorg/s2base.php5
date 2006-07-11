@@ -218,8 +218,9 @@ class GoyaCommand implements S2Base_GenerateCommand {
                    "{$this->actionClassName}.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/action.php');
-        $patterns = array("/@@CLASS_NAME@@/","/@@SERVICE_INTERFACE@@/");
-        $replacements = array($this->actionClassName,$this->serviceInterfaceName);
+        $serviceProp = strtolower(substr($this->serviceInterfaceName,0,1)) . substr($this->serviceInterfaceName,1);
+        $patterns = array("/@@CLASS_NAME@@/","/@@SERVICE_INTERFACE@@/","/@@SERVICE_PROPERTY@@/");
+        $replacements = array($this->actionClassName,$this->serviceInterfaceName,$serviceProp);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         CmdCommand::writeFile($srcFile,$tempContent);
     }
@@ -260,8 +261,9 @@ class GoyaCommand implements S2Base_GenerateCommand {
                    "{$this->serviceClassName}.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/service.php');
-        $patterns = array("/@@CLASS_NAME@@/","/@@INTERFACE_NAME@@/","/@@DAO_NAME@@/");
-        $replacements = array($this->serviceClassName,$this->serviceInterfaceName,$this->daoInterfaceName);
+        $daoProp = strtolower(substr($this->daoInterfaceName,0,1)) . substr($this->daoInterfaceName,1);
+        $patterns = array("/@@CLASS_NAME@@/","/@@INTERFACE_NAME@@/","/@@DAO_NAME@@/","/@@DAO_PROPERTY@@/");
+        $replacements = array($this->serviceClassName,$this->serviceInterfaceName,$this->daoInterfaceName,$daoProp);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         CmdCommand::writeFile($srcFile,$tempContent);
     }

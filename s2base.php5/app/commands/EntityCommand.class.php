@@ -148,16 +148,24 @@ class EntityCommand implements S2Base_GenerateCommand {
                         '    public function get@@UC_PROP_NAME@@(){return $this->@@PROP_NAME@@;}' . "\n\n";
         $retSrc = "";
         foreach($cols as $col){
-            $prop = preg_replace("/_/"," ",strtolower($col));
-            $prop = ucwords($prop);
-            $prop = preg_replace("/\s+/","",$prop);
-            $prop = strtolower(substr($prop,0,1)) . substr($prop,1);
+            $prop = self::getPropertyNameFromCol($col);
             
             $patterns = array("/@@UC_PROP_NAME@@/","/@@PROP_NAME@@/","/@@COL_NAME@@/");
             $replacements = array(ucfirst($prop),$prop,$col);
             $retSrc .= preg_replace($patterns,$replacements,$tempContent);
         }
         return $retSrc;
+    }
+
+    public static function getPropertyNameFromCol($col){
+        $prop = $col;
+        if (preg_match("/_/",$col)){
+            $prop = preg_replace("/_/"," ",strtolower($col));
+            $prop = ucwords($prop);
+            $prop = preg_replace("/\s+/","",$prop);
+            $prop = strtolower(substr($prop,0,1)) . substr($prop,1);
+        }
+        return $prop;
     }
 
     public static function getToStringSrc($cols){
@@ -169,8 +177,9 @@ class EntityCommand implements S2Base_GenerateCommand {
         $src      = '    public function __toString() {' . "\n";
         $src     .= '        $buf = array();' . "\n";
         foreach($cols as $col){
-            $getter = '" . $this->get' . ucfirst($col) . '();';            
-            $src .= '        $buf[] = "' . "$col => " . $getter . "\n";
+            $prop = self::getPropertyNameFromCol($col);
+            $getter = '" . $this->get' . ucfirst($prop) . '();';            
+            $src .= '        $buf[] = "' . "$prop => " . $getter . "\n";
         }
         $src     .= '        return "{" . implode(", ",$buf) . "}";' . "\n";
         $src     .= '    }' . "\n";
