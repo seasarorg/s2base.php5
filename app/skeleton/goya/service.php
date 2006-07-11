@@ -1,12 +1,12 @@
 <?php
 class @@CLASS_NAME@@ 
     implements @@INTERFACE_NAME@@ {
-    private $dao;
+    private $@@DAO_PROPERTY@@;
 
     public function __construct(){}
 
-    public function setDao(@@DAO_NAME@@ $dao){
-        $this->dao = $dao;
+    public function set@@DAO_NAME@@(@@DAO_NAME@@ $dao){
+        $this->@@DAO_PROPERTY@@ = $dao;
     } 
 }
 ?>
