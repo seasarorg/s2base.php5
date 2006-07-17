@@ -13,7 +13,7 @@ class AgaviGoyaCommand implements S2Base_GenerateCommand
     private $moduleDir;
     
     public function getName(){
-        return "<agavi> goya";
+        return "goya";
     }
 
     public function execute(){
@@ -124,15 +124,7 @@ class AgaviGoyaCommand implements S2Base_GenerateCommand
         $cols = implode(', ',$this->cols);
         print "  columns                 : $cols \n";
         print "  service dicon file name : {$this->serviceInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
-
-        $types = array('yes','no');
-        $rep = S2Base_StdinManager::getValueFromArray($types,
-                                        "confirmation");
-        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
-            $rep == 'no'){
-            return false;
-        }
-        return true;
+        return S2Base_StdinManager::isYes('confirm ?');
     }
 
     private function prepareFiles(){
