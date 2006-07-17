@@ -12,7 +12,7 @@ class AgaviProjectCommand implements S2Base_GenerateCommand
     
     public function getName ()
     {
-        return "<agavi> project";
+        return "project";
     }
 
     public function execute ()
@@ -51,15 +51,7 @@ class AgaviProjectCommand implements S2Base_GenerateCommand
         print "  module name         : {$this->moduleName} \n";
         print "  action name         : {$this->actionName} \n";
         print "  view name           : {$this->viewName} \n";
-
-        $types = array('yes','no');
-        $rep = S2Base_StdinManager::getValueFromArray($types,
-                                        "confirmation");
-        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
-            $rep == 'no'){
-            return false;
-        }
-        return true;
+        return S2Base_StdinManager::isYes('confirm ?');
     }
     
     private function validate ($name){

@@ -9,7 +9,7 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
     
     public function getName ()
     {
-        return "<agavi> service";
+        return "service";
     }
 
     public function execute ()
@@ -42,15 +42,7 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
         print "  service class name      : {$this->serviceClassName} \n";
         print "  service test class name : {$this->serviceClassName}Test \n";
         print "  service dicon file name : {$this->serviceInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
-        $types = array('yes','no');
-        $rep = S2Base_StdinManager::getValueFromArray($types,
-                                        "confirmation");
-        if ($rep == S2Base_StdinManager::EXIT_LABEL or 
-            $rep == 'no'){
-            return false;
-        }
-
-        return true;
+        return S2Base_StdinManager::isYes('confirm ?');
     }
 
     private function validate($name){
@@ -69,7 +61,7 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
                     S2BASE_PHP5_SERVICE_DIR .
                    "{$this->serviceClassName}.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
-                                                    'service_impl.php');
+                                                    'service/service.php');
         $patterns = array("/@@CLASS_NAME@@/","/@@INTERFACE_NAME@@/");
         $replacements = array($this->serviceClassName,$this->serviceInterfaceName);
         $tempContent = preg_replace($patterns, $replacements, $tempContent);
@@ -81,7 +73,7 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
                     S2BASE_PHP5_SERVICE_DIR .
                    "{$this->serviceInterfaceName}.class.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
-                                                    'service_interface.php');
+                                                    'service/interface.php');
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
                                     $this->serviceInterfaceName,
                                     $tempContent);   
@@ -108,7 +100,7 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
                    S2BASE_PHP5_DICON_DIR . 
                    "{$this->serviceInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
-                                                    'service_dicon.php');
+                                                    'service/dicon.php');
         $tempContent = preg_replace("/@@SERVICE_CLASS@@/",
                                     $this->serviceClassName,
                                     $tempContent);   
