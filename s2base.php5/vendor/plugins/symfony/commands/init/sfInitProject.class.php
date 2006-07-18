@@ -48,16 +48,17 @@ class sfInitProject
     {
         $this->prepareConfigPhpFile();
         $this->prepareAutoloadYmlFile();
-        sfCommandUtil::copyMyFrontWebController($this->pathName, $this->appName);
-        sfCommandUtil::createLogicDirectories($this->pathName,
-                                              $this->appName,
-                                              $this->moduleName);
-        sfCommandUtil::prepareModuleAutoloadYmlFile($this->pathName,
-                                                    $this->appName,
-                                                    $this->moduleName);
-        sfCommandUtil::prepareModuleDiconFile($this->pathName,
-                                              $this->appName,
-                                              $this->moduleName);
+        $this->writeProjectPathFile();
+        
+        sfCommandUtil::$attributes['pathName']   = $this->pathName;
+        sfCommandUtil::$attributes['appName']    = $this->appName;
+        sfCommandUtil::$attributes['moduleName'] = $this->moduleName;
+        sfCommandUtil::copyMyFrontWebController();
+        sfCommandUtil::createLogicDirectories();
+        sfCommandUtil::createTestDirectories();
+        sfCommandUtil::prepareTestIncFile();
+        sfCommandUtil::prepareModuleAutoloadYmlFile();
+        sfCommandUtil::prepareModuleDiconFile();
     }
     
     private function prepareAutoloadYmlFile ()
@@ -86,6 +87,15 @@ class sfInitProject
                                     S2BASE_PHP5_ROOT,
                                     $tempContent);
         CmdCommand::writeFile($srcFile,$tempContent);
+    }
+    
+    private function writeProjectPathFile ()
+    {
+        @unlink(S2BASE_PHP5_SF_PATH_CACHE);
+        $content = 'projectPath = '.$this->pathName;
+        if(!file_put_contents(S2BASE_PHP5_SF_PATH_CACHE,$content,LOCK_EX)){
+            throw new Exception("Cannot write to file [ $filename ]");
+        }
     }
 }
 ?>

@@ -13,6 +13,7 @@
       <property file="${project.basedir}/var/cache/sf.project.cache"/>
       <input propertyname="project.dir" promptChar="?"
       		 defaultValue="${projectPath}" message="ProjectFullPath "/>
+	  <input propertyname="app.dir" promptChar="?" message="AppName "/>
 	  <input propertyname="module.dir" promptChar="?" message="ModuleName "/>
 	  <input propertyname="test.dirs"
 	  		 defaultValue="dao,service" promptChar="?" message="TestDirectory "/>
@@ -23,7 +24,7 @@
       <phpunit2 haltonfailure="false" haltonerror="false">
         <formatter type="plain" usefile="false"/>
           <batchtest>
-            <fileset dir="${project.dir}/tests/modules/${module.dir}/${test.dir}">
+            <fileset dir="${project.dir}/test/${app.dir}/${module.dir}/${test.dir}">
                 <include name="**/*Test.class.php"/>
             </fileset>
           </batchtest>
