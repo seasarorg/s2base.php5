@@ -103,9 +103,10 @@ class sfCommandUtil
                    self::$attributes['moduleName'] . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SF_SKELETON_DIR .
                                                     'actions.dicon');
-        $tempContent = preg_replace("/@@MODULE_NAME@@/",
-                                    self::$attributes['moduleName'],
-                                    $tempContent);
+        $patterns = array("/@@APP_NAME@@/","/@@MODULE_NAME@@/");
+        $replacements = array(self::$attributes['appName'],
+                              self::$attributes['moduleName']);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
         CmdCommand::writeFile($srcFile,$tempContent);
     }
     

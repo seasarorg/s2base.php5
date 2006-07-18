@@ -48,5 +48,6 @@ define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::WARN);
 
 //define('LOG4PHP_DIR', S2BASE_PHP5_ROOT . '/lib/log4php-0.9/src/log4php');
 //define('LOG4PHP_CONFIGURATION', S2BASE_PHP5_ROOT . '/config/log4php.properties');
+//require_once('JavelinPatternLayout.class.php');
 //require_once(LOG4PHP_DIR . '/LoggerManager.php');
 //S2Container_S2LogFactory::$LOGGER = S2Container_S2LogFactory::LOG4PHP;
