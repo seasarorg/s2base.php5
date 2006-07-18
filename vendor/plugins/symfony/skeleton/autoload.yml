@@ -1,0 +1,15 @@
+autoload:
+  s2container:
+    name:           S2Container
+    ext:            .class.php
+    path:           "@@S2BASE_PHP5_ROOT@@/lib/S2Container/build/s2container.php5/S2Container"
+
+  s2dao:
+    name:           S2Dao
+    ext:            .class.php
+    path:           "@@S2BASE_PHP5_ROOT@@/lib/S2Dao/build/s2dao.php5/S2Dao"
+
+  commons:
+    name:           commons
+    ext:            .class.php
+    path:           "@@S2BASE_PHP5_ROOT@@/app/commons"
