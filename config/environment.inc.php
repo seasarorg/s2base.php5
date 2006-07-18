@@ -47,16 +47,28 @@ function __autoload($class = null){
 }
 
 /**
- * Log setting
+ * Log level setting
  */
-define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::WARN);
-//define('S2CONTAINER_PHP5_SIMPLE_LOG_FILE',S2BASE_PHP5_VAR_DIR . '/logs/s2.log');
+//define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::DEBUG);
 //define('S2CONTAINER_PHP5_DEBUG_EVAL',false);
 
-//define('LOG4PHP_DIR', S2BASE_PHP5_ROOT . '/lib/log4php-0.9/src/log4php');
-//define('LOG4PHP_CONFIGURATION', S2BASE_PHP5_ROOT . '/config/log4php.properties');
-//require_once('JavelinPatternLayout.class.php');
-//require_once(LOG4PHP_DIR . '/LoggerManager.php');
+/**
+ * S2Container_SimpleLogger log file setting
+ */
+//define('S2CONTAINER_PHP5_SIMPLE_LOG_FILE',S2BASE_PHP5_VAR_DIR . '/logs/s2.log');
+
+/**
+ * log4php setting
+ */
 //S2Container_S2LogFactory::$LOGGER = S2Container_S2LogFactory::LOG4PHP;
+//define('LOG4PHP_DIR', S2BASE_PHP5_ROOT . '/lib/log4php-version/src/log4php');
+//define('LOG4PHP_CONFIGURATION', S2BASE_PHP5_ROOT . '/config/log4php.properties');
+//require_once(LOG4PHP_DIR . '/LoggerManager.php');
+
+/**
+ * S2Javelin setting
+ */
+//require_once('S2Javelin/S2JavelinTraceInterceptor.class.php');
+//require_once('S2Javelin/S2JavelinPatternLayout.class.php');
 
 ?>
