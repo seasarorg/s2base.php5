@@ -3,7 +3,7 @@
 "http://www.seasar.org/dtd/components21.dtd">
 <components>
     <!-- 
-    <include path="%SF_ROOT_DIR%/apps/%SF_APP%/modules/@@MODULE_NAME@@/dicon/Service.dicon"/>
+    <include path="%SF_ROOT_DIR%/apps/@@APP_NAME@@/modules/@@MODULE_NAME@@/dicon/Service.dicon"/>
     -->
 	<!--
     <component name="@@MODULE_NAME@@" class="@@MODULE_NAME@@Actions">
