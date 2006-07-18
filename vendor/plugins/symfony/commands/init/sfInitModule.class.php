@@ -13,7 +13,7 @@ class sfInitModule
         }
         
         $targetDir = $this->pathName . S2BASE_PHP5_DS . 'apps';
-        $this->appName     = sfCommandUtil::getModuleName($targetDir);
+        $this->appName     = sfCommandUtil::getAppName($targetDir);
         $this->moduleName  = sfCommandUtil::getValueFromType(S2BASE_PHP5_SF_MODULE);
         $this->validate($this->moduleName);
         
@@ -41,15 +41,14 @@ class sfInitModule
     
     private function prepareFiles ()
     {
-        sfCommandUtil::createLogicDirectories($this->pathName,
-                                              $this->appName,
-                                              $this->moduleName);
-        sfCommandUtil::prepareModuleAutoloadYmlFile($this->pathName,
-                                                    $this->appName,
-                                                    $this->moduleName);
-        sfCommandUtil::prepareModuleDiconFile($this->pathName,
-                                              $this->appName,
-                                              $this->moduleName);
+        sfCommandUtil::$attributes['pathName']   = $this->pathName;
+        sfCommandUtil::$attributes['appName']    = $this->appName;
+        sfCommandUtil::$attributes['moduleName'] = $this->moduleName;
+        sfCommandUtil::createLogicDirectories();
+        sfCommandUtil::createTestDirectories();
+        sfCommandUtil::prepareTestIncFile();
+        sfCommandUtil::prepareModuleAutoloadYmlFile();
+        sfCommandUtil::prepareModuleDiconFile();
     }
 }
 ?>

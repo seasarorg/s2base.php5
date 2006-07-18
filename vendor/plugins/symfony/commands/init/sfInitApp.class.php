@@ -42,16 +42,13 @@ class sfInitApp
     
     private function prepareFiles ()
     {
-        sfCommandUtil::copyMyFrontWebController($this->pathName, $this->appName);
-        sfCommandUtil::createLogicDirectories($this->pathName,
-                                              $this->appName,
-                                              $this->moduleName);
-        sfCommandUtil::prepareModuleAutoloadYmlFile($this->pathName,
-                                                    $this->appName,
-                                                    $this->moduleName);
-        sfCommandUtil::prepareModuleDiconFile($this->pathName,
-                                              $this->appName,
-                                              $this->moduleName);
+        sfCommandUtil::$attributes['pathName']   = $this->pathName;
+        sfCommandUtil::$attributes['appName']    = $this->appName;
+        sfCommandUtil::$attributes['moduleName'] = $this->moduleName;
+        sfCommandUtil::copyMyFrontWebController();
+        sfCommandUtil::createLogicDirectories();
+        sfCommandUtil::prepareModuleAutoloadYmlFile();
+        sfCommandUtil::prepareModuleDiconFile();
     }
 }
 ?>
