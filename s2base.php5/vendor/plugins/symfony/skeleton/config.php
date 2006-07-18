@@ -21,6 +21,19 @@ define('PDO_DICON',S2BASE_PHP5_ROOT . '/app/commons/dicon/pdo.dicon');
 define('S2CONTAINER_PHP5_DOM_VALIDATE',false);
 
 /**
+ * include path setting
+ */
+$packages = array(
+    S2BASE_PHP5_ROOT . '/app/commons/dao',
+    S2BASE_PHP5_ROOT . '/app/commons/interceptor',
+    S2BASE_PHP5_ROOT . '/lib'
+);
+ini_set('include_path', 
+        implode(PATH_SEPARATOR, $packages) . PATH_SEPARATOR . 
+        ini_get('include_path')
+);
+
+/**
  * library setting
  */
 require_once('S2Container/S2Container.php');
