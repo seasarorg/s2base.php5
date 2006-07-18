@@ -85,7 +85,7 @@ ArrowVisionは、<a href="http://www.smg.co.jp/service/products/arrow_vision/index
 <br>
 <h3><a name="log4php">log4php を使用する場合の設定</a></h3>
 <p>
-S2Container の<a href="http://s2container.php5.sandbox.seasar.org/extension.html#log">ログ設定</a>で log4php を使用する設定とし、ログレベルを DEBUG レベルとすると、JavelinTraceInterceptor は、シーケンス情報に加えて S2Dao が発行する SQL を取得することができます。
+S2Container の<a href="http://s2container.php5.sandbox.seasar.org/extension.html#log">ログ設定</a>で log4php を使用する設定とすると、JavelinTraceInterceptor は、シーケンス情報に加えて S2Dao が発行する SQL を取得することができます。
 SQL ログは ArrowVision で表示できます。<br>
 log4php 用の設定ファイルは、s2base.php5/config/log4php.properties にあります。
 </p>
@@ -124,7 +124,7 @@ s2base.php/config/environment.inc.php の Log setting で行います。
 /**
  * Log setting
  */
-define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::WARN);
+define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::DEBUG);
 //define('S2CONTAINER_PHP5_SIMPLE_LOG_FILE',S2BASE_PHP5_VAR_DIR . '/logs/s2.log');
 //define('S2CONTAINER_PHP5_DEBUG_EVAL',false);
 
@@ -134,7 +134,7 @@ define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::WARN);
 //S2Container_S2LogFactory::$LOGGER = S2Container_S2LogFactory::LOG4PHP;
 ?&gt;
 </pre>
-
+S2CONTAINER_PHP5_LOG_LEVEL 定数をDEBUGレベルに設定することで、S2Dao が発行する SQL をロギングすることができます。
 
 <!-- document end -->
 <!-- don't edit start -->
