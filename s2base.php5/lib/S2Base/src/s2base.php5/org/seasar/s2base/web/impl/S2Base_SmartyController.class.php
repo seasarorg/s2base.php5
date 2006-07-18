@@ -106,6 +106,7 @@ class S2Base_SmartyController extends Smarty
         $this->assign('act_key',S2BASE_PHP5_REQUEST_ACTION_KEY);
         $this->assign('module',$mod);
         $this->assign('action',$act);
+        $this->assign('request',$this->request);
         
         if (preg_match("/^redirect:(.+)$/",$this->actionTpl,$matches)){
             $this->redirect($matches[1]);
