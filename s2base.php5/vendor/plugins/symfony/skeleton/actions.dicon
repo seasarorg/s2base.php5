@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components21.dtd">
+<components>
+    <!-- 
+    <include path="%SF_ROOT_DIR%/apps/%SF_APP%/modules/@@MODULE_NAME@@/dicon/Service.dicon"/>
+    -->
+	<!--
+    <component name="@@MODULE_NAME@@" class="@@MODULE_NAME@@Actions">
+    </component>
+    -->
+</components>

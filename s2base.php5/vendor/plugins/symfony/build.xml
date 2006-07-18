@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project name="project" default="command" basedir=".">
+    <target name="command">
+      <php expression="require_once('vendor/plugins/symfony/config/environment.inc.php')"/>
+      <command>
+	    <fileset dir="${plugins.dir}/symfony/commands">
+	        <include name="*Command.class.php"/>
+        </fileset>
+      </command>
+    </target>
+    
+    <target name="test">
+      <property file="${project.basedir}/var/cache/sf.project.cache"/>
+      <input propertyname="project.dir" promptChar="?"
+      		 defaultValue="${projectPath}" message="ProjectFullPath "/>
+	  <input propertyname="module.dir" promptChar="?" message="ModuleName "/>
+	  <input propertyname="test.dirs"
+	  		 defaultValue="dao,service" promptChar="?" message="TestDirectory "/>
+	  <foreach list="${test.dirs}" param="test.dir" target="doTest" />
+    </target>
+    
+    <target name="doTest">
+      <phpunit2 haltonfailure="false" haltonerror="false">
+        <formatter type="plain" usefile="false"/>
+          <batchtest>
+            <fileset dir="${project.dir}/tests/modules/${module.dir}/${test.dir}">
+                <include name="**/*Test.class.php"/>
+            </fileset>
+          </batchtest>
+      </phpunit2>
+    </target>
+</project>
