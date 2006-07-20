@@ -3,7 +3,7 @@
 "http://www.seasar.org/dtd/components21.dtd">
 <components namespace="javelin">
      <component name="javelinTraceInterceptor"
-                class="JavelinTraceInterceptor">
+                class="S2JavelinTraceInterceptor">
          <property name="logArgs">true</property>
          <property name="logReturn">true</property>
          <property name="logStackTrace">false</property>

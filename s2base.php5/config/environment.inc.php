@@ -26,7 +26,8 @@ define('S2CONTAINER_PHP5_DOM_VALIDATE',false);
 $packages = array(
     S2BASE_PHP5_ROOT . '/app/commons/dao',
     S2BASE_PHP5_ROOT . '/app/commons/interceptor',
-    S2BASE_PHP5_ROOT . '/lib'
+    S2BASE_PHP5_ROOT . '/lib',
+    S2BASE_PHP5_ROOT . '/lib/S2Javelin'
 );
 ini_set('include_path', 
         implode(PATH_SEPARATOR, $packages) . PATH_SEPARATOR . 
@@ -64,11 +65,4 @@ function __autoload($class = null){
 //define('LOG4PHP_DIR', S2BASE_PHP5_ROOT . '/lib/log4php-version/src/log4php');
 //define('LOG4PHP_CONFIGURATION', S2BASE_PHP5_ROOT . '/config/log4php.properties');
 //require_once(LOG4PHP_DIR . '/LoggerManager.php');
-
-/**
- * S2Javelin setting
- */
-//require_once('S2Javelin/S2JavelinTraceInterceptor.class.php');
-//require_once('S2Javelin/S2JavelinPatternLayout.class.php');
-
 ?>
