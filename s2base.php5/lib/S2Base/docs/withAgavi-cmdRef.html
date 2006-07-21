@@ -84,11 +84,7 @@ ViewName[Input,Success] ? : &lt;---ビュー名を入力(デフォルトはInput,Success)
   action name         : Index
   view name           : Input,Success
 
-[ confirmation ]
-0 : [ EXIT ]
-1 : yes
-2 : no
-choice ? : 1                &lt;--- 表示される情報を確認
+confirm ? (y/n) : y         &lt;--- 表示される情報を確認
 
 [INFO ] generate agavi project (heavy) : /Users/seasar
 [INFO ] create : /Users/seasar/webapp/lib/s2agavi
@@ -160,12 +156,8 @@ ViewName[Input,Success] ? : &lt;---ビュー名を入力(デフォルトはInput,Success)
   module name         : Demo
   action name         : Index
   view name           : Input,Success
-
-[ confirmation ]
-0 : [ EXIT ]
-1 : yes
-2 : no
-choice ? : 1                &lt;--- 表示される情報を確認
+  
+confirm ? (y/n) : y         &lt;--- 表示される情報を確認
 
 [INFO ] generate agavi module : Demo
 [INFO ] create : /Users/seasar/webapp/modules/Demo/dao/
@@ -233,11 +225,7 @@ ViewName[Input,Success] ? : Success
   action name         : List
   view name           : Success
 
-[ confirmation ]
-0 : [ EXIT ]
-1 : yes
-2 : no
-choice ? : 1
+confirm ? (y/n) : y         &lt;--- 表示される情報を確認
 
 [INFO ] generate agavi action : List
 [INFO ] create : /Users/seasar/webapp/modules/Demo/dicon/List.dicon

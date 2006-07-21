@@ -9,7 +9,12 @@ autoload:
     ext:            .class.php
     path:           "@@S2BASE_PHP5_ROOT@@/lib/S2Dao/build/s2dao.php5/S2Dao"
 
-  commons:
-    name:           commons
+  s2javelin:
+    name:           S2Javelin
     ext:            .class.php
-    path:           "@@S2BASE_PHP5_ROOT@@/app/commons"
+    path:           "@@S2BASE_PHP5_ROOT@@/lib/S2Javelin"
+
+  #commons:
+  #  name:           commons
+  #  ext:            .class.php
+  #  path:           "@@S2BASE_PHP5_ROOT@@/app/commons"
