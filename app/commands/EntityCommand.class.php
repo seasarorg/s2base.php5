@@ -50,7 +50,7 @@ class EntityCommand implements S2Base_GenerateCommand {
                 $tableNameTmp = self::guessTableName($this->entityClassName);
                 $this->tableName = S2Base_StdinManager::getValue("table name ? [{$tableNameTmp}] : ");
                 if(trim($this->tableName) == ''){
-                    $this->tableName = $this->entityClassName;
+                    $this->tableName = $tableNameTmp;
                 }
                 $this->validate($this->tableName);
             } else {

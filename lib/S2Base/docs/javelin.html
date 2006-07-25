@@ -33,18 +33,17 @@
 <br>
 
 <p>
-JavelinTraceInterceptor は、<a href="http://s2javelin.sandbox.seasar.org/s2javelin.html">Javaで実装された S2Javelin</a>
- に含まれる JavelinTraceInterceptor を PHP に移植したものです。JavelinTraceInterceptor によって出力されるトレースログは、
+S2JavelinTraceInterceptor は、<a href="http://s2javelin.sandbox.seasar.org/s2javelin.html">Javaで実装された S2Javelin</a>
+ に含まれる JavelinTraceInterceptor を PHP に移植したものです。S2JavelinTraceInterceptor によって出力されるトレースログは、
 ArrowVision という表示用ツールによりビジュアルに表示することができます。
 ArrowVisionは、<a href="http://www.smg.co.jp/service/products/arrow_vision/index.html">エスエムジー株式会社のホームページ</a>から、
 無償でダウンロードすることができます。
 </p>
 
 <h2><a name="setup">セットアップ</a></h2>
-<p>JavelinTraceInterceptor は s2base.php5/app/commons/interceptor/JavelinTraceInterceptor にあります。</p>
 <h3><a name="dicon">dicon 設定</a></h3>
-<p>s2base.php5/app/commons/dicon/javelin.dicon に JavelinTraceInterceptor コンポーネントを定義済みの ダイコンファイルがあります。
-このダイコンファイルをアクションダイコンやサービスダイコンで include し、JavelinTraceInterceptor をアスペクトすることができます。
+<p>s2base.php5/app/commons/dicon/javelin.dicon に S2JavelinTraceInterceptor コンポーネントを定義済みの ダイコンファイルがあります。
+このダイコンファイルをアクションダイコンやサービスダイコンで include し、S2JavelinTraceInterceptor をアスペクトすることができます。
 ログファイルは、logFile プロパティで指定します。デフォルトでは、s2base.php5/var/logs/javelin.jvn です。(拡張子は .jvn として下さい。)
 </p>
 
@@ -55,11 +54,11 @@ ArrowVisionは、<a href="http://www.smg.co.jp/service/products/arrow_vision/index
 "http://www.seasar.org/dtd/components21.dtd"&gt;
 &lt;components namespace="javelin"&gt;
      &lt;component name="javelinTraceInterceptor"
-                class="JavelinTraceInterceptor"&gt;
+                class="S2JavelinTraceInterceptor"&gt;
          &lt;property name="logArgs"&gt;true&lt;/property&gt;
          &lt;property name="logReturn"&gt;true&lt;/property&gt;
          &lt;property name="logStackTrace"&gt;false&lt;/property&gt;
-         &lt;property name="logFile"&gt;"%S2BASE_PHP5_VAR_DIR%/logs/javelin.jvn"&lt;/property&gt;
+         &lt;property name="logFile"&gt;S2BASE_PHP5_VAR_DIR . "/logs/javelin.jvn"&lt;/property&gt;
      &lt;/component&gt;
 &lt;/components&gt;
 </pre>
@@ -85,17 +84,17 @@ ArrowVisionは、<a href="http://www.smg.co.jp/service/products/arrow_vision/index
 <br>
 <h3><a name="log4php">log4php を使用する場合の設定</a></h3>
 <p>
-S2Container の<a href="http://s2container.php5.sandbox.seasar.org/extension.html#log">ログ設定</a>で log4php を使用する設定とすると、JavelinTraceInterceptor は、シーケンス情報に加えて S2Dao が発行する SQL を取得することができます。
+S2Container の<a href="http://s2container.php5.sandbox.seasar.org/extension.html#log">ログ設定</a>で log4php を使用する設定とすると、S2JavelinTraceInterceptor は、シーケンス情報に加えて S2Dao が発行する SQL を取得することができます。
 SQL ログは ArrowVision で表示できます。<br>
 log4php 用の設定ファイルは、s2base.php5/config/log4php.properties にあります。
 </p>
 
 <pre>
-; [[ JavelinTraceInterceptor ]]
-log4php.category.JavelinTraceInterceptor = "DEBUG, Javelin"
-log4php.appender.Javelin                 = "LoggerAppenderFile"
-log4php.appender.Javelin.File            = "/tmp/javelin.jvn"
-log4php.appender.Javelin.layout          = "JavelinPatternLayout"
+; [[ S2JavelinTraceInterceptor ]]
+log4php.category.S2JavelinTraceInterceptor = "DEBUG, Javelin"
+log4php.appender.Javelin                   = "LoggerAppenderFile"
+log4php.appender.Javelin.File              = "/tmp/javelin.jvn"
+log4php.appender.Javelin.layout            = "S2JavelinPatternLayout"
 log4php.appender.Javelin.layout.ConversionPattern = "%m%n"
 
 ; [[ S2Dao Logger ]]
@@ -104,12 +103,12 @@ log4php.category.S2Dao_InsertAutoHandler  = "DEBUG, DaoSql"
 log4php.category.S2Dao_UpdateAutoHandler  = "DEBUG, DaoSql"
 log4php.category.S2Dao_DeleteAutoHandler  = "DEBUG, DaoSql"
 log4php.appender.DaoSql                   = "LoggerAppenderFile"
-log4php.appender.DaoSql.layout            = "JavelinPatternLayout"
+log4php.appender.DaoSql.layout            = "S2JavelinPatternLayout"
 
 ; [[ S2Dao Javelin ]]
 log4php.appender.DaoSql.File                     = "/tmp/javelin.jvn"
-log4php.appender.DaoSql.layout.ConversionPattern = "Write ,%d{Y/m/d H:i:s u},,DaoSQL,0,%M,%C,0,
-                                                    public,%t%n<<javelin.FieldValue_START>>%n%m%n<<javelin.FieldValue_END>>%n%n"
+log4php.appender.DaoSql.layout.ConversionPattern = "Write ,%d{Y/m/d H:i:s u},,DaoSQL,0,%M,%C,0,public,%t%n
+                                          &lt;&lt;javelin.FieldValue_START&gt;&gt;%n%m%n&lt;&lt;javelin.FieldValue_END&gt;&gt;%n%n"
 </pre>
 ログファイルはデフォルトで /tmp/javelin.jvn となります。S2Container のログ設定や log4php の設定は
 s2base.php/config/environment.inc.php の Log setting で行います。
@@ -122,19 +121,23 @@ s2base.php/config/environment.inc.php の Log setting で行います。
 ・・・
 
 /**
- * Log setting
+ * Log level setting
  */
 define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::DEBUG);
-//define('S2CONTAINER_PHP5_SIMPLE_LOG_FILE',S2BASE_PHP5_VAR_DIR . '/logs/s2.log');
-//define('S2CONTAINER_PHP5_DEBUG_EVAL',false);
+・・・
+・・・
+・・・
 
-//define('LOG4PHP_DIR', S2BASE_PHP5_ROOT . '/lib/log4php-***/src/log4php');
-//define('LOG4PHP_CONFIGURATION', S2BASE_PHP5_ROOT . '/config/log4php.properties');
-//require_once(LOG4PHP_DIR . '/LoggerManager.php');
-//S2Container_S2LogFactory::$LOGGER = S2Container_S2LogFactory::LOG4PHP;
+/**
+ * log4php setting
+ */
+S2Container_S2LogFactory::$LOGGER = S2Container_S2LogFactory::LOG4PHP;
+define('LOG4PHP_DIR', S2BASE_PHP5_ROOT . '/lib/log4php-version/src/log4php');
+define('LOG4PHP_CONFIGURATION', S2BASE_PHP5_ROOT . '/config/log4php.properties');
+require_once(LOG4PHP_DIR . '/LoggerManager.php');
 ?&gt;
 </pre>
-S2CONTAINER_PHP5_LOG_LEVEL 定数をDEBUGレベルに設定することで、S2Dao が発行する SQL をロギングすることができます。
+S2CONTAINER_PHP5_LOG_LEVEL 定数を DEBUG レベルに設定することで、S2Dao が発行する SQL をロギングすることができます。
 
 <!-- document end -->
 <!-- don't edit start -->
