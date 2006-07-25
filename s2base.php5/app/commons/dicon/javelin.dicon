@@ -7,6 +7,6 @@
          <property name="logArgs">true</property>
          <property name="logReturn">true</property>
          <property name="logStackTrace">false</property>
-         <property name="logFile">"%S2BASE_PHP5_VAR_DIR%/logs/javelin.jvn"</property>
+         <property name="logFile">S2BASE_PHP5_VAR_DIR . "/logs/javelin.jvn"</property>
      </component>
 </components>

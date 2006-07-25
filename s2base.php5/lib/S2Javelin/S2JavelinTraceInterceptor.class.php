@@ -239,7 +239,7 @@ class S2JavelinTraceInterceptor extends S2Container_AbstractInterceptor
             $args = $invocation->getArguments();
             $c = count($args);
             for($i = 0; $i < $c; $i++){
-                $callDetailBuff .= "    args[$i] = " . $args[$i] . PHP_EOL;
+                $callDetailBuff .= "    args[$i] = " . $this->mixToString($args[$i]) . PHP_EOL;
             }
             $callDetailBuff .= "<<javelin.Args_END>>" . PHP_EOL;
         }
@@ -288,9 +288,9 @@ class S2JavelinTraceInterceptor extends S2Container_AbstractInterceptor
         // 戻り値のログを生成する。
         if ($this->isLogReturn_)
         {
-            $returnDetailBuff .= "<<javelin.Return_START>>" . PHP_EOL .
-                                 "    $ret"                 . PHP_EOL .
-                                 "<<javelin.Return_END>>"   . PHP_EOL;
+            $returnDetailBuff .= "<<javelin.Return_START>>"        . PHP_EOL
+                               . "    " . $this->mixToString($ret) . PHP_EOL
+                               . "<<javelin.Return_END>>"          . PHP_EOL;
         }
         return $returnDetailBuff;
     }
@@ -356,7 +356,6 @@ class S2JavelinTraceInterceptor extends S2Container_AbstractInterceptor
 
     public function setLogFile($logFile)
     {
-        $logFile = S2Container_StringUtil::expandPath($logFile);
         if(!is_writable(dirname($logFile))){
             throw new Exception("can not write log file. [ $logFile ]");
         }
@@ -377,7 +376,6 @@ class S2JavelinTraceInterceptor extends S2Container_AbstractInterceptor
     private function getTime()
     {
         list($usec, $sec) = explode(" ", microtime());
-        //$usec = (string)((float)$usec + 0.0005);
         return date('Y/m/d H:i:s',$sec) . substr($usec,1,4);
     }
 
@@ -392,5 +390,26 @@ class S2JavelinTraceInterceptor extends S2Container_AbstractInterceptor
             self::$ID = uniqid();
         }
     }
+
+    private function mixToString($val) {
+        if (is_array($val)) {
+            $c = count($val);
+            return "array($c)";
+        } else if (is_object($val)){
+            $name = get_class($val);
+            return "object<$name>";
+        } else if (is_bool($val)){
+            if ($val) {
+                return 'true';
+            } else {
+                return 'false';
+            }
+        } else if (is_null($val)){
+            return 'null';
+        } else {
+            return $val;   
+        }
+    }
+
 }
 ?>
