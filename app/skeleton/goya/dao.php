@@ -2,9 +2,10 @@
 interface @@CLASS_NAME@@ {
     const BEAN = "@@ENTITY_NAME@@";
     
-    public function findAllArray();
-    public function update(@@ENTITY_NAME@@ $entity);
-    public function insert(@@ENTITY_NAME@@ $entity);
-    public function delete(@@ENTITY_NAME@@ $entity);
+    public function findAllList();
+    //public function findAllArray();
+    //public function update(@@ENTITY_NAME@@ $entity);
+    //public function insert(@@ENTITY_NAME@@ $entity);
+    //public function delete(@@ENTITY_NAME@@ $entity);
 }
 ?>
