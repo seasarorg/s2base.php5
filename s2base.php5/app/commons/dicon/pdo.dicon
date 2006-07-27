@@ -59,9 +59,22 @@
     </component>
     -->
     
+    <!-- freetds dsn sybase|mssql -->
+    <!--
+    <component name="dataSource" class="S2Container_PDODataSource">
+        <property name="dsn">"dblib:host=localhost; dbname=s2con"</property>
+        <property name="user">"root"</property>
+        <property name="password">"passpass"</property>
+        <property name="option">
+            array(PDO::ATTR_ORACLE_NULLS => PDO::NULL_EMPTY_STRING);
+        </property>
+    </component>
+    -->
+    
     <component name="requiredTx" class="S2Dao_RequiredInterceptor" />
     <component name="requiresNewTx" class="S2Dao_RequiresNewInterceptor" />
     <component name="mandatoryTx" class="S2Dao_MandatoryInterceptor" />
+    <component name="neverTx" class="S2Dao_NeverInterceptor" />
     <component name="notSupportedTx" class="S2Dao_NotSupportedInterceptor" />
 
 </components>
