@@ -158,9 +158,9 @@ class EntityCommand implements S2Base_GenerateCommand {
     }
 
     public static function getPropertyNameFromCol($col){
-        $prop = $col;
+        $prop = strtolower($col);
         if (preg_match("/_/",$col)){
-            $prop = preg_replace("/_/"," ",strtolower($col));
+            $prop = preg_replace("/_/"," ",$prop);
             $prop = ucwords($prop);
             $prop = preg_replace("/\s+/","",$prop);
             $prop = strtolower(substr($prop,0,1)) . substr($prop,1);
