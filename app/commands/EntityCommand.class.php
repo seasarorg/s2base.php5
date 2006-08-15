@@ -178,10 +178,10 @@ class EntityCommand implements S2Base_GenerateCommand {
         $src     .= '        $buf = array();' . "\n";
         foreach($cols as $col){
             $prop = self::getPropertyNameFromCol($col);
-            $getter = '" . $this->get' . ucfirst($prop) . '();';            
-            $src .= '        $buf[] = "' . "$prop => " . $getter . "\n";
+            $getter = '\' . $this->get' . ucfirst($prop) . '();';            
+            $src .= '        $buf[] = \'' . "$prop => " . $getter . "\n";
         }
-        $src     .= '        return "{" . implode(", ",$buf) . "}";' . "\n";
+        $src     .= '        return \'{\' . implode(\', \',$buf) . \'}\';' . "\n";
         $src     .= '    }' . "\n";
         return $src;
     }

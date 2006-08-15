@@ -17,10 +17,7 @@ class GenerateCoreFileTask extends Task {
         $this->log("coreFile : {$this->coreFile}");
         $this->contents = array();
         $this->classes = $this->getClasses();
-        $dirs = explode(',',$this->searchDir);
-        foreach($dirs as $dir){
-            $this->searchDirectory($dir);
-        }
+        $this->searchDirectory($this->searchDir);
 
         $contents = "<?php\n" . 
                     $this->getAllContents() .
@@ -47,7 +44,7 @@ class GenerateCoreFileTask extends Task {
         foreach($classes as &$c){
             $c = trim($c);
         }
-        return $classes;
+        return $classes;            
     }
     
     private function searchDirectory($parentPath){
@@ -61,7 +58,7 @@ class GenerateCoreFileTask extends Task {
             if(is_dir($path)){
                 $this->searchDirectory($path);
             }else{
-                if(preg_match('/^(.+?)\..*php$/',$entry,$reg)){
+                if(preg_match('/(.+)\.class\.php$/',$entry,$reg)){
                     if(in_array($reg[1],$this->classes)){
                         $this->getSrc($reg[1],$path);
                         $this->included++;

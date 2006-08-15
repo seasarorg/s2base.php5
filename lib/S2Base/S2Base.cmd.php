@@ -24,6 +24,7 @@
 /**
  * @author klove
  */
+/*
 if(!defined('STDIN')){
     define('STDIN',fopen("php://stdin","r"));
 }
@@ -44,7 +45,8 @@ define('S2BASE_PHP5_ENTITY_DIR',      S2BASE_PHP5_DS . "entity" .      S2BASE_PH
 define('S2BASE_PHP5_INTERCEPTOR_DIR', S2BASE_PHP5_DS . "interceptor" . S2BASE_PHP5_DS);
 define('S2BASE_PHP5_SERVICE_DIR',     S2BASE_PHP5_DS . "service" .     S2BASE_PHP5_DS);
 define('S2BASE_PHP5_VIEW_DIR',        S2BASE_PHP5_DS . "view" .        S2BASE_PHP5_DS);
+*/
 
-require_once('build/s2base.php5/s2base.cmd.classes.php')
+require_once('build/s2base.php5/S2Base.cmd.php');
 
 ?>

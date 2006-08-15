@@ -17,12 +17,22 @@
 // | either express or implied. See the License for the specific language |
 // | governing permissions and limitations under the License.             |
 // +----------------------------------------------------------------------+
-// | Authors: klove                                                       |
+// | Authors: klove, KIYO-SHIT                                            |
 // +----------------------------------------------------------------------+
 //
 // $Id:$
 /**
- * @author klove
+ * @author klove, KIYO-SHIT
  */
-require_once('build/s2base.php5/S2Base.web.php');
+require_once(LOG4PHP_DIR . "/layouts/LoggerPatternLayout.php");
+class S2JavelinPatternLayout extends LoggerPatternLayout
+{
+     function format($event)
+     {
+         $timeStamp = $event->getTimeStamp();
+         $usecs = round(($timeStamp - (int)$timeStamp) * 1000);
+         $usec  = sprintf('%03d', $usecs);
+         return preg_replace("/(\d\d:\d\d),\d{3}/","$1.$usec",parent::format($event),1);
+     }
+}
 ?>

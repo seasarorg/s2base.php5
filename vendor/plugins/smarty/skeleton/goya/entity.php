@@ -10,7 +10,7 @@ class @@CLASS_NAME@@ {
     private $prop;
     const prop_RELNO = 0;
     const prop_RELKEYS = 'this_fk:other_pk';
-    public function setProp(Entity $entity){ $this->prop = $entity; }
+    public function setProp(OtherEntity $entity){ $this->prop = $entity; }
     public function getProp(){ return $this->prop; }
     */    
 }
