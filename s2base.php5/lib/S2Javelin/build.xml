@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
-<project name="s2base.php5" default="build" basedir=".">
+<project name="s2javelin.php5" default="build" basedir=".">
 
     <taskdef name="copy2" classname="src.phing.task.CopyFilesToOneDirTask" />
     <taskdef name="gcore" classname="src.phing.task.GenerateCoreFileTask" />
-    <taskdef name="pearpkg2" classname="src.phing.task.PearPkg2SupportTask" />
 
     <target name="init">
         <property name="project.name" value="${phing.project.name}" />
-        <property name="package.name" value="S2Base" />
+        <property name="package.name" value="S2Javelin" />
         <property name="project.version" value="1.0.0" />
         <property name="project.state" value="beta" />
         <property name="project.build.dir" value="${project.basedir}/build" />
@@ -24,33 +23,23 @@
 
     <target name="prepare" depends="init">
         <mkdir dir="${project.build.dir}" />
-        <mkdir dir="${project.build.dir}/${project.name}" />
-        <!-- mkdir dir="${project.build.dir}/${project.name}/${package.name}" /-->
+        <mkdir dir="${project.build.dir}/${project.name}/${package.name}" />
     </target>
 
     <target name="build" depends="prepare">
-        <gcore searchDir="${project.src.dir}/${project.name}"
-               coreFile="${project.build.dir}/${project.name}/${package.name}.web.classes.php"
-               listFile="${project.src.dir}/phing/etc/${package.name}.web.files.txt"/>
+        <copy2 toDir="${project.build.dir}/${project.name}/${package.name}">
+            <fileset dir="${project.src.dir}">
+                <include name="${project.name}/**/*.php"/>
+                <include name="${project.name}/**/*.properties"/>
+            </fileset>
+        </copy2>
 
-        <gcore searchDir="${project.src.dir}/${project.name}"
-               coreFile="${project.build.dir}/${project.name}/${package.name}.cmd.classes.php"
-               listFile="${project.src.dir}/phing/etc/${package.name}.cmd.files.txt"/>
+        <gcore searchDir="${project.build.dir}/${project.name}/${package.name}"
+               coreFile="${project.build.dir}/${project.name}/${package.name}.core.classes.php"
+               listFile="${project.basedir}/src/phing/etc/${package.name}.core.files.txt"/>
 
-        <gcore searchDir="${project.basedir}/../S2Dao/src/phing,${project.src.dir}/phing"
-               coreFile="${project.build.dir}/${project.name}/${package.name}.phing.classes.php"
-               listFile="${project.src.dir}/phing/etc/${package.name}.phing.files.txt"/>
-
-        <copy file="${project.basedir}/src/phing/etc/${package.name}.cmd.php.tpl"
-              tofile="${project.build.dir}/${project.name}/${package.name}.cmd.php"
-              overwrite="true"/>
-
-        <copy file="${project.basedir}/src/phing/etc/${package.name}.web.php.tpl"
-              tofile="${project.build.dir}/${project.name}/${package.name}.web.php"
-              overwrite="true"/>
-
-        <copy file="${project.basedir}/src/phing/etc/${package.name}.phing.php.tpl"
-              tofile="${project.build.dir}/${project.name}/${package.name}.phing.php"
+        <copy file="${project.basedir}/src/phing/etc/${package.name}.php.tpl"
+              tofile="${project.build.dir}/${project.name}/${package.name}.php"
               overwrite="true"/>
 
         <copy file="${project.basedir}/${license.file}"
@@ -58,33 +47,16 @@
               overwrite="true"/>
     </target>
 
-    <target name="project-tree" depends="build">
-        <mkdir dir="${project.build.dir}/${project.name}/bin" />
-        <mkdir dir="${project.build.dir}/${project.name}/project" />
-
-        <copy toDir="${project.build.dir}/${project.name}/project">
-            <fileset dir="../..">
-                <exclude name="lib/S2*/**" />
-                <exclude name="**/.*/**" />
-            </fileset>
-        </copy>
-    </target>
-
-    <target name="pear-pkg-xml" depends="project-tree">
-
-        <copy file="${project.basedir}/src/phing/etc/s2base.php"
-              tofile="${project.build.dir}/${project.name}/bin/s2base.php"
-              overwrite="true"/>
-
+    <target name="pear-pkg-xml" depends="build">
         <pearpkg name="${package.name}" 
                  dir="${project.build.dir}/${project.name}" 
-                 destFile="${project.build.dir}/${project.name}/package.xml">
+                 destFile="${project.build.dir}/${project.name}/package-dist.xml">
             <fileset dir="${project.build.dir}/${project.name}">
                 <include name="**/*"/>
             </fileset>
             <option name="notes">${release.notes}</option>
-            <option name="description">S2Base.PHP5</option>
-            <option name="summary">S2Base.PHP5</option>
+            <option name="description">S2Javelin.PHP5</option>
+            <option name="summary">S2Javelin.PHP5</option>
             <option name="version" value="${project.version}"/>
             <option name="state" value="${project.state}"/>
             <option name="baseinstalldir" value="${package.name}"/>
@@ -94,24 +66,6 @@
                     <element key="type" value="php"/>
                     <element key="rel" value="ge"/>
                     <element key="version" value="5.1.0"/>
-                </element>
-                <element>
-                    <element key="type" value="pkg"/>
-                    <element key="rel" value="has"/>
-                    <element key="optional" value="yes"/>
-                    <element key="name" value="Phing"/>
-                </element>
-                <element>
-                    <element key="type" value="pkg"/>
-                    <element key="rel" value="has"/>
-                    <element key="optional" value="yes"/>
-                    <element key="name" value="S2Container"/>
-                </element>
-                <element>
-                    <element key="type" value="pkg"/>
-                    <element key="rel" value="has"/>
-                    <element key="optional" value="yes"/>
-                    <element key="name" value="S2Dao"/>
                 </element>
             </mapping>
             <mapping name="maintainers">
@@ -130,21 +84,20 @@
             </mapping>
         </pearpkg>
 
-        <pearpkg2 pkgFile="${project.build.dir}/${project.name}/package.xml"/>
-
-        <copy toDir="${project.build.dir}/${project.name}/bin">
-            <fileset dir="${project.basedir}/src/phing/etc">
-                <include name="s2base" />
-                <include name="s2base.bat" />
-            </fileset>
+        <copy file="${project.build.dir}/${project.name}/package-dist.xml"
+              tofile="${project.build.dir}/${project.name}/package.xml">
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="(role=.)data" replace="\1php" ignoreCase="true"/>
+                </replaceregexp>
+            </filterchain>
         </copy>
-
     </target>
  
     <target name="pear-pkg" depends="pear-pkg-xml">
-        <exec command="pear package package.xml" 
+        <exec command="pear package " 
               dir="${project.build.dir}/${project.name}" />
-        <mkdir dir="${project.build.dir}/pear" />
+
         <move toDir="${project.build.dir}/pear" overwrite="true">
             <fileset dir="${project.build.dir}/${project.name}">
                 <include name="*.tgz"/>

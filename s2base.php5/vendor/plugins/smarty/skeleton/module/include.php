@@ -1,15 +1,8 @@
 <?php
-$pwd = dirname(__FILE__);
-$packages = array(
-    $pwd,
-    $pwd . '/action',
-    $pwd . '/dao',
-    $pwd . '/entity',
-    $pwd . '/interceptor',
-    $pwd . '/service'
-);
-ini_set('include_path', 
-        implode(PATH_SEPARATOR, $packages) . PATH_SEPARATOR . 
-        ini_get('include_path')
-);
+$modDir = dirname(__FILE__);
+S2ContainerClassLoader::import($modDir . '/action');
+S2ContainerClassLoader::import($modDir . '/dao');
+S2ContainerClassLoader::import($modDir . '/entity');
+S2ContainerClassLoader::import($modDir . '/interceptor');
+S2ContainerClassLoader::import($modDir . '/service');
 ?>

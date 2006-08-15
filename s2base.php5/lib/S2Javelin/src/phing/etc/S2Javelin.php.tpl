@@ -24,5 +24,8 @@
 /**
  * @author klove
  */
-require_once('build/s2base.php5/S2Base.web.php');
+
+//require_once('S2Javelin/S2JavelinPatternLayout.class.php');
+//require_once('S2Javelin/S2JavelinTraceInterceptor.class.php');
+define('S2JAVELIN_PHP5',dirname(__FILE__) . DIRECTORY_SEPARATOR . 'S2Javelin');
 ?>

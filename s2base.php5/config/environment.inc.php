@@ -24,11 +24,7 @@ define('S2CONTAINER_PHP5_DOM_VALIDATE',false);
  * include path setting
  */
 $packages = array(
-    S2BASE_PHP5_ROOT . '/app/commons/dao',
-    S2BASE_PHP5_ROOT . '/app/commons/interceptor',
-    S2BASE_PHP5_ROOT . '/lib',
-    S2BASE_PHP5_ROOT . '/lib/S2Javelin'
-);
+    S2BASE_PHP5_ROOT . '/lib');
 ini_set('include_path', 
         implode(PATH_SEPARATOR, $packages) . PATH_SEPARATOR . 
         ini_get('include_path')
@@ -38,13 +34,18 @@ ini_set('include_path',
  * library setting
  */
 require_once('S2Container/S2Container.php');
+S2ContainerClassLoader::import(S2CONTAINER_PHP5);
 require_once('S2Dao/S2Dao.php');
+S2ContainerClassLoader::import(S2DAO_PHP5);
+//require_once('S2Javelin/S2Javelin.php');
+//S2ContainerClassLoader::import(S2JAVELIN_PHP5);
+S2ContainerClassLoader::import(S2BASE_PHP5_ROOT . '/app/commons/dao');
 
 /**
  * autoload setting
  */
 function __autoload($class = null){
-    if($class != null){@include_once("$class.class.php");}
+    S2ContainerClassLoader::load($class);
 }
 
 /**

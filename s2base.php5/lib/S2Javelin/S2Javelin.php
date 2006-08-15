@@ -24,5 +24,6 @@
 /**
  * @author klove
  */
-require_once('build/s2base.php5/S2Base.web.php');
+
+require_once('build/s2javelin.php5/S2Javelin.php');
 ?>
