@@ -98,20 +98,22 @@
                 <element>
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
-                    <element key="optional" value="yes"/>
-                    <element key="name" value="Phing"/>
+                    <element key="name" value="S2Javelin"/>
                 </element>
                 <element>
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
-                    <element key="optional" value="yes"/>
+                    <element key="name" value="S2Dao"/>
+                </element>
+                <element>
+                    <element key="type" value="pkg"/>
+                    <element key="rel" value="has"/>
                     <element key="name" value="S2Container"/>
                 </element>
                 <element>
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
-                    <element key="optional" value="yes"/>
-                    <element key="name" value="S2Dao"/>
+                    <element key="name" value="phing"/>
                 </element>
             </mapping>
             <mapping name="maintainers">
@@ -142,7 +144,7 @@
     </target>
  
     <target name="pear-pkg" depends="pear-pkg-xml">
-        <exec command="pear package package.xml" 
+        <exec command="pear package package2.xml" 
               dir="${project.build.dir}/${project.name}" />
         <mkdir dir="${project.build.dir}/pear" />
         <move toDir="${project.build.dir}/pear" overwrite="true">
