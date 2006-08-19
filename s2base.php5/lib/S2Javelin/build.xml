@@ -3,6 +3,7 @@
 
     <taskdef name="copy2" classname="src.phing.task.CopyFilesToOneDirTask" />
     <taskdef name="gcore" classname="src.phing.task.GenerateCoreFileTask" />
+    <taskdef name="pearpkg2" classname="src.phing.task.PearPkg2SupportTask" />
 
     <target name="init">
         <property name="project.name" value="${phing.project.name}" />
@@ -50,7 +51,7 @@
     <target name="pear-pkg-xml" depends="build">
         <pearpkg name="${package.name}" 
                  dir="${project.build.dir}/${project.name}" 
-                 destFile="${project.build.dir}/${project.name}/package-dist.xml">
+                 destFile="${project.build.dir}/${project.name}/package.xml">
             <fileset dir="${project.build.dir}/${project.name}">
                 <include name="**/*"/>
             </fileset>
@@ -84,6 +85,8 @@
             </mapping>
         </pearpkg>
 
+        <pearpkg2 pkgFile="${project.build.dir}/${project.name}/package.xml"/>
+<!--
         <copy file="${project.build.dir}/${project.name}/package-dist.xml"
               tofile="${project.build.dir}/${project.name}/package.xml">
             <filterchain>
@@ -92,10 +95,11 @@
                 </replaceregexp>
             </filterchain>
         </copy>
+-->
     </target>
  
     <target name="pear-pkg" depends="pear-pkg-xml">
-        <exec command="pear package " 
+        <exec command="pear package package2.xml" 
               dir="${project.build.dir}/${project.name}" />
 
         <move toDir="${project.build.dir}/pear" overwrite="true">

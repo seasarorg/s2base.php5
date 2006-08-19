@@ -6,10 +6,10 @@ class PearPkg2SupportTask extends Task {
     public function init(){}
 
     public function main(){
-        $URIs['s2container'] = 'http://s2container.php5.seasar.org/download/S2Container-1.1.1';
-        $URIs['s2dao']       = 'http://s2dao.php5.sandbox.seasar.org/files/S2Dao-1.1.0';
-        $URIs['s2javelin']   = 'http://';
-        $URIs['phing']       = 'pear.phing.info';
+        $URIs['S2Container'] = 'http://labs.s2php5.jp/s2base/pear/S2Container-current';
+        $URIs['S2Dao']       = 'http://labs.s2php5.jp/s2base/pear/S2Dao-current';
+        $URIs['S2Javelin']   = 'http://labs.s2php5.jp/s2base/pear/S2Javelin-current';
+        $URIs['S2Base']      = 'http://labs.s2php5.jp/s2base/pear/S2Base-1.0.0';
 
         $this->log("pkgFile : {$this->pkgFile}");
 
@@ -38,24 +38,18 @@ class PearPkg2SupportTask extends Task {
         $pkg2File = dirname($this->pkgFile) . DIRECTORY_SEPARATOR . 'package2.xml';
         $contents = file_get_contents($pkg2File);
 
-        $uri = $URIs['s2container'];
-        $key = "<name>S2Container<\/name>.*?<channel>pear.php.net<\/channel>";
-        $rep = "<name>S2Container</name><uri>$uri</uri>";
+        foreach ($URIs as $name => $uri) {
+            $key = "<name>$name<\/name>.*?<channel>pear.php.net<\/channel>";
+            $rep = "<name>$name</name><uri>$uri</uri>";
+            $contents = preg_replace("/$key/s",$rep,$contents);
+        }
+
+        $key = "<name>phing<\/name>.*?<channel>pear.php.net<\/channel>";
+        $rep = "<name>phing</name><channel>pear.phing.info</channel>";
         $contents = preg_replace("/$key/s",$rep,$contents);
 
-        $uri = $URIs['s2dao'];
-        $key = "<name>S2Dao<\/name>.*?<channel>pear.php.net<\/channel>";
-        $rep = "<name>S2Dao</name><uri>$uri</uri>";
-        $contents = preg_replace("/$key/s",$rep,$contents);
-
-        $uri = $URIs['s2javelin'];
-        $key = "<name>S2Javelin<\/name>.*?<channel>pear.php.net<\/channel>";
-        $rep = "<name>S2Javelin</name><uri>$uri</uri>";
-        $contents = preg_replace("/$key/s",$rep,$contents);
-
-        $channel = $URIs['phing'];
-        $key = "<name>Phing<\/name>.*?<channel>pear.php.net<\/channel>";
-        $rep = "<name>Phing</name><channel>$channel</channel>";
+        $key = "<pearinstaller>.*?<min>.+?<\/min>";
+        $rep = "<pearinstaller><min>1.4.11</min>";
         $contents = preg_replace("/$key/s",$rep,$contents);
 
         $key = "http:\/\/www\.example\.com";
