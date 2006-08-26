@@ -25,16 +25,29 @@
  * @author klove
  */
 
+/**
+ * Initial setting
+ */
 $s2baseDir = dirname(dirname(__FILE__));
 $args = $_SERVER['argv'];
+$projectType = 'default';
 
+/**
+ * Command Line Arguments setting
+ */
 if (isset($args[1])) {
     $projectDir = $args[1];
 } else {
     print "[INFO ] Usage: % s2base <project directory>" . PHP_EOL;
     exit;
 }
+if (isset($args[2])) {
+    $projectType = $args[2];
+}
 
+/**
+ * Project directory validation
+ */
 if (!is_dir($projectDir)) {
     $parent = dirname($projectDir);
     if (is_dir($parent) and is_writable($parent)) {
@@ -50,13 +63,30 @@ if (!is_dir($projectDir)) {
     exit;
 }
 
+/**
+ * Main
+ */
 print "[INFO ] s2base  directory : $s2baseDir" . PHP_EOL;
 print "[INFO ] project directory : $projectDir" . PHP_EOL;
 
+$excludes = getExcludeList($projectType);
 $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
-dircopy($srcDir,$projectDir);
+dircopy($srcDir,$projectDir,$excludes);
 
-function dircopy($src,$dest) {
+/**
+ * End of Main
+ */
+ 
+ 
+/**
+ * Functions 
+ */
+/**
+ * @param string $src
+ * @param string $dest
+ * @param array  $excludes
+ */
+function dircopy($src,$dest,$excludes) {
     $items = scandir($src);
     if ($items === false) {
         print "[ERROR] scan directory [$src] failed." . PHP_EOL;
@@ -64,13 +94,22 @@ function dircopy($src,$dest) {
     }
 
     foreach ($items as $item) {
-        if (preg_match('/^\./',$item) or 
-            $item == 'dummy') {
+        if (preg_match('/^\./', $item)){ 
             continue;
         }
 
         $srcItem  = $src  . DIRECTORY_SEPARATOR . $item;
         $destItem = $dest . DIRECTORY_SEPARATOR . $item;
+
+        $isExclude = false;
+        foreach ($excludes as $key) {
+            if (preg_match("/$key/",$srcItem)){ 
+                $isExclude = true;
+            }
+        }
+        if ($isExclude) {
+            continue;
+        }
 
         if (is_dir($srcItem)) {
             if (is_dir($destItem)) {
@@ -83,7 +122,7 @@ function dircopy($src,$dest) {
             else {
                 print "[INFO ] create : $destItem" . PHP_EOL;
             }
-            dircopy($srcItem,$destItem);
+            dircopy($srcItem,$destItem,$excludes);
         }
         else if (is_file($srcItem)) {
             if (is_file($destItem)) {
@@ -101,4 +140,24 @@ function dircopy($src,$dest) {
     }
 }
 
+/**
+ * @param string $projectType
+ */
+function getExcludeList($projectType) {
+    $excludes = array('dummy$');
+
+    if ($projectType != 'smarty') {
+        $excludes[] = 'var.+?smarty$';
+        $excludes[] = 'var.+?cache$';
+        $excludes[] = 'var.+?session$';
+        $excludes[] = 'plugins.+?smarty$';
+        $excludes[] = 'public$';
+        $excludes[] = 'commons.+?view$';
+    }
+    
+    return $excludes;
+}
+/**
+ * End of Functions
+ */
 ?>
