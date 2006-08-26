@@ -48,6 +48,9 @@ class S2Base_RuntimeException extends Exception {
             case 'ERR108':
                 $msg = "invalid action result [{$args[0]}]";
                 break;
+            case 'ERR109':
+                $msg = "template file[{$args[0]}] not found in template dir[{$args[1]}].";
+                break;
             default:
                 $msg = implode($args);
         }
