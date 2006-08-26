@@ -31,14 +31,19 @@
 $s2baseDir = dirname(dirname(__FILE__));
 $args = $_SERVER['argv'];
 $projectType = 'default';
+$projectDir = null;
 
 /**
  * Command Line Arguments setting
  */
 if (isset($args[1])) {
     $projectDir = $args[1];
-} else {
-    print "[INFO ] Usage: % s2base <project directory>" . PHP_EOL;
+}
+
+if (is_null($projectDir) or
+    strtolower($projectDir) == '--help' or 
+    strtolower($projectDir) == '-h') {
+    print "[INFO ] Usage: % s2base <project directory> [smarty]" . PHP_EOL;
     exit;
 }
 if (isset($args[2])) {
