@@ -115,9 +115,9 @@ class S2Base_SmartyController extends Smarty
             $viewFile = $this->actionTpl;
         } else {
             $viewFile = "$mod/view/" . $this->actionTpl;
-            if (!file_exists("{$this->template_dir}/$viewFile")) {
-            	throw new S2Base_RuntimeException('ERR109',
-                    array($viewFile,$this->template_dir));
+            if (!file_exists($this->template_dir . '/' . $viewFile)) {
+                throw new S2Base_RuntimeException('ERR109',
+                    array($mod, $act, $this->template_dir . '/' . $viewFile));
             }
         }
 

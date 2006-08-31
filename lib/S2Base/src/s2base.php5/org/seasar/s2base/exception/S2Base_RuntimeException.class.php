@@ -49,7 +49,7 @@ class S2Base_RuntimeException extends Exception {
                 $msg = "invalid action result [{$args[0]}]";
                 break;
             case 'ERR109':
-                $msg = "template file[{$args[0]}] not found in template dir[{$args[1]}].";
+                $msg = "template file[{$args[2]}] not found. [ module<{$args[0]}> action<{$args[1]}> ]";
                 break;
             default:
                 $msg = implode($args);
