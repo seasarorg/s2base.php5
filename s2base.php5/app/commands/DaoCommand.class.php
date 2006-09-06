@@ -166,10 +166,11 @@ class DaoCommand implements S2Base_GenerateCommand {
     
     private function prepareDaoFile(){
 
-        $srcFile = S2BASE_PHP5_MODULES_DIR . 
-                   $this->moduleName . 
-                   S2BASE_PHP5_DAO_DIR . 
-                   "{$this->daoInterfaceName}.class.php";
+        $srcFile = S2BASE_PHP5_MODULES_DIR
+                 . $this->moduleName 
+                 . S2BASE_PHP5_DAO_DIR
+                 . $this->daoInterfaceName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'dao/dao.php');
 
@@ -181,10 +182,11 @@ class DaoCommand implements S2Base_GenerateCommand {
 
     private function prepareDaoTestFile(){
         $testName = $this->daoInterfaceName . "Test";
-        $srcFile = S2BASE_PHP5_TEST_MODULES_DIR . 
-                    $this->moduleName . 
-                    S2BASE_PHP5_DAO_DIR . 
-                    "$testName.class.php";
+        $srcFile = S2BASE_PHP5_TEST_MODULES_DIR
+                 . $this->moduleName 
+                 . S2BASE_PHP5_DAO_DIR
+                 . $testName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'dao/test.php');
         $patterns = array("/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@DAO_CLASS@@/");
@@ -209,10 +211,11 @@ class DaoCommand implements S2Base_GenerateCommand {
 
     private function prepareEntityFile(){
 
-        $srcFile = S2BASE_PHP5_MODULES_DIR . 
-                   $this->moduleName . 
-                   S2BASE_PHP5_ENTITY_DIR . 
-                   "{$this->entityClassName}.class.php";
+        $srcFile = S2BASE_PHP5_MODULES_DIR
+                 . $this->moduleName
+                 . S2BASE_PHP5_ENTITY_DIR
+                 . $this->entityClassName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $accessorSrc = EntityCommand::getAccessorSrc($this->cols);
         $toStringSrc = EntityCommand::getToStringSrc($this->cols);
         if ($this->isEntityExtends) {

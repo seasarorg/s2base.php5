@@ -160,10 +160,11 @@ class GoyaCommand implements S2Base_GenerateCommand {
     
     private function prepareServiceClassFile(){
         $serviceName = $this->serviceClassName . "Impl";
-        $srcFile = S2BASE_PHP5_MODULES_DIR . 
-                   $this->moduleName . 
-                   S2BASE_PHP5_SERVICE_DIR . 
-                   "{$this->serviceClassName}.class.php";
+        $srcFile = S2BASE_PHP5_MODULES_DIR
+                 . $this->moduleName
+                 . S2BASE_PHP5_SERVICE_DIR
+                 . $this->serviceClassName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'goya/service.php');
         $daoProp = strtolower(substr($this->daoInterfaceName,0,1)) . substr($this->daoInterfaceName,1);
@@ -174,10 +175,11 @@ class GoyaCommand implements S2Base_GenerateCommand {
     }
 
     private function prepareServiceInterfaceFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR . 
-                   $this->moduleName . 
-                   S2BASE_PHP5_SERVICE_DIR . 
-                   "{$this->serviceInterfaceName}.class.php";
+        $srcFile = S2BASE_PHP5_MODULES_DIR
+                 . $this->moduleName
+                 . S2BASE_PHP5_SERVICE_DIR
+                 . $this->serviceInterfaceName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'goya/service_interface.php');
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
@@ -188,10 +190,11 @@ class GoyaCommand implements S2Base_GenerateCommand {
 
     private function prepareServiceTestFile(){
         $testName = $this->serviceClassName . "Test";
-        $srcFile = S2BASE_PHP5_TEST_MODULES_DIR . 
-                    $this->moduleName . 
-                    S2BASE_PHP5_SERVICE_DIR . 
-                    "$testName.class.php";
+        $srcFile = S2BASE_PHP5_TEST_MODULES_DIR
+                 . $this->moduleName
+                 . S2BASE_PHP5_SERVICE_DIR
+                 . $testName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'goya/service_test.php');
 
@@ -203,10 +206,11 @@ class GoyaCommand implements S2Base_GenerateCommand {
 
     private function prepareDaoFile(){
 
-        $srcFile = S2BASE_PHP5_MODULES_DIR . 
-                   $this->moduleName . 
-                   S2BASE_PHP5_DAO_DIR . 
-                   "{$this->daoInterfaceName}.class.php";
+        $srcFile = S2BASE_PHP5_MODULES_DIR
+                 . $this->moduleName
+                 . S2BASE_PHP5_DAO_DIR
+                 . $this->daoInterfaceName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'goya/dao.php');
 
@@ -218,10 +222,11 @@ class GoyaCommand implements S2Base_GenerateCommand {
 
     private function prepareDaoTestFile(){
         $testClassName = $this->daoInterfaceName . "Test";
-        $srcFile = S2BASE_PHP5_TEST_MODULES_DIR . 
-                    $this->moduleName . 
-                    S2BASE_PHP5_DAO_DIR . 
-                    "$testClassName.class.php";
+        $srcFile = S2BASE_PHP5_TEST_MODULES_DIR
+                 . $this->moduleName
+                 . S2BASE_PHP5_DAO_DIR
+                 . $testClassName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'goya/dao_test.php');
 
@@ -233,10 +238,11 @@ class GoyaCommand implements S2Base_GenerateCommand {
 
     private function prepareEntityFile(){
 
-        $srcFile = S2BASE_PHP5_MODULES_DIR . 
-                   $this->moduleName . 
-                   S2BASE_PHP5_ENTITY_DIR . 
-                   "{$this->entityClassName}.class.php";
+        $srcFile = S2BASE_PHP5_MODULES_DIR
+                 . $this->moduleName
+                 . S2BASE_PHP5_ENTITY_DIR
+                 . $this->entityClassName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $accessorSrc = EntityCommand::getAccessorSrc($this->cols);
         $toStringSrc = EntityCommand::getToStringSrc($this->cols);
         if ($this->isEntityExtends) {

@@ -26,7 +26,7 @@
  * @author klove
  */
 interface S2Base_GenerateCommand {
-    const TPL_SUFFIX = ".tpl";
+    //const TPL_SUFFIX = ".tpl";
     public function getName();
     public function execute();
 }

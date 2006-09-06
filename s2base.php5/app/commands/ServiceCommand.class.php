@@ -67,10 +67,11 @@ class ServiceCommand implements S2Base_GenerateCommand {
     }
     
     private function prepareServiceImplFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR . 
-                   $this->moduleName . 
-                   S2BASE_PHP5_SERVICE_DIR . 
-                   "{$this->serviceClassName}.class.php";
+        $srcFile = S2BASE_PHP5_MODULES_DIR
+                 . $this->moduleName
+                 . S2BASE_PHP5_SERVICE_DIR
+                 . $this->serviceClassName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'service/service.php');
 
@@ -81,10 +82,11 @@ class ServiceCommand implements S2Base_GenerateCommand {
     }
 
     private function prepareServiceInterfaceFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR . 
-                   $this->moduleName . 
-                   S2BASE_PHP5_SERVICE_DIR . 
-                   "{$this->serviceInterfaceName}.class.php";
+        $srcFile = S2BASE_PHP5_MODULES_DIR
+                 . $this->moduleName
+                 . S2BASE_PHP5_SERVICE_DIR
+                 . $this->serviceInterfaceName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'service/interface.php');
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
@@ -95,10 +97,11 @@ class ServiceCommand implements S2Base_GenerateCommand {
 
     private function prepareServiceTestFile(){
         $testName = $this->serviceClassName . "Test";
-        $srcFile = S2BASE_PHP5_TEST_MODULES_DIR . 
-                    $this->moduleName . 
-                    S2BASE_PHP5_SERVICE_DIR . 
-                    "$testName.class.php";
+        $srcFile = S2BASE_PHP5_TEST_MODULES_DIR
+                 . $this->moduleName
+                 . S2BASE_PHP5_SERVICE_DIR
+                 . $testName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'service/test.php');
 

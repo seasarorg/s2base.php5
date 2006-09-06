@@ -119,10 +119,11 @@ class EntityCommand implements S2Base_GenerateCommand {
     
     private function prepareEntityFile(){
 
-        $srcFile = S2BASE_PHP5_MODULES_DIR . 
-                   $this->moduleName . 
-                   S2BASE_PHP5_ENTITY_DIR . 
-                   "{$this->entityClassName}.class.php";
+        $srcFile = S2BASE_PHP5_MODULES_DIR 
+                 . $this->moduleName
+                 . S2BASE_PHP5_ENTITY_DIR
+                 . $this->entityClassName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $accessorSrc = self::getAccessorSrc($this->cols);
         $toStringSrc = self::getToStringSrc($this->cols);
         if ($this->isEntityExtends) {

@@ -5,12 +5,12 @@
         <php expression="require_once('vendor/plugins/maple/config/environment.inc.php')"/>
         <command>
             <fileset dir="${plugins.dir}/maple/commands">
-               <include name="*Command.class.php"/>
+               <include name="*Command*.php"/>
             </fileset>
 
             <!-- default -->
             <fileset dir="${cmd.dir}">
-                <include name="*Command.class.php"/>
+                <include name="*Command*.php"/>
             </fileset>
         </command>
     </target>

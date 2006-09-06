@@ -4,12 +4,12 @@
         <php expression="require_once('vendor/plugins/smarty/config/environment.inc.php')"/>
         <command>
             <fileset dir="${plugins.dir}/smarty/commands">
-               <include name="*Command.class.php"/>
+               <include name="*Command*.php"/>
             </fileset>
 
             <!-- default -->
             <fileset dir="${cmd.dir}">
-                <include name="*Command.class.php"/>
+                <include name="*Command*.php"/>
             </fileset>
         </command>
     </target>

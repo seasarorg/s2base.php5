@@ -39,8 +39,9 @@ class CmdCommand implements S2Base_GenerateCommand {
     private function prepareCmdFile(){
 
         $cmdClassName = ucfirst($this->cmdName) . "Command";
-        $srcFile = S2BASE_PHP5_COMMANDS_DIR . 
-                   "$cmdClassName.class.php";
+        $srcFile = S2BASE_PHP5_COMMANDS_DIR 
+                 . $cmdClassName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR 
                      . 'command/command.php');
 
