@@ -28,7 +28,7 @@
 class S2Base_SmartyController extends Smarty
     implements S2Base_Controller,S2Base_View {
 
-    const TPL_SUFFIX = ".tpl";
+    const TPL_SUFFIX = S2BASE_PHP5_SMARTY_TPL_SUFFIX;
     public static $config = array();
     protected $request = null;
     protected static $errors = array();

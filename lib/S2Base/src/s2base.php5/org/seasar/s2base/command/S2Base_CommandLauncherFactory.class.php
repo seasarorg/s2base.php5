@@ -27,25 +27,26 @@
  */
 class S2Base_CommandLauncherFactory {
 
-    public static function create($classFiles){
+    public static function create($classFiles) {
         $launcher = new S2Base_CommandLauncher();
 
-        foreach($classFiles as $classFile){
-            if(preg_match("/(\w+)\.class\.php$/",$classFile,$matches)){
+        foreach ($classFiles as $classFile) {
+            $fileInfo = pathinfo($classFile);
+            if (strtolower($fileInfo['extension']) == 'php' and 
+                preg_match("/^(\w+)/",$fileInfo['basename'],$matches)) {
                 $cmdClassName = $matches[1];
-                if(!class_exists($cmdClassName,false)){
+                if (!class_exists($cmdClassName,false)) {
                     require_once($classFile);
                 }
-                if(!class_exists($cmdClassName,false)){
+                if (!class_exists($cmdClassName,false)) {
                     continue;
                 }
                 $cmdObj = new $cmdClassName();
-                if($cmdObj instanceof S2Base_GenerateCommand){
+                if ($cmdObj instanceof S2Base_GenerateCommand) {
                     $launcher->addCommand($cmdObj);
                 }
             }
         }
-
         return $launcher;
     }
 }

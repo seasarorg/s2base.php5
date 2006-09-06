@@ -1,3 +1,3 @@
 <br>
-This is @@ACTION_NAME@@.tpl <br>
+This is @@ACTION_NAME@@ template. <br>
 <br>

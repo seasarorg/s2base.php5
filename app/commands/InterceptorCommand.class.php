@@ -49,10 +49,11 @@ class InterceptorCommand implements S2Base_GenerateCommand {
     
     private function prepareInterceptorFile(){
 
-        $srcFile = S2BASE_PHP5_MODULES_DIR . 
-                   $this->moduleName . 
-                   S2BASE_PHP5_INTERCEPTOR_DIR . 
-                   "{$this->interceptorClassName}.class.php";
+        $srcFile = S2BASE_PHP5_MODULES_DIR
+                 . $this->moduleName
+                 . S2BASE_PHP5_INTERCEPTOR_DIR
+                 . $this->interceptorClassName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . "interceptor/default.php");
         $tempContent = preg_replace("/@@CLASS_NAME@@/",

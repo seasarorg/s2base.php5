@@ -55,10 +55,11 @@ class ActionCommand implements S2Base_GenerateCommand {
     }
     
     private function prepareActionFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR . 
-                   $this->moduleName . 
-                   S2BASE_PHP5_ACTION_DIR . 
-                   "{$this->actionClassName}.class.php";
+        $srcFile = S2BASE_PHP5_MODULES_DIR
+                 . $this->moduleName
+                 . S2BASE_PHP5_ACTION_DIR
+                 . $this->actionClassName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/action/action.php');
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
@@ -72,7 +73,7 @@ class ActionCommand implements S2Base_GenerateCommand {
                      $this->moduleName . 
                      S2BASE_PHP5_VIEW_DIR . 
                      "{$this->actionName}" . 
-                     S2Base_GenerateCommand::TPL_SUFFIX; 
+                     S2BASE_PHP5_SMARTY_TPL_SUFFIX; 
         $htmlFile = defined('S2BASE_PHP5_LAYOUT') ? 'html_layout.php' : 'html.php';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . "/skeleton/action/$htmlFile");

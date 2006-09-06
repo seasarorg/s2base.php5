@@ -1,0 +1,68 @@
+2006-09-06 S2Base.PHP5-1.0.0-rc4
+
+================ S2Base.PHP5-1.0.0-rc4 更新履歴 ===================
+
+	* add: S2BASE_PHP5_CLASS_SUFFIX定数を追加しました。
+	* add: S2BASE_PHP5_SMARTY_TPL_SUFFIX定数を追加しました。
+
+
+2006-08-15 S2Base.PHP5-1.0.0-rc4
+
+	* modify: __autoloadでS2ContainerClassLoaderを使用するように変更しました。
+	* add: PEARパッケージ作成
+	* modify: withSmarty
+	テンプレートファイルが存在しない場合に例外をthrowするようにしました。
+
+
+2006-07-30 S2Base.PHP5-1.0.0-rc3
+
+================ S2Base.PHP5-1.0.0-rc3 更新履歴 ===================
+
+	* info: S2Container.PHP5-1.1.1 をバンドルしました。
+	* info: S2Dao.PHP5-1.1.0 をバンドルしました。
+	* add: S2JavelinTarceInterceptorを追加しました。
+	* add: Symfony WEBフレームワークとの連携を行いました。
+	* modyfy: gen-dao タスクのDSN設定は PDO_DICON 定数 (app/commons/dicon/pdo.dicon) を
+	使用するようにしました。
+	* modify: goyaコマンドで、setServiceメソッドや、setDaoメソッド名を、serviceやdaoの
+	インタフェース名に合わせました。
+	* add: skeletonディレクトリ内にコマンドごとにディレクトリを作成しました。
+	* add: Entityクラスの生成に__toStringメソッドを追加しました。
+	* modify: ServiceCommandで、インタフェースと実装クラスの名前を指定できるようにしました。
+	* modify: Commons Daoが存在する場合にCommons Daoの選択リストを表示するように変更しました。
+	* modify: Commons Entityが存在する場合にCommons Entityの選択リストを表示し、選択された
+	クラスを継承する機能を追加しました。
+	* add: Entityクラスのプロパティ名と、カラム名のマップアノテーションを追加しました。
+	(COLUMNアノテーション) 
+	* modify: カラム名の「_」を区切り文字として、プロパティ名を作成するようにしました。
+	カラム名 : id_cd  =>  プロパティ名 : idCd
+	* modify: サービスダイコンファイル名を、サービス実装クラス名に合わせました。
+	* fix: Commons Dicon の mock.dicon サンプルを修正しました。
+	* add: withSmarty
+	goyaコマンドを作成しました。
+	* add: withSmarty
+	レイアウト指定時に使用するhtml skeleton を作成しました。
+	* fix: withSmarty
+	Commons View のレイアウトテンプレートを修正しました。
+	* modify: withSmarty
+	アクション.inc.php の作成を行わないようにしました。
+
+
+2006-06-03 S2Base.PHP5-1.0.0-rc2
+
+================ S2Base.PHP5-1.0.0-rc2 更新履歴 ===================
+
+	* modify: 生成コマンドで、ファイルが存在していた場合に例外終了していましたが、
+	終了せずに処理を進めるように改修しました。
+	* modify: 生成コマンドの最後で、入力された情報を表示し、最終確認を行うように改修しました。
+	* add: JavelinTraceInterceptor app/commons/interceptor に含めました。
+	* modify: WEBフレームワークとの連携部をプラグインの形に切り離しました。 vendor/plugins ディレクトリを作成。
+	* add: Agavi WEBフレームワークとの連携を行いました。
+
+
+2006-05-08 S2Base.PHP5-1.0.0-rc1
+
+================ S2Base.PHP5-1.0.0-rc1 更新履歴 ===================
+
+	* info: S2Base.PHP5 初リリース
+

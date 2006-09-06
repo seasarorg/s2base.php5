@@ -91,7 +91,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
                      $this->moduleName . 
                      S2BASE_PHP5_VIEW_DIR . 
                      "index" .
-                     S2Base_GenerateCommand::TPL_SUFFIX; 
+                     S2BASE_PHP5_SMARTY_TPL_SUFFIX; 
 
         $htmlFile = defined('S2BASE_PHP5_LAYOUT') ? 'index_layout.php' : 'index.php';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY

@@ -6,7 +6,7 @@
 </head>
 <body>
 
-This is index.tpl <br>
+This is index template. <br>
 
 </body>
 </html>

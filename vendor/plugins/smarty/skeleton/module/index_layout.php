@@ -1,3 +1,3 @@
 <br>
-This is index.tpl <br>
+This is index template. <br>
 <br>
