@@ -6,10 +6,10 @@ class PearPkg2SupportTask extends Task {
     public function init(){}
 
     public function main(){
-        $URIs['S2Container'] = 'http://labs.s2php5.jp/s2base/pear/S2Container-current';
-        $URIs['S2Dao']       = 'http://labs.s2php5.jp/s2base/pear/S2Dao-current';
-        $URIs['S2Javelin']   = 'http://labs.s2php5.jp/s2base/pear/S2Javelin-current';
-        $URIs['S2Base']      = 'http://labs.s2php5.jp/s2base/pear/S2Base-1.0.0';
+        $URIs['S2Container'] = 'http://s2container.php5.seasar.org/download/S2Container-1.1.1';
+        $URIs['S2Dao']       = 'http://s2dao.php5.sandbox.seasar.org/files/S2Dao-1.1.0';
+        $URIs['S2Javelin']   = 'http://s2base.php5.sandbox.seasar.org/download/S2Javelin-1.0.0';
+        $URIs['S2Base']      = 'http://s2base.php5.sandbox.seasar.org/download/S2Base-1.0.0';
 
         $this->log("pkgFile : {$this->pkgFile}");
 
@@ -18,17 +18,17 @@ class PearPkg2SupportTask extends Task {
         $contents = file_get_contents($this->pkgFile);
         $contents = preg_replace("/$key/",$rep,$contents);
 
-        $key = "<filelist>";
+        $key = '<filelist>';
         $rep = '<filelist>
-                    <file role="script" baseinstalldir="/" platform="(*ix|*ux|darwin*|*BSD|SunOS*)" install-as="s2base" name="bin/s2base">
-                        <replace type="pear-config" from="@PHP-BIN@" to="php_bin"/>
-                        <replace type="pear-config" from="@PEAR-DIR@" to="php_dir"/>
-                    </file>
                     <file role="script" baseinstalldir="/" platform="windows" install-as="s2base.bat" name="bin/s2base.bat">
                         <replace type="pear-config" from="@PHP-BIN@" to="php_bin"/>
                         <replace type="pear-config" from="@PEAR-DIR@" to="php_dir"/>
+                    </file>
+                    <file role="script" baseinstalldir="/" platform="unix" install-as="s2base" name="bin/s2base">
+                        <replace type="pear-config" from="@PHP-BIN@" to="php_bin"/>
+                        <replace type="pear-config" from="@PEAR-DIR@" to="php_dir"/>
                     </file>';
-        $contents = preg_replace("/$key/",$rep,$contents);
+        $contents = preg_replace("/$key/s",$rep,$contents);
 
         file_put_contents($this->pkgFile,$contents,LOCK_EX);
 
