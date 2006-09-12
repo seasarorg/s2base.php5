@@ -24,16 +24,20 @@
 <!-- document start -->
 
 <ul>
-<li><a href="#setup">ƒZƒbƒgƒAƒbƒv</a></li>
+<li><a href="#setup-pear">PEARƒpƒbƒP[ƒW‚ÌƒZƒbƒgƒAƒbƒv</a></li>
   <ul>
-    <li><a href="#install">S2Base.PHP5 ‚ÌƒCƒ“ƒXƒg[ƒ‹</a></li>
-    <li><a href="#db">ƒf[ƒ^ƒx[ƒXÚ‘±İ’è</a></li>
+    <li><a href="#install-pear">S2Base.PHP5 ‚ÌƒCƒ“ƒXƒg[ƒ‹</a></li>
+    <li><a href="#uninstall-pear">PEARƒpƒbƒP[ƒW‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹</a></li>
+    <li><a href="#project">ƒvƒƒWƒFƒNƒg‚Ìì¬</a></li>
+  </ul>
+<li><a href="#setup-full">ƒtƒ‹ƒpƒbƒP[ƒW‚ÌƒZƒbƒgƒAƒbƒv</a></li>
+  <ul>
+    <li><a href="#install-full">S2Base.PHP5 ‚ÌƒCƒ“ƒXƒg[ƒ‹</a></li>
     <li><a href="#versionup">S2Container.PHP5 ‚Æ S2Dao.PHP5 ‚Ìƒo[ƒWƒ‡ƒ“ƒAƒbƒv</a></li>
   </ul>
+<li><a href="#db">ƒf[ƒ^ƒx[ƒXÚ‘±İ’è</a></li>
 </ul>
 <br>
-
-<h2><a name="setup">ƒZƒbƒgƒAƒbƒv</a></h2>
 
 <p>
 S2Base.PHP5‚Å‚ÍA<a href="http://phing.info/trac/">Phing</a> ‚Æ <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a> ‚ª<font color="red">•K—v</font>‚Å‚·BŠeƒc[ƒ‹‚ÌƒhƒLƒ…ƒƒ“ƒg‚É]‚¢ƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‰º‚³‚¢B
@@ -43,8 +47,65 @@ S2Base.PHP5‚Å‚ÍA<a href="http://phing.info/trac/">Phing</a> ‚Æ <a href="http://
 <li><a href="http://phing.info/trac/wiki/Users/Download">Phing ƒ_ƒEƒ“ƒ[ƒhƒy[ƒW</a></li>
 <li><a href="http://pear.php.net/package/PHPUnit2/download">PHPUnit2 ƒ_ƒEƒ“ƒ[ƒhƒy[ƒW</a></li>
 </ul>
+
 <br>
-<h3><a name="install">S2Base.PHP5 ‚ÌƒCƒ“ƒXƒg[ƒ‹</a></h3>
+<h2><a name="setup-pear">PEARƒpƒbƒP[ƒW‚ÌƒZƒbƒgƒAƒbƒv</a></h2>
+
+<h3><a name="install-pear">S2Base.PHP5 ‚ÌƒCƒ“ƒXƒg[ƒ‹</a></h3>
+<p>
+S2Base-version.tgz ‚ğæ“¾‚µAupear installvƒRƒ}ƒ“ƒh‚ÅƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‰º‚³‚¢B
+</p>
+<pre>
+% pear list | grep 'PEAR '
+PEAR                    1.4.11      stable
+%
+% pear install S2Base-version.tgz
+% pear list -c __uri
+Installed packages, channel __uri:
+==================================
+Package Version State
+S2Base  1.0.0   beta
+%
+</pre>
+* PEARƒo[ƒWƒ‡ƒ“ 1.4.11 ˆÈã‚ª•K—v‚Å‚·B<br>
+* S2Container.PHP5AS2Dao.PHP5 ‚ÌƒCƒ“ƒXƒg[ƒ‹‚ª•Ê“r•K—v‚Å‚·B
+
+<h3><a name="uninstall-pear">PEARƒpƒbƒP[ƒW‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹</a></h3>
+<p>upear uninstallvƒRƒ}ƒ“ƒh‚ÅƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚ğs‚¢‚Ü‚·B</p>
+<pre>
+% pear uninstall channel://__uri/S2Base
+uninstall ok: channel://__uri/S2Base-1.0.0
+% pear list -c __uri
+(no packages installed from channel __uri)
+%
+</pre>
+
+<h3><a name="project">ƒvƒƒWƒFƒNƒg‚Ìì¬</a></h3>
+<p>
+PEARƒpƒbƒP[ƒW‚ÌƒCƒ“ƒXƒg[ƒ‹‚ªŠ®—¹‚·‚é‚ÆAPHP ƒoƒCƒiƒŠƒfƒBƒŒƒNƒgƒŠA‚Ü‚½‚Í PHP_PEAR_BIN_DIR ‚Åw’è‚³‚ê‚½ƒfƒBƒŒƒNƒgƒŠ‚ÉAs2base (s2base.bat) ƒRƒ}ƒ“ƒh‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ü‚·B‚±‚Ì s2base ƒRƒ}ƒ“ƒh‚ğ—p‚¢‚ÄƒvƒƒWƒFƒNƒgƒfƒBƒŒƒNƒgƒŠ‚ğì¬‚µ‚Ü‚·B
+</p>
+<pre>
+% s2base --help
+[INFO ] Usage: % s2base &lt;project directory&gt; [smarty]
+%
+% s2base ./ProjectA
+% ls ProjectA
+app  build.xml  config  lib  test  var  vendor
+%
+% s2base ./ProjectB smarty
+% ls ProjectB
+app  build.xml  config  lib  public  test  var  vendor
+%
+</pre>
+s2base ƒRƒ}ƒ“ƒh‚Ì‘æ1ˆø”‚ÉƒvƒƒWƒFƒNƒgƒfƒBƒŒƒNƒgƒŠ‚Ö‚ÌƒpƒX‚ğw’è‚µ‚Ü‚·B
+withSmarty ‚ğg—p‚·‚éê‡‚ÍA‘æ2ˆø”‚É usmartyv‚Æİ’è‚µ‚Ü‚·BwithSmarty‚Å•K—v‚É‚È‚é public ƒfƒBƒŒƒNƒgƒŠ“™‚ª’Ç‰Á‚³‚ê‚Ü‚·B
+</p>
+
+<br>
+<br>
+<h2><a name="setup-full">ƒtƒ‹ƒpƒbƒP[ƒW‚ÌƒZƒbƒgƒAƒbƒv</a></h2>
+
+<h3><a name="install-full">S2Base.PHP5 ‚ÌƒCƒ“ƒXƒg[ƒ‹</a></h3>
 <p>
 s2base.php5-version.zip ‚ğæ“¾‚µA”CˆÓ‚ÌƒfƒBƒŒƒNƒgƒŠ‚É‰ğ“€‚µ‚Ä‰º‚³‚¢Bs2base.php5 ƒfƒBƒŒƒNƒgƒŠ‚ªì¬‚³‚ê‚Ü‚·B
 </p>
@@ -92,14 +153,6 @@ Total time: 3.3343 seconds
 %
 </pre>
 
-
-<br>
-<h3><a name="db">ƒf[ƒ^ƒx[ƒXÚ‘±İ’è</a></h3>
-<p>
-ƒf[ƒ^ƒx[ƒX‚Ö‚ÌÚ‘±İ’è‚ÍA<a href="http://s2dao.php5.sandbox.seasar.org/setup.html#pdo_dicon">S2Dao ‚Ì pdo.dicon </a>‚Ås‚¢‚Ü‚·Bpdo.dicon ‚ÍAapp/commons/daoƒfƒBƒŒƒNƒgƒŠ‚É‚ ‚è‚Ü‚·B‚²g—p‚Ìƒf[ƒ^ƒx[ƒX‚Ö‚ÌÚ‘±İ’è‚ğs‚Á‚Ä‰º‚³‚¢B
-</p>
-
-<br>
 <h3><a name="versionup">S2Container.PHP5 ‚Æ S2Dao.PHP5 ‚Ìƒo[ƒWƒ‡ƒ“ƒAƒbƒv</a></h3>
 <p>
 S2Container.PHP5 ‚Æ S2Dao.PHP5 ‚Ìƒo[ƒWƒ‡ƒ“ƒAƒbƒv‚ÍAlib ƒfƒBƒŒƒNƒgƒŠ‚ÉƒA[ƒJƒCƒu‚ğ‰ğ“€‚·‚é‚¾‚¯‚Å‚·B
@@ -112,6 +165,13 @@ PEAR ƒpƒbƒP[ƒW‚Ü‚½‚Íƒtƒ‹ƒpƒbƒP[ƒW‚ğæ“¾‚µAs2base.php5/lib/S2Container ‚Æ‚µ‚Ä‰
 ƒtƒ‹ƒpƒbƒP[ƒW‚ğæ“¾‚µAs2base.php5/lib/S2Dao ‚Æ‚µ‚Ä‰ğ“€‚µ‚Ä‰º‚³‚¢B
 </li>
 </ul>
+
+<br>
+<h3><a name="db">ƒf[ƒ^ƒx[ƒXÚ‘±İ’è</a></h3>
+<p>
+ƒf[ƒ^ƒx[ƒX‚Ö‚ÌÚ‘±İ’è‚ÍA<a href="http://s2dao.php5.sandbox.seasar.org/setup.html#pdo_dicon">S2Dao ‚Ì pdo.dicon </a>‚Ås‚¢‚Ü‚·Bpdo.dicon ‚ÍAapp/commons/daoƒfƒBƒŒƒNƒgƒŠ‚É‚ ‚è‚Ü‚·B‚²g—p‚Ìƒf[ƒ^ƒx[ƒX‚Ö‚ÌÚ‘±İ’è‚ğs‚Á‚Ä‰º‚³‚¢B
+</p>
+
 
 <!-- document end -->
 <!-- don't edit start -->

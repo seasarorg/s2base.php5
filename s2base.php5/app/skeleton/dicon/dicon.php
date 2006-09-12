@@ -8,5 +8,5 @@
         <property name="name">value</property>
         <aspect>dao.interceptor</aspect>
     </component>
-    --->
+    -->
 </components>

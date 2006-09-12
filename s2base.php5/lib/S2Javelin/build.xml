@@ -56,8 +56,8 @@
                 <include name="**/*"/>
             </fileset>
             <option name="notes">${release.notes}</option>
-            <option name="description">S2Javelin.PHP5</option>
-            <option name="summary">S2Javelin.PHP5</option>
+            <option name="description">S2Javelin.PHP5 is a port of Java S2Javelin. And it is a subpackage of S2Base.PHP5, adding logging support using S2AOP. </option>
+            <option name="summary">S2Javelin.PHP5 is a port of Java S2Javelin.</option>
             <option name="version" value="${project.version}"/>
             <option name="state" value="${project.state}"/>
             <option name="baseinstalldir" value="${package.name}"/>
