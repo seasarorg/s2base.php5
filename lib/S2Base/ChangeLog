@@ -1,68 +1,73 @@
+﻿2006-09-12 S2Base.PHP5-1.0.0-rc4
+
+================ S2Base.PHP5-1.0.0-rc4 更新履歴 ===================
+
+	* fix: app/skeleton/dicon/dicon.php
+	* modify: セットアップドキュメントにPEARパッケージでのインストールを追加しました。
+
 2006-09-06 S2Base.PHP5-1.0.0-rc4
 
-================ S2Base.PHP5-1.0.0-rc4 �������� ===================
-
-	* add: S2BASE_PHP5_CLASS_SUFFIX������ɲä��ޤ�����
-	* add: S2BASE_PHP5_SMARTY_TPL_SUFFIX������ɲä��ޤ�����
+	* add: S2BASE_PHP5_CLASS_SUFFIX定数を追加し、定数を使用するように修正しました。
+	* add: S2BASE_PHP5_SMARTY_TPL_SUFFIX定数を追加し、定数を使用するように修正しました。
 
 
 2006-08-15 S2Base.PHP5-1.0.0-rc4
 
-	* modify: __autoload��S2ContainerClassLoader����Ѥ���褦���ѹ����ޤ�����
-	* add: PEAR�ѥå���������
+	* modify: __autoloadでS2ContainerClassLoaderを使用するように変更しました。
+	* add: PEARパッケージ作成
 	* modify: withSmarty
-	�ƥ�ץ졼�ȥե����뤬¸�ߤ��ʤ������㳰��throw����褦�ˤ��ޤ�����
+	テンプレートファイルが存在しない場合に例外をthrowするようにしました。
 
 
 2006-07-30 S2Base.PHP5-1.0.0-rc3
 
-================ S2Base.PHP5-1.0.0-rc3 �������� ===================
+================ S2Base.PHP5-1.0.0-rc3 更新履歴 ===================
 
-	* info: S2Container.PHP5-1.1.1 ��Х�ɥ뤷�ޤ�����
-	* info: S2Dao.PHP5-1.1.0 ��Х�ɥ뤷�ޤ�����
-	* add: S2JavelinTarceInterceptor���ɲä��ޤ�����
-	* add: Symfony WEB�ե졼�����Ȥ�Ϣ�Ȥ�Ԥ��ޤ�����
-	* modyfy: gen-dao ��������DSN����� PDO_DICON ��� (app/commons/dicon/pdo.dicon) ��
-	���Ѥ���褦�ˤ��ޤ�����
-	* modify: goya���ޥ�ɤǡ�setService�᥽�åɤ䡢setDao�᥽�å�̾��service��dao��
-	���󥿥ե�����̾�˹�碌�ޤ�����
-	* add: skeleton�ǥ��쥯�ȥ���˥��ޥ�ɤ��Ȥ˥ǥ��쥯�ȥ��������ޤ�����
-	* add: Entity���饹��������__toString�᥽�åɤ��ɲä��ޤ�����
-	* modify: ServiceCommand�ǡ����󥿥ե������ȼ������饹��̾�������Ǥ���褦�ˤ��ޤ�����
-	* modify: Commons Dao��¸�ߤ������Commons Dao������ꥹ�Ȥ�ɽ������褦���ѹ����ޤ�����
-	* modify: Commons Entity��¸�ߤ������Commons Entity������ꥹ�Ȥ�ɽ���������򤵤줿
-	���饹��Ѿ����뵡ǽ���ɲä��ޤ�����
-	* add: Entity���饹�Υץ��ѥƥ�̾�ȡ������̾�Υޥåץ��Υơ��������ɲä��ޤ�����
-	(COLUMN���Υơ������) 
-	* modify: �����̾�Ρ�_�פ���ڤ�ʸ���Ȥ��ơ��ץ��ѥƥ�̾���������褦�ˤ��ޤ�����
-	�����̾ : id_cd  =>  �ץ��ѥƥ�̾ : idCd
-	* modify: �����ӥ���������ե�����̾�򡢥����ӥ��������饹̾�˹�碌�ޤ�����
-	* fix: Commons Dicon �� mock.dicon ����ץ�������ޤ�����
+	* info: S2Container.PHP5-1.1.1 をバンドルしました。
+	* info: S2Dao.PHP5-1.1.0 をバンドルしました。
+	* add: S2JavelinTarceInterceptorを追加しました。
+	* add: Symfony WEBフレームワークとの連携を行いました。
+	* modyfy: gen-dao タスクのDSN設定は PDO_DICON 定数 (app/commons/dicon/pdo.dicon) を
+	使用するようにしました。
+	* modify: goyaコマンドで、setServiceメソッドや、setDaoメソッド名を、serviceやdaoの
+	インタフェース名に合わせました。
+	* add: skeletonディレクトリ内にコマンドごとにディレクトリを作成しました。
+	* add: Entityクラスの生成に__toStringメソッドを追加しました。
+	* modify: ServiceCommandで、インタフェースと実装クラスの名前を指定できるようにしました。
+	* modify: Commons Daoが存在する場合にCommons Daoの選択リストを表示するように変更しました。
+	* modify: Commons Entityが存在する場合にCommons Entityの選択リストを表示し、選択された
+	クラスを継承する機能を追加しました。
+	* add: Entityクラスのプロパティ名と、カラム名のマップアノテーションを追加しました。
+	(COLUMNアノテーション) 
+	* modify: カラム名の「_」を区切り文字として、プロパティ名を作成するようにしました。
+	カラム名 : id_cd  =>  プロパティ名 : idCd
+	* modify: サービスダイコンファイル名を、サービス実装クラス名に合わせました。
+	* fix: Commons Dicon の mock.dicon サンプルを修正しました。
 	* add: withSmarty
-	goya���ޥ�ɤ�������ޤ�����
+	goyaコマンドを作成しました。
 	* add: withSmarty
-	�쥤�����Ȼ�����˻��Ѥ���html skeleton ��������ޤ�����
+	レイアウト指定時に使用するhtml skeleton を作成しました。
 	* fix: withSmarty
-	Commons View �Υ쥤�����ȥƥ�ץ졼�Ȥ������ޤ�����
+	Commons View のレイアウトテンプレートを修正しました。
 	* modify: withSmarty
-	���������.inc.php �κ�����Ԥ�ʤ��褦�ˤ��ޤ�����
+	アクション.inc.php の作成を行わないようにしました。
 
 
 2006-06-03 S2Base.PHP5-1.0.0-rc2
 
-================ S2Base.PHP5-1.0.0-rc2 �������� ===================
+================ S2Base.PHP5-1.0.0-rc2 更新履歴 ===================
 
-	* modify: �������ޥ�ɤǡ��ե����뤬¸�ߤ��Ƥ��������㳰��λ���Ƥ��ޤ�������
-	��λ�����˽�����ʤ��褦�˲������ޤ�����
-	* modify: �������ޥ�ɤκǸ�ǡ����Ϥ��줿�����ɽ�������ǽ���ǧ��Ԥ��褦�˲������ޤ�����
-	* add: JavelinTraceInterceptor app/commons/interceptor �˴ޤ�ޤ�����
-	* modify: WEB�ե졼�����Ȥ�Ϣ������ץ饰����η����ڤ�Υ���ޤ����� vendor/plugins �ǥ��쥯�ȥ�������
-	* add: Agavi WEB�ե졼�����Ȥ�Ϣ�Ȥ�Ԥ��ޤ�����
+	* modify: 生成コマンドで、ファイルが存在していた場合に例外終了していましたが、
+	終了せずに処理を進めるように改修しました。
+	* modify: 生成コマンドの最後で、入力された情報を表示し、最終確認を行うように改修しました。
+	* add: JavelinTraceInterceptor app/commons/interceptor に含めました。
+	* modify: WEBフレームワークとの連携部をプラグインの形に切り離しました。 vendor/plugins ディレクトリを作成。
+	* add: Agavi WEBフレームワークとの連携を行いました。
 
 
 2006-05-08 S2Base.PHP5-1.0.0-rc1
 
-================ S2Base.PHP5-1.0.0-rc1 �������� ===================
+================ S2Base.PHP5-1.0.0-rc1 更新履歴 ===================
 
-	* info: S2Base.PHP5 ���꡼��
+	* info: S2Base.PHP5 初リリース
 

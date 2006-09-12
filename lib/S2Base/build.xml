@@ -83,8 +83,8 @@
                 <include name="**/*"/>
             </fileset>
             <option name="notes">${release.notes}</option>
-            <option name="description">S2Base.PHP5</option>
-            <option name="summary">S2Base.PHP5</option>
+            <option name="description">S2Base.PHP5 is a command line tool for development using S2Container and S2Dao. Includes generator of project directory, source files and unit test. </option>
+            <option name="summary">S2Base.PHP5 is a command line tool for development using S2Container and S2Dao.</option>
             <option name="version" value="${project.version}"/>
             <option name="state" value="${project.state}"/>
             <option name="baseinstalldir" value="${package.name}"/>
@@ -99,17 +99,22 @@
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
                     <element key="name" value="S2Javelin"/>
+                    <element key="optional" value="true"/>
                 </element>
+<!--
                 <element>
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
                     <element key="name" value="S2Dao"/>
+                    <element key="optional" value="true"/>
                 </element>
                 <element>
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
                     <element key="name" value="S2Container"/>
+                    <element key="optional" value="true"/>
                 </element>
+-->
                 <element>
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
