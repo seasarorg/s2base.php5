@@ -25,6 +25,6 @@
  * @author klove
  */
 
-require_once('s2base.phing.classes.php');
+require_once('S2Base.phing.classes.php');
 
 ?>
