@@ -45,5 +45,5 @@ define('S2BASE_PHP5_INTERCEPTOR_DIR', S2BASE_PHP5_DS . "interceptor" . S2BASE_PH
 define('S2BASE_PHP5_SERVICE_DIR',     S2BASE_PHP5_DS . "service" .     S2BASE_PHP5_DS);
 define('S2BASE_PHP5_VIEW_DIR',        S2BASE_PHP5_DS . "view" .        S2BASE_PHP5_DS);
 
-require_once('s2base.cmd.classes.php');
+require_once('S2Base.cmd.classes.php');
 ?>

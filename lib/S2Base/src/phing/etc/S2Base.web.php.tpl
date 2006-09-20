@@ -25,6 +25,6 @@
  * @author klove
  */
 
-require_once('s2base.web.classes.php');
+require_once('S2Base.web.classes.php');
 
 ?>
