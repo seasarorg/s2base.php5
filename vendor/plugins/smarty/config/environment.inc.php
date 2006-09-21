@@ -44,8 +44,8 @@ define('S2BASE_PHP5_CACHE_ON',false);
  * Smarty config
  *     S2Base_SmartyController::$config['property name'] = property value
  */
-S2Base_SmartyController::$config['compile_dir'] = S2BASE_PHP5_VAR_DIR . '/smarty/template_c';
-S2Base_SmartyController::$config['config_dir']  = S2BASE_PHP5_VAR_DIR . '/smarty/config';
-S2Base_SmartyController::$config['cache_dir']   = S2BASE_PHP5_VAR_DIR . '/smarty/cache';
+S2Base_SmartyController::$config['compile_dir'] = S2BASE_PHP5_ROOT . '/var/smarty/template_c';
+S2Base_SmartyController::$config['config_dir']  = S2BASE_PHP5_ROOT . '/var/smarty/config';
+S2Base_SmartyController::$config['cache_dir']   = S2BASE_PHP5_ROOT . '/var/smarty/cache';
 S2Base_SmartyController::$config['caching']     = 0;
 ?>
