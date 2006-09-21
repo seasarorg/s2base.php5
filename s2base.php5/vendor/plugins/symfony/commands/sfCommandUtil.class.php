@@ -34,7 +34,7 @@ class sfCommandUtil
     public static function getValueFromType ($type)
     {
         switch ($type) {
-            case S2BASE_PHP5_SF__PATH:
+            case S2BASE_PHP5_SF_PATH:
                 $msg = 'ProjectFullPath[' .
                        S2BASE_PHP5_SF_DEFAULT_PATH .
                        '] ? : ';
