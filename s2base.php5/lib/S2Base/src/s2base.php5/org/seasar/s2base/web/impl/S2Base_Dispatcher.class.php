@@ -33,7 +33,6 @@ class S2Base_Dispatcher {
 
     public static function dispatch($request) {
         self::initialize($request);
-        S2Base_CacheUtil::init($request);
         $action = self::instantiateAction($request);
 
         $controller = self::instantiateController();
@@ -85,7 +84,7 @@ class S2Base_Dispatcher {
             return new $actClassName();
         }
 
-        $container = S2ContainerFileCacheFactory::create($dicon);
+        $container = S2ContainerFactory::create($dicon);
         $container->init();
         $componentKey = null;
         if ($container->hasComponentDef($act)){
