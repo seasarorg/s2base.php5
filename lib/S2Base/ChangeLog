@@ -1,7 +1,11 @@
-﻿2006-09-12 S2Base.PHP5-1.0.0-rc4
+﻿2006-09-22 S2Base.PHP5-1.0.0-rc4
 
 ================ S2Base.PHP5-1.0.0-rc4 更新履歴 ===================
 
+	* modify: withSymfony
+	Symfonyのインストールをsf_sandboxからPEARインストールに変更しました。
+
+2006-09-12 S2Base.PHP5-1.0.0-rc4
 	* fix: app/skeleton/dicon/dicon.php
 	* modify: セットアップドキュメントにPEARパッケージでのインストールを追加しました。
 
