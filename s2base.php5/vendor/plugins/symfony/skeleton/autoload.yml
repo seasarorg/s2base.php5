@@ -2,19 +2,19 @@ autoload:
   s2container:
     name:           S2Container
     ext:            .class.php
-    path:           "@@S2BASE_PHP5_ROOT@@/lib/S2Container/build/s2container.php5/S2Container"
+    path:           "%S2CONTAINER_PHP5%"
 
   s2dao:
     name:           S2Dao
     ext:            .class.php
-    path:           "@@S2BASE_PHP5_ROOT@@/lib/S2Dao/build/s2dao.php5/S2Dao"
+    path:           "%S2DAO_PHP5%"
 
-  s2javelin:
-    name:           S2Javelin
-    ext:            .class.php
-    path:           "@@S2BASE_PHP5_ROOT@@/lib/S2Javelin"
-
-  #commons:
-  #  name:           commons
+  #s2javelin:
+  #  name:           S2Javelin
   #  ext:            .class.php
-  #  path:           "@@S2BASE_PHP5_ROOT@@/app/commons"
+  #  path:           "%S2JAVELIN_PHP5%"
+
+  #commonsdao:
+  #  name:           CommonsDao
+  #  ext:            .class.php
+  #  path:           "@@S2BASE_PHP5_ROOT@@/app/commons/dao"

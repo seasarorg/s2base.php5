@@ -68,7 +68,7 @@ class sfCommandUtil
         );
         
         $cwd = $pathName;
-        $cmd = "php " . S2BASE_PHP5_SF_CMD . " $cmd $args";
+        $cmd = S2BASE_PHP5_SF_CMD . " $cmd $args";
         $process = proc_open($cmd, $descriptorspec, $pipes, $cwd);
         if (is_resource($process)) {
             fclose($pipes[0]);
@@ -89,6 +89,19 @@ class sfCommandUtil
         @unlink($srcFile);
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SF_SKELETON_DIR
                      . $mfwcName);
+        CmdCommand::writeFile($srcFile,$tempContent);
+    }
+    
+    public static function copyFactoriesYml ()
+    {
+        $srcFile = self::$attributes['pathName'] . S2BASE_PHP5_DS .
+                   "apps"                        . S2BASE_PHP5_DS .
+                   self::$attributes['appName']  . S2BASE_PHP5_DS .
+                   "config"                      . S2BASE_PHP5_DS .
+                   "factories.yml";
+        @unlink($srcFile);
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SF_SKELETON_DIR .
+                                                    'factories.yml');
         CmdCommand::writeFile($srcFile,$tempContent);
     }
     
