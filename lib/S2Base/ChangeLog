@@ -4,6 +4,8 @@
 
 	* modify: withSymfony
 	Symfonyのインストールをsf_sandboxからPEARインストールに変更しました。
+	* modify: withSmarty
+	S2ContainerFileCacheFactory から S2ContainerFactory を使用するようにしました。
 
 2006-09-12 S2Base.PHP5-1.0.0-rc4
 	* fix: app/skeleton/dicon/dicon.php
