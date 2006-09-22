@@ -193,7 +193,8 @@ class sfDaoCommand implements S2Base_GenerateCommand
                    "modules"         . S2BASE_PHP5_DS .
                    $this->moduleName .
                    S2BASE_PHP5_DAO_DIR . 
-                   "{$this->daoInterfaceName}.class.php";
+                   "{$this->daoInterfaceName}" .
+                   S2BASE_PHP5_CLASS_SUFFIX;
         
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'dao/dao.php');
@@ -211,7 +212,8 @@ class sfDaoCommand implements S2Base_GenerateCommand
                     $this->appName      . S2BASE_PHP5_DS .
                     $this->moduleName   .
                     S2BASE_PHP5_DAO_DIR .
-                    "$testName.class.php";
+                    "$testName" .
+                    S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SF_SKELETON_DIR .
                                                  'sf_dao_test.php');
         $patterns = array("/@@SF_ROOT_DIR@@/",
@@ -248,7 +250,8 @@ class sfDaoCommand implements S2Base_GenerateCommand
                    "modules"         . S2BASE_PHP5_DS .
                    $this->moduleName .
                    S2BASE_PHP5_ENTITY_DIR . 
-                   "{$this->entityClassName}.class.php";
+                   "{$this->entityClassName}" . 
+                   S2BASE_PHP5_CLASS_SUFFIX;
         $accessorSrc = EntityCommand::getAccessorSrc($this->cols);
         $toStringSrc = EntityCommand::getToStringSrc($this->cols);
         if ($this->isEntityExtends) {

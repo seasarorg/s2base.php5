@@ -94,7 +94,8 @@ class sfServiceCommand implements S2Base_GenerateCommand
                    "modules"         . S2BASE_PHP5_DS .
                    $this->moduleName .
                    S2BASE_PHP5_SERVICE_DIR . 
-                   "{$this->serviceClassName}.class.php";
+                   "{$this->serviceClassName}" .
+                   S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'service/service.php');
 
@@ -111,7 +112,8 @@ class sfServiceCommand implements S2Base_GenerateCommand
                    "modules"         . S2BASE_PHP5_DS .
                    $this->moduleName .
                    S2BASE_PHP5_SERVICE_DIR . 
-                   "{$this->serviceInterfaceName}.class.php";
+                   "{$this->serviceInterfaceName}" .
+                   S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'service/interface.php');
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
@@ -127,7 +129,8 @@ class sfServiceCommand implements S2Base_GenerateCommand
                     $this->appName      . S2BASE_PHP5_DS .
                     $this->moduleName   .
                     S2BASE_PHP5_SERVICE_DIR . 
-                    "$testName.class.php";
+                    "$testName" .
+                    S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SF_SKELETON_DIR
                      . 'sf_service_test.php');
         $patterns = array("/@@SF_ROOT_DIR@@/",

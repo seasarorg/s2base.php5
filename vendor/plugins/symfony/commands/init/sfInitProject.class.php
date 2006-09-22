@@ -54,6 +54,7 @@ class sfInitProject
         sfCommandUtil::$attributes['appName']    = $this->appName;
         sfCommandUtil::$attributes['moduleName'] = $this->moduleName;
         sfCommandUtil::copyMyFrontWebController();
+        sfCommandUtil::copyFactoriesYml();
         sfCommandUtil::createLogicDirectories();
         sfCommandUtil::createTestDirectories();
         sfCommandUtil::prepareTestIncFile();
