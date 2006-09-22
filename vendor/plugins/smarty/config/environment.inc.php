@@ -36,11 +36,6 @@ session_save_path(S2BASE_PHP5_VAR_DIR . '/session');
 //define('S2BASE_PHP5_LAYOUT','file:' . S2BASE_PHP5_ROOT . '/app/commons/view/layout.tpl');
 
 /**
- * cache switch
- */
-define('S2BASE_PHP5_CACHE_ON',false);
-
-/**
  * Smarty config
  *     S2Base_SmartyController::$config['property name'] = property value
  */
