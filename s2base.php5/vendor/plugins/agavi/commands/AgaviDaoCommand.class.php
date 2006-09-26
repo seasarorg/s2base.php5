@@ -182,7 +182,8 @@ class AgaviDaoCommand implements S2Base_GenerateCommand
                    S2BASE_PHP5_DS .
                    $this->moduleName . 
                    S2BASE_PHP5_DAO_DIR . 
-                   "{$this->daoInterfaceName}.class.php";
+                   $this->daoInterfaceName . 
+                   S2BASE_PHP5_CLASS_SUFFIX;
         
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'dao/dao.php');
@@ -199,7 +200,8 @@ class AgaviDaoCommand implements S2Base_GenerateCommand
                     S2BASE_PHP5_AG_TEST_DIR . 
                     $this->moduleName . 
                     S2BASE_PHP5_DAO_DIR . 
-                    "$testName.class.php";
+                    $testName . 
+                    S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_AG_SKELETON_DIR .
                                                  'agavi_dao_test.php');
         $patterns = array("/@@AG_PROJECT_DIR@@/","/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@DAO_CLASS@@/");
@@ -233,7 +235,8 @@ class AgaviDaoCommand implements S2Base_GenerateCommand
                    S2BASE_PHP5_DS . 
                    $this->moduleName . 
                    S2BASE_PHP5_ENTITY_DIR . 
-                   "{$this->entityClassName}.class.php";
+                   $this->entityClassName . 
+                   S2BASE_PHP5_CLASS_SUFFIX;
         $accessorSrc = EntityCommand::getAccessorSrc($this->cols);
         $toStringSrc = EntityCommand::getToStringSrc($this->cols);
         if ($this->isEntityExtends) {

@@ -14,7 +14,7 @@ class @@CLASS_NAME@@ extends PHPUnit2_Framework_TestCase {
     }
 
     function setUp(){
-        print "\n";
+        print __CLASS__ . "::{$this->getName()}\n";
         $moduleDir = "@@AG_PROJECT_DIR@@/webapp/modules/{$this->module}";
         $dicon = $moduleDir . "/dicon/@@SERVICE_INTERFACE@@" . S2BASE_PHP5_DICON_SUFFIX;
         include_once('@@AG_PROJECT_DIR@@/tests/modules/@@MODULE_NAME@@/test.inc.php');

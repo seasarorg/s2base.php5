@@ -10,7 +10,7 @@
     </target>
     
     <target name="test">
-      <property file="${project.basedir}/var/cache/ag.project.cache"/>
+      <property file="${project.basedir}/var/ag.project.cache"/>
       <input propertyname="project.dir" promptChar="?"
       		 defaultValue="${projectPath}" message="ProjectFullPath "/>
 	  <input propertyname="module.dir" promptChar="?" message="ModuleName "/>

@@ -3,9 +3,13 @@
 ================ S2Base.PHP5-1.0.0-rc4 更新履歴 ===================
 
 	* modify: withSymfony
-	Symfonyのインストールをsf_sandboxからPEARインストールに変更しました。
+	Symfony のインストールを sf_sandbox から PEARインストールに変更しました。
 	* modify: withSmarty
 	S2ContainerFileCacheFactory から S2ContainerFactory を使用するようにしました。
+	* modify: withAgavi
+	__autoload で S2ContainerClassLoader を使用するようにしました。
+	* modify: withAgavi
+	goya コマンドを削除しました。
 
 2006-09-12 S2Base.PHP5-1.0.0-rc4
 	* fix: app/skeleton/dicon/dicon.php

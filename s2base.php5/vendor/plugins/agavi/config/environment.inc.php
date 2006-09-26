@@ -6,12 +6,12 @@ define('S2BASE_PHP5_AG_TYPE_MODULE', 'module');
 define('S2BASE_PHP5_AG_TYPE_ACTION', 'action');
 define('S2BASE_PHP5_AG_TYPE_VIEW',   'view');
 
-define('S2BASE_PHP5_AG_PATH_CACHE', S2BASE_PHP5_VAR_DIR . '/cache/ag.project.cache');
+define('S2BASE_PHP5_AG_PATH_CACHE', S2BASE_PHP5_VAR_DIR . '/ag.project.cache');
 if(file_exists(S2BASE_PHP5_AG_PATH_CACHE)){
     $ini = parse_ini_file(S2BASE_PHP5_AG_PATH_CACHE);
     define('S2BASE_PHP5_AG_DEFAULT_PATH', $ini['projectPath']);
 }else{
-    define('S2BASE_PHP5_AG_DEFAULT_PATH', S2BASE_PHP5_ROOT);
+    define('S2BASE_PHP5_AG_DEFAULT_PATH', S2BASE_PHP5_ROOT . S2BASE_PHP5_DS . 's2agavi');
 }
 define('S2BASE_PHP5_AG_DEFAULT_MODULE', 'Default');
 define('S2BASE_PHP5_AG_DEFAULT_ACTION', 'Index');

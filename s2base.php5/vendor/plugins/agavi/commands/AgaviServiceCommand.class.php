@@ -58,8 +58,9 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
 
     private function prepareServiceImplFile(){
         $srcFile = $this->moduleDir .
-                    S2BASE_PHP5_SERVICE_DIR .
-                   "{$this->serviceClassName}.class.php";
+                   S2BASE_PHP5_SERVICE_DIR .
+                   $this->serviceClassName .
+                   S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                     'service/service.php');
         $patterns = array("/@@CLASS_NAME@@/","/@@INTERFACE_NAME@@/");
@@ -70,8 +71,9 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
 
     private function prepareServiceInterfaceFile(){
         $srcFile = $this->moduleDir . 
-                    S2BASE_PHP5_SERVICE_DIR .
-                   "{$this->serviceInterfaceName}.class.php";
+                   S2BASE_PHP5_SERVICE_DIR .
+                   $this->serviceInterfaceName .
+                   S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                     'service/interface.php');
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
@@ -86,7 +88,8 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
                     S2BASE_PHP5_AG_TEST_DIR . 
                     $this->moduleName . 
                     S2BASE_PHP5_SERVICE_DIR . 
-                    "$testName.class.php";
+                    $testName .
+                    S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_AG_SKELETON_DIR .
                                                     'agavi_service_test.php');
         $patterns = array("/@@AG_PROJECT_DIR@@/","/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@SERVICE_INTERFACE@@/");
@@ -98,7 +101,8 @@ class AgaviServiceCommand implements S2Base_GenerateCommand
     private function prepareDiconFile(){
         $srcFile = $this->moduleDir . 
                    S2BASE_PHP5_DICON_DIR . 
-                   "{$this->serviceInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX;
+                   $this->serviceInterfaceName .
+                   S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR .
                                                     'service/dicon.php');
         $tempContent = preg_replace("/@@SERVICE_CLASS@@/",
