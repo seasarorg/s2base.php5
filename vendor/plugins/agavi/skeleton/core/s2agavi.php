@@ -76,12 +76,8 @@ function __autoload ($class)
 	if (isset($classes[$class])) {
 		// class exists, let's include it
 		require_once($classes[$class]);
-	} elseif (!@include_once("$class.class.php")) {
-        S2ContainerClassLoader::import(S2CONTAINER_PHP5);
-        if (defined('S2DAO_PHP5')) {
-            S2ContainerClassLoader::import(S2DAO_PHP5);
-        }
-        S2ContainerClassLoader::load($class);		
+	} else {
+        S2ContainerClassLoader::load($class);
 	}
 	/*	
 

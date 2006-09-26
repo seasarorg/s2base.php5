@@ -1,5 +1,4 @@
 <?php
-require_once('OS/Guess.php');
 class AgaviCommandUtil
 {
 
@@ -76,10 +75,7 @@ class AgaviCommandUtil
         
         $cwd = $mode == self::AG_CMD_PROJECT ? S2BASE_PHP5_ROOT : $pathName;
         
-        $os = new OS_Guess();
-        $cmd = preg_match('/windows/i', $os->getSysname()) ? 'agavi.bat' : 'agavi';
-        
-        $process = proc_open("$cmd $mode", $descriptorspec, $pipes, $cwd);
+        $process = proc_open("agavi $mode", $descriptorspec, $pipes, $cwd);
         if (is_resource($process)) {
             if ($mode == self::AG_CMD_PROJECT) {
                 fwrite($pipes[0], $pathName . "\n");
