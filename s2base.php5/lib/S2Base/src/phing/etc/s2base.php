@@ -153,7 +153,6 @@ function getExcludeList($projectType) {
 
     if ($projectType != 'smarty') {
         $excludes[] = 'var.+?smarty$';
-        $excludes[] = 'var.+?cache$';
         $excludes[] = 'var.+?session$';
         $excludes[] = 'plugins.+?smarty$';
         $excludes[] = 'public$';
