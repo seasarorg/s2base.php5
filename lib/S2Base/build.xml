@@ -163,6 +163,7 @@
     <target name="test" depends="init">
         <echo>test directory : test/${project.name}/${td}</echo>
         <echo>test target    : ${tt}</echo>
+        <php expression="require_once('test/conf/test.inc.php')"/>
         <phpunit2 haltonfailure="false" haltonerror="false">
             <formatter type="plain" usefile="false"/>
             <batchtest>
