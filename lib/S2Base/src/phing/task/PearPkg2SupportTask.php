@@ -9,7 +9,7 @@ class PearPkg2SupportTask extends Task {
         $URIs['S2Container'] = 'http://s2container.php5.seasar.org/download/S2Container-1.1.1';
         $URIs['S2Dao']       = 'http://s2dao.php5.sandbox.seasar.org/files/S2Dao-1.1.0';
         $URIs['S2Javelin']   = 'http://s2base.php5.sandbox.seasar.org/download/S2Javelin-1.0.0-rc4';
-        $URIs['S2Base']      = 'http://s2base.php5.sandbox.seasar.org/download/S2Base-1.0.0-rc4';
+        $URIs['S2Base']      = 'http://s2base.php5.sandbox.seasar.org/download/S2Base-1.0.0';
 
         $this->log("pkgFile : {$this->pkgFile}");
 
