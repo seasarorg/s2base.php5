@@ -59,6 +59,9 @@ S2Base-version.tgz を取得し、「pear install」コマンドでインストールして下さい。
 % pear list | grep 'PEAR '
 PEAR                    1.4.11      stable
 %
+% pear config-get download_dir
+/tmp/pear/cache
+%
 % pear install S2Base-version.tgz
 % pear list -c __uri
 Installed packages, channel __uri:
@@ -68,6 +71,7 @@ S2Base  1.0.0   beta
 %
 </pre>
 * PEARバージョン 1.4.11 以上が必要です。<br>
+* download_dir が存在することを確認して下さい。<br>
 * S2Container.PHP5、S2Dao.PHP5 のインストールが別途必要です。
 
 <h3><a name="uninstall-pear">PEARパッケージのアンインストール</a></h3>
