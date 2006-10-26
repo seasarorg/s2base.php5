@@ -32,5 +32,6 @@ interface S2Base_Request {
     public function getAction();
     public function getParam($key);
     public function setParam($key,$val);
+    public function isParam($key);
 }
 ?>

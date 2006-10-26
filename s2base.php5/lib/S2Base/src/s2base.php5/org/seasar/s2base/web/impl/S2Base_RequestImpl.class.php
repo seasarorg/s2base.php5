@@ -60,6 +60,10 @@ class S2Base_RequestImpl implements S2Base_Request {
     public function setParam($key,$val){
         $this->request[$key] = $val;
     }
+
+    public function isParam($key){
+        return isset($this->request[$key]);
+    }
     
     public function setModule($module = null){
         if ($module == null){

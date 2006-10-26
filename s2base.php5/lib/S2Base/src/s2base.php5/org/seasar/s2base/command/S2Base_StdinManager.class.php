@@ -38,8 +38,12 @@ class S2Base_StdinManager {
             }
 
             print "choice ? : ";
-            if(fscanf(STDIN, "%d\n", $number) and
-                array_key_exists($number,$cmds)){
+            $val = trim(fgets(STDIN));
+            if(strcasecmp($val,'q') == 0){
+                $number = 0;
+                break;
+            } else if (array_key_exists($val,$cmds)) {
+                $number = $val;
                 break;
             }
         }

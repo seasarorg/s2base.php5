@@ -1,8 +1,9 @@
 <?php
+require_once('DefaultCommandUtil.class.php');
 class InterceptorCommand implements S2Base_GenerateCommand {
 
-    private $moduleName;
-    private $interceptorClassName;
+    protected $moduleName;
+    protected $interceptorClassName;
     
     public function getName(){
         return "interceptor";
@@ -10,56 +11,49 @@ class InterceptorCommand implements S2Base_GenerateCommand {
 
     public function execute(){
         try{
-            $this->moduleName = S2Base_CommandUtil::getModuleName();
-        } catch(Exception $e) {
-            CmdCommand::showException($e);
-            return;
-        }
-        if($this->moduleName == S2Base_StdinManager::EXIT_LABEL){
-            return;
-        }
-
-        $this->interceptorClassName = S2Base_StdinManager::getValue('interceptor class name ? : ');
-        try{
+            $this->moduleName = DefaultCommandUtil::getModuleName();
+            if(DefaultCommandUtil::isListExitLabel($this->moduleName)){
+                return;
+            }
+            $this->interceptorClassName = S2Base_StdinManager::getValue('interceptor class name ? : ');
             $this->validate($this->interceptorClassName);
+            if (!$this->finalConfirm()){
+                return;
+            }
+            $this->prepareFiles();
         } catch(Exception $e) {
-            CmdCommand::showException($e);
+            DefaultCommandUtil::showException($e);
             return;
         }
-        if (!$this->finalConfirm()){
-            return;
-        }
-        $this->prepareFiles();
-    }        
-
-    private function validate($name){
-        S2Base_CommandUtil::validate($name,"Invalid interceptor name. [ $name ]");
     }
 
-    private function finalConfirm(){
+    protected function validate($name){
+        DefaultCommandUtil::validate($name,"Invalid interceptor name. [ $name ]");
+    }
+
+    protected function finalConfirm(){
         print "\n[ generate information ] \n";
         print "  module name            : {$this->moduleName} \n";
         print "  interceptor class name : {$this->interceptorClassName} \n";
         return S2Base_StdinManager::isYes('confirm ?');
     }
     
-    private function prepareFiles(){
+    protected function prepareFiles(){
         $this->prepareInterceptorFile();
     }
-    
-    private function prepareInterceptorFile(){
 
+    protected function prepareInterceptorFile(){
         $srcFile = S2BASE_PHP5_MODULES_DIR
                  . $this->moduleName
                  . S2BASE_PHP5_INTERCEPTOR_DIR
                  . $this->interceptorClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . "interceptor/default.php");
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
                              $this->interceptorClassName,
                              $tempContent);   
-        CmdCommand::writeFile($srcFile,$tempContent);
+        DefaultCommandUtil::writeFile($srcFile,$tempContent);
     }
 }
 ?>
