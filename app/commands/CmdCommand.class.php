@@ -1,44 +1,53 @@
 <?php
+require_once('DefaultCommandUtil.class.php');
 class CmdCommand implements S2Base_GenerateCommand {
+    const COMMAND_CLASS_SUFFIX = 'Command';
+    protected $cmdName;
 
-    private $cmdName;
+    public static function writeFile($srcFile,$tempContent) {
+        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+    }
+
+    public static function showException(Exception $e){
+        DefaultCommandUtil::showException($e);
+    }
 
     public function getName(){
         return "command";
     }
 
     public function execute(){
-        $this->cmdName = S2Base_StdinManager::getValue('command name ? : ');
         try{
+            $this->cmdName = S2Base_StdinManager::getValue('command name ? : ');
             $this->validate($this->cmdName);
+
+            if (!$this->finalConfirm()){
+                return;
+            }
+            $this->prepareFiles();
         } catch(Exception $e) {
             CmdCommand::showException($e);
             return;
         }
-
-        if (!$this->finalConfirm()){
-            return;
-        }
-        $this->prepareFiles();
     }
 
-    private function validate($name){
+    protected function validate($name){
         S2Base_CommandUtil::validate($name,"Invalid command name. [ $name ]");
     }
 
-    private function finalConfirm(){
+    protected function finalConfirm(){
         print "\n[ generate information ] \n";
         print "  command name : {$this->cmdName} \n";
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
-    private function prepareFiles(){
+    protected function prepareFiles(){
         $this->prepareCmdFile();
     }
     
-    private function prepareCmdFile(){
+    protected function prepareCmdFile(){
 
-        $cmdClassName = ucfirst($this->cmdName) . "Command";
+        $cmdClassName = ucfirst($this->cmdName) . self::COMMAND_CLASS_SUFFIX;
         $srcFile = S2BASE_PHP5_COMMANDS_DIR 
                  . $cmdClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
@@ -51,23 +60,5 @@ class CmdCommand implements S2Base_GenerateCommand {
 
         self::writeFile($srcFile,$tempContent);
     }
-
-    public static function writeFile($srcFile,$tempContent) {
-        try{
-            S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-            print "[INFO ] create : $srcFile\n";
-        }catch(Exception $e){
-            if ($e instanceof S2Base_FileExistsException){
-                print "[INFO ] exists : $srcFile\n";
-            } else {
-                throw $e;
-            }
-        }
-    }
-
-    public static function showException(Exception $e){
-        print "\n!!! Exception\n!!! {$e->getMessage()}\n\n";
-    }
-    
 }
 ?>

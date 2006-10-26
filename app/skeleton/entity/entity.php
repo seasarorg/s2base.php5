@@ -12,6 +12,6 @@ class @@CLASS_NAME@@ {
     const prop_RELKEYS = 'this_fk:other_pk';
     public function setProp(OtherEntity $entity){ $this->prop = $entity; }
     public function getProp(){ return $this->prop; }
-    */    
+    */
 }
 ?>

@@ -1,149 +1,16 @@
 <?php
+require_once('DefaultCommandUtil.class.php');
 class EntityCommand implements S2Base_GenerateCommand {
 
-    private $moduleName;
-    private $entityClassName;
-    private $extendsEntityClassName;
-    private $isEntityExtends;
-    private $cols;
-
-    public function getName(){
-        return "entity";
-    }
-
-    public function execute(){
-        try{
-            $this->moduleName = S2Base_CommandUtil::getModuleName();
-        } catch(Exception $e) {
-            CmdCommand::showException($e);
-            return;
-        }
-        if($this->moduleName == S2Base_StdinManager::EXIT_LABEL){
-            return;
-        }
-
-        try{
-            $this->entityClassName = S2Base_StdinManager::getValue('entity class name ? : ');
-            $this->validate($this->entityClassName);
-        } catch(Exception $e) {
-            CmdCommand::showException($e);
-            return;
-        }
-            
-        $entitys = self::getAllEntityFromCommonsDao();
-        $this->isEntityExtends = false;
-        if(count($entitys) > 0){
-            $this->isEntityExtends = S2Base_StdinManager::isYes('extends commons entity ?');
-        }
-
-        $this->extendsEntityClassName = "none";
-        if ($this->isEntityExtends) {
-            $this->extendsEntityClassName = S2Base_StdinManager::getValueFromArray($entitys,
-                                            "entity list");
-            if ($this->extendsEntityClassName == S2Base_StdinManager::EXIT_LABEL){
-                return;
-            }
-        }
-
-        try{
-            if (!$this->isEntityExtends) {
-                $tableNameTmp = self::guessTableName($this->entityClassName);
-                $this->tableName = S2Base_StdinManager::getValue("table name ? [{$tableNameTmp}] : ");
-                if(trim($this->tableName) == ''){
-                    $this->tableName = $tableNameTmp;
-                }
-                $this->validate($this->tableName);
-            } else {
-                $this->tableName = "extended";
-            }
-        } catch(Exception $e) {
-            CmdCommand::showException($e);
-            return;
-        }
-
-        $cols = S2Base_StdinManager::getValue("columns ? (id,name,--,) : ");
-        $this->cols = self::validateCols($cols);
-        if (!$this->finalConfirm()){
-            return;
-        }
-        $this->prepareFiles();
-    }        
-
-    public static function validateCols($colsStr){
-        $colsTmp = array_unique(explode(',',$colsStr));
-        $cols = array();
-        foreach($colsTmp as $col){
-            $col = trim($col);
-            if(preg_match("/^\w+$/",$col)){
-                $cols[] = $col;
-            }
-        }
-        return $cols;
-    }
-
-    public static function getAllEntityFromCommonsDao(){
-        $commonsDaoDir = S2BASE_PHP5_ROOT . '/app/commons/dao';
-        $entries = scandir($commonsDaoDir);
-        if(!$entries){
-            throw new Exception("invalid dir : [ $commonsDaoDir ]");
-        }
-        $entitys = array();
-        foreach($entries as $entry){
-            $maches = array();
-            if(preg_match("/(\w+Entity)\.class\.php$/",$entry,$maches)){
-                $entitys[] = $maches[1];
-            }
-        }
-        return $entitys;
-    }
-
-    private function validate($name){
-        S2Base_CommandUtil::validate($name,"Invalid value. [ $name ]");
-    }
-
-    private function finalConfirm(){
-        print "\n[ generate information ] \n";
-        print "  module name          : {$this->moduleName} \n";
-        print "  entity class name    : {$this->entityClassName} \n";
-        print "  entity class extends : {$this->extendsEntityClassName} \n";
-        print "  table name           : {$this->tableName} \n";
-        $cols = implode(', ',$this->cols);
-        print "  columns              : $cols \n";
-
-        return S2Base_StdinManager::isYes('confirm ?');
-    }
-
-    private function prepareFiles(){
-        $this->prepareEntityFile();
-    }
-    
-    private function prepareEntityFile(){
-
-        $srcFile = S2BASE_PHP5_MODULES_DIR 
-                 . $this->moduleName
-                 . S2BASE_PHP5_ENTITY_DIR
-                 . $this->entityClassName
-                 . S2BASE_PHP5_CLASS_SUFFIX;
-        $accessorSrc = self::getAccessorSrc($this->cols);
-        $toStringSrc = self::getToStringSrc($this->cols);
-        if ($this->isEntityExtends) {
-            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                         . 'entity/entity_extends.php');
-            $patterns = array("/@@CLASS_NAME@@/","/@@ACCESSOR@@/","/@@EXTENDS_CLASS@@/","/@@TO_STRING@@/");
-            $replacements = array($this->entityClassName,$accessorSrc,$this->extendsEntityClassName,$toStringSrc);
-        }else{
-            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                         . 'entity/entity.php');
-            $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/","/@@TO_STRING@@/");
-            $replacements = array($this->entityClassName,$this->tableName,$accessorSrc,$toStringSrc);
-        }
-
-        $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
-    }
+    protected $moduleName;
+    protected $entityClassName;
+    protected $extendsEntityClassName;
+    protected $entityExtends;
+    protected $cols;
+    protected $useDB;
 
     public static function getAccessorSrc($cols){
-        $tempContent  = '    private $@@PROP_NAME@@;' . "\n" .
+        $tempContent  = '    protected $@@PROP_NAME@@;' . "\n" .
                         '    const @@PROP_NAME@@_COLUMN = "@@COL_NAME@@";' . "\n" .
                         '    public function set@@UC_PROP_NAME@@($val){$this->@@PROP_NAME@@ = $val;}' . "\n" . 
                         '    public function get@@UC_PROP_NAME@@(){return $this->@@PROP_NAME@@;}' . "\n\n";
@@ -186,12 +53,178 @@ class EntityCommand implements S2Base_GenerateCommand {
         $src     .= '    }' . "\n";
         return $src;
     }
-    
+
     public static function guessTableName($name){
         $patterns = array("/Entity$/","/Dto$/","/Bean$/");
         $replacements = array('','','');
         $guess = strtoupper(preg_replace($patterns,$replacements,$name));
         return $guess == $name ? strtoupper($name) : $guess;
+    }
+
+    public static function validateCols($colsStr){
+        $colsTmp = array_unique(explode(',',$colsStr));
+        $cols = array();
+        foreach($colsTmp as $col){
+            $col = trim($col);
+            if(preg_match("/^\w+$/",$col)){
+                $cols[] = $col;
+            }
+        }
+        return $cols;
+    }
+
+    public static function isCommonsEntityAvailable() {
+        $entitys = self::getAllEntityFromCommonsDao();
+        if(count($entitys) > 0){
+            return S2Base_StdinManager::isYes('extends commons entity ?');
+        } else {
+            return false;
+        }
+    }
+
+    public static function getAllEntityFromCommonsDao(){
+        $commonsDaoDir = S2BASE_PHP5_ROOT . '/app/commons/dao';
+        $entries = scandir($commonsDaoDir);
+        if(!$entries){
+            throw new Exception("invalid dir : [ $commonsDaoDir ]");
+        }
+        $entitys = array();
+        foreach($entries as $entry){
+            $maches = array();
+            if(preg_match("/(\w+Entity)\.class\.php$/",$entry,$maches)){
+                $entitys[] = $maches[1];
+            }
+        }
+        return $entitys;
+    }
+
+    public function getName(){
+        return "entity";
+    }
+
+    public function execute(){
+        try{
+            $this->moduleName = DefaultCommandUtil::getModuleName();
+            if(DefaultCommandUtil::isListExitLabel($this->moduleName)){
+                return;
+            }
+
+            $this->useDB = $this->isUseDB();
+            if ($this->useDB) {
+                if ($this->getEntityInfoFromDB() and 
+                    $this->finalConfirm()){
+                    $this->prepareFiles();
+                }
+            } else {
+                if ($this->getEntityInfoInteractive() and
+                    $this->finalConfirm()){
+                    $this->prepareFiles();
+                }
+            }
+        } catch(Exception $e) {
+            DefaultCommandUtil::showException($e);
+            return;
+        }
+    }
+
+    protected function isUseDB() {
+        return S2Base_StdinManager::isYes('use database ?');
+    }
+
+    protected function isEntityExtends() {
+        return EntityCommand::isCommonsEntityAvailable();
+    }
+
+    protected function getEntityInfoFromDB() {
+        $dbms = DefaultCommandUtil::getS2DaoSkeletonDbms();
+        $this->tableName = S2Base_StdinManager::getValueFromArray($dbms->getTables(),
+                                                                  "table list");
+        if (DefaultCommandUtil::isListExitLabel($this->tableName)){
+            return false;
+        }
+        $this->entityClassName = ucfirst(strtolower($this->tableName)) . S2DaoSkelConst::BeanName;
+        $this->cols = $dbms->getColumns($this->tableName);
+        $this->extendsEntityClassName = "none";
+
+        $entityClassNameTmp = S2Base_StdinManager::getValue("entity class name ? [{$this->entityClassName}] : ");
+        $this->entityClassName = trim($entityClassNameTmp) == '' ? $this->entityClassName : $entityClassNameTmp;
+        $this->validate($this->entityClassName);
+        return true;
+    }
+
+    protected function getEntityInfoInteractive() {
+        $this->entityClassName = S2Base_StdinManager::getValue('entity class name ? : ');
+        $this->validate($this->entityClassName);
+
+        $this->entityExtends = $this->isEntityExtends();
+        $this->extendsEntityClassName = "none";
+        if ($this->entityExtends) {
+            $entitys = self::getAllEntityFromCommonsDao();
+            $this->extendsEntityClassName = S2Base_StdinManager::getValueFromArray($entitys,
+                                        "entity list");
+            if (DefaultCommandUtil::isListExitLabel($this->extendsEntityClassName)){
+                return false;
+            }
+            $this->tableName = "extended";
+        } else {
+            $tableNameTmp = self::guessTableName($this->entityClassName);
+            $this->tableName = S2Base_StdinManager::getValue("table name ? [{$tableNameTmp}] : ");
+            if(trim($this->tableName) == ''){
+                $this->tableName = $tableNameTmp;
+            }
+            $this->validate($this->tableName);
+        }
+        $cols = S2Base_StdinManager::getValue("columns ? (id,name,--,) : ");
+        $this->cols = self::validateCols($cols);
+
+        return true;
+    }
+
+    protected function validate($name){
+        DefaultCommandUtil::validate($name,"Invalid value. [ $name ]");
+    }
+
+    protected function finalConfirm(){
+        print "\n[ generate information ] \n";
+        print "  module name          : {$this->moduleName} \n";
+        print "  entity class name    : {$this->entityClassName} \n";
+        if (!$this->useDB) {
+            print "  entity class extends : {$this->extendsEntityClassName} \n";
+        }
+        print "  table name           : {$this->tableName} \n";
+        $cols = implode(', ',$this->cols);
+        print "  columns              : $cols \n";
+
+        return S2Base_StdinManager::isYes('confirm ?');
+    }
+
+    protected function prepareFiles(){
+        $this->prepareEntityFile();
+    }
+    
+    protected function prepareEntityFile(){
+
+        $srcFile = S2BASE_PHP5_MODULES_DIR 
+                 . $this->moduleName
+                 . S2BASE_PHP5_ENTITY_DIR
+                 . $this->entityClassName
+                 . S2BASE_PHP5_CLASS_SUFFIX;
+        $accessorSrc = self::getAccessorSrc($this->cols);
+        $toStringSrc = self::getToStringSrc($this->cols);
+        if ($this->entityExtends) {
+            $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+                         . 'entity/entity_extends.php');
+            $patterns = array("/@@CLASS_NAME@@/","/@@ACCESSOR@@/","/@@EXTENDS_CLASS@@/","/@@TO_STRING@@/");
+            $replacements = array($this->entityClassName,$accessorSrc,$this->extendsEntityClassName,$toStringSrc);
+        }else{
+            $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+                         . 'entity/entity.php');
+            $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/","/@@TO_STRING@@/");
+            $replacements = array($this->entityClassName,$this->tableName,$accessorSrc,$toStringSrc);
+        }
+
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        DefaultCommandUtil::writeFile($srcFile,$tempContent);
     }
 }
 ?>
