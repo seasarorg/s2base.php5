@@ -1,32 +1,11 @@
 <?php
 class DefaultCommandUtil {
 
-    public static function createDirectoryInternal($directoryPath){
-        if(!file_exists($directoryPath)){
-            if(!mkdir($directoryPath)){
-               throw new Exception("Cannot make dir [ $directoryPath ]");
-            }
-            return true;
-        }else{
-            throw new S2Base_FileExistsException("Already exists. [ $directoryPath ]");
-        }
-    }
-
     public static function readFile($filePath){
         if(!is_readable($filePath)){
             throw new Exception("Cannot read file [ $filePath ]");
         }
         return file_get_contents($filePath);
-    }
-
-    public static function writeFileInternal($filePath, $contents) {
-        if (file_exists($filePath)) {
-            throw new S2Base_FileExistsException("Already exists. [ $filePath ]");
-        }
-
-        if(!file_put_contents($filePath,$contents,LOCK_EX)){
-            throw new Exception("Cannot write to file [ $filePath ]");
-        }
     }
 
     public static function getModuleName(){
@@ -90,6 +69,16 @@ class DefaultCommandUtil {
         }
     }
 
+    public static function writeFileInternal($filePath, $contents) {
+        if (file_exists($filePath)) {
+            throw new S2Base_FileExistsException("Already exists. [ $filePath ]");
+        }
+
+        if(!file_put_contents($filePath,$contents,LOCK_EX)){
+            throw new Exception("Cannot write to file [ $filePath ]");
+        }
+    }
+
     public static function createDirectory($dirPath){
         try{
             self::createDirectoryInternal($dirPath);
@@ -100,6 +89,17 @@ class DefaultCommandUtil {
             } else {
                 throw $e;
             }
+        }
+    }
+
+    public static function createDirectoryInternal($directoryPath){
+        if(!file_exists($directoryPath)){
+            if(!mkdir($directoryPath)){
+               throw new Exception("Cannot make dir [ $directoryPath ]");
+            }
+            return true;
+        }else{
+            throw new S2Base_FileExistsException("Already exists. [ $directoryPath ]");
         }
     }
 
