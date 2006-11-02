@@ -1,15 +1,14 @@
 <?php
-require_once('DefaultCommandUtil.class.php');
 class CmdCommand implements S2Base_GenerateCommand {
     const COMMAND_CLASS_SUFFIX = 'Command';
     protected $cmdName;
 
     public static function writeFile($srcFile,$tempContent) {
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     public static function showException(Exception $e){
-        DefaultCommandUtil::showException($e);
+        S2Base_CommandUtil::showException($e);
     }
 
     public function getName(){
@@ -36,8 +35,8 @@ class CmdCommand implements S2Base_GenerateCommand {
     }
 
     protected function finalConfirm(){
-        print "\n[ generate information ] \n";
-        print "  command name : {$this->cmdName} \n";
+        print PHP_EOL . '[ generate information ]' . PHP_EOL;
+        print "  command name : {$this->cmdName} " . PHP_EOL;
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
@@ -53,9 +52,10 @@ class CmdCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR 
                      . 'command/command.php');
-
-        $patterns = array("/@@CLASS_NAME@@/","/@@COMMAND_NAME@@/");
-        $replacements = array( $cmdClassName,$this->cmdName);
+        $patterns = array("/@@CLASS_NAME@@/",
+                          "/@@COMMAND_NAME@@/");
+        $replacements = array($cmdClassName,
+                              $this->cmdName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
 
         self::writeFile($srcFile,$tempContent);

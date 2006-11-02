@@ -60,7 +60,7 @@ class AgaviProjectCommand implements S2Base_GenerateCommand
     
     private function createDirectory ()
     {
-        AgaviCommandUtil::createDirectory($this->webappDir . '/lib/s2agavi');
+        S2Base_CommandUtil::createDirectory($this->webappDir . '/lib/s2agavi');
         AgaviCommandUtil::createLogicDirectories($this->moduleDir);
         AgaviCommandUtil::createTestDirectory($this->pathName,
                                               $this->moduleName);

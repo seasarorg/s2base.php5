@@ -22,8 +22,8 @@ class GoyaCommand implements S2Base_GenerateCommand {
 
     public function execute(){
         try{
-            $this->moduleName = DefaultCommandUtil::getModuleName();
-            if(DefaultCommandUtil::isListExitLabel($this->moduleName)){
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+            if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
                 return;
             }
 
@@ -59,7 +59,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
                 }
             }
         } catch(Exception $e) {
-            DefaultCommandUtil::showException($e);
+            S2Base_CommandUtil::showException($e);
             return;
         }
     }
@@ -83,7 +83,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
     protected function getGoyaInfoWithCommonsDao($actionName){
         $daos = DaoCommand::getAllDaoFromCommonsDao();
         $daoName = S2Base_StdinManager::getValueFromArray($daos, "dao list");
-        if(DefaultCommandUtil::isListExitLabel($daoName)){
+        if(S2Base_CommandUtil::isListExitLabel($daoName)){
             return false;
         }
         $this->setupPropertyWithoutDao($actionName);
@@ -98,10 +98,10 @@ class GoyaCommand implements S2Base_GenerateCommand {
     protected function getGoyaInfoWithDB($actionName) {
         $this->setupPropertyWithDao($actionName);
 
-        $dbms = DefaultCommandUtil::getS2DaoSkeletonDbms();
+        $dbms = S2Base_CommandUtil::getS2DaoSkeletonDbms();
         $this->tableName = S2Base_StdinManager::getValueFromArray($dbms->getTables(),
                                                                   "table list");
-        if (DefaultCommandUtil::isListExitLabel($this->tableName)){
+        if (S2Base_CommandUtil::isListExitLabel($this->tableName)){
             return false;
         }
         $this->cols = $dbms->getColumns($this->tableName);
@@ -125,7 +125,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
             $entitys = EntityCommand::getAllEntityFromCommonsDao();
             $this->extendsEntityClassName = S2Base_StdinManager::getValueFromArray($entitys,
                                                     "entity list");
-            if (DefaultCommandUtil::isListExitLabel($this->extendsEntityClassName)){
+            if (S2Base_CommandUtil::isListExitLabel($this->extendsEntityClassName)){
                 return false;
             }
             $this->tableName = "extended";
@@ -161,31 +161,31 @@ class GoyaCommand implements S2Base_GenerateCommand {
     }
 
     protected function validate($name){
-        DefaultCommandUtil::validate($name,"Invalid value. [ $name ]");
+        S2Base_CommandUtil::validate($name,"Invalid value. [ $name ]");
     }
 
     protected function finalConfirm(){
-        print "\n[ generate information ] \n";
-        print "  module name             : {$this->moduleName} \n";
-        print "  action name             : {$this->actionName} \n";
-        print "  action class name       : {$this->actionClassName} \n";
-        print "  action dicon file name  : {$this->actionClassName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
-        print "  action template file    : {$this->actionName}" . S2BASE_PHP5_SMARTY_TPL_SUFFIX . "\n";
-        print "  service interface name  : {$this->serviceInterfaceName} \n";
-        print "  service class name      : {$this->serviceClassName} \n";
-        print "  service test class name : {$this->serviceClassName}Test \n";
-        print "  service dicon file name : {$this->serviceClassName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
+        print  PHP_EOL . '[ generate information ]' . PHP_EOL;
+        print "  module name             : {$this->moduleName}" . PHP_EOL;
+        print "  action name             : {$this->actionName}" . PHP_EOL;
+        print "  action class name       : {$this->actionClassName}" . PHP_EOL;
+        print "  action dicon file name  : {$this->actionClassName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
+        print "  action template file    : {$this->actionName}" . S2BASE_PHP5_SMARTY_TPL_SUFFIX . PHP_EOL;
+        print "  service interface name  : {$this->serviceInterfaceName}" . PHP_EOL;
+        print "  service class name      : {$this->serviceClassName}" . PHP_EOL;
+        print "  service test class name : {$this->serviceClassName}Test" . PHP_EOL;
+        print "  service dicon file name : {$this->serviceClassName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
         if ($this->useDao) {
-            print "  dao interface name      : {$this->daoInterfaceName} \n";
-            print "  dao test class name     : {$this->daoInterfaceName}Test \n";
-            print "  entity class name       : {$this->entityClassName} \n";
+            print "  dao interface name      : {$this->daoInterfaceName}" . PHP_EOL;
+            print "  dao test class name     : {$this->daoInterfaceName}Test" . PHP_EOL;
+            print "  entity class name       : {$this->entityClassName}" . PHP_EOL;
             if (!$this->useCommonsDao) {
                 if (!$this->useDB) {
-                    print "  entity class extends    : {$this->extendsEntityClassName} \n";
+                    print "  entity class extends    : {$this->extendsEntityClassName}" . PHP_EOL;
                 }
-                print "  table name              : {$this->tableName} \n";
+                print "  table name              : {$this->tableName}" . PHP_EOL;
                 $cols = implode(', ',$this->cols);
-                print "  columns                 : $cols \n";
+                print "  columns                 : $cols" . PHP_EOL;
             }
         }
         return S2Base_StdinManager::isYes('confirm ?');
@@ -218,13 +218,17 @@ class GoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_ACTION_DIR
                  . $this->actionClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/action.php');
         $serviceProp = strtolower(substr($this->serviceInterfaceName,0,1)) . substr($this->serviceInterfaceName,1);
-        $patterns = array("/@@CLASS_NAME@@/","/@@SERVICE_INTERFACE@@/","/@@SERVICE_PROPERTY@@/");
-        $replacements = array($this->actionClassName,$this->serviceInterfaceName,$serviceProp);
+        $patterns = array("/@@CLASS_NAME@@/",
+                          "/@@SERVICE_INTERFACE@@/",
+                          "/@@SERVICE_PROPERTY@@/");
+        $replacements = array($this->actionClassName,
+                              $this->serviceInterfaceName,
+                              $serviceProp);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareHtmlFile(){
@@ -234,12 +238,12 @@ class GoyaCommand implements S2Base_GenerateCommand {
                  . $this->actionName
                  . S2BASE_PHP5_SMARTY_TPL_SUFFIX; 
         $htmlFile = defined('S2BASE_PHP5_LAYOUT') ? 'html_layout.php' : 'html.php';
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . "/skeleton/action/$htmlFile");
         $patterns = array("/@@MODULE_NAME@@/","/@@ACTION_NAME@@/");
         $replacements = array($this->moduleName,$this->actionName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareActionDiconFile(){
@@ -248,12 +252,18 @@ class GoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DICON_DIR
                  . $this->actionClassName
                  . S2BASE_PHP5_DICON_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/action_dicon.php');
-        $patterns = array("/@@MODULE_NAME@@/","/@@COMPONENT_NAME@@/","/@@CLASS_NAME@@/","/@@SERVICE_CLASS@@/");
-        $replacements = array($this->moduleName,$this->actionName,$this->actionClassName,$this->serviceClassName);
+        $patterns = array("/@@MODULE_NAME@@/",
+                          "/@@COMPONENT_NAME@@/",
+                          "/@@CLASS_NAME@@/",
+                          "/@@SERVICE_CLASS@@/");
+        $replacements = array($this->moduleName,
+                              $this->actionName,
+                              $this->actionClassName,
+                              $this->serviceClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }    
 
     protected function prepareServiceClassFile(){
@@ -263,13 +273,20 @@ class GoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_SERVICE_DIR
                  . $this->serviceClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/service.php');
-        $daoProp = strtolower(substr($this->daoInterfaceName,0,1)) . substr($this->daoInterfaceName,1);
-        $patterns = array("/@@CLASS_NAME@@/","/@@INTERFACE_NAME@@/","/@@DAO_NAME@@/","/@@DAO_PROPERTY@@/");
-        $replacements = array($this->serviceClassName,$this->serviceInterfaceName,$this->daoInterfaceName,$daoProp);
+        $daoProp = strtolower(substr($this->daoInterfaceName,0,1))
+                 . substr($this->daoInterfaceName,1);
+        $patterns = array("/@@CLASS_NAME@@/",
+                          "/@@INTERFACE_NAME@@/",
+                          "/@@DAO_NAME@@/",
+                          "/@@DAO_PROPERTY@@/");
+        $replacements = array($this->serviceClassName,
+                              $this->serviceInterfaceName,
+                              $this->daoInterfaceName,
+                              $daoProp);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareServiceClassFileWithoutDao(){
@@ -279,12 +296,12 @@ class GoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_SERVICE_DIR
                  . $this->serviceClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/service_without_dao.php');
         $patterns = array("/@@CLASS_NAME@@/","/@@INTERFACE_NAME@@/");
         $replacements = array($this->serviceClassName,$this->serviceInterfaceName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareServiceInterfaceFile(){
@@ -293,12 +310,12 @@ class GoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_SERVICE_DIR
                  . $this->serviceInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/service_interface.php');
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
                              $this->serviceInterfaceName,
                              $tempContent);   
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareServiceTestFile(){
@@ -308,13 +325,19 @@ class GoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_SERVICE_DIR 
                  . $testName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/service_test.php');
 
-        $patterns = array("/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@SERVICE_CLASS@@/","/@@SERVICE_INTERFACE@@/");
-        $replacements = array($testName,$this->moduleName,$this->serviceClassName,$this->serviceInterfaceName);
+        $patterns = array("/@@CLASS_NAME@@/",
+                          "/@@MODULE_NAME@@/",
+                          "/@@SERVICE_CLASS@@/",
+                          "/@@SERVICE_INTERFACE@@/");
+        $replacements = array($testName,
+                              $this->moduleName,
+                              $this->serviceClassName,
+                              $this->serviceInterfaceName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareDaoFile(){
@@ -324,13 +347,13 @@ class GoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DAO_DIR
                  . $this->daoInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/dao.php');
 
         $patterns = array("/@@CLASS_NAME@@/","/@@ENTITY_NAME@@/");
         $replacements = array($this->daoInterfaceName,$this->entityClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareDaoTestFile(){
@@ -340,13 +363,19 @@ class GoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DAO_DIR
                  . $testClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/dao_test.php');
 
-        $patterns = array("/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@DAO_CLASS@@/","/@@SERVICE_CLASS@@/");
-        $replacements = array($testClassName,$this->moduleName,$this->daoInterfaceName,$this->serviceClassName);
+        $patterns = array("/@@CLASS_NAME@@/",
+                          "/@@MODULE_NAME@@/",
+                          "/@@DAO_CLASS@@/",
+                          "/@@SERVICE_CLASS@@/");
+        $replacements = array($testClassName,
+                              $this->moduleName,
+                              $this->daoInterfaceName,
+                              $this->serviceClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareEntityFile(){
@@ -358,19 +387,25 @@ class GoyaCommand implements S2Base_GenerateCommand {
         $accessorSrc = EntityCommand::getAccessorSrc($this->cols);
         $toStringSrc = EntityCommand::getToStringSrc($this->cols);
         if ($this->entityExtends) {
-            $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/entity_extends.php');
-            $patterns = array("/@@CLASS_NAME@@/","/@@ACCESSOR@@/","/@@EXTENDS_CLASS@@/","/@@TO_STRING@@/");
-            $replacements = array($this->entityClassName,$accessorSrc,$this->extendsEntityClassName,$toStringSrc);
+            $patterns = array("/@@CLASS_NAME@@/",
+                              "/@@ACCESSOR@@/",
+                              "/@@EXTENDS_CLASS@@/",
+                              "/@@TO_STRING@@/");
+            $replacements = array($this->entityClassName,
+                                  $accessorSrc,
+                                  $this->extendsEntityClassName,
+                                  $toStringSrc);
         }else{
-            $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/entity.php');
             $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/","/@@TO_STRING@@/");
             $replacements = array($this->entityClassName,$this->tableName,$accessorSrc,$toStringSrc);
         }
 
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);     
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);     
     }
 
     protected function prepareServiceDiconFile(){
@@ -379,13 +414,13 @@ class GoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DICON_DIR
                  . $this->serviceClassName
                  . S2BASE_PHP5_DICON_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/service_dicon.php');
 
         $patterns = array("/@@SERVICE_CLASS@@/","/@@DAO_CLASS@@/");
         $replacements = array($this->serviceClassName,$this->daoInterfaceName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareServiceDiconFileWithoutDao(){
@@ -394,13 +429,13 @@ class GoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DICON_DIR
                  . $this->serviceClassName
                  . S2BASE_PHP5_DICON_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/goya/service_dicon_without_dao.php');
 
         $patterns = array("/@@SERVICE_CLASS@@/");
         $replacements = array($this->serviceClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 }
 ?>

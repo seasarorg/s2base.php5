@@ -11,8 +11,8 @@ class ActionCommand implements S2Base_GenerateCommand {
 
     public function execute(){
         try{
-            $this->moduleName = DefaultCommandUtil::getModuleName();
-            if(DefaultCommandUtil::isListExitLabel($this->moduleName)){
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+            if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
                 return;
             }
             $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
@@ -23,22 +23,22 @@ class ActionCommand implements S2Base_GenerateCommand {
             }
             $this->prepareFiles();
         } catch(Exception $e) {
-            DefaultCommandUtil::showException($e);
+            S2Base_CommandUtil::showException($e);
             return;
         }
     }
 
     protected function validate($name){
-        DefaultCommandUtil::validate($name,"Invalid action name. [ $name ]");
+        S2Base_CommandUtil::validate($name,"Invalid action name. [ $name ]");
     }
 
     protected function finalConfirm(){
-        print "\n[ generate information ] \n";
-        print "  module name            : {$this->moduleName} \n";
-        print "  action name            : {$this->actionName} \n";
-        print "  action class name      : {$this->actionClassName} \n";
-        print "  action dicon file name : {$this->actionClassName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
-        print "  action template file   : {$this->actionName}" . S2BASE_PHP5_SMARTY_TPL_SUFFIX . "\n";
+        print PHP_EOL . '[ generate information ]' . PHP_EOL;
+        print "  module name            : {$this->moduleName}" . PHP_EOL;
+        print "  action name            : {$this->actionName}" . PHP_EOL;
+        print "  action class name      : {$this->actionClassName}" . PHP_EOL;
+        print "  action dicon file name : {$this->actionClassName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
+        print "  action template file   : {$this->actionName}" . S2BASE_PHP5_SMARTY_TPL_SUFFIX . PHP_EOL;
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
@@ -54,40 +54,41 @@ class ActionCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_ACTION_DIR
                  . $this->actionClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/action/action.php');
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
                              $this->actionClassName,
                              $tempContent);   
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareHtmlFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR . 
-                     $this->moduleName . 
-                     S2BASE_PHP5_VIEW_DIR . 
-                     "{$this->actionName}" . 
-                     S2BASE_PHP5_SMARTY_TPL_SUFFIX; 
+        $srcFile = S2BASE_PHP5_MODULES_DIR 
+                 . $this->moduleName 
+                 . S2BASE_PHP5_VIEW_DIR 
+                 . $this->actionName 
+                 . S2BASE_PHP5_SMARTY_TPL_SUFFIX; 
         $htmlFile = defined('S2BASE_PHP5_LAYOUT') ? 'html_layout.php' : 'html.php';
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . "/skeleton/action/$htmlFile");
         $patterns = array("/@@MODULE_NAME@@/","/@@ACTION_NAME@@/");
         $replacements = array($this->moduleName,$this->actionName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareDiconFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR . 
-                   $this->moduleName . 
-                   S2BASE_PHP5_DICON_DIR . 
-                   "{$this->actionClassName}" . S2BASE_PHP5_DICON_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
+        $srcFile = S2BASE_PHP5_MODULES_DIR
+                 . $this->moduleName
+                 . S2BASE_PHP5_DICON_DIR
+                 . $this->actionClassName
+                 . S2BASE_PHP5_DICON_SUFFIX;
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/action/dicon.php');
         $patterns = array("/@@MODULE_NAME@@/","/@@COMPONENT_NAME@@/","/@@CLASS_NAME@@/");
         $replacements = array($this->moduleName,$this->actionName,$this->actionClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 }
 ?>

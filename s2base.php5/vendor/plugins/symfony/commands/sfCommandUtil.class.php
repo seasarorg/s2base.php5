@@ -59,7 +59,7 @@ class sfCommandUtil
 
         if (!is_dir($pathName))
         {
-            self::createDirectory($pathName);
+            S2Base_CommandUtil::createDirectory($pathName);
         }
         
         $descriptorspec = array(
@@ -157,7 +157,7 @@ class sfCommandUtil
             S2BASE_PHP5_INTERCEPTOR_DIR,
             S2BASE_PHP5_SERVICE_DIR,);
         foreach ($dirs as $dir) {
-            self::createDirectory($modulePath . $dir);
+            S2Base_CommandUtil::createDirectory($modulePath . $dir);
         }
     }
     
@@ -167,12 +167,12 @@ class sfCommandUtil
                    "test"                         . S2BASE_PHP5_DS .
                    self::$attributes['appName']   . S2BASE_PHP5_DS .
                    self::$attributes['moduleName'];
-        self::createDirectory($testDir);
+        S2Base_CommandUtil::createDirectory($testDir);
         $dirs = array(
             S2BASE_PHP5_DAO_DIR,
             S2BASE_PHP5_SERVICE_DIR);
         foreach ($dirs as $dir) {
-            self::createDirectory($testDir . $dir);
+            S2Base_CommandUtil::createDirectory($testDir . $dir);
         }
     }
     

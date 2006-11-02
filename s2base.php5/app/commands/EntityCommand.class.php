@@ -1,5 +1,4 @@
 <?php
-require_once('DefaultCommandUtil.class.php');
 class EntityCommand implements S2Base_GenerateCommand {
 
     protected $moduleName;
@@ -10,16 +9,20 @@ class EntityCommand implements S2Base_GenerateCommand {
     protected $useDB;
 
     public static function getAccessorSrc($cols){
-        $tempContent  = '    protected $@@PROP_NAME@@;' . "\n" .
-                        '    const @@PROP_NAME@@_COLUMN = "@@COL_NAME@@";' . "\n" .
-                        '    public function set@@UC_PROP_NAME@@($val){$this->@@PROP_NAME@@ = $val;}' . "\n" . 
-                        '    public function get@@UC_PROP_NAME@@(){return $this->@@PROP_NAME@@;}' . "\n\n";
+        $tempContent  = '    protected $@@PROP_NAME@@;' . PHP_EOL .
+                        '    const @@PROP_NAME@@_COLUMN = "@@COL_NAME@@";'  . PHP_EOL .
+                        '    public function set@@UC_PROP_NAME@@($val){$this->@@PROP_NAME@@ = $val;}' . PHP_EOL . 
+                        '    public function get@@UC_PROP_NAME@@(){return $this->@@PROP_NAME@@;}' . PHP_EOL . PHP_EOL;
         $retSrc = "";
         foreach($cols as $col){
             $prop = self::getPropertyNameFromCol($col);
             
-            $patterns = array("/@@UC_PROP_NAME@@/","/@@PROP_NAME@@/","/@@COL_NAME@@/");
-            $replacements = array(ucfirst($prop),$prop,$col);
+            $patterns = array("/@@UC_PROP_NAME@@/",
+                              "/@@PROP_NAME@@/",
+                              "/@@COL_NAME@@/");
+            $replacements = array(ucfirst($prop),
+                                  $prop,
+                                  $col);
             $retSrc .= preg_replace($patterns,$replacements,$tempContent);
         }
         return $retSrc;
@@ -42,15 +45,15 @@ class EntityCommand implements S2Base_GenerateCommand {
             return "";
         }
         
-        $src      = '    public function __toString() {' . "\n";
-        $src     .= '        $buf = array();' . "\n";
+        $src      = '    public function __toString() {' . PHP_EOL;
+        $src     .= '        $buf = array();' . PHP_EOL;
         foreach($cols as $col){
             $prop = self::getPropertyNameFromCol($col);
             $getter = '\' . $this->get' . ucfirst($prop) . '();';            
-            $src .= '        $buf[] = \'' . "$prop => " . $getter . "\n";
+            $src .= '        $buf[] = \'' . "$prop => " . $getter . PHP_EOL;
         }
-        $src     .= '        return \'{\' . implode(\', \',$buf) . \'}\';' . "\n";
-        $src     .= '    }' . "\n";
+        $src     .= '        return \'{\' . implode(\', \',$buf) . \'}\';' . PHP_EOL;
+        $src     .= '    }' . PHP_EOL;
         return $src;
     }
 
@@ -104,8 +107,8 @@ class EntityCommand implements S2Base_GenerateCommand {
 
     public function execute(){
         try{
-            $this->moduleName = DefaultCommandUtil::getModuleName();
-            if(DefaultCommandUtil::isListExitLabel($this->moduleName)){
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+            if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
                 return;
             }
 
@@ -122,7 +125,7 @@ class EntityCommand implements S2Base_GenerateCommand {
                 }
             }
         } catch(Exception $e) {
-            DefaultCommandUtil::showException($e);
+            S2Base_CommandUtil::showException($e);
             return;
         }
     }
@@ -136,10 +139,10 @@ class EntityCommand implements S2Base_GenerateCommand {
     }
 
     protected function getEntityInfoFromDB() {
-        $dbms = DefaultCommandUtil::getS2DaoSkeletonDbms();
+        $dbms = S2Base_CommandUtil::getS2DaoSkeletonDbms();
         $this->tableName = S2Base_StdinManager::getValueFromArray($dbms->getTables(),
                                                                   "table list");
-        if (DefaultCommandUtil::isListExitLabel($this->tableName)){
+        if (S2Base_CommandUtil::isListExitLabel($this->tableName)){
             return false;
         }
         $this->entityClassName = ucfirst(strtolower($this->tableName)) . S2DaoSkelConst::BeanName;
@@ -162,7 +165,7 @@ class EntityCommand implements S2Base_GenerateCommand {
             $entitys = self::getAllEntityFromCommonsDao();
             $this->extendsEntityClassName = S2Base_StdinManager::getValueFromArray($entitys,
                                         "entity list");
-            if (DefaultCommandUtil::isListExitLabel($this->extendsEntityClassName)){
+            if (S2Base_CommandUtil::isListExitLabel($this->extendsEntityClassName)){
                 return false;
             }
             $this->tableName = "extended";
@@ -181,19 +184,19 @@ class EntityCommand implements S2Base_GenerateCommand {
     }
 
     protected function validate($name){
-        DefaultCommandUtil::validate($name,"Invalid value. [ $name ]");
+        S2Base_CommandUtil::validate($name,"Invalid value. [ $name ]");
     }
 
     protected function finalConfirm(){
-        print "\n[ generate information ] \n";
-        print "  module name          : {$this->moduleName} \n";
-        print "  entity class name    : {$this->entityClassName} \n";
+        print PHP_EOL . '[ generate information ]' . PHP_EOL;
+        print "  module name          : {$this->moduleName}" . PHP_EOL;
+        print "  entity class name    : {$this->entityClassName}" . PHP_EOL;
         if (!$this->useDB) {
-            print "  entity class extends : {$this->extendsEntityClassName} \n";
+            print "  entity class extends : {$this->extendsEntityClassName}" . PHP_EOL;
         }
-        print "  table name           : {$this->tableName} \n";
+        print "  table name           : {$this->tableName}" . PHP_EOL;
         $cols = implode(', ',$this->cols);
-        print "  columns              : $cols \n";
+        print "  columns              : $cols" . PHP_EOL;
 
         return S2Base_StdinManager::isYes('confirm ?');
     }
@@ -212,19 +215,31 @@ class EntityCommand implements S2Base_GenerateCommand {
         $accessorSrc = self::getAccessorSrc($this->cols);
         $toStringSrc = self::getToStringSrc($this->cols);
         if ($this->entityExtends) {
-            $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                          . 'entity/entity_extends.php');
-            $patterns = array("/@@CLASS_NAME@@/","/@@ACCESSOR@@/","/@@EXTENDS_CLASS@@/","/@@TO_STRING@@/");
-            $replacements = array($this->entityClassName,$accessorSrc,$this->extendsEntityClassName,$toStringSrc);
+            $patterns = array("/@@CLASS_NAME@@/",
+                              "/@@ACCESSOR@@/",
+                              "/@@EXTENDS_CLASS@@/",
+                              "/@@TO_STRING@@/");
+            $replacements = array($this->entityClassName,
+                                  $accessorSrc,
+                                  $this->extendsEntityClassName,
+                                  $toStringSrc);
         }else{
-            $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                          . 'entity/entity.php');
-            $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/","/@@TO_STRING@@/");
-            $replacements = array($this->entityClassName,$this->tableName,$accessorSrc,$toStringSrc);
+            $patterns = array("/@@CLASS_NAME@@/",
+                              "/@@TABLE_NAME@@/",
+                              "/@@ACCESSOR@@/",
+                              "/@@TO_STRING@@/");
+            $replacements = array($this->entityClassName,
+                                  $this->tableName,
+                                  $accessorSrc,
+                                  $toStringSrc);
         }
 
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 }
 ?>

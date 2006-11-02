@@ -1,5 +1,4 @@
 <?php
-require_once('DefaultCommandUtil.class.php');
 class DaoCommand implements S2Base_GenerateCommand {
 
     protected $moduleName;
@@ -51,8 +50,8 @@ class DaoCommand implements S2Base_GenerateCommand {
 
     public function execute(){
         try{
-            $this->moduleName = DefaultCommandUtil::getModuleName();
-            if(DefaultCommandUtil::isListExitLabel($this->moduleName)){
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+            if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
                 return;
             }
 
@@ -77,7 +76,7 @@ class DaoCommand implements S2Base_GenerateCommand {
                 }
             }
         } catch(Exception $e) {
-            DefaultCommandUtil::showException($e);
+            S2Base_CommandUtil::showException($e);
             return;
         }
     }
@@ -96,7 +95,7 @@ class DaoCommand implements S2Base_GenerateCommand {
 
     protected function getDaoInfoFromCommonsDao($daos){
         $daoName = S2Base_StdinManager::getValueFromArray($daos, "dao list");
-        if (DefaultCommandUtil::isListExitLabel($daoName)){
+        if (S2Base_CommandUtil::isListExitLabel($daoName)){
             return false;
         }
         $this->daoInterfaceName = $daoName;
@@ -108,10 +107,10 @@ class DaoCommand implements S2Base_GenerateCommand {
     }
 
     protected function getDaoInfoFromDB(){
-        $dbms = DefaultCommandUtil::getS2DaoSkeletonDbms();
+        $dbms = S2Base_CommandUtil::getS2DaoSkeletonDbms();
         $this->tableName = S2Base_StdinManager::getValueFromArray($dbms->getTables(),
                                                                   "table list");
-        if (DefaultCommandUtil::isListExitLabel($this->tableName)){
+        if (S2Base_CommandUtil::isListExitLabel($this->tableName)){
             return false;
         }
         $this->daoInterfaceName = ucfirst(strtolower($this->tableName)) . S2DaoSkelConst::DaoName;
@@ -146,7 +145,7 @@ class DaoCommand implements S2Base_GenerateCommand {
             $entitys = EntityCommand::getAllEntityFromCommonsDao();
             $this->extendsEntityClassName = S2Base_StdinManager::getValueFromArray($entitys,
                                             "entity list");
-            if (DefaultCommandUtil::isListExitLabel($this->extendsEntityClassName)){
+            if (S2Base_CommandUtil::isListExitLabel($this->extendsEntityClassName)){
                 return false;
             }
             $this->tableName = "extended";
@@ -174,24 +173,24 @@ class DaoCommand implements S2Base_GenerateCommand {
     }
 
     protected function validate($name){
-        DefaultCommandUtil::validate($name,"Invalid value. [ $name ]");
+        S2Base_CommandUtil::validate($name,"Invalid value. [ $name ]");
     }
 
     protected function finalConfirm(){
-        print "\n[ generate information ] \n";
-        print "  module name          : {$this->moduleName} \n";
-        print "  dao interface name   : {$this->daoInterfaceName} \n";
-        print "  dao test class name  : {$this->daoInterfaceName}Test \n";
-        print "  entity class name    : {$this->entityClassName} \n";
+        print PHP_EOL . '[ generate information ]' . PHP_EOL;
+        print "  module name          : {$this->moduleName} " . PHP_EOL;
+        print "  dao interface name   : {$this->daoInterfaceName} " . PHP_EOL;
+        print "  dao test class name  : {$this->daoInterfaceName}Test " . PHP_EOL;
+        print "  entity class name    : {$this->entityClassName} " . PHP_EOL;
         if (!$this->useDB and !$this->useCommonsDao) {
-            print "  entity class extends : {$this->extendsEntityClassName} \n";
+            print "  entity class extends : {$this->extendsEntityClassName} " . PHP_EOL;
         }
         if (!$this->useCommonsDao) {
-            print "  table name           : {$this->tableName} \n";
+            print "  table name           : {$this->tableName} " . PHP_EOL;
             $cols = implode(', ',$this->cols);
-            print "  columns              : $cols \n";
+            print "  columns              : $cols " . PHP_EOL;
         }
-        print "  dao dicon file name  : {$this->daoInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
+        print "  dao dicon file name  : {$this->daoInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
@@ -210,13 +209,13 @@ class DaoCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DAO_DIR
                  . $this->daoInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'dao/dao.php');
 
         $patterns = array("/@@CLASS_NAME@@/","/@@ENTITY_NAME@@/");
         $replacements = array($this->daoInterfaceName,$this->entityClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareDaoTestFile(){
@@ -226,13 +225,13 @@ class DaoCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DAO_DIR
                  . $testName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'dao/test.php');
         $patterns = array("/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@DAO_CLASS@@/");
         $replacements = array($testName,$this->moduleName,$this->daoInterfaceName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
 
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareDiconFile(){
@@ -241,12 +240,12 @@ class DaoCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DICON_DIR
                  . $this->daoInterfaceName
                  . S2BASE_PHP5_DICON_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'dao/dicon.php');
         $tempContent = preg_replace("/@@DAO_CLASS@@/",
                                     $this->daoInterfaceName,
                                     $tempContent);   
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareEntityFile(){
@@ -258,19 +257,19 @@ class DaoCommand implements S2Base_GenerateCommand {
         $accessorSrc = EntityCommand::getAccessorSrc($this->cols);
         $toStringSrc = EntityCommand::getToStringSrc($this->cols);
         if ($this->entityExtends) {
-            $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                          . 'entity/entity_extends.php');
             $patterns = array("/@@CLASS_NAME@@/","/@@ACCESSOR@@/","/@@EXTENDS_CLASS@@/","/@@TO_STRING@@/");
             $replacements = array($this->entityClassName,$accessorSrc,$this->extendsEntityClassName,$toStringSrc);
         }else{
-            $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                          . 'entity/entity.php');
             $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/","/@@TO_STRING@@/");
             $replacements = array($this->entityClassName,$this->tableName,$accessorSrc,$toStringSrc);
         }
 
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 }
 ?>

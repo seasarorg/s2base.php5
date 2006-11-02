@@ -27,33 +27,12 @@
  */
 class S2Base_CommandUtil {
 
-    public static function createDirectory($path){
-        if(!file_exists($path)){
-            if(!mkdir($path)){
-               throw new Exception("Cannot make dir [ $path ]");
-            }
-            return true;
-        }else{
-            return false;
+    public static function readFile($filePath){
+        if(!is_readable($filePath)){
+            throw new Exception("Cannot read file [ $filePath ]");
         }
+        return file_get_contents($filePath);
     }
-
-    public static function readFile($src){
-        if(!is_readable($src)){
-            throw new Exception("Cannot read file [ $src ]");
-        }
-        return file_get_contents($src);
-    }
-
-    public static function writeFile($filename,$content){
-        if (file_exists($filename)) {
-            throw new S2Base_FileExistsException("Already exists. [ $filename ]");
-        }
-
-        if(!file_put_contents($filename,$content,LOCK_EX)){
-            throw new Exception("Cannot write to file [ $filename ]");
-        }
-    }    
 
     public static function getModuleName(){
         $modules = self::getAllModules();
@@ -62,9 +41,14 @@ class S2Base_CommandUtil {
         }
         return S2Base_StdinManager::getValueFromArray($modules,"Module list");
     }
-        
+
     public static function getAllModules(){
-        $entries = scandir(S2BASE_PHP5_APP_DIR . "modules");
+        $modulesDir = S2BASE_PHP5_APP_DIR . "modules";
+        $entries = scandir($modulesDir);
+        if(!$entries){
+            throw new Exception("invalid dir : [ $modulesDir ]");
+        }
+
         $modules = array();
         foreach($entries as $entry) {
             $path = S2BASE_PHP5_MODULES_DIR . $entry;
@@ -73,12 +57,81 @@ class S2Base_CommandUtil {
             }
         }
         return $modules;
-    }        
+    }
 
-    public static function validate($name,$msg){
-        if(!preg_match("/^\w+$/",$name)){
-           throw new Exception($msg);
+    public static function validate($target, $exceptionMsg) {
+        if(!preg_match("/^\w+$/",$target)){
+           throw new Exception($exceptionMsg);
         }   
+    }
+
+    public static function isListExitLabel($label) {
+        return $label == S2Base_StdinManager::EXIT_LABEL;
+    }
+
+    public static function getS2DaoSkeletonDbms() {
+        $container = S2ContainerFactory::create(PDO_DICON);
+        $cd = $container->getComponentDef('dataSource');
+        $dsn = $cd->getPropertyDef('dsn')->getValue();
+        if ($cd->hasPropertyDef('user')) {
+            $user = $cd->getPropertyDef('user')->getValue();
+        }
+        if ($cd->hasPropertyDef('password')) {
+            $pass = $cd->getPropertyDef('password')->getValue();
+        }
+        return new S2DaoSkeletonDbms($dsn, $user, $pass);
+    }
+
+    public static function writeFile($srcFile,$tempContent) {
+        try{
+            self::writeFileInternal($srcFile,$tempContent);
+            print "[INFO ] create : $srcFile" . PHP_EOL;
+        }catch(Exception $e){
+            if ($e instanceof S2Base_FileExistsException){
+                print "[INFO ] exists : $srcFile" . PHP_EOL;
+            } else {
+                throw $e;
+            }
+        }
+    }
+
+    public static function writeFileInternal($filePath, $contents) {
+        if (file_exists($filePath)) {
+            throw new S2Base_FileExistsException("Already exists. [ $filePath ]");
+        }
+
+        if(!file_put_contents($filePath,$contents,LOCK_EX)){
+            throw new Exception("Cannot write to file [ $filePath ]");
+        }
+    }
+
+    public static function createDirectory($dirPath){
+        try{
+            self::createDirectoryInternal($dirPath);
+            print "[INFO ] create : $dirPath" . PHP_EOL;
+        }catch(Exception $e){
+            if ($e instanceof S2Base_FileExistsException){
+                print "[INFO ] exists : $dirPath" . PHP_EOL;
+            } else {
+                throw $e;
+            }
+        }
+    }
+
+    public static function createDirectoryInternal($directoryPath){
+        if(!file_exists($directoryPath)){
+            if(!mkdir($directoryPath)){
+               throw new Exception("Cannot make dir [ $directoryPath ]");
+            }
+            return true;
+        }else{
+            throw new S2Base_FileExistsException("Already exists. [ $directoryPath ]");
+        }
+    }
+
+    public static function showException(Exception $e){
+        print PHP_EOL . '!!! Exception' . PHP_EOL;
+        print "!!! {$e->getMessage()}" . PHP_EOL . PHP_EOL;
     }
 }
 ?>

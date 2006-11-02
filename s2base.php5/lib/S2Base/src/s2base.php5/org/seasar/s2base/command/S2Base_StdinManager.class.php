@@ -42,7 +42,8 @@ class S2Base_StdinManager {
             if(strcasecmp($val,'q') == 0){
                 $number = 0;
                 break;
-            } else if (array_key_exists($val,$cmds)) {
+            } else if (is_numeric($val) and
+                       array_key_exists($val,$cmds)) {
                 $number = $val;
                 break;
             }

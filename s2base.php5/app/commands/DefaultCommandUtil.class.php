@@ -59,10 +59,10 @@ class DefaultCommandUtil {
     public static function writeFile($srcFile,$tempContent) {
         try{
             self::writeFileInternal($srcFile,$tempContent);
-            print "[INFO ] create : $srcFile\n";
+            print "[INFO ] create : $srcFile" . PHP_EOL;
         }catch(Exception $e){
             if ($e instanceof S2Base_FileExistsException){
-                print "[INFO ] exists : $srcFile\n";
+                print "[INFO ] exists : $srcFile" . PHP_EOL;
             } else {
                 throw $e;
             }
@@ -82,10 +82,10 @@ class DefaultCommandUtil {
     public static function createDirectory($dirPath){
         try{
             self::createDirectoryInternal($dirPath);
-            print "[INFO ] create : $dirPath\n";
+            print "[INFO ] create : $dirPath" . PHP_EOL;
         }catch(Exception $e){
             if ($e instanceof S2Base_FileExistsException){
-                print "[INFO ] exists : $dirPath\n";
+                print "[INFO ] exists : $dirPath" . PHP_EOL;
             } else {
                 throw $e;
             }
@@ -104,7 +104,8 @@ class DefaultCommandUtil {
     }
 
     public static function showException(Exception $e){
-        print "\n!!! Exception\n!!! {$e->getMessage()}\n\n";
+        print PHP_EOL . '!!! Exception' . PHP_EOL;
+        print "!!! {$e->getMessage()}" . PHP_EOL . PHP_EOL;
     }
 }
 ?>
