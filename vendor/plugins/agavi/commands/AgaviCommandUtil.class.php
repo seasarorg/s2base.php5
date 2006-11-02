@@ -102,7 +102,7 @@ class AgaviCommandUtil
             S2BASE_PHP5_INTERCEPTOR_DIR,
             S2BASE_PHP5_SERVICE_DIR,);
         foreach ($dirs as $dir) {
-            self::createDirectory($modulePath . $dir);
+            S2Base_CommandUtil::createDirectory($modulePath . $dir);
         }
     }
     
@@ -113,7 +113,7 @@ class AgaviCommandUtil
             S2BASE_PHP5_DAO_DIR,
             S2BASE_PHP5_SERVICE_DIR);
         foreach ($dirs as $dir) {
-            self::createDirectory($testDirPath . $dir);
+            S2Base_CommandUtil::createDirectory($testDirPath . $dir);
         }
     }
     

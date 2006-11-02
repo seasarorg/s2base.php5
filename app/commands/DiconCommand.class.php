@@ -1,5 +1,4 @@
 <?php
-require_once('DefaultCommandUtil.class.php');
 class DiconCommand implements S2Base_GenerateCommand {
 
     protected $moduleName;
@@ -11,8 +10,8 @@ class DiconCommand implements S2Base_GenerateCommand {
 
     public function execute(){
         try{
-            $this->moduleName = DefaultCommandUtil::getModuleName();
-            if(DefaultCommandUtil::isListExitLabel($this->moduleName)){
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+            if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
                 return;
             }
             $this->diconName = S2Base_StdinManager::getValue('dicon name ? : ');
@@ -22,19 +21,19 @@ class DiconCommand implements S2Base_GenerateCommand {
             }
             $this->prepareFiles();
         } catch(Exception $e) {
-            DefaultCommandUtil::showException($e);
+            S2Base_CommandUtil::showException($e);
             return;
         }
     }
 
     protected function validate($name){
-        DefaultCommandUtil::validate($name,"Invalid dicon name. [ $name ]");
+        S2Base_CommandUtil::validate($name,"Invalid dicon name. [ $name ]");
     }
 
     protected function finalConfirm(){
-        print "\n[ generate information ] \n";
-        print "  module name     : {$this->moduleName} \n";
-        print "  dicon file name : {$this->diconName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
+        print PHP_EOL . '[ generate information ]' . PHP_EOL;
+        print "  module name     : {$this->moduleName}" . PHP_EOL;
+        print "  dicon file name : {$this->diconName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
@@ -48,9 +47,9 @@ class DiconCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DICON_DIR
                  . $this->diconName
                  . S2BASE_PHP5_DICON_SUFFIX;
-        $tempContent = DefaultCommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'dicon/dicon.php');
-        DefaultCommandUtil::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 }
 ?>

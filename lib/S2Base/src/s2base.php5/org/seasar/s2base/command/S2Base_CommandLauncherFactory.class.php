@@ -41,9 +41,9 @@ class S2Base_CommandLauncherFactory {
                 if (!class_exists($cmdClassName,false)) {
                     continue;
                 }
-                $cmdObj = new $cmdClassName();
-                if ($cmdObj instanceof S2Base_GenerateCommand) {
-                    $launcher->addCommand($cmdObj);
+                $ref = new ReflectionClass($cmdClassName);
+                if (!$ref->isAbstract() and $ref->isSubclassOf('S2Base_GenerateCommand')) {
+                    $launcher->addCommand(new $cmdClassName());
                 }
             }
         }
