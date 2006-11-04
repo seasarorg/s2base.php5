@@ -9,7 +9,7 @@ define('S2BASE_PHP5_VAR_DIR',S2BASE_PHP5_ROOT . '/var');
  * dicon file suffix setting
  */
 define('S2BASE_PHP5_DICON_SUFFIX','.dicon');
-define('S2BASE_PHP5_CLASS_SUFFIX','.class.php');
+define('S2BASE_PHP5_CLASS_SUFFIX','.php');
 
 /**
  * S2Dao pdo.dicon setting
