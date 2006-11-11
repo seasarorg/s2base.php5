@@ -269,7 +269,15 @@ class ScaffoldCommand extends AbstractGoyaCommand {
             $src .= ucfirst($prop);
             $src .= "</th>";
         }
-        return $src . "</tr>";
+        return $src . '<th colspan="2"></th></tr>';
+/*
+        $src .= '<th colspan="2">';
+        $src .= '<a href="?mod={$module}&act=' 
+              . $this->actionName
+              . 'Create">create</a>';
+        $src .= '</th>';
+        return $src . '</tr>';
+*/
     }
 
     protected function getPropertyRowsHtml() {

@@ -1,7 +1,5 @@
-<br>
-<hr>
-{$func} <br>
+<h3>{$func}</h3>
 @@FORM@@
-<hr>
+<h3>
 <a href="javascript:history.back()">back</a>
-<br>
+</h3>
