@@ -195,12 +195,12 @@ class DaoCommand implements S2Base_GenerateCommand {
     }
 
     protected function prepareFiles(){
-        $this->prepareDaoFile();
-        $this->prepareEntityFile();
         if (!$this->useCommonsDao) {
-            $this->prepareDaoTestFile();
-            $this->prepareDiconFile();
+            $this->prepareDaoFile();
+            $this->prepareEntityFile();
         }
+        $this->prepareDaoTestFile();
+        $this->prepareDiconFile();
     }
 
     protected function prepareDaoFile(){
