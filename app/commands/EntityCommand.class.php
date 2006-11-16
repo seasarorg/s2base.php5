@@ -33,7 +33,7 @@ class EntityCommand implements S2Base_GenerateCommand {
         if (preg_match("/_/",$col)){
             $prop = preg_replace("/_/"," ",$prop);
             $prop = ucwords($prop);
-            $prop = preg_replace("/\s+/","",$prop);
+            $prop = preg_replace("/\s/","_",$prop);
             $prop = strtolower(substr($prop,0,1)) . substr($prop,1);
         }
         return $prop;

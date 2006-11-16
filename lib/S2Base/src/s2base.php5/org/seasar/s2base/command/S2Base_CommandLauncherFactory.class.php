@@ -42,7 +42,9 @@ class S2Base_CommandLauncherFactory {
                     continue;
                 }
                 $ref = new ReflectionClass($cmdClassName);
-                if (!$ref->isAbstract() and $ref->isSubclassOf('S2Base_GenerateCommand')) {
+                if (!$ref->isAbstract() and 
+                    !$ref->isInterface() and
+                    $ref->isSubclassOf('S2Base_GenerateCommand')) {
                     $launcher->addCommand(new $cmdClassName());
                 }
             }
