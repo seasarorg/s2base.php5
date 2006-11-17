@@ -33,7 +33,16 @@ class EntityCommand implements S2Base_GenerateCommand {
         if (preg_match("/_/",$col)){
             $prop = preg_replace("/_/"," ",$prop);
             $prop = ucwords($prop);
-            $prop = preg_replace("/\s+/","",$prop);
+            $matches = array();
+            if (preg_match("/^(\s+)/", $prop, $matches)) {
+                $preSpace  = $matches[1];
+            }
+            $matches = array();
+            if (preg_match("/(\s+)$/", $prop, $matches)) {
+                $postSpace = $matches[1];
+            }
+            $prop = preg_replace("/\s/","",$prop);
+            $prop = preg_replace("/\s/","_",$preSpace . $prop . $postSpace);
             $prop = strtolower(substr($prop,0,1)) . substr($prop,1);
         }
         return $prop;
