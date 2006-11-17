@@ -20,7 +20,8 @@
         <property name="release.notes" value="Release 1.0.0" />
         <property name="td" value="" />
         <property name="tt" value="**/*Test.class.php" />
-        <property name="s2base.package.url" value="http://s2base.php5.sandbox.seasar.org/download/${package.name}-${project.version}" />
+        <property name="s2base.package.url" value="http://labs.s2php5.jp/s2base/pear/${package.name}-${project.version}" />
+        <!-- property name="s2base.package.url" value="http://s2base.php5.sandbox.seasar.org/download/${package.name}-${project.version}" /-->
     </target>
 
     <target name="clean" depends="init">

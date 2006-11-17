@@ -1,6 +1,12 @@
 <?php
 class InterceptorCommand implements S2Base_GenerateCommand {
 
+    const TYPE_DEFAULT  = 'default';
+    const TYPE_ARROUND  = 'arround';
+    const TYPE_BEFORE   = 'before';
+    const TYPE_AFTER    = 'after';
+    const TYPE_VALIDATE = 'validate';
+
     protected $moduleName;
     protected $interceptorClassName;
     protected $type;
@@ -15,7 +21,12 @@ class InterceptorCommand implements S2Base_GenerateCommand {
             if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
                 return;
             }
-            $types = array('default','arround','before','after','validate');
+            //$types = array('default','arround','before','after','validate');
+            $types = array(self::TYPE_DEFAULT, 
+                           self::TYPE_ARROUND,
+                           self::TYPE_BEFORE,
+                           self::TYPE_AFTER,
+                           self::TYPE_VALIDATE);
             $this->type = S2Base_StdinManager::getValueFromArray($types,
                                             "Type list");
             if(S2Base_CommandUtil::isListExitLabel($this->type)){
@@ -48,6 +59,12 @@ class InterceptorCommand implements S2Base_GenerateCommand {
     }
 
     protected function prepareFiles(){
+        if ($this->type == self::TYPE_VALIDATE) {
+            S2Base_CommandUtil::createDirectory(S2BASE_PHP5_MODULES_DIR
+                                              . $this->moduleName
+                                              . S2BASE_PHP5_DS
+                                              . self::TYPE_VALIDATE);
+        }
         $this->prepareInterceptorFile();
     }
     
