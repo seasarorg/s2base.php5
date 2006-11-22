@@ -9,6 +9,8 @@ class DaoCommand implements S2Base_GenerateCommand {
     protected $cols;
     protected $useCommonsDao;
     protected $useDB;
+    protected $tableName;
+    protected $tableNames;
 
     public static function guessEntityName($daoInterfaceName){
         $patterns = array("/Dao$/");
@@ -108,14 +110,16 @@ class DaoCommand implements S2Base_GenerateCommand {
 
     protected function getDaoInfoFromDB(){
         $dbms = S2Base_CommandUtil::getS2DaoSkeletonDbms();
-        $this->tableName = S2Base_StdinManager::getValueFromArray($dbms->getTables(),
+        $this->tableNames = S2Base_StdinManager::getValuesFromArray($dbms->getTables(),
                                                                   "table list");
+        $this->tableName = $this->tableNames[0];
         if (S2Base_CommandUtil::isListExitLabel($this->tableName)){
             return false;
         }
+        $this->cols = EntityCommand::getColumnsFromTables($dbms, $this->tableNames);
+
         $this->daoInterfaceName = ucfirst(strtolower($this->tableName)) . S2DaoSkelConst::DaoName;
         $this->entityClassName = ucfirst(strtolower($this->tableName)) . S2DaoSkelConst::BeanName;
-        $this->cols = $dbms->getColumns($this->tableName);
         $this->extendsEntityClassName = "none";
 
         $daoInterfaceNameTmp = S2Base_StdinManager::getValue("dao interface name [{$this->daoInterfaceName}]? : ");
@@ -187,8 +191,8 @@ class DaoCommand implements S2Base_GenerateCommand {
         }
         if (!$this->useCommonsDao) {
             print "  table name           : {$this->tableName} " . PHP_EOL;
-            $cols = implode(', ',$this->cols);
-            print "  columns              : $cols " . PHP_EOL;
+            print '  tables               : ' . implode(', ',$this->tableNames) . PHP_EOL;
+            print '  columns              : ' . implode(', ',$this->cols) . PHP_EOL;
         }
         print "  dao dicon file name  : {$this->daoInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
         return S2Base_StdinManager::isYes('confirm ?');

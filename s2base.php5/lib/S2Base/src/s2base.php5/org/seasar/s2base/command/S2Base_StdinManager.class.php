@@ -30,9 +30,9 @@ class S2Base_StdinManager {
     
     public static function getValueFromArray($cmds, $title){
         $cmds = array_merge(array(self::EXIT_LABEL),$cmds);
-        print "\n[ $title ]\n";
         $number = null;
         while(true){
+            print "\n[ $title ]\n";
             foreach($cmds as $key=>$module){
                 print "$key : $module\n";
             }
@@ -48,8 +48,41 @@ class S2Base_StdinManager {
                 break;
             }
         }
-
         return $cmds[$number];
+    }
+
+    public static function getValuesFromArray($cmds, $title){
+        $cmds = array_merge(array(self::EXIT_LABEL),$cmds);
+        $items = null;
+        while(true){
+            print "\n[ $title ]\n";
+            $items = array();
+            foreach($cmds as $key => $val){
+                print "$key : $val\n";
+            }
+            print "choices ? (1,2,--,) : ";
+            $inputVal = trim(fgets(STDIN));
+
+            if(strcasecmp($inputVal,'q') == 0 or
+               strcasecmp($inputVal,'0') == 0 ){
+                $items[] = $cmds[0];
+                break;
+            }
+
+            $nums = explode(',', $inputVal);
+            foreach ($nums as $num) {
+                $num = trim($num);
+                if (is_numeric($num) and
+                    $num != '0' and
+                    array_key_exists($num, $cmds)) {
+                    $items[] = $cmds[$num];
+                }
+            }
+            if (count($items) > 0) {
+                break;
+            }
+        }
+        return array_unique($items);
     }
 
     public static function getValue($msg){

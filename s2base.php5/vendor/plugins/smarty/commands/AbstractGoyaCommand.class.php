@@ -11,6 +11,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
     protected $extendsEntityClassName;
     protected $entityExtends;
     protected $tableName;
+    protected $tableNames;
     protected $cols;
     protected $useCommonsDao;
     protected $useDB;
@@ -87,12 +88,15 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $this->setupPropertyWithDao($actionName);
 
         $dbms = S2Base_CommandUtil::getS2DaoSkeletonDbms();
-        $this->tableName = S2Base_StdinManager::getValueFromArray($dbms->getTables(),
+
+        $this->tableNames = S2Base_StdinManager::getValuesFromArray($dbms->getTables(),
                                                                   "table list");
+        $this->tableName = $this->tableNames[0];
         if (S2Base_CommandUtil::isListExitLabel($this->tableName)){
             return false;
         }
-        $this->cols = $dbms->getColumns($this->tableName);
+        $this->cols = EntityCommand::getColumnsFromTables($dbms, $this->tableNames);
+
         $this->extendsEntityClassName = "none";
 
         $daoInterfaceNameTmp = S2Base_StdinManager::getValue("dao interface name [{$this->daoInterfaceName}]? : ");
@@ -172,8 +176,8 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                     print "  entity class extends    : {$this->extendsEntityClassName}" . PHP_EOL;
                 }
                 print "  table name              : {$this->tableName}" . PHP_EOL;
-                $cols = implode(', ',$this->cols);
-                print "  columns                 : $cols" . PHP_EOL;
+                print '  tables                  : ' . implode(', ',$this->tableNames) . PHP_EOL;
+                print '  columns                 : ' . implode(', ',$this->cols) . PHP_EOL;
             }
         }
         return S2Base_StdinManager::isYes('confirm ?');
