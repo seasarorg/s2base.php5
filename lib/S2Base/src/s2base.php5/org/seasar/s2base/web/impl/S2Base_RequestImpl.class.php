@@ -61,7 +61,7 @@ class S2Base_RequestImpl implements S2Base_Request {
         $this->request[$key] = $val;
     }
 
-    public function isParam($key){
+    public function hasParam($key){
         return isset($this->request[$key]);
     }
     
