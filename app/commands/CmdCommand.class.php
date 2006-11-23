@@ -1,20 +1,48 @@
 <?php
+/**
+ * Generateコマンドを生成します。
+ * 
+ * 生成ファイル
+ * <ul>
+ *   <li>app/commands/コマンド名Command.class.php</li>
+ * </ul>
+ * 
+ */
 class CmdCommand implements S2Base_GenerateCommand {
     const COMMAND_CLASS_SUFFIX = 'Command';
     protected $cmdName;
 
+    /**
+     * ファイルにコンテンツを書き出します。
+     * 
+     * @param string $srcFile 出力ファイルへのパス
+     * @param string $tempContent 出力内容
+     * @deprecated
+     */
     public static function writeFile($srcFile,$tempContent) {
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
+    /**
+     * 例外内容を標準出力に表示します。
+     * 
+     * @param Exception $e
+     * @deprecated
+     */
     public static function showException(Exception $e){
         S2Base_CommandUtil::showException($e);
     }
 
+    /**
+     * @see S2Base_GenerateCommand::getName()
+     */
     public function getName(){
         return "command";
     }
 
+    /**
+     * @see S2Base_GenerateCommand::execute()
+     */
     public function execute(){
         try{
             $this->cmdName = S2Base_StdinManager::getValue('command name ? : ');

@@ -1,5 +1,8 @@
 ﻿
 2006-11-22 S2Base.PHP5-1.0.1
+
+================ S2Base.PHP5-1.0.1 更新履歴 ===================
+
 	* dao、entity、goyaコマンドでデータベースからテーブル情報を取得できるようにしました。
 	* package org.seasar.s2base.command
 	S2Base_CommandLauncherFactoryで各コマンドのインスタンス化において、abstract class、interface

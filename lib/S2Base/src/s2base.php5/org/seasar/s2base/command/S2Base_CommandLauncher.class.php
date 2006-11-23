@@ -20,19 +20,34 @@
 // | Authors: klove                                                       |
 // +----------------------------------------------------------------------+
 //
-// $Id:$
+// $Id$
 /**
- * @package org.seasar.s2base.command
- * @author klove
+ * S2Base_GenerateCommandを実行するランチャークラスです。
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.command
+ * @author     klove
  */
 class S2Base_CommandLauncher {
 
     private $commands = array();
 
+    /**
+     * S2Base_GenerateCommandをリストに追加します。
+     * 
+     * @param S2Base_GenerateCommand $command 追加するコマンド
+     */
     public function addCommand(S2Base_GenerateCommand $command){
         $this->commands[$command->getName()] = $command;
     }
 
+    /**
+     * コマンドランチャーを起動します。
+     */
     public function main(){
         $cmds = array_keys($this->commands);
         sort($cmds);

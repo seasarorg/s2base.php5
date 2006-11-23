@@ -22,12 +22,27 @@
 //
 // $Id:$
 /**
- * @package org.seasar.s2base.command
- * @author klove
+ * 生成コマンドのインターフェイスです。
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.command
+ * @author     klove
  */
 interface S2Base_GenerateCommand {
-    //const TPL_SUFFIX = ".tpl";
+    /**
+     * コマンドランチャーで表示されるコマンド名を返します。
+     * 
+     * @return string コマンド名
+     */
     public function getName();
+    
+    /**
+     * コマンドを実行します。
+     */
     public function execute();
 }
 ?>

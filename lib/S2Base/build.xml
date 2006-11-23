@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="s2base.php5" default="build" basedir=".">
+<project name="s2base.php5" default="info" basedir=".">
 
     <taskdef name="copy2" classname="src.phing.task.CopyFilesToOneDirTask" />
     <taskdef name="gcore" classname="src.phing.task.GenerateCoreFileTask" />
@@ -20,6 +20,7 @@
         <property name="release.notes" value="Release 1.0.0" />
         <property name="td" value="" />
         <property name="tt" value="**/*Test.class.php" />
+        <property name="dd" value="" />
         <property name="s2base.package.url" value="http://labs.s2php5.jp/s2base/pear/${package.name}-${project.version}" />
         <!-- property name="s2base.package.url" value="http://s2base.php5.sandbox.seasar.org/download/${package.name}-${project.version}" /-->
     </target>
@@ -201,5 +202,30 @@
                 </fileset>
             </batchtest>
         </phpunit2>
+    </target>
+
+    <target name="doc" depends="prepare">
+        <echo>src directory : ${project.src.dir}/${project.name}/${dd}</echo>
+        <phpdoc title="${project.name} Documentation"
+            destdir="${project.build.dir}/apidocs"
+            sourcepath="${project.src.dir}/${project.name}/${dd}"
+            output="HTML:Smarty:PHP"
+            parseprivate="true"
+            linksource="false"/>
+    </target>
+
+    <target name="info">
+        <echo message="" />
+        <echo message="S2Base.PHP5 build script" />
+        <echo message="----------------------------" />
+        <echo message="available targets:"/>
+        <echo message="" />
+        <echo message="build    ---> build all; don't create pear-package" />
+        <echo message="pear-pkg ---> create pear-package" />
+        <echo message="test     ---> run unit test suite from test/s2base.php5/" />
+        <echo message="doc      ---> run phpdoc from src/s2base.php5/" />
+        <echo message="clean    ---> remove build directory" />
+        <echo message="----------------------------" />
+        <echo message="" />
     </target>
 </project>

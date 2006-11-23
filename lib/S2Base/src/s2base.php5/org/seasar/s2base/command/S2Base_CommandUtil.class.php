@@ -22,11 +22,25 @@
 //
 // $Id:$
 /**
- * @package org.seasar.s2base.command
- * @author klove
+ * 各コマンドで使用する共通メソッドをまとめたUtilityクラスです。
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.command
+ * @author     klove
  */
 class S2Base_CommandUtil {
 
+    /**
+     * ファイルを読み込みます。
+     * 
+     * @param string $filePath 読み込むファイルのパス
+     * @return string ファイル内容
+     * @throws Exception 読み込みに失敗した場合にスローされます。
+     */
     public static function readFile($filePath){
         if(!is_readable($filePath)){
             throw new Exception("Cannot read file [ $filePath ]");
@@ -34,6 +48,11 @@ class S2Base_CommandUtil {
         return file_get_contents($filePath);
     }
 
+    /**
+     * app/modulesのモジュールを選択します。
+     * 
+     * @return string module名
+     */
     public static function getModuleName(){
         $modules = self::getAllModules();
         if(count($modules) == 0){
@@ -42,6 +61,11 @@ class S2Base_CommandUtil {
         return S2Base_StdinManager::getValueFromArray($modules,"Module list");
     }
 
+    /**
+     * app/modulesのすべてのモジュールを取得します。
+     * 
+     * @return array app/modulesのmodule名の配列
+     */
     public static function getAllModules(){
         $modulesDir = S2BASE_PHP5_APP_DIR . "modules";
         $entries = scandir($modulesDir);
@@ -59,16 +83,34 @@ class S2Base_CommandUtil {
         return $modules;
     }
 
+    /**
+     * 共通の文字列検証を行います。
+     * 
+     * @param string $target 検証を行う文字列
+     * @param string $exceptionMsg 検証に失敗した場合のメッセージ
+     * @throws Exception 検証に失敗した場合にスローされます。
+     */
     public static function validate($target, $exceptionMsg) {
         if(!preg_match("/^\w+$/",$target)){
            throw new Exception($exceptionMsg);
         }   
     }
 
+    /**
+     * list選択でexitが選択されたかどうかを確認します。
+     * 
+     * @param string $label list選択の結果文字列
+     * @return boolean
+     */
     public static function isListExitLabel($label) {
         return $label == S2Base_StdinManager::EXIT_LABEL;
     }
 
+    /**
+     * pdo.diconを用いてS2DaoSkeletonDbmsを生成します。
+     * 
+     * @return S2DaoSkeletonDbms
+     */
     public static function getS2DaoSkeletonDbms() {
         $container = S2ContainerFactory::create(PDO_DICON);
         $cd = $container->getComponentDef('dataSource');
@@ -82,6 +124,13 @@ class S2Base_CommandUtil {
         return new S2DaoSkeletonDbms($dsn, $user, $pass);
     }
 
+    /**
+     * ファイルに書き出します。
+     * 
+     * @param string $srcFile 書き込みを行うファイルへのパス
+     * @param string $tempContent 書き込み内容
+     * @throws Exception 書き込みに失敗した場合にスローされます。
+     */
     public static function writeFile($srcFile,$tempContent) {
         try{
             self::writeFileInternal($srcFile,$tempContent);
@@ -95,6 +144,14 @@ class S2Base_CommandUtil {
         }
     }
 
+    /**
+     * ファイルに書き出します。
+     * 
+     * @param string $filePath 書き込みを行うファイルへのパス
+     * @param string $contents 書き込み内容
+     * @throws S2Base_FileExistsException ファイルが既に存在していた場合にスローされます。
+     * @throws Exception 書き込みに失敗した場合にスローされます。
+     */
     public static function writeFileInternal($filePath, $contents) {
         if (file_exists($filePath)) {
             throw new S2Base_FileExistsException("Already exists. [ $filePath ]");
@@ -105,6 +162,12 @@ class S2Base_CommandUtil {
         }
     }
 
+    /**
+     * ディレクトリを作成します。
+     * 
+     * @param string $dirPath 作成するディレクトリパス
+     * @throws Exception ディレクトリ作成に失敗した場合にスローされます。
+     */
     public static function createDirectory($dirPath){
         try{
             self::createDirectoryInternal($dirPath);
@@ -118,6 +181,13 @@ class S2Base_CommandUtil {
         }
     }
 
+    /**
+     * ディレクトリを作成します。
+     * 
+     * @param string $directoryPath 作成するディレクトリパス
+     * @throws S2Base_FileExistsException ディレクトリが既に存在していた場合にスローされます。
+     * @throws Exception ディレクトリ作成に失敗した場合にスローされます。
+     */
     public static function createDirectoryInternal($directoryPath){
         if(!file_exists($directoryPath)){
             if(!mkdir($directoryPath)){
@@ -129,6 +199,11 @@ class S2Base_CommandUtil {
         }
     }
 
+    /**
+     * 例外メッセージを出力します。
+     * 
+     * @param Exception $e 例外
+     */
     public static function showException(Exception $e){
         print PHP_EOL . '!!! Exception' . PHP_EOL;
         print "!!! {$e->getMessage()}" . PHP_EOL . PHP_EOL;
