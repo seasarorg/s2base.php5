@@ -20,7 +20,7 @@
 // | Authors: klove                                                       |
 // +----------------------------------------------------------------------+
 //
-// $Id:$
+// $Id$
 /**
  * @package org.seasar.s2base.web.impl
  * @author klove
