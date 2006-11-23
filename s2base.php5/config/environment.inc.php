@@ -6,7 +6,7 @@ define('S2BASE_PHP5_ROOT',dirname(dirname(__FILE__)));
 define('S2BASE_PHP5_VAR_DIR',S2BASE_PHP5_ROOT . '/var');
 
 /**
- * dicon file suffix setting
+ * suffix setting
  */
 define('S2BASE_PHP5_DICON_SUFFIX','.dicon');
 define('S2BASE_PHP5_CLASS_SUFFIX','.class.php');
@@ -24,8 +24,7 @@ define('S2CONTAINER_PHP5_DOM_VALIDATE',false);
 /**
  * include path setting
  */
-$packages = array(
-    S2BASE_PHP5_ROOT . '/lib');
+$packages = array(S2BASE_PHP5_ROOT . '/lib');
 ini_set('include_path', 
         implode(PATH_SEPARATOR, $packages) . PATH_SEPARATOR . 
         ini_get('include_path')
