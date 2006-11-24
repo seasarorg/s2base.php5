@@ -22,8 +22,15 @@
 //
 // $Id$
 /**
- * @package org.seasar.s2base.web.impl
- * @author klove
+ * withSmarty WEBフレームワークのSmartyクラスを継承するコントローラクラス。またビューを兼務します。
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.web.impl
+ * @author     klove
  */
 class S2Base_SmartyController extends Smarty
     implements S2Base_Controller,S2Base_View {
@@ -47,22 +54,43 @@ class S2Base_SmartyController extends Smarty
         }
     }
     
+    /**
+     * @see S2Base_Controller::setAction()
+     */
     public function setAction(S2Base_Action $action){
         $this->action = $action;
     }
 
+    /**
+     * @see S2Base_View::setLayout()
+     */
     public function setLayout($layout){
         $this->layout = $layout;
     }
 
+    /**
+     * @see S2Base_Controller::setRequest()
+     */
     public function setRequest(S2Base_Request $request){
         $this->request = $request;
     }
 
+    /**
+     * キーに対するエラー内容を設定します。
+     * 
+     * @param string $key キー
+     * @param mixed $val エラー内容
+     */
     public final function putError($key,$val){
         self::$errors[$key] = $val;
     }
 
+    /**
+     * キーに設定されているエラー内容を返します。
+     * 
+     * @param string $key キー
+     * @return mixed エラー内容
+     */
     public final function getError($key){
         if(isset(self::$errors[$key])){
             return self::$errors[$key];
@@ -70,18 +98,36 @@ class S2Base_SmartyController extends Smarty
         return null;
     }
 
+    /**
+     * すべてのエラー内容を返します。
+     * 
+     * @return array 
+     */
     public final function getErrors(){
         return self::$errors;
     }
 
+    /**
+     * rendered値を設定します。 rendered値は、viewメソッドを実行するかどうかを決定します。
+     * 
+     * @param boolean $value
+     */
     public final function setRendered($value){
         self::$rendered = $value;
     }
 
+    /**
+     * rendered値を返します。
+     * 
+     * @return boolean
+     */
     public final function isRendered(){
         return self::$rendered;
     }
     
+    /**
+     * @see S2Base_Controller::process()
+     */
     public function process(){
         $this->actionTpl = $this->action->execute($this->request,$this);
         if ($this->actionTpl === null){
@@ -97,6 +143,9 @@ class S2Base_SmartyController extends Smarty
         }
     }
     
+    /**
+     * @see S2Base_View::setLayout()
+     */
     public function view(){
         $mod = $this->request->getModule();
         $act = $this->request->getAction();
@@ -131,10 +180,20 @@ class S2Base_SmartyController extends Smarty
         $this->setRendered(true);        
     }
 
+    /**
+     * @return string アクション名から導出したテンプレートファイル名
+     */
     protected function getDefaultActionTpl(){
         return $this->request->getAction() . self::TPL_SUFFIX;
     }
 
+    /**
+     * S2Base_Dispatcherのdispatchメソッドにリクエストをリダイレクトします。
+     * 
+     * @param string $target リダイレクトターゲット。モジュール名とアクション名をコロンで区切ります。
+     *                       コロンが存在しない場合はアクション名として扱います。
+     * @throws S2Base_RuntimeException ターゲット文字列のフォーマットに問題があった場合にスローされます。
+     */
     private function redirect($target){
         $targets = explode(':',$target);
         if (count($targets) == 2){

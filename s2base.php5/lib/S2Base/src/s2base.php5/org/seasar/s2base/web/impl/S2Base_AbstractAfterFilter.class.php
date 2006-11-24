@@ -22,13 +22,23 @@
 //
 // $Id$
 /**
- * @package org.seasar.s2base.web.impl
- * @author klove
+ * withSmarty WEBフレームワークのフィルタークラス
+ * 
+ * このabstractクラスを継承してafterフィルターを実装します。
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.web.impl
+ * @author     klove
  */
 abstract class S2Base_AbstractAfterFilter 
     extends S2Base_AbstractFilterInterceptor {
 
     /**
+     * @see S2Base_AbstractFilterInterceptor::invoke()
      * @see S2Base_FilterInterceptor::before()
      */
     public function before(){

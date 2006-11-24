@@ -22,8 +22,15 @@
 //
 // $Id$
 /**
- * @package org.seasar.s2base.web.impl
- * @author klove
+ * withSmarty WEBフレームワークのリクエストクラス
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.web.impl
+ * @author     klove
  */
 class S2Base_RequestImpl implements S2Base_Request {
 
@@ -42,14 +49,23 @@ class S2Base_RequestImpl implements S2Base_Request {
         $this->setAction();
     }
 
+    /**
+     * @see S2Base_Request::getModule()
+     */
     public function getModule(){
         return $this->module;
     }
     
+    /**
+     * @see S2Base_Request::getAction()
+     */
     public function getAction(){
         return $this->action;
     }
     
+    /**
+     * @see S2Base_Request::getParam()
+     */    
     public function getParam($key){
         if(isset($this->request[$key])){
             return $this->request[$key];
@@ -57,14 +73,27 @@ class S2Base_RequestImpl implements S2Base_Request {
         return null;
     }
     
+    /**
+     * @see S2Base_Request::setParam()
+     */    
     public function setParam($key,$val){
         $this->request[$key] = $val;
     }
 
+    /**
+     * @see S2Base_Request::hasParam()
+     */    
     public function hasParam($key){
         return isset($this->request[$key]);
     }
     
+    /**
+     * モジュール名を設定します。
+     * デフォルトモジュール名を S2BASE_PHP5_DEFAULT_MODULE_NAME 定数で指定できます。
+     * 
+     * @param string $module モジュール名
+     * @throws S2Base_RuntimeException モジュール名の検証に失敗したときにスローされます。
+     */    
     public function setModule($module = null){
         if ($module == null){
             $this->module = $this->getParam(S2BASE_PHP5_REQUEST_MODULE_KEY);
@@ -83,6 +112,13 @@ class S2Base_RequestImpl implements S2Base_Request {
         }
     }
 
+    /**
+     * アクション名を設定します。
+     * デフォルトアクション名を S2BASE_PHP5_DEFAULT_ACTION_NAME 定数で指定できます。
+     * 
+     * @param string $action アクション名
+     * @throws S2Base_RuntimeException アクション名の検証に失敗したときにスローされます。
+     */    
     public function setAction($action = null){
         if ($action == null){
             $this->action = $this->getParam(S2BASE_PHP5_REQUEST_ACTION_KEY);
