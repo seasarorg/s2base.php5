@@ -7,6 +7,8 @@ class EntityCommand implements S2Base_GenerateCommand {
     protected $entityExtends;
     protected $cols;
     protected $useDB;
+    protected $tableName;
+    protected $tableNames;
 
     public static function getAccessorSrc($cols){
         $tempContent  = '    protected $@@PROP_NAME@@;' . PHP_EOL .
@@ -33,7 +35,16 @@ class EntityCommand implements S2Base_GenerateCommand {
         if (preg_match("/_/",$col)){
             $prop = preg_replace("/_/"," ",$prop);
             $prop = ucwords($prop);
-            $prop = preg_replace("/\s+/","",$prop);
+            $matches = array();
+            if (preg_match("/^(\s+)/", $prop, $matches)) {
+                $preSpace  = $matches[1];
+            }
+            $matches = array();
+            if (preg_match("/(\s+)$/", $prop, $matches)) {
+                $postSpace = $matches[1];
+            }
+            $prop = preg_replace("/\s/","",$prop);
+            $prop = preg_replace("/\s/","_",$preSpace . $prop . $postSpace);
             $prop = strtolower(substr($prop,0,1)) . substr($prop,1);
         }
         return $prop;
@@ -140,19 +151,30 @@ class EntityCommand implements S2Base_GenerateCommand {
 
     protected function getEntityInfoFromDB() {
         $dbms = S2Base_CommandUtil::getS2DaoSkeletonDbms();
-        $this->tableName = S2Base_StdinManager::getValueFromArray($dbms->getTables(),
+        $this->tableNames = S2Base_StdinManager::getValuesFromArray($dbms->getTables(),
                                                                   "table list");
+        $this->tableName = $this->tableNames[0];
         if (S2Base_CommandUtil::isListExitLabel($this->tableName)){
             return false;
         }
+        $this->cols = self::getColumnsFromTables($dbms, $this->tableNames);
+
         $this->entityClassName = ucfirst(strtolower($this->tableName)) . S2DaoSkelConst::BeanName;
-        $this->cols = $dbms->getColumns($this->tableName);
         $this->extendsEntityClassName = "none";
 
         $entityClassNameTmp = S2Base_StdinManager::getValue("entity class name ? [{$this->entityClassName}] : ");
         $this->entityClassName = trim($entityClassNameTmp) == '' ? $this->entityClassName : $entityClassNameTmp;
         $this->validate($this->entityClassName);
         return true;
+    }
+
+    public static function getColumnsFromTables($dbms, $tableNames) {
+        $cols = array();
+        foreach ($tableNames as $tableName) {
+            $cols = array_merge($cols, $dbms->getColumns($tableName));
+        }
+
+        return array_unique($cols);
     }
 
     protected function getEntityInfoInteractive() {
@@ -195,8 +217,8 @@ class EntityCommand implements S2Base_GenerateCommand {
             print "  entity class extends : {$this->extendsEntityClassName}" . PHP_EOL;
         }
         print "  table name           : {$this->tableName}" . PHP_EOL;
-        $cols = implode(', ',$this->cols);
-        print "  columns              : $cols" . PHP_EOL;
+        print '  tables               : ' . implode(', ',$this->tableNames) . PHP_EOL;
+        print '  columns              : ' . implode(', ',$this->cols) . PHP_EOL;
 
         return S2Base_StdinManager::isYes('confirm ?');
     }
