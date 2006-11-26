@@ -3,19 +3,25 @@
 
     <taskdef name="copy2" classname="src.phing.task.CopyFilesToOneDirTask" />
     <taskdef name="gcore" classname="src.phing.task.GenerateCoreFileTask" />
-    <taskdef name="pearpkg2" classname="src.phing.task.PearPkg2SupportTask" />
+    <taskdef name="pkg2-ubs" classname="src.phing.task.Pkg2UriBasedSupportTask"/>
+    <taskdef name="pkg2-ls"  classname="src.phing.task.Pkg2LicenseSupportTask"/>
+    <taskdef name="pkg2-pvs" classname="src.phing.task.Pkg2PearVersionSupportTask"/>
+    <taskdef name="pkg2-cbs" classname="src.phing.task.Pkg2ChannelBasedSupportTask"/>
+    <taskdef name="pkg2-bs"  classname="src.phing.task.Pkg2BinSupportTask"/>
 
     <target name="init">
         <property name="project.name" value="${phing.project.name}" />
         <property name="package.name" value="S2Base" />
-        <property name="project.version" value="1.0.0" />
-        <property name="project.state" value="stable" />
+        <property name="project.version" value="1.0.1" />
+        <property name="project.state" value="beta" />
         <property name="project.build.dir" value="${project.basedir}/build" />
         <property name="project.src.dir" value="${project.basedir}/src" />
         <property name="license.file" value="Apache_Software_License_2.0.txt" />
         <property name="release.notes" value="Release 1.0.0" />
         <property name="td" value="" />
         <property name="tt" value="**/*Test.class.php" />
+        <property name="s2base.package.url" value="http://labs.s2php5.jp/s2base/pear/${package.name}-${project.version}" />
+        <!-- property name="s2base.package.url" value="http://s2base.php5.sandbox.seasar.org/download/${package.name}-${project.version}" /-->
     </target>
 
     <target name="clean" depends="init">
@@ -78,7 +84,7 @@
 
         <pearpkg name="${package.name}" 
                  dir="${project.build.dir}/${project.name}" 
-                 destFile="${project.build.dir}/${project.name}/package.xml">
+                 destFile="${project.build.dir}/${project.name}/package-dist.xml">
             <fileset dir="${project.build.dir}/${project.name}">
                 <include name="**/*"/>
             </fileset>
@@ -137,7 +143,16 @@
             </mapping>
         </pearpkg>
 
-        <pearpkg2 pkgFile="${project.build.dir}/${project.name}/package.xml"/>
+        <copy file="${project.build.dir}/${project.name}/package-dist.xml"
+              tofile="${project.build.dir}/${project.name}/package.xml">
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="(role=.)data" replace="\1php" ignoreCase="true"/>
+                </replaceregexp>
+            </filterchain>
+        </copy>
+
+        <pkg2-bs pkgFile="${project.build.dir}/${project.name}/package.xml"/>
 
         <copy toDir="${project.build.dir}/${project.name}/bin">
             <fileset dir="${project.basedir}/src/phing/etc">
@@ -146,8 +161,22 @@
             </fileset>
         </copy>
 
+        <exec command="pear convert package.xml" 
+              dir="${project.build.dir}/${project.name}" />
+        <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
+                  pkgName="${package.name}"
+                  uri="${s2base.package.url}"/>
+        <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
+                  pkgName="S2Javelin"
+                  uri="http://s2base.php5.sandbox.seasar.org/download/S2Javelin-1.0.0"/>
+        <pkg2-cbs pkgFile="${project.build.dir}/${project.name}/package2.xml"
+                  pkgName="phing"
+                  channel="pear.phing.info"/>
+        <pkg2-ls  pkgFile="${project.build.dir}/${project.name}/package2.xml"/>
+        <pkg2-pvs pkgFile="${project.build.dir}/${project.name}/package2.xml"
+                  pearVersion="1.4.11"/>
     </target>
- 
+
     <target name="pear-pkg" depends="pear-pkg-xml">
         <exec command="pear package package2.xml" 
               dir="${project.build.dir}/${project.name}" />
