@@ -5,6 +5,7 @@
 
 	* add: package org.seasar.s2base.command
 	S2Base_StdinManager::getValuesFromArray()メソッドを追加しました。
+	* info: S2Container.PHP5-1.1.2をバンドルしました。
 
 2006-11-22 S2Base.PHP5-1.0.1
 
