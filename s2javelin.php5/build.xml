@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<project name="s2javelin.php5" default="build" basedir=".">
+
+    <taskdef name="copy2" classname="src.phing.task.CopyFilesToOneDirTask" />
+    <taskdef name="gcore" classname="src.phing.task.GenerateCoreFileTask" />
+    <taskdef name="pearpkg2" classname="src.phing.task.PearPkg2SupportTask" />
+
+    <target name="init">
+        <property name="project.name" value="${phing.project.name}" />
+        <property name="package.name" value="S2Javelin" />
+        <property name="project.version" value="1.0.0" />
+        <property name="project.state" value="stable" />
+        <property name="project.build.dir" value="${project.basedir}/build" />
+        <property name="project.src.dir" value="${project.basedir}/src" />
+        <property name="license.file" value="Apache_Software_License_2.0.txt" />
+        <property name="release.notes" value="Release 1.0.0" />
+        <property name="td" value="" />
+        <property name="tt" value="**/*Test.class.php" />
+    </target>
+
+    <target name="clean" depends="init">
+        <delete dir="${project.build.dir}"/>
+    </target>
+
+    <target name="prepare" depends="init">
+        <mkdir dir="${project.build.dir}" />
+        <mkdir dir="${project.build.dir}/${project.name}/${package.name}" />
+    </target>
+
+    <target name="build" depends="prepare">
+        <copy2 toDir="${project.build.dir}/${project.name}/${package.name}">
+            <fileset dir="${project.src.dir}">
+                <include name="${project.name}/**/*.php"/>
+                <include name="${project.name}/**/*.properties"/>
+            </fileset>
+        </copy2>
+
+        <gcore searchDir="${project.build.dir}/${project.name}/${package.name}"
+               coreFile="${project.build.dir}/${project.name}/${package.name}.core.classes.php"
+               listFile="${project.basedir}/src/phing/etc/${package.name}.core.files.txt"/>
+
+        <copy file="${project.basedir}/src/phing/etc/${package.name}.php.tpl"
+              tofile="${project.build.dir}/${project.name}/${package.name}.php"
+              overwrite="true"/>
+
+        <copy file="${project.basedir}/${license.file}"
+              tofile="${project.build.dir}/${project.name}/${license.file}"
+              overwrite="true"/>
+    </target>
+
+    <target name="pear-pkg-xml" depends="build">
+        <pearpkg name="${package.name}" 
+                 dir="${project.build.dir}/${project.name}" 
+                 destFile="${project.build.dir}/${project.name}/package.xml">
+            <fileset dir="${project.build.dir}/${project.name}">
+                <include name="**/*"/>
+            </fileset>
+            <option name="notes">${release.notes}</option>
+            <option name="description">S2Javelin.PHP5 is a port of Java S2Javelin. And it is a subpackage of S2Base.PHP5, adding logging support using S2AOP. </option>
+            <option name="summary">S2Javelin.PHP5 is a port of Java S2Javelin.</option>
+            <option name="version" value="${project.version}"/>
+            <option name="state" value="${project.state}"/>
+            <option name="baseinstalldir" value="${package.name}"/>
+            <option name="license" value="The Apache License, Version 2.0"/>
+            <mapping name="deps">
+                <element>
+                    <element key="type" value="php"/>
+                    <element key="rel" value="ge"/>
+                    <element key="version" value="5.1.0"/>
+                </element>
+            </mapping>
+            <mapping name="maintainers">
+                <element>
+                    <element key="handle" value="klove"/>
+                    <element key="name" value="klove"/>
+                    <element key="email" value="seasar-s2dicon-php5@lists.sourceforge.jp"/>
+                    <element key="role" value="lead"/>
+                </element>
+                <element>
+                    <element key="handle" value="KIYO-SHIT"/>
+                    <element key="name" value="KIYO-SHIT"/>
+                    <element key="email" value="seasar-s2dicon-php5@lists.sourceforge.jp"/>
+                    <element key="role" value="developer"/>
+                </element>
+            </mapping>
+        </pearpkg>
+
+        <pearpkg2 pkgFile="${project.build.dir}/${project.name}/package.xml"/>
+<!--
+        <copy file="${project.build.dir}/${project.name}/package-dist.xml"
+              tofile="${project.build.dir}/${project.name}/package.xml">
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="(role=.)data" replace="\1php" ignoreCase="true"/>
+                </replaceregexp>
+            </filterchain>
+        </copy>
+-->
+    </target>
+ 
+    <target name="pear-pkg" depends="pear-pkg-xml">
+        <exec command="pear package package2.xml" 
+              dir="${project.build.dir}/${project.name}" />
+
+        <move toDir="${project.build.dir}/pear" overwrite="true">
+            <fileset dir="${project.build.dir}/${project.name}">
+                <include name="*.tgz"/>
+                <include name="package*.xml"/>
+            </fileset>
+        </move>
+    </target>
+
+    <target name="test" depends="init">
+        <echo>test directory : test/${project.name}/${td}</echo>
+        <echo>test target    : ${tt}</echo>
+        <php expression="require_once('test/test.inc.php')"/>
+        <phpunit2 haltonfailure="false" haltonerror="false">
+            <formatter type="plain" usefile="false"/>
+            <batchtest>
+                <fileset dir="test/${project.name}/${td}">
+                    <include name="${tt}"/>
+                </fileset>
+            </batchtest>
+        </phpunit2>
+    </target>
+</project>
