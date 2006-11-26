@@ -45,9 +45,7 @@ S2ContainerClassLoader::import(S2BASE_PHP5_ROOT . '/app/commons/dao');
 /**
  * autoload setting
  */
-function __autoload($class = null){
-    S2ContainerClassLoader::load($class);
-}
+require_once('S2ContainerAutoLoad.php');
 
 /**
  * Log level setting
