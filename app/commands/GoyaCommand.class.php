@@ -185,7 +185,6 @@ class GoyaCommand implements S2Base_GenerateCommand {
                 print "  entity class extends    : {$this->extendsEntityClassName}" . PHP_EOL;
             }
             print "  table name              : {$this->tableName}" . PHP_EOL;
-            print '  tables                  : ' . implode(', ',$this->tableNames) . PHP_EOL;
             print '  columns                 : ' . implode(', ',$this->cols) . PHP_EOL;
         }
         print "  dicon file name         : {$this->serviceClassName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;

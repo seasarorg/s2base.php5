@@ -176,7 +176,6 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                     print "  entity class extends    : {$this->extendsEntityClassName}" . PHP_EOL;
                 }
                 print "  table name              : {$this->tableName}" . PHP_EOL;
-                print '  tables                  : ' . implode(', ',$this->tableNames) . PHP_EOL;
                 print '  columns                 : ' . implode(', ',$this->cols) . PHP_EOL;
             }
         }

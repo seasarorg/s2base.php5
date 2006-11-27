@@ -64,7 +64,8 @@ class CmdCommand implements S2Base_GenerateCommand {
 
     protected function finalConfirm(){
         print PHP_EOL . '[ generate information ]' . PHP_EOL;
-        print "  command name : {$this->cmdName} " . PHP_EOL;
+        print "  command name       : {$this->cmdName} " . PHP_EOL;
+        print '  command class name : ' . ucfirst($this->cmdName) . self::COMMAND_CLASS_SUFFIX . PHP_EOL;
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
