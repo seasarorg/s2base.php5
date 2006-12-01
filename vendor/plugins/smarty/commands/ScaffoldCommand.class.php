@@ -490,8 +490,14 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_SMARTY
                      . '/skeleton/scaffold/dao.php');
 
-        $patterns = array("/@@CLASS_NAME@@/","/@@ENTITY_NAME@@/","/@@CONDITION_DTO_NAME@@/");
-        $replacements = array($this->daoInterfaceName,$this->entityClassName, $this->dtoClassName);
+        $patterns = array("/@@CLASS_NAME@@/",
+                          "/@@ENTITY_NAME@@/",
+                          "/@@CONDITION_DTO_NAME@@/",
+                          "/@@UNIQUE_KEY_NAME@@/");
+        $replacements = array($this->daoInterfaceName,
+                              $this->entityClassName,
+                              $this->dtoClassName,
+                              $this->primaryProp);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         CmdCommand::writeFile($srcFile,$tempContent);
     }

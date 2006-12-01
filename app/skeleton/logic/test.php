@@ -2,7 +2,7 @@
 class @@CLASS_NAME@@ extends PHPUnit2_Framework_TestCase {
     private $module = "@@MODULE_NAME@@";
     private $container;
-    private $service;
+    private $logic;
 
     function __construct($name) {
         parent::__construct($name);
@@ -17,13 +17,13 @@ class @@CLASS_NAME@@ extends PHPUnit2_Framework_TestCase {
         $dicon = $moduleDir . "/dicon/@@LOGIC_CLASS@@" . S2BASE_PHP5_DICON_SUFFIX;
         include_once($moduleDir . "/{$this->module}.inc.php");
         $this->container = S2ContainerFactory::create($dicon);
-        $this->service = $this->container->getComponent("@@LOGIC_INTERFACE@@");
+        $this->logic = $this->container->getComponent("@@LOGIC_INTERFACE@@");
     }
 
     function tearDown() {
         print "\n";
         $this->container = null;
-        $this->service = null;
+        $this->logic = null;
     }
 
 }

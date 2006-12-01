@@ -7,15 +7,15 @@
 
     <target name="init-pkg">
         <property name="package.name"    value="S2Base_Smarty_ActionDao" />
-        <property name="package.version" value="1.0.0" />
-        <property name="package.url"     value="http://labs.s2php5.jp/s2base/pear" />
+        <property name="package.version" value="0.7.0" />
+        <property name="package.url"     value="http://pear.s2php5.jp/s2base" />
         <property name="package.state"   value="beta" />
-        <property name="package.notes"   value="Release 1.0.0" />
-        <property name="package.summary" value="summary" />
-        <property name="package.description"       value="description" />
-        <property name="package.maintainer.handle" value="handle name" />
-        <property name="package.maintainer.name"   value="name" />
-        <property name="package.maintainer.email"  value="mail@address.jp" />
+        <property name="package.notes"   value="Release 0.7.0" />
+        <property name="package.summary" value="S2Base.PHP5 Smarty Command Plugin" />
+        <property name="package.description"       value="S2Base.PHP5 Smarty Command Plugin" />
+        <property name="package.maintainer.handle" value="klove" />
+        <property name="package.maintainer.name"   value="klove" />
+        <property name="package.maintainer.email"  value="seasar-s2dicon-php5@lists.sourceforge.jp" />
     </target>
 
     <target name="project-tree" depends="prepare">
@@ -104,7 +104,7 @@
         <property name="project.name" value="${phing.project.name}" />
         <property name="project.build.dir" value="${project.basedir}/build/plugin" />
         <property name="s2base.pear.base.dir" value="S2Base" />
-        <property name="s2base.package.url" value="http://labs.s2php5.jp/s2base/pear/S2Base-1.0.1" />
+        <property name="s2base.package.url" value="http://s2base.php5.sandbox.seasar.org/download/S2Base-1.0.1" />
     </target>
 
     <target name="clean" depends="init">
