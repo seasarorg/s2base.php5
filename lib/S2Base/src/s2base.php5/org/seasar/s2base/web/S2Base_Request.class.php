@@ -20,18 +20,60 @@
 // | Authors: klove                                                       |
 // +----------------------------------------------------------------------+
 //
-// $Id:$
+// $Id$
 /**
- * @package org.seasar.s2base.web
- * @author klove
+ * withSmarty WEBフレームワークのリクエストインターフェイス
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.web
+ * @author     klove
  */
 interface S2Base_Request {
+    /**
+     * モジュール名とアクション名の最大文字数
+     */
     const MAX_LEN = 50;
 
+    /**
+     * モジュール名を返します。
+     * 
+     * @return string モジュール名
+     */
     public function getModule();
+
+    /**
+     * アクション名を返します。
+     * 
+     * @return string アクション名
+     */
     public function getAction();
+    
+    /**
+     * キーで登録されているパラメータ値を返します。
+     * 
+     * @param string $key キー
+     * @return string パラメータ値
+     */
     public function getParam($key);
+    
+    /**
+     * キーでパラメータ値を登録します。
+     * 
+     * @param string $key キー
+     * @param string $val パラメータ値
+     */
     public function setParam($key,$val);
+    
+    /**
+     * キーにパラメータが登録されているかを確認します。
+     * 
+     * @param string $key キー
+     * @return boolean 
+     */
     public function hasParam($key);
 }
 ?>

@@ -20,14 +20,28 @@
 // | Authors: klove                                                       |
 // +----------------------------------------------------------------------+
 //
-// $Id:$
+// $Id$
 /**
- * @package org.seasar.s2base.command
- * @author klove
+ * 標準入力のサポートクラスです。
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.command
+ * @author     klove
  */
 class S2Base_StdinManager {
     const EXIT_LABEL = "(exit)";
     
+    /**
+     * 選択項目の一覧から1項目を取得します。
+     * 
+     * @param array $cmds 選択項目の配列
+     * @param string $title 選択リストのタイトル文字列
+     * @return string 選択された項目文字列
+     */
     public static function getValueFromArray($cmds, $title){
         $cmds = array_merge(array(self::EXIT_LABEL),$cmds);
         $number = null;
@@ -51,6 +65,13 @@ class S2Base_StdinManager {
         return $cmds[$number];
     }
 
+    /**
+     * 選択項目の一覧から複数項目を取得します。
+     * 
+     * @param array $cmds 選択項目の配列
+     * @param string $title 選択リストのタイトル文字列
+     * @return array 選択された項目
+     */
     public static function getValuesFromArray($cmds, $title){
         $cmds = array_merge(array(self::EXIT_LABEL),$cmds);
         $items = null;
@@ -85,12 +106,24 @@ class S2Base_StdinManager {
         return array_unique($items);
     }
 
+    /**
+     * 標準入力から一行文字列を取得します。
+     * 
+     * @param string $msg メッセージ
+     * @return string 標準入力から取得した文字列
+     */
     public static function getValue($msg){
         print "\n$msg";
         $val = trim(fgets(STDIN));
         return $val;
     }
 
+    /**
+     * y/n選択結果を取得します。
+     * 
+     * @param string $msg メッセージ
+     * @return boolean
+     */
     public static function isYes($msg){
         $ret = false;
 

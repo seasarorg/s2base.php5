@@ -20,30 +20,55 @@
 // | Authors: klove                                                       |
 // +----------------------------------------------------------------------+
 //
-// $Id:$
+// $Id$
 /**
- * @package org.seasar.s2base.web.impl
- * @author klove
+ * withSmarty WEBフレームワークのフィルタークラス
+ * 
+ * このabstractクラスを継承してvalidateフィルターを実装します。
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.web.impl
+ * @author     klove
  */
 abstract class S2Base_AbstractValidateFilter 
     extends S2Base_AbstractBeforeFilter {
-
+    const VALIDATE_DIR = '/validate/';
+    /**
+     * @var array validateルールを格納した配列
+     */
     protected $rule;
     
+    /**
+     * validateを実装します。
+     */
     abstract public function validate();
 
+    /**
+     * validateルールを設定するINIファイルのサフィックスを返します。
+     */
     abstract public function getSuffix();
 
     /**
+     * app/modules/module名/validate/action名.suffix.iniファイルから
+     * validateルールを読み込みます。
+     * 
+     * @see S2Base_AbstractFilterInterceptor::invoke()
      * @see S2Base_FilterInterceptor::before()
      */
     public function before(){
         if($this->rule == null){
-            $ruleFile = S2BASE_PHP5_ROOT . 
-                    "/app/modules/" . 
-                    $this->moduleName . "/validate/".
-                    $this->actionName . "." .
-                    $this->getSuffix() . ".ini";
+            $ruleFile = S2BASE_PHP5_ROOT
+                      . '/app/modules/' 
+                      . $this->moduleName
+                      . self::VALIDATE_DIR
+                      . $this->actionName
+                      . '.'
+                      . $this->getSuffix()
+                      . '.ini';
             if(is_readable($ruleFile)){
                 $this->rule = parse_ini_file($ruleFile,true);
             }

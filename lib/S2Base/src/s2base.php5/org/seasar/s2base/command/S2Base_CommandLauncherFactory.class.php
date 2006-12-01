@@ -20,13 +20,26 @@
 // | Authors: klove                                                       |
 // +----------------------------------------------------------------------+
 //
-// $Id:$
+// $Id$
 /**
- * @package org.seasar.s2base.command
- * @author klove
+ * S2Base_CommandLauncherのファクトリークラスです。
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.command
+ * @author     klove
  */
 class S2Base_CommandLauncherFactory {
 
+    /**
+     * コマンドランチャーを作成し、コマンドクラスをランチャーに登録します。
+     * 
+     * @param array $classFiles コマンドクラスの配列
+     * @return S2Base_CommandLauncher
+     */
     public static function create($classFiles) {
         $launcher = new S2Base_CommandLauncher();
 

@@ -1,13 +1,28 @@
 <?php
+/**
+ * Diconファイルを生成します。
+ * 
+ * 生成ファイル
+ * <ul>
+ *   <li>app/modules/module名/dicon/dicon名.dicon</li>
+ * </ul>
+ * 
+ */
 class DiconCommand implements S2Base_GenerateCommand {
 
     protected $moduleName;
     protected $diconName;
-    
+
+    /**
+     * @see S2Base_GenerateCommand::getName()
+     */    
     public function getName(){
         return "dicon";
     }
 
+    /**
+     * @see S2Base_GenerateCommand::execute()
+     */
     public function execute(){
         try{
             $this->moduleName = S2Base_CommandUtil::getModuleName();

@@ -1,13 +1,28 @@
 <?php
+/**
+ * interceptorを生成します。
+ * 
+ * 生成ファイル
+ * <ul>
+ *   <li>app/modules/module名/interceptor/interceptor名.class.php</li>
+ * </ul>
+ * 
+ */
 class InterceptorCommand implements S2Base_GenerateCommand {
 
     protected $moduleName;
     protected $interceptorClassName;
     
+    /**
+     * @see S2Base_GenerateCommand::getName()
+     */    
     public function getName(){
         return "interceptor";
     }
 
+    /**
+     * @see S2Base_GenerateCommand::execute()
+     */
     public function execute(){
         try{
             $this->moduleName = S2Base_CommandUtil::getModuleName();

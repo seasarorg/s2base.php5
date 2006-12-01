@@ -20,12 +20,28 @@
 // | Authors: klove                                                       |
 // +----------------------------------------------------------------------+
 //
-// $Id:$
+// $Id$
 /**
- * @package org.seasar.s2base.web
- * @author klove
+ * withSmarty WEBフレームワークのアクションインターフェイス
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.web
+ * @author     klove
  */
 interface S2Base_Action {
+
+    /**
+     * アクション処理を実行します。
+     * 
+     * @param S2Base_Request $request リクエストのラッパーオブジェクト
+     * @param S2Base_View $view Smartyオブジェクト
+     * @return string|null ビューテンプレートファイル名を返します。 
+     *                     nullを返した場合はアクション名からビューテンプレートファイル名が導出されます。
+     */
     public function execute(S2Base_Request $request, S2Base_View $view);
 }
 ?>

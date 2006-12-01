@@ -1,4 +1,20 @@
 <?php
+/**
+ * service, dao, entityを生成します。
+ * 
+ * 生成ファイル
+ * <ul>
+ *   <li>app/modules/module名/service/service名.class.php</li>
+ *   <li>app/modules/module名/service/service名Impl.class.php</li>
+ *   <li>app/modules/module名/dicon/service名Impl.dicon</li>
+ *   <li>test/modules/module名/service/service名ImplTest.class.php</li>
+ *   <li>app/modules/module名/dao/dao名.class.php</li>
+ *   <li>app/modules/module名/dicon/dao名.dicon</li>
+ *   <li>test/modules/module名/dao/dao名Test.class.php</li>
+ *   <li>app/modules/module名/entity/entity名.dicon</li>
+ * </ul>
+ * 
+ */
 class GoyaCommand implements S2Base_GenerateCommand {
 
     protected $moduleName;
@@ -15,10 +31,16 @@ class GoyaCommand implements S2Base_GenerateCommand {
     protected $useCommonsDao;
     protected $useDB;
 
+    /**
+     * @see S2Base_GenerateCommand::getName()
+     */
     public function getName(){
         return "goya";
     }
 
+    /**
+     * @see S2Base_GenerateCommand::execute()
+     */
     public function execute(){
         try{
             $this->moduleName = S2Base_CommandUtil::getModuleName();
@@ -163,7 +185,6 @@ class GoyaCommand implements S2Base_GenerateCommand {
                 print "  entity class extends    : {$this->extendsEntityClassName}" . PHP_EOL;
             }
             print "  table name              : {$this->tableName}" . PHP_EOL;
-            print '  tables                  : ' . implode(', ',$this->tableNames) . PHP_EOL;
             print '  columns                 : ' . implode(', ',$this->cols) . PHP_EOL;
         }
         print "  dicon file name         : {$this->serviceClassName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
