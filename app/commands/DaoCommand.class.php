@@ -1,4 +1,16 @@
 <?php
+/**
+ * Daoを生成します。
+ * 
+ * 生成ファイル
+ * <ul>
+ *   <li>app/modules/module名/dao/dao名.class.php</li>
+ *   <li>app/modules/module名/dicon/dao名.dicon</li>
+ *   <li>test/modules/module名/dao/dao名Test.class.php</li>
+ *   <li>app/modules/module名/entity/entity名.dicon</li>
+ * </ul>
+ * 
+ */
 class DaoCommand implements S2Base_GenerateCommand {
 
     protected $moduleName;
@@ -12,6 +24,12 @@ class DaoCommand implements S2Base_GenerateCommand {
     protected $tableName;
     protected $tableNames;
 
+    /**
+     * daoインターフェイス名からentityクラス名を導出します。
+     * 
+     * @param string $daoInterfaceName daoインターフェイス名
+     * @return string entityクラス名
+     */
     public static function guessEntityName($daoInterfaceName){
         $patterns = array("/Dao$/");
         $replacements = array('Entity');
@@ -21,6 +39,12 @@ class DaoCommand implements S2Base_GenerateCommand {
                          $guess;
     }
 
+    /**
+     * app/commons/daoにdaoが存在するかどうかを確認します。
+     * 存在する場合は、使用するかどうかを確認します。
+     * 
+     * @return boolean 
+     */
     public static function isCommonsDaoAvailable() {
         $daos = self::getAllDaoFromCommonsDao();
         if(count($daos) > 0){
@@ -30,6 +54,11 @@ class DaoCommand implements S2Base_GenerateCommand {
         }
     }
 
+    /**
+     * app/commons/daoにあるdaoをすべて取得します。
+     * 
+     * @return array dao名が格納された配列
+     */
     public static function getAllDaoFromCommonsDao(){
         $commonsDaoDir = S2BASE_PHP5_ROOT . '/app/commons/dao';
         $entries = scandir($commonsDaoDir);
@@ -46,10 +75,16 @@ class DaoCommand implements S2Base_GenerateCommand {
         return $daos;
     }
 
+    /**
+     * @see S2Base_GenerateCommand::getName()
+     */
     public function getName(){
         return "dao";
     }
 
+    /**
+     * @see S2Base_GenerateCommand::execute()
+     */
     public function execute(){
         try{
             $this->moduleName = S2Base_CommandUtil::getModuleName();
@@ -191,7 +226,6 @@ class DaoCommand implements S2Base_GenerateCommand {
         }
         if (!$this->useCommonsDao) {
             print "  table name           : {$this->tableName} " . PHP_EOL;
-            print '  tables               : ' . implode(', ',$this->tableNames) . PHP_EOL;
             print '  columns              : ' . implode(', ',$this->cols) . PHP_EOL;
         }
         print "  dao dicon file name  : {$this->daoInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;

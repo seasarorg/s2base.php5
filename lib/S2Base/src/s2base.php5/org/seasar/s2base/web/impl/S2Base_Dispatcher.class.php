@@ -20,10 +20,17 @@
 // | Authors: klove                                                       |
 // +----------------------------------------------------------------------+
 //
-// $Id:$
+// $Id$
 /**
- * @package org.seasar.s2base.web.impl
- * @author klove
+ * withSmarty WEBフレームワークのDispatcherクラス
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.web.impl
+ * @author     klove
  */
 class S2Base_Dispatcher {
 
@@ -31,7 +38,12 @@ class S2Base_Dispatcher {
 
     private static $redirects = array();
 
-    public static function dispatch($request) {
+    /**
+     * リクエスト情報からコントローラとアクションを生成し、コントローラのprocessメソッドを実行します。
+     * 
+     * @param S2Base_Request $request
+     */
+    public static function dispatch(S2Base_Request $request) {
         self::initialize($request);
         $action = self::instantiateAction($request);
 
@@ -41,7 +53,12 @@ class S2Base_Dispatcher {
         $controller->process();
     }
     
-    public static function initialize($request){
+    /**
+     * リクエスト情報より、リダイレクトの登録、モジュールディレクトリの確認、設定ファイルの読み込み初期化処理を行います。
+     * 
+     * @param S2Base_Request $request
+     */
+    public static function initialize(S2Base_Request $request){
         $mod = $request->getModule();
         $act = $request->getAction();
         self::pushRedirect($mod . ":" . $act);
@@ -54,8 +71,13 @@ class S2Base_Dispatcher {
         self::requireIfExists(S2BASE_PHP5_ROOT . "/app/modules/$mod/$mod.inc.php");
         self::requireIfExists(S2BASE_PHP5_ROOT . "/app/modules/$mod/action/$actClassName.inc.php");
     }
-    
-    public static function instantiateAction($request) {
+
+    /**
+     * リクエスト情報よりアクションをインスタンス化します。
+     * 
+     * @param S2Base_Request $request
+     */    
+    public static function instantiateAction(S2Base_Request $request) {
         $mod = $request->getModule();
         $act = $request->getAction();
         $actClassName = ucfirst($act) . "Action";
@@ -70,11 +92,22 @@ class S2Base_Dispatcher {
         return self::getActionWithS2Container($mod,$act,$actClassName);
     }
 
+    /**
+     * staticプロパティ $controller で設定されたコントローラを生成します。
+     * 
+     * @return S2Base_Controller
+     */
     protected static function instantiateController(){
         $controllerClass = self::$controller;
         return new $controllerClass();
     }
 
+    /**
+     * @param string $mod モジュール名
+     * @param string $act アクション名
+     * @param string $actClassName アクションクラス名
+     * @return S2Base_Action
+     */
     private static function getActionWithS2Container($mod,$act,$actClassName){
         $dicon = S2BASE_PHP5_ROOT . 
                  "/app/modules/$mod/dicon/$actClassName" .

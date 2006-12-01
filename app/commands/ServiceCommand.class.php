@@ -1,14 +1,32 @@
 <?php
+/**
+ * serviceを生成します。
+ * 
+ * 生成ファイル
+ * <ul>
+ *   <li>app/modules/module名/service/service名.class.php</li>
+ *   <li>app/modules/module名/service/service名Impl.class.php</li>
+ *   <li>app/modules/module名/dicon/service名Impl.dicon</li>
+ *   <li>test/modules/module名/service/service名ImplTest.class.php</li>
+ * </ul>
+ * 
+ */
 class ServiceCommand implements S2Base_GenerateCommand {
 
     protected $moduleName;
     protected $serviceInterfaceName;
     protected $serviceClassName;
     
+    /**
+     * @see S2Base_GenerateCommand::getName()
+     */
     public function getName(){
         return "service";
     }
 
+    /**
+     * @see S2Base_GenerateCommand::execute()
+     */
     public function execute(){
         try{
             $this->moduleName = S2Base_CommandUtil::getModuleName();

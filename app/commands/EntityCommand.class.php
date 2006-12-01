@@ -1,4 +1,13 @@
 <?php
+/**
+ * Entityを生成します。
+ * 
+ * 生成ファイル
+ * <ul>
+ *   <li>app/modules/module名/entity/entity名.class.php</li>
+ * </ul>
+ * 
+ */
 class EntityCommand implements S2Base_GenerateCommand {
 
     protected $moduleName;
@@ -10,6 +19,12 @@ class EntityCommand implements S2Base_GenerateCommand {
     protected $tableName;
     protected $tableNames;
 
+    /**
+     * カラムのsetter、getterソースを生成します。
+     * 
+     * @param array $cols カラム名の配列
+     * @return string setter、getterソース
+     */
     public static function getAccessorSrc($cols){
         $tempContent  = '    protected $@@PROP_NAME@@;' . PHP_EOL .
                         '    const @@PROP_NAME@@_COLUMN = "@@COL_NAME@@";'  . PHP_EOL .
@@ -30,6 +45,13 @@ class EntityCommand implements S2Base_GenerateCommand {
         return $retSrc;
     }
 
+    /**
+     * カラム名からプロパティ名を導出します。
+     * 
+     * user_id  : userId  <br>
+     * user_id_ : userId_ <br>
+     * _user_id : _UserId <br>
+     */
     public static function getPropertyNameFromCol($col){
         $prop = strtolower($col);
         if (preg_match("/_/",$col)){
@@ -50,6 +72,12 @@ class EntityCommand implements S2Base_GenerateCommand {
         return $prop;
     }
 
+    /**
+     * __toStringメソッドのソースをカラム名を用いて生成します。
+     * 
+     * @param array $cols カラム名の配列
+     * @return string __toStringメソッドのソース
+     */
     public static function getToStringSrc($cols){
         
         if (count($cols) == 0){
@@ -68,6 +96,12 @@ class EntityCommand implements S2Base_GenerateCommand {
         return $src;
     }
 
+    /**
+     * Entity名からテーブル名を導出します。
+     * 
+     * @param string $name entity名
+     * @return string テーブル名
+     */
     public static function guessTableName($name){
         $patterns = array("/Entity$/","/Dto$/","/Bean$/");
         $replacements = array('','','');
@@ -75,6 +109,12 @@ class EntityCommand implements S2Base_GenerateCommand {
         return $guess == $name ? strtoupper($name) : $guess;
     }
 
+    /**
+     * カラム名の検証を行います
+     * 
+     * @param array $colsStr カンマ区切りのカラム名
+     * @return array 検証済みのカラム名の配列
+     */
     public static function validateCols($colsStr){
         $colsTmp = array_unique(explode(',',$colsStr));
         $cols = array();
@@ -87,6 +127,12 @@ class EntityCommand implements S2Base_GenerateCommand {
         return $cols;
     }
 
+    /**
+     * app/commons/daoのentityが使用可能かどうかを調べます。
+     * 使用可能な場合は、使用するかどうかを確認します。
+     * 
+     * @return boolean
+     */
     public static function isCommonsEntityAvailable() {
         $entitys = self::getAllEntityFromCommonsDao();
         if(count($entitys) > 0){
@@ -96,6 +142,11 @@ class EntityCommand implements S2Base_GenerateCommand {
         }
     }
 
+    /**
+     * app/commons/daoにあるentityクラスをすべて取得します。
+     * 
+     * @return array entityクラス名の配列
+     */
     public static function getAllEntityFromCommonsDao(){
         $commonsDaoDir = S2BASE_PHP5_ROOT . '/app/commons/dao';
         $entries = scandir($commonsDaoDir);
@@ -112,10 +163,16 @@ class EntityCommand implements S2Base_GenerateCommand {
         return $entitys;
     }
 
+    /**
+     * @see S2Base_GenerateCommand::getName()
+     */
     public function getName(){
         return "entity";
     }
 
+    /**
+     * @see S2Base_GenerateCommand::execute()
+     */
     public function execute(){
         try{
             $this->moduleName = S2Base_CommandUtil::getModuleName();
@@ -217,7 +274,6 @@ class EntityCommand implements S2Base_GenerateCommand {
             print "  entity class extends : {$this->extendsEntityClassName}" . PHP_EOL;
         }
         print "  table name           : {$this->tableName}" . PHP_EOL;
-        print '  tables               : ' . implode(', ',$this->tableNames) . PHP_EOL;
         print '  columns              : ' . implode(', ',$this->cols) . PHP_EOL;
 
         return S2Base_StdinManager::isYes('confirm ?');

@@ -1,13 +1,35 @@
 <?php
+/**
+ * moduleディレクトリを生成します。
+ * 
+ * 生成ディレクトリ
+ * <ul>
+ *   <li>app/modules/module名</li>
+ *   <li>app/modules/module名/dao</li>
+ *   <li>app/modules/module名/dicon</li>
+ *   <li>app/modules/module名/entity</li>
+ *   <li>app/modules/module名/interceptor</li>
+ *   <li>app/modules/module名/service</li>
+ *   <li>test/modules/module名/dao</li>
+ *   <li>test/modules/module名/service</li>
+ * </ul>
+ * 
+ */
 class ModuleCommand implements S2Base_GenerateCommand {
     protected $moduleName;
     protected $srcDirectory;
     protected $testDirectory;
 
+    /**
+     * @see S2Base_GenerateCommand::getName()
+     */    
     public function getName(){
         return "module";
     }
 
+    /**
+     * @see S2Base_GenerateCommand::execute()
+     */
     public function execute(){
         try{
             $this->moduleName = S2Base_StdinManager::getValue('module name ? : ');

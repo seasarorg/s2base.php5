@@ -20,21 +20,34 @@
 // | Authors: klove                                                       |
 // +----------------------------------------------------------------------+
 //
-// $Id:$
+// $Id$
 /**
- * @package org.seasar.s2base.web
- * @author klove
+ * withSmarty WEBフレームワークのフィルターインターフェイス
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.web
+ * @author     klove
  */
 interface S2Base_FilterInterceptor {
 
     /**
-     * @return string|null tpl file name
+     * アスペクト対象メソッドが実行される前に処理を割り込みます。
+     * 
+     * @return string|null ビューテンプレートファイル名を返した場合は、アスペクト対象メソッドは実行されません。
+     *                     nullを返した場合は、次のフィルタやアスペクト対象メソッドが実行されます。
      */
     public function before();
 
     /**
-     * @param string tpl file name
-     * @return strig tpl file name
+     * アスペクト対象メソッドが実行された後に処理を割り込みます。
+     * 
+     * @param string $viewName アスペクト対象メソッドの戻り値
+     * @return string|null ビューテンプレートファイル名を返します。 
+     *                     nullを返した場合はアクション名からビューテンプレートファイル名が導出されます。
      */
     public function after($viewName);
 }

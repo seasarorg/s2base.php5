@@ -20,13 +20,29 @@
 // | Authors: klove                                                       |
 // +----------------------------------------------------------------------+
 //
-// $Id:$
+// $Id$
 /**
- * @package org.seasar.s2base.web
- * @author klove
+ * withSmarty WEBフレームワークのビューインターフェイス
+ * 
+ * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0
+ * @version    Release: 1.0.0
+ * @link       http://s2base.php5.seasar.org/
+ * @since      Class available since Release 1.0.0
+ * @package    org.seasar.s2base.web
+ * @author     klove
  */
 interface S2Base_View {
+    /**
+     * ビューの処理を行います。
+     */
     public function view();
+
+    /**
+     * レイアウトをセットします。
+     * 
+     * @param string $layout レイアウトファイル名
+     */
     public function setLayout($layout);
 }
 ?>
