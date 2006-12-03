@@ -8,8 +8,8 @@ class ActionCommand implements S2Base_GenerateCommand {
     protected $actionMethodName;
 
     public function __construct(){
-        require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Dispatcher.php';
-        $this->dispatcher = new S2Dispatcher();
+        require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
+        $this->dispatcher = new S2Base_ZfDispatcher();
     }
 
     public function getName(){
@@ -76,8 +76,17 @@ class ActionCommand implements S2Base_GenerateCommand {
         $tempAction = preg_replace($patterns,$replacements,$tempAction);
 
         $tempContent = S2Base_CommandUtil::readFile($srcFile);
-        $tempContent = preg_replace('/\s\s\s\s\/\*\*\sS2BASE_PHP5\sACTION\sMETHOD\s\*\*\//',
-                             $tempAction, $tempContent, 1);
+
+        $reg = '/\s\s\s\s\/\*\*\sS2BASE_PHP5\sACTION\sMETHOD\s\*\*\//';
+        if (!preg_match($reg, $tempContent)) {
+            print PHP_EOL;
+            print "[INFO ] please copy & paste to $srcFile" . PHP_EOL;
+            print $tempAction . PHP_EOL;
+            print PHP_EOL;
+            return;
+        }
+
+        $tempContent = preg_replace($reg, $tempAction, $tempContent, 1);
         if(!file_put_contents($srcFile,$tempContent,LOCK_EX)){
             S2Base_CommandUtil::showException(new Exception("Cannot write to file [ $srcFile ]"));
         } else {

@@ -10,18 +10,10 @@ ini_set('log_errors','On');
 ini_set('error_log',S2BASE_PHP5_VAR_DIR . '/logs/php.log');
 
 /**
- * Library setting
- */
-ini_set('include_path',  S2BASE_PHP5_ROOT . '/lib/ZendFramework/library'
-        . PATH_SEPARATOR . ini_get('include_path')
-);
-require_once('Zend.php');
-
-/**
  * definition
  */
 define('S2BASE_PHP5_ZF_TPL_SUFFIX','.html'); 
-define('S2BASE_PHP5_ZF_ALIAS','/zf'); 
+define('S2BASE_PHP5_ZF_BASE_URL','/zf'); 
 
 /**
  * Directory setting
@@ -33,4 +25,22 @@ define('S2BASE_PHP5_PLUGIN_ZF',S2BASE_PHP5_ROOT . '/vendor/plugins/zf');
  */
 session_save_path(S2BASE_PHP5_VAR_DIR . '/session');
 
+/**
+ * Library setting
+ */
+require_once('Smarty/libs/Smarty.class.php');
+require_once('Zend.php');
+require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
+require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfSmartyView.php';
+
+/**
+ * Smarty config
+ *     S2Base_ZfSmartyView::$config['property name'] = property value
+ */
+S2Base_ZfSmartyView::$config['compile_dir'] = S2BASE_PHP5_ROOT . '/var/smarty/template_c';
+S2Base_ZfSmartyView::$config['config_dir']  = S2BASE_PHP5_ROOT . '/var/smarty/config';
+S2Base_ZfSmartyView::$config['cache_dir']   = S2BASE_PHP5_ROOT . '/var/smarty/cache';
+S2Base_ZfSmartyView::$config['caching']     = 0;
+
 ?>
+

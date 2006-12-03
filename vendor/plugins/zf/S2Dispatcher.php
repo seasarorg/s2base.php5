@@ -32,7 +32,7 @@ class S2Dispatcher extends Zend_Controller_Dispatcher {
 
     protected function getController($controllerName, $actionName,$controllerClassName){
         $formatedActionName = $this->formatActionName($actionName);
-
+print "AAAAAAAAAAAAA";exit;
         $actionDicon = S2BASE_PHP5_ROOT 
                      . "/app/modules/$controllerName/dicon/$formatedActionName.dicon";
         $moduleIncFile = S2BASE_PHP5_ROOT 
