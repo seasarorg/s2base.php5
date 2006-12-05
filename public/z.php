@@ -17,6 +17,7 @@ try{
     $request = new Zend_Controller_Request_Http();
     $request->setBaseUrl(S2BASE_PHP5_ZF_BASE_URL);
     $fc = Zend_Controller_Front::getInstance();
+    $fc->registerPlugin(new S2Base_ZfValidateSupportPlugin());
     $fc->setDispatcher(new S2Base_ZfDispatcher());
     $fc->setRequest($request);
     $fc->setControllerDirectory(S2BASE_PHP5_ROOT . '/app/modules');
@@ -26,7 +27,7 @@ try{
         $exceptions = $response->getException();
         print '<pre><font color="red">' . PHP_EOL;
         foreach($exceptions as $e){
-            print $e->getMessage() . PHP_EOL;
+            print $e->__toString() . PHP_EOL;
         }
         print '</font></pre>' . PHP_EOL;
     } else {
