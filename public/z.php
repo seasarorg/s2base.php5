@@ -17,7 +17,7 @@ try{
     $request = new Zend_Controller_Request_Http();
     $request->setBaseUrl(S2BASE_PHP5_ZF_BASE_URL);
     $fc = Zend_Controller_Front::getInstance();
-    $fc->registerPlugin(new S2Base_ZfValidateSupportPlugin());
+    $fc->registerPlugin(new S2Base_ZfDispatcherSupportPlugin());
     $fc->setDispatcher(new S2Base_ZfDispatcher());
     $fc->setRequest($request);
     $fc->setControllerDirectory(S2BASE_PHP5_ROOT . '/app/modules');
