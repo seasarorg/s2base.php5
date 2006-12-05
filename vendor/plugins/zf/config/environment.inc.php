@@ -32,6 +32,8 @@ require_once('Smarty/libs/Smarty.class.php');
 require_once('Zend.php');
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfSmartyView.php';
+require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfValidateFilter.php';
+require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfValidateSupportPlugin.php';
 
 /**
  * Smarty config

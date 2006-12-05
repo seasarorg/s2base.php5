@@ -22,8 +22,8 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
     protected $moduleServiceInterfaceName;
 
     public function __construct(){
-        require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Dispatcher.php';
-        $this->dispatcher = new S2Dispatcher();
+        require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
+        $this->dispatcher = new S2Base_ZfDispatcher();
     }
 
     abstract protected function isUseCommonsDao();

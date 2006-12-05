@@ -1,15 +1,13 @@
 
-    public function @@ACTION_NAME@@()
-    {
+    public function @@ACTION_METHOD_NAME@@(){
         $listLimit = 10;
         $pageLimit = 5;
-        $request = $this->getRequest();
         $support = new S2Dao_PagerSupport($listLimit,
                            '@@CONDITION_DTO_NAME@@',
                            '@@CONDITION_DTO_SESSION_KEY@@');
         $conditionDto = $support->getPagerCondition();
-        if($request->getParam('s2pager_offset') != null){
-            $conditionDto->setOffset((integer)$request->getParam('s2pager_offset'));
+        if($this->getRequest()->getParam('s2pager_offset') != null){
+            $conditionDto->setOffset((integer)$this->getRequest()->getParam('s2pager_offset'));
         }
         $dtos = $this->service->getByConditionDto($conditionDto);
         $this->view->assign('dtos',$dtos);
@@ -24,8 +22,6 @@
             $pageIndex[] = $i;
         }
         $this->view->assign('pageIndex',$pageIndex);
-
-        $this->view->render('@@TEMPLATE_NAME@@');
+        $this->view->render('@@ACTION_NAME@@.html');
     }
     /** S2BASE_PHP5 ACTION METHOD **/
-

@@ -11,12 +11,12 @@ class @@CONTROLLER_CLASS_NAME@@ extends Zend_Controller_Action
         }
         $this->view = new S2Base_ZfSmartyView();
         $this->view->setRequest($this->getRequest());
+        $this->view->setResponse($this->getResponse());
     }
 
     public function __call($methodName, $args)
     {
-        $this->getResponse()->setBody($this->view->render(
-            $this->getRequest()->getActionName()));
+        $this->view->render($this->getRequest()->getActionName());
     }
 
     public function indexAction()
@@ -25,9 +25,19 @@ class @@CONTROLLER_CLASS_NAME@@ extends Zend_Controller_Action
     }
     /** S2BASE_PHP5 ACTION METHOD **/
 
-    public function preDispatch() {}
+    public function preDispatch() {
+        $preActionMethodName = 'pre' . ucfirst($this->getRequest()->getParam(S2Base_ZfDispatcher::ACTION_METHOD));
+        if (method_exists($this, $preActionMethodName)) {
+            $this->$preActionMethodName();
+        }
+    }
 
-    public function postDispatch() {}
+    public function postDispatch() {
+        $postActionMethodName = 'post' . ucfirst($this->getRequest()->getParam(S2Base_ZfDispatcher::ACTION_METHOD));
+        if (method_exists($this, $postActionMethodName)) {
+            $this->$postActionMethodName();
+        }
+    }
 
     public function setService(@@SERVICE_CLASS_NAME@@ $service)
     {

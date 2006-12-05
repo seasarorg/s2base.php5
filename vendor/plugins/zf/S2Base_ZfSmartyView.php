@@ -6,9 +6,12 @@ class S2Base_ZfSmartyView
 
     public static $config = array();
     private static $rendered = false;
+    private static $errors = array();
     private $layout = '';
     private $scriptPath = '';
     private $request = null;
+    private $response = null;
+    private static $instance = null;
 
     public function __construct(){
         parent::__construct();
@@ -33,8 +36,27 @@ class S2Base_ZfSmartyView
         $this->layout = $layout;
     }
 
+    public final function putError($key,$val){
+        self::$errors[$key] = $val;
+    }
+
+    public final function getError($key){
+        if(isset(self::$errors[$key])){
+            return self::$errors[$key];
+        }
+        return null;
+    }
+
+    public final function getErrors(){
+        return self::$errors;
+    }
+
     public function setRequest(Zend_Controller_Request_Abstract $request){
         $this->request = $request;
+    }
+
+    public function setResponse(Zend_Controller_Response_Abstract $response){
+        $this->response = $response;
     }
 
     public function getEngine() {
@@ -74,6 +96,10 @@ class S2Base_ZfSmartyView
      * @see Zend_View_Interface::render()
      */
     public function render($name) {
+        if (!$this->response instanceof Zend_Controller_Response_Abstract) {
+            throw new Exception('response not set.');
+        }
+
         if (self::isRendered()) {
             return;
         }
@@ -81,6 +107,7 @@ class S2Base_ZfSmartyView
         
         $this->template_dir = $this->scriptPath;
         $this->assign('request',$this->request);
+        $this->assign('errors',self::$errors);
         $this->assign('module', $this->request->getControllerName());
         $this->assign('controller', $this->request->getControllerName());
         $this->assign('action', $this->request->getActionName());
@@ -108,10 +135,10 @@ class S2Base_ZfSmartyView
         }
 
         if($this->layout == null){
-            return $this->fetch($viewFile);
+            $this->response->setBody($this->fetch($viewFile));
         }else{
             $this->assign('content_for_layout',$viewFile);
-            return $this->fetch($this->layout);
+            $this->response->setBody($this->fetch($this->layout));
         }
     }
 }
