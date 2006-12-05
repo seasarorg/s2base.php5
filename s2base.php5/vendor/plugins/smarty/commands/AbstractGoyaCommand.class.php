@@ -33,7 +33,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
             }
 
             $actionName = S2Base_StdinManager::getValue('action name ? : ');
-            $this->validate(actionName);
+            $this->validate($actionName);
 
             $this->useDao = $this->isUseDao();
             if($this->useDao){
