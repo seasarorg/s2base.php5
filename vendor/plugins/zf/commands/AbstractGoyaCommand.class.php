@@ -4,6 +4,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
     protected $moduleName;
     protected $actionName;
     protected $actionMethodName;
+    protected $formatActionName;
     protected $serviceClassName;
     protected $serviceInterfaceName;
     protected $daoInterfaceName;
@@ -44,33 +45,36 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
             $this->controllerClassName = $this->dispatcher->formatControllerName($this->moduleName);
             $this->moduleServiceInterfaceName = ucfirst($this->moduleName) . 'Service';
 
-            $actionName = S2Base_StdinManager::getValue('action name ? : ');
-            $this->validate(actionName);
+            $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
+            $this->formatActionName = $this->dispatcher->formatName($this->actionName);
+            $this->validate($this->formatActionName);
+            $this->actionMethodName = $this->dispatcher->formatActionName($this->actionName);
+            $this->validate($this->actionMethodName);
 
             $this->useDao = $this->isUseDao();
             if($this->useDao){
                 $this->useCommonsDao = $this->isUseCommonsDao();
                 if ($this->useCommonsDao) {
-                    if ($this->getGoyaInfoWithCommonsDao($actionName) and
+                    if ($this->getGoyaInfoWithCommonsDao($this->actionName) and
                         $this->finalConfirm()) {
                         $this->prepareFiles();
                     }
                 } else {
                     $this->useDB = $this->isUseDB();
                     if ($this->useDB) {
-                        if ($this->getGoyaInfoWithDB($actionName) and
+                        if ($this->getGoyaInfoWithDB($this->actionName) and
                             $this->finalConfirm()) {
                             $this->prepareFiles();
                         }
                     } else {
-                        if ($this->getGoyaInfoInteractive($actionName) and
+                        if ($this->getGoyaInfoInteractive($this->actionName) and
                             $this->finalConfirm()) {
                             $this->prepareFiles();
                         }
                     }
                 }
             } else {
-                $this->setupPropertyWithoutDao($actionName);
+                $this->setupPropertyWithoutDao($this->actionName);
                 if ($this->finalConfirm()){
                     $this->prepareFiles();
                 }
@@ -158,15 +162,13 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
 
     protected function setupPropertyWithDao($actionName){
         $this->setupPropertyWithoutDao($actionName);
-        $name = ucfirst($actionName);
+        $name = ucfirst($this->formatActionName);
         $this->daoInterfaceName = $name . "Dao";
         $this->entityClassName = $name . "Entity";
     }
 
     protected function setupPropertyWithoutDao($actionName){
-        $this->actionName = $actionName;
-        $name = ucfirst($actionName);
-        $this->actionMethodName = $this->dispatcher->formatActionName($name);
+        $name = ucfirst($this->formatActionName);
         $this->serviceInterfaceName = $name . "Service";
         $this->serviceClassName = $name . "ServiceImpl";
         $this->extendsEntityClassName = "none";
@@ -180,7 +182,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         print  PHP_EOL . '[ generate information ]' . PHP_EOL;
         print "  module name             : {$this->moduleName}" . PHP_EOL;
         print "  action name             : {$this->actionName}" . PHP_EOL;
-
+        print "  format action name      : {$this->formatActionName}" . PHP_EOL;
         print "  action method name      : {$this->actionMethodName}" . PHP_EOL;
         print "  action dicon file name  : {$this->actionMethodName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
         print "  action template file    : {$this->actionName}" . S2BASE_PHP5_ZF_TPL_SUFFIX . PHP_EOL;
@@ -289,7 +291,6 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
     }    
 
     protected function prepareServiceClassFile(){
-        $actionName = $this->serviceClassName . "Impl";
         $srcFile = S2BASE_PHP5_MODULES_DIR
                  . $this->moduleName
                  . S2BASE_PHP5_SERVICE_DIR
@@ -316,7 +317,6 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
     }
 
     protected function prepareServiceClassFileWithoutDao(){
-        $actionName = $this->serviceClassName . "Impl";
         $srcFile = S2BASE_PHP5_MODULES_DIR
                  . $this->moduleName
                  . S2BASE_PHP5_SERVICE_DIR

@@ -6,6 +6,7 @@ class ActionCommand implements S2Base_GenerateCommand {
     protected $dispatcher;
     protected $controllerClassName;
     protected $actionMethodName;
+    protected $formatActionName;
 
     public function __construct(){
         require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
@@ -32,8 +33,10 @@ class ActionCommand implements S2Base_GenerateCommand {
             }
             $this->controllerClassName = $this->dispatcher->formatControllerName($this->moduleName);
             $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
-            $this->validate($this->actionName);
+            $this->formatActionName = $this->dispatcher->formatName($this->actionName);
+            $this->validate($this->formatActionName);
             $this->actionMethodName = $this->dispatcher->formatActionName($this->actionName);
+            $this->validate($this->actionMethodName);
             if (!$this->finalConfirm()){
                 return;
             }
@@ -53,6 +56,7 @@ class ActionCommand implements S2Base_GenerateCommand {
         print "  controller name       : {$this->moduleName}" . PHP_EOL;
         print "  controller class name : {$this->controllerClassName}" . PHP_EOL;
         print "  action name           : {$this->actionName}" . PHP_EOL;
+        print "  format action name    : {$this->formatActionName}" . PHP_EOL;
         print "  action method name    : {$this->actionMethodName}" . PHP_EOL;
         print "  action dicon file     : {$this->actionMethodName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
         print "  action template file  : {$this->actionName}" . S2BASE_PHP5_ZF_TPL_SUFFIX . PHP_EOL;
@@ -71,8 +75,10 @@ class ActionCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                     . '/skeleton/action/action.php');
-        $patterns = array("/@@ACTION_NAME@@/","/@@TEMPLATE_NAME@@/");
-        $replacements = array($this->actionMethodName,$this->actionName . S2BASE_PHP5_ZF_TPL_SUFFIX);
+        $patterns = array("/@@ACTION_NAME@@/",
+                          "/@@TEMPLATE_NAME@@/");
+        $replacements = array($this->actionMethodName,
+                              $this->actionName . S2BASE_PHP5_ZF_TPL_SUFFIX);
         $tempAction = preg_replace($patterns,$replacements,$tempAction);
 
         $tempContent = S2Base_CommandUtil::readFile($srcFile);
@@ -103,8 +109,10 @@ class ActionCommand implements S2Base_GenerateCommand {
         $htmlFile = 'html.php';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . "/skeleton/action/$htmlFile");
-        $patterns = array("/@@MODULE_NAME@@/","/@@ACTION_NAME@@/");
-        $replacements = array($this->moduleName,$this->actionName);
+        $patterns = array("/@@MODULE_NAME@@/",
+                          "/@@ACTION_NAME@@/");
+        $replacements = array($this->moduleName,
+                              $this->actionName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
@@ -117,8 +125,10 @@ class ActionCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . '/skeleton/action/dicon.php');
-        $patterns = array("/@@MODULE_NAME@@/","/@@CONTROLLER_CLASS_NAME@@/");
-        $replacements = array($this->moduleName,$this->controllerClassName);
+        $patterns = array("/@@MODULE_NAME@@/",
+                          "/@@CONTROLLER_CLASS_NAME@@/");
+        $replacements = array($this->moduleName,
+                              $this->controllerClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }

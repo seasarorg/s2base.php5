@@ -1,6 +1,6 @@
 <?php
 require_once('Zend/Controller/Plugin/Abstract.php');
-class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
+class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
 {
     private static $exitDispatchLoop = false;
 

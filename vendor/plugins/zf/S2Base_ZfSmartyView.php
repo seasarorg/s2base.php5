@@ -12,6 +12,7 @@ class S2Base_ZfSmartyView
     private $request = null;
     private $response = null;
     private static $instance = null;
+    private $template = null;
 
     public function __construct(){
         parent::__construct();
@@ -59,12 +60,32 @@ class S2Base_ZfSmartyView
         $this->response = $response;
     }
 
+    public function getResponse() {
+        return $this->response;
+    }
+
     public function getEngine() {
         return $this;
     }
 
     public function setScriptPath($path) {
         $this->scriptPath = $path;
+    }
+
+    public function setTpl($tpl) {
+        $this->template = $tpl;
+    }
+
+    public function getTpl() {
+        return $this->template;
+    }
+
+    public function prepareResponse() {
+        if ($this->template == null) {
+            $this->render($this->request->getActionName());
+        } else {
+            $this->render($this->template);
+        }
     }
 
     /**

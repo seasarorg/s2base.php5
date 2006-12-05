@@ -1,14 +1,13 @@
 <?php
 require_once('Zend/Controller/Dispatcher.php');
 class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
-    const ACTION_METHOD = 's2base_action_method';
 
     public function getControllerName(Zend_Controller_Request_Abstract $request) {
         $controllerName = $request->getControllerName();
         if (empty($controllerName)) {
             $controllerName = $this->getDefaultController();
         }
-        return $controllerName;  
+        return $controllerName;
     }
 
     public function getActionName($request) {
@@ -19,6 +18,10 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
         }
         return $action;
     }    
+
+    public function formatName($name) {
+        return $this->_formatName($name);
+    }
 
     /**
      * Dispatch to a controller/action
@@ -69,7 +72,6 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
          * Retrieve the action name
          */
         $action = $this->_getAction($request);
-        $request->setParam(self::ACTION_METHOD, $action);
 
         /**
          * If method does not exist, default to __call()
@@ -108,8 +110,7 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
         
         return $controller;
     }
-    
-    
+
     protected function getControllerFromS2Container($request, $controllerClassName){
         $controllerName = $this->getControllerName($request);
         $actionName = $this->getActionName($request);

@@ -31,9 +31,11 @@ session_save_path(S2BASE_PHP5_VAR_DIR . '/session');
 require_once('Smarty/libs/Smarty.class.php');
 require_once('Zend.php');
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
+require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcherSupportPlugin.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfSmartyView.php';
-require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfValidateFilter.php';
-require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfValidateSupportPlugin.php';
+require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfRequestValidator.php';
+require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfValidatorFactory.php';
+require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfAbstractValidator.php';
 
 /**
  * Smarty config

@@ -1,9 +1,4 @@
 
-    public function @@PRE_ACTION_METHOD_NAME@@() {
-        $filter = new RegexpValidator($this->getRequest(), $this->getResponse(), $this->view);
-        $filter->validate();
-    }
-
     public function @@ACTION_METHOD_NAME@@(){
 
         $pk = $this->getRequest()->getParam('@@UNIQUE_KEY_NAME@@');
@@ -14,6 +9,6 @@
         $this->view->assign('dto',$dto);
         $this->view->assign('func', 'update');
 
-        $this->view->render('@@ACTION_NAME@@Input.html');
+        $this->view->setTpl('@@ACTION_NAME@@-input.html');
     }
     /** S2BASE_PHP5 ACTION METHOD **/

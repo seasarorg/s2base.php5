@@ -32,8 +32,8 @@ class PagerCommand extends AbstractGoyaCommand {
 
     protected function getGoyaInfoWithCommonsDao($actionName){
         if(parent::getGoyaInfoWithCommonsDao($actionName)) {
-            $this->conditionDtoClassName = ucfirst($actionName) . self::CONDITION_DTO_SUFFIX;
-            $this->conditionDtoSessionKey = $actionName . self::CONDITION_DTO_SUFFIX;
+            $this->conditionDtoClassName = ucfirst($this->formatActionName) . self::CONDITION_DTO_SUFFIX;
+            $this->conditionDtoSessionKey = $this->formatActionName . self::CONDITION_DTO_SUFFIX;
             $this->entityPropertyNames = $this->getEntityPropertyNames($this->entityClassName);
             return true;
         }
@@ -61,14 +61,14 @@ class PagerCommand extends AbstractGoyaCommand {
 
     protected function setupPropertyWithDao($actionName){
         parent::setupPropertyWithDao($actionName);
-        $this->conditionDtoClassName = ucfirst($actionName) . self::CONDITION_DTO_SUFFIX;
-        $this->conditionDtoSessionKey = $actionName . self::CONDITION_DTO_SUFFIX;
+        $this->conditionDtoClassName = ucfirst($this->formatActionName) . self::CONDITION_DTO_SUFFIX;
+        $this->conditionDtoSessionKey = $this->formatActionName . self::CONDITION_DTO_SUFFIX;
     }
 
     protected function setupPropertyWithoutDao($actionName){
         parent::setupPropertyWithoutDao($actionName);
-        $this->conditionDtoClassName = ucfirst($actionName) . self::CONDITION_DTO_SUFFIX;
-        $this->conditionDtoSessionKey = $actionName . self::CONDITION_DTO_SUFFIX;
+        $this->conditionDtoClassName = ucfirst($this->formatActionName) . self::CONDITION_DTO_SUFFIX;
+        $this->conditionDtoSessionKey = $this->formatActionName . self::CONDITION_DTO_SUFFIX;
     }
 
     protected function finalConfirm(){
@@ -77,7 +77,7 @@ class PagerCommand extends AbstractGoyaCommand {
         print "  action name               : {$this->actionName} " . PHP_EOL;
 
         print "  action method name        : {$this->actionMethodName}" . PHP_EOL;
-        print "  action dicon file name    : {$this->actionClassName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
+        print "  action dicon file name    : {$this->actionMethodName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
         print "  action template file      : {$this->actionName}" . S2BASE_PHP5_ZF_TPL_SUFFIX . PHP_EOL;
         print "  service interface name    : {$this->serviceInterfaceName}" . PHP_EOL;
         print "  service class name        : {$this->serviceClassName}" . PHP_EOL;

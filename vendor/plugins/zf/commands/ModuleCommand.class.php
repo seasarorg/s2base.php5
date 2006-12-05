@@ -12,7 +12,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
     }
 
     public function getName(){
-        return "module & action controller";
+        return "module";
     }
 
     public function execute(){

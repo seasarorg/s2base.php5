@@ -22,6 +22,5 @@
             $pageIndex[] = $i;
         }
         $this->view->assign('pageIndex',$pageIndex);
-        $this->view->render('@@ACTION_NAME@@.html');
     }
     /** S2BASE_PHP5 ACTION METHOD **/
