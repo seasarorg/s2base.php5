@@ -85,7 +85,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
                       "/@@CONTROLLER_NAME@@/",
                       "/@@TEMPLATE_NAME@@/");
         $reps = array($this->controllerClassName,
-                      $this->moduleName . 'Service',
+                      ucfirst($this->moduleName) . 'Service',
                       $this->moduleName,
                       'index' . S2BASE_PHP5_ZF_TPL_SUFFIX);
         $tempContent = preg_replace($keys, $reps, $tempContent);   

@@ -5,6 +5,6 @@
     <include path="%S2BASE_PHP5_ROOT%/app/modules/@@MODULE_NAME@@/dicon/@@SERVICE_CLASS@@.dicon"/>
 
     <component class="@@CONTROLLER_CLASS_NAME@@">
-        <!-- aspect><component class="@@VALIDATOR_CLASS_NAME@@"/></aspect -->
+        <!-- aspect pointcut="action method"><component class=""/></aspect -->
     </component>
 </components>

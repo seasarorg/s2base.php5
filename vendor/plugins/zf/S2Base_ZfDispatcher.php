@@ -111,12 +111,26 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
         return $controller;
     }
 
+    protected function setupModule($request, $controllerClassName){
+        $controllerName = $this->getControllerName($request);
+        $actionName = $this->getActionName($request);
+        $moduleIncFile = S2BASE_PHP5_ROOT 
+                     . "/app/modules/$controllerName/$controllerName.inc.php"; 
+        $actionIncFile = S2BASE_PHP5_ROOT 
+                     . "/app/modules/$controllerName/$actionName.inc.php"; 
+        require_once($moduleIncFile);
+        if (file_exists($actionIncFile)) {
+            require_once($actionIncFile);
+        }
+    }
+
     protected function getControllerFromS2Container($request, $controllerClassName){
         $controllerName = $this->getControllerName($request);
         $actionName = $this->getActionName($request);
         $formatedActionName = $this->_getAction($request);
         $actionDicon = S2BASE_PHP5_ROOT 
                      . "/app/modules/$controllerName/dicon/$formatedActionName.dicon";
+
         $moduleIncFile = S2BASE_PHP5_ROOT 
                      . "/app/modules/$controllerName/$controllerName.inc.php"; 
         $actionIncFile = S2BASE_PHP5_ROOT 

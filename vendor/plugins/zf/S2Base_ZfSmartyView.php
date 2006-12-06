@@ -11,7 +11,6 @@ class S2Base_ZfSmartyView
     private $scriptPath = '';
     private $request = null;
     private $response = null;
-    private static $instance = null;
     private $template = null;
 
     public function __construct(){
@@ -23,6 +22,9 @@ class S2Base_ZfSmartyView
         if(defined('S2BASE_PHP5_LAYOUT')){
             $this->layout = S2BASE_PHP5_LAYOUT;
         }
+
+        $this->request = Zend_Controller_Front::getInstance()->getRequest();
+        $this->response = Zend_Controller_Front::getInstance()->getResponse();
     }
 
     public static function setRendered($value = true){
@@ -37,18 +39,18 @@ class S2Base_ZfSmartyView
         $this->layout = $layout;
     }
 
-    public final function putError($key,$val){
+    public function putError($key,$val){
         self::$errors[$key] = $val;
     }
 
-    public final function getError($key){
+    public function getError($key){
         if(isset(self::$errors[$key])){
             return self::$errors[$key];
         }
         return null;
     }
 
-    public final function getErrors(){
+    public function getErrors(){
         return self::$errors;
     }
 
@@ -126,14 +128,16 @@ class S2Base_ZfSmartyView
         }
         self::setRendered();
         
+        $controllerName = Zend_Controller_Front::getInstance()->
+                          getDispatcher()->getControllerName($this->request);
         $this->template_dir = $this->scriptPath;
         $this->assign('request',$this->request);
         $this->assign('errors',self::$errors);
-        $this->assign('module', $this->request->getControllerName());
-        $this->assign('controller', $this->request->getControllerName());
+        $this->assign('module', $controllerName);
+        $this->assign('controller', $controllerName);
         $this->assign('action', $this->request->getActionName());
         $this->assign('base_url', $this->request->getBaseUrl());
-        $ctl_url = $this->request->getBaseUrl() . '/' . $this->request->getControllerName();
+        $ctl_url = $this->request->getBaseUrl() . '/' . $controllerName;
         $act_url = $ctl_url . '/' . $this->request->getActionName();
         $this->assign('ctl_url', $ctl_url);
         $this->assign('act_url', $act_url);
@@ -144,7 +148,7 @@ class S2Base_ZfSmartyView
             if (!preg_match('/' . S2BASE_PHP5_ZF_TPL_SUFFIX . '$/', $name)) {
                 $name .= S2BASE_PHP5_ZF_TPL_SUFFIX;
             }
-            $viewFile = $this->request->getControllerName()
+            $viewFile = $controllerName
                       . DIRECTORY_SEPARATOR
                       . 'view'
                       . DIRECTORY_SEPARATOR

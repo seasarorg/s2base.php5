@@ -7,7 +7,7 @@
     -->
 
     <component class="@@CONTROLLER_CLASS_NAME@@">
-        <!-- <aspect pointcut="run"></aspect> -->
+        <!-- <aspect pointcut="action method"><component class=""/></aspect> -->
     </component>
 
 </components>
