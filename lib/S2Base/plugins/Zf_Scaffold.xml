@@ -51,7 +51,7 @@
                 <element>
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
-                    <element key="name" value="S2Base_Zf"/>
+                    <element key="name" value="S2Base_Zf_Pager"/>
                 </element>
                 <!--
                 <element>
@@ -85,8 +85,8 @@
 
         <!-- URI Based dependency -->
         <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
-                  pkgName="S2Base_Zf"
-                  uri="${package.url}/S2Base_Zf-0.6.0"/>
+                  pkgName="S2Base_Zf_Pager"
+                  uri="${package.url}/S2Base_Zf_Pager-0.6.0"/>
 
         <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pkgName="${package.name}"
