@@ -6,7 +6,7 @@
     <taskdef name="pkg2-pvs" classname="src.phing.task.Pkg2PearVersionSupportTask"/>
 
     <target name="init-pkg">
-        <property name="package.name"    value="S2Base_Zf" />
+        <property name="package.name"    value="S2Base_Zf_Pager" />
         <property name="package.version" value="0.6.0" />
         <property name="package.url"     value="http://pear.s2php5.jp/s2base" />
         <property name="package.state"   value="beta" />
@@ -22,14 +22,10 @@
         <mkdir dir="${project.build.dir}/${project.name}/project" />
         <copy toDir="${project.build.dir}/${project.name}/project">
             <fileset dir="../..">
-                <include name="vendor/plugins/zf/**" />
-                <exclude name="vendor/plugins/zf/commands/Pager*" />
-                <exclude name="vendor/plugins/zf/commands/Scaffold*" />
-                <exclude name="vendor/plugins/zf/skeleton/pager/**" />
-                <exclude name="vendor/plugins/zf/skeleton/scaffold/**" />
-                <include name="zf.xml" />
-                <include name="public/z.php" />
-                <include name="public/htaccess.sample" />
+                <include name="vendor/plugins/zf/commands/Pager*" />
+                <include name="vendor/plugins/zf/skeleton/pager/**" />
+                <include name="public/images/**" />
+                <include name="public/css/**" />
             </fileset>
         </copy>
     </target>
@@ -57,7 +53,7 @@
                 <element>
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
-                    <element key="name" value="S2Base"/>
+                    <element key="name" value="S2Base_Zf"/>
                 </element>
                 <!--
                 <element>
@@ -91,8 +87,8 @@
 
         <!-- URI Based dependency -->
         <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
-                  pkgName="S2Base"
-                  uri="${s2base.package.url}"/>
+                  pkgName="S2Base_Zf"
+                  uri="${package.url}/S2Base_Zf-0.6.0"/>
 
         <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pkgName="${package.name}"
