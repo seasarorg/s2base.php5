@@ -8,11 +8,8 @@ $time_start = microtime_float();
 require_once(dirname(dirname(__FILE__)).'/config/environment.inc.php');
 require_once(dirname(dirname(__FILE__)).'/vendor/plugins/zf/config/environment.inc.php');
 require_once 'Zend/Controller/Front.php';
-require_once 'Zend/Controller/Action.php';
 require_once 'Zend/Controller/Request/Http.php';
-require_once 'Zend/View.php';
 
-$response = null;
 try{
     $request = new Zend_Controller_Request_Http();
     $request->setBaseUrl(S2BASE_PHP5_ZF_BASE_URL);
