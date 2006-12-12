@@ -1,15 +1,22 @@
 <?xml version="1.0"?>
 <project name="project" default="command" basedir=".">
     <target name="command">
-        <php expression="require_once('vendor/plugins/smarty/config/environment.inc.php')"/>
+        <php expression="require_once('vendor/plugins/prado/config/environment.inc.php')"/>
         <command>
-            <fileset dir="${plugins.dir}/smarty/commands">
+            <!-- in prado plugin -->
+            <fileset dir="${plugins.dir}/prado/commands">
                <include name="*Command*.php"/>
             </fileset>
 
-            <!-- default -->
+            <!-- in default command-->
             <fileset dir="${cmd.dir}">
-                <include name="*Command*.php"/>
+                <include name="CmdCommand*.php"/>
+                <include name="DaoCommand*.php"/>
+                <include name="DaoMethodCommand*.php"/>
+                <include name="DiconCommand*.php"/>
+                <include name="DtoCommand*.php"/>
+                <include name="EntityCommand*.php"/>
+                <include name="SqliteCommand*.php"/>
             </fileset>
         </command>
     </target>
