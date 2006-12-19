@@ -8,7 +8,7 @@ class S2Base_ZfValidatorFactory {
     public static function create(Zend_Controller_Request_Abstract $request) {
         $validators = array();
         $validateDir = S2BASE_PHP5_ROOT . '/app/modules/'
-                     . Zend_Controller_Front::getInstance()->getDispatcher()->getControllerName($request)
+                     . $request->getControllerName()
                      . self::VALIDATE_DIR;
         if (!is_dir($validateDir)) {
             return $validators;

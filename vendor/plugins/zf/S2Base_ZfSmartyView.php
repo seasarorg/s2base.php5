@@ -2,7 +2,7 @@
 require_once('Zend/View/Interface.php');
 class S2Base_ZfSmartyView
     extends Smarty
-    implements Zend_View_Interface {
+    implements Zend_View_Interface, S2Base_ZfView {
 
     public static $config = array();
     private static $rendered = false;
@@ -12,17 +12,19 @@ class S2Base_ZfSmartyView
     private $request = null;
     private $response = null;
     private $template = null;
+    private $controllerName = null;
 
     public function __construct(){
         parent::__construct();
         foreach(self::$config as $key=>$val){
             $this->$key = $val;
         }
-        $this->setScriptPath(S2BASE_PHP5_ROOT . '/app/modules');
+
         if(defined('S2BASE_PHP5_LAYOUT')){
             $this->layout = S2BASE_PHP5_LAYOUT;
         }
 
+        $this->setScriptPath(S2BASE_PHP5_ROOT . '/app/modules');
         $this->request = Zend_Controller_Front::getInstance()->getRequest();
         $this->response = Zend_Controller_Front::getInstance()->getResponse();
     }
@@ -82,7 +84,11 @@ class S2Base_ZfSmartyView
         return $this->template;
     }
 
-    public function prepareResponse() {
+    public function setControllerName($controllerName) {
+        $this->controllerName = $controllerName;
+    }
+
+    public function renderWithTpl() {
         if ($this->template == null) {
             $this->render($this->request->getActionName());
         } else {
@@ -128,8 +134,9 @@ class S2Base_ZfSmartyView
         }
         self::setRendered();
         
-        $controllerName = Zend_Controller_Front::getInstance()->
-                          getDispatcher()->getControllerName($this->request);
+        $controllerName = $this->controllerName != null ?
+                          $this->controllerName :
+                          $this->request->getControllerName();
         $this->template_dir = $this->scriptPath;
         $this->assign('request',$this->request);
         $this->assign('errors',self::$errors);

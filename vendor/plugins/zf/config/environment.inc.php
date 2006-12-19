@@ -13,7 +13,6 @@ ini_set('error_log',S2BASE_PHP5_VAR_DIR . '/logs/php.log');
  * definition
  */
 define('S2BASE_PHP5_ZF_TPL_SUFFIX','.html'); 
-define('S2BASE_PHP5_ZF_BASE_URL','/zf'); 
 
 /**
  * Directory setting
@@ -32,6 +31,7 @@ require_once('Smarty/libs/Smarty.class.php');
 require_once('Zend.php');
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcherSupportPlugin.php';
+require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfView.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfSmartyView.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfRequestValidator.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfValidatorFactory.php';

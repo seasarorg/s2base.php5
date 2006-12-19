@@ -33,7 +33,7 @@ class ActionCommand implements S2Base_GenerateCommand {
             }
             $this->controllerClassName = $this->dispatcher->formatControllerName($this->moduleName);
             $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
-            $this->formatActionName = $this->dispatcher->formatName($this->actionName);
+            $this->formatActionName = $this->dispatcher->formatName($this->actionName, false);
             $this->validate($this->formatActionName);
             $this->actionMethodName = $this->dispatcher->formatActionName($this->actionName);
             $this->validate($this->actionMethodName);

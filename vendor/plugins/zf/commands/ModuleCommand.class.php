@@ -5,21 +5,29 @@ class ModuleCommand implements S2Base_GenerateCommand {
     protected $testDirectory;
     protected $controllerClassName;
     protected $dispatcher;
+    protected $moduleInterfaceName;
 
     public function __construct(){
         require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
         $this->dispatcher = new S2Base_ZfDispatcher();
     }
 
+    public static function getModuleServiceInterfaceName($moduleName) {
+        $dispatcher = new S2Base_ZfDispatcher();
+        return $dispatcher->formatName($moduleName, false) . 'Service';
+    }
+
     public function getName(){
-        return "module";
+        return "controller (s2base module)";
     }
 
     public function execute(){
         try{
             $this->moduleName = S2Base_StdinManager::getValue('controller name ? : ');
-            $this->validate($this->moduleName);
+            $this->moduleName = $this->formatModuleName($this->moduleName);
             $this->controllerClassName = $this->dispatcher->formatControllerName($this->moduleName);
+            $this->validate($this->controllerClassName);
+            $this->moduleInterfaceName = self::getModuleServiceInterfaceName($this->moduleName);
             $this->srcDirectory = S2BASE_PHP5_MODULES_DIR . $this->moduleName;
             $this->testDirectory = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName;
             if (!$this->finalConfirm()){
@@ -41,6 +49,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
         print PHP_EOL . '[ generate information ]' . PHP_EOL;
         print "  controller name       : {$this->moduleName}" . PHP_EOL;
         print "  controller class name : {$this->controllerClassName}" . PHP_EOL;
+        print "  module interface name : {$this->moduleInterfaceName}" . PHP_EOL;
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
@@ -85,7 +94,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
                       "/@@CONTROLLER_NAME@@/",
                       "/@@TEMPLATE_NAME@@/");
         $reps = array($this->controllerClassName,
-                      ucfirst($this->moduleName) . 'Service',
+                      $this->moduleInterfaceName,
                       $this->moduleName,
                       'index' . S2BASE_PHP5_ZF_TPL_SUFFIX);
         $tempContent = preg_replace($keys, $reps, $tempContent);   
@@ -96,13 +105,13 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $srcFile = S2BASE_PHP5_MODULES_DIR
                  . $this->moduleName
                  . '/service/'
-                 . ucfirst($this->moduleName) . 'Service'
+                 . $this->moduleInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX; 
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . "/skeleton/module/service.php");
         $keys = array("/@@SERVICE_CLASS_NAME@@/");
-        $reps = array(ucfirst($this->moduleName) . 'Service');
+        $reps = array($this->moduleInterfaceName);
         $tempContent = preg_replace($keys, $reps, $tempContent);   
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
@@ -131,5 +140,17 @@ class ModuleCommand implements S2Base_GenerateCommand {
                                     $tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
+
+    private function formatModuleName($name){
+        if (preg_match("/_/",$name)){
+            $name = strtolower($name);
+            $name = preg_replace("/_/"," ",$name);
+            $name = ucwords(trim($name));
+            $name = preg_replace("/\s/","",$name);
+            $name = strtolower(substr($name,0,1)) . substr($name,1);
+        }
+        return $name;
+    }
+
 }
 ?>

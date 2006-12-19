@@ -1,5 +1,5 @@
-RewriteBase /zf
 RewriteEngine on
-RewriteRule ^(images/.*)$ $1 [L]
-RewriteRule ^(css/.*)$ $1 [L]
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ z.php [L]
+RewriteBase /zf
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.*)$ z.php/$1

@@ -10,26 +10,19 @@ require_once(dirname(dirname(__FILE__)).'/vendor/plugins/zf/config/environment.i
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Request/Http.php';
 
+//require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDefaultView.php';
+//S2Base_ZfDispatcherSupportPlugin::$VIEW_CLASS = 'S2Base_ZfDefaultView';
+
 try{
     $request = new Zend_Controller_Request_Http();
-    $request->setBaseUrl(S2BASE_PHP5_ZF_BASE_URL);
+    $request->setBaseUrl();
     $fc = Zend_Controller_Front::getInstance();
+    $fc->throwExceptions(true);
     $fc->registerPlugin(new S2Base_ZfDispatcherSupportPlugin());
     $fc->setDispatcher(new S2Base_ZfDispatcher());
     $fc->setRequest($request);
     $fc->setControllerDirectory(S2BASE_PHP5_ROOT . '/app/modules');
-    $response = $fc->dispatch($request);
-
-    if ($response->isException()) {
-        $exceptions = $response->getException();
-        print '<pre><font color="red">' . PHP_EOL;
-        foreach($exceptions as $e){
-            print $e->__toString() . PHP_EOL;
-        }
-        print '</font></pre>' . PHP_EOL;
-    } else {
-        echo $response;
-    }    
+    $response = $fc->dispatch();
 }catch(Exception $e){
     print '<pre><font color="red">' . $e->__toString() . '</font></pre>' . PHP_EOL;
 }

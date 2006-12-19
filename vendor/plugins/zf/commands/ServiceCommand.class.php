@@ -17,7 +17,7 @@ class ServiceCommand implements S2Base_GenerateCommand {
                 return;
             }
 
-            $this->moduleServiceInterfaceName = $this->moduleName . 'Service';
+            $this->moduleServiceInterfaceName = ModuleCommand::getModuleServiceInterfaceName($this->moduleName);
             $this->serviceInterfaceName = S2Base_StdinManager::getValue('service interface name ? : ');
             $this->validate($this->serviceInterfaceName);
 

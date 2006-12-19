@@ -27,8 +27,7 @@ abstract class S2Base_ZfAbstractValidator {
         $this->request = $request;
         $this->view = $view;
         $this->response = $this->view->getResponse();
-        $this->controllerName = Zend_Controller_Front::getInstance()->
-                                getDispatcher()->getControllerName($this->request);
+        $this->controllerName = $this->request->getControllerName();
         $this->moduleName = $this->controllerName;
         $this->actionName = $this->request->getActionName();
     }

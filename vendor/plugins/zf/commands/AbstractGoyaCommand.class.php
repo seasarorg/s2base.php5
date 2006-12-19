@@ -43,7 +43,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
             }
 
             $this->controllerClassName = $this->dispatcher->formatControllerName($this->moduleName);
-            $this->moduleServiceInterfaceName = ucfirst($this->moduleName) . 'Service';
+            $this->moduleServiceInterfaceName = ModuleCommand::getModuleServiceInterfaceName($this->moduleName);
 
             $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
             $this->formatActionName = $this->dispatcher->formatName($this->actionName);
