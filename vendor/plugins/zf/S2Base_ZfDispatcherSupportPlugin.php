@@ -18,13 +18,17 @@ class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
     }
 
     public function dispatchLoopStartup($request) {
-        Zend::register(self::VIEW_REGISTRY_KEY, new self::$VIEW_CLASS);
+        if (self::$VIEW_CLASS != null) {
+            Zend::register(self::VIEW_REGISTRY_KEY, new self::$VIEW_CLASS);
+        }
     }
 
     public function dispatchLoopShutdown() {
-        $view = Zend::registry(self::VIEW_REGISTRY_KEY);
-        if ($view instanceof S2Base_ZfView) {
-            $view->renderWithTpl();
+        if (Zend::isRegistered(self::VIEW_REGISTRY_KEY)) {
+            $view = Zend::registry(self::VIEW_REGISTRY_KEY);
+            if ($view instanceof S2Base_ZfView) {
+                $view->renderWithTpl();
+            }
         }
     }
 

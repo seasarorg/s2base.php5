@@ -7,10 +7,10 @@
 
     <target name="init-pkg">
         <property name="package.name"    value="S2Base_Zf" />
-        <property name="package.version" value="0.6.0" />
+        <property name="package.version" value="0.6.1" />
         <property name="package.url"     value="http://pear.s2php5.jp/s2base" />
         <property name="package.state"   value="beta" />
-        <property name="package.notes"   value="Release 0.6.0" />
+        <property name="package.notes"   value="Release 0.6.1" />
         <property name="package.summary" value="S2Base.PHP5 Zf Plugin" />
         <property name="package.description"       value="S2Base.PHP5 Zf Plugin" />
         <property name="package.maintainer.handle" value="klove" />

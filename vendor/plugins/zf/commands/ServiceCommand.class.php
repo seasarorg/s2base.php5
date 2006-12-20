@@ -2,9 +2,14 @@
 class ServiceCommand implements S2Base_GenerateCommand {
 
     protected $moduleName;
+    protected $controllerName;
     protected $serviceInterfaceName;
     protected $serviceClassName;
     protected $moduleServiceInterfaceName;
+    protected $srcModuleDir;
+    protected $srcCtlDir;
+    protected $testModuleDir;
+    protected $testCtlDir;
 
     public function getName(){
         return "service";
@@ -12,12 +17,20 @@ class ServiceCommand implements S2Base_GenerateCommand {
 
     public function execute(){
         try{
-            $this->moduleName = S2Base_CommandUtil::getModuleName();
-            if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
+           if (S2BASE_PHP5_ZF_USE_MODULE) {
+                $this->moduleName = S2Base_CommandUtil::getModuleName();
+                if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
+                    return;
+                }
+            } else {
+                $this->moduleName = S2BASE_PHP5_ZF_DEFAULT_MODULE;
+                $this->validate($this->moduleName);
+            }
+            $this->controllerName = ModuleCommand::getActionControllerName($this->moduleName);
+            if(S2Base_CommandUtil::isListExitLabel($this->controllerName)){
                 return;
             }
-
-            $this->moduleServiceInterfaceName = ModuleCommand::getModuleServiceInterfaceName($this->moduleName);
+            $this->moduleServiceInterfaceName = ModuleCommand::getCtlServiceInterfaceName($this->controllerName);
             $this->serviceInterfaceName = S2Base_StdinManager::getValue('service interface name ? : ');
             $this->validate($this->serviceInterfaceName);
 
@@ -47,6 +60,7 @@ class ServiceCommand implements S2Base_GenerateCommand {
     protected function finalConfirm(){
         print PHP_EOL . '[ generate information ]' . PHP_EOL;
         print "  module name               : {$this->moduleName}" . PHP_EOL;
+        print "  controller name           : {$this->controllerName}" . PHP_EOL;
         print "  service interface name    : {$this->serviceInterfaceName}" . PHP_EOL;
         print $this->isImplementsModuleService ?
               "  implements module service : Yes ({$this->moduleServiceInterfaceName})" . PHP_EOL :
@@ -58,6 +72,10 @@ class ServiceCommand implements S2Base_GenerateCommand {
     }
 
     protected function prepareFiles(){
+        $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
+        $this->srcCtlDir     = $this->srcModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
+        $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
+        $this->testCtlDir    = $this->testModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
         $this->prepareServiceImplFile();
         $this->prepareServiceInterfaceFile();
         $this->prepareServiceTestFile();
@@ -65,8 +83,7 @@ class ServiceCommand implements S2Base_GenerateCommand {
     }
     
     protected function prepareServiceImplFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_SERVICE_DIR
                  . $this->serviceClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
@@ -87,8 +104,7 @@ class ServiceCommand implements S2Base_GenerateCommand {
     }
 
     protected function prepareServiceInterfaceFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_SERVICE_DIR
                  . $this->serviceInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
@@ -102,23 +118,29 @@ class ServiceCommand implements S2Base_GenerateCommand {
 
     protected function prepareServiceTestFile(){
         $testName = $this->serviceClassName . "Test";
-        $srcFile = S2BASE_PHP5_TEST_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->testCtlDir
                  . S2BASE_PHP5_SERVICE_DIR
                  . $testName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                     . 'service/test.php');
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                     . '/skeleton/service/test.php');
 
-        $patterns = array("/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@SERVICE_INTERFACE@@/","/@@SERVICE_CLASS@@/");
-        $replacements = array($testName,$this->moduleName,$this->serviceInterfaceName,$this->serviceClassName);
+        $patterns = array("/@@CLASS_NAME@@/",
+                          "/@@MODULE_NAME@@/",
+                          "/@@CONTROLLER_NAME@@/",
+                          "/@@SERVICE_INTERFACE@@/",
+                          "/@@SERVICE_CLASS@@/");
+        $replacements = array($testName,
+                              $this->moduleName,
+                              $this->controllerName,
+                              $this->serviceInterfaceName,
+                              $this->serviceClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareDiconFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_DICON_DIR
                  . $this->serviceClassName
                  . S2BASE_PHP5_DICON_SUFFIX;

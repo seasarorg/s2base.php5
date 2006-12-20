@@ -21,7 +21,7 @@ try{
     $fc->registerPlugin(new S2Base_ZfDispatcherSupportPlugin());
     $fc->setDispatcher(new S2Base_ZfDispatcher());
     $fc->setRequest($request);
-    $fc->setControllerDirectory(S2BASE_PHP5_ROOT . '/app/modules/');
+    $fc->setControllerDirectory(array());
     $response = $fc->dispatch();
 }catch(Exception $e){
     print '<pre><font color="red">' . $e->__toString() . '</font></pre>' . PHP_EOL;

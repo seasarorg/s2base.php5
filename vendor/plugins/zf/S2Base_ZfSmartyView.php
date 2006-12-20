@@ -146,8 +146,12 @@ class S2Base_ZfSmartyView
         $this->assign('controller', $controllerName);
         $this->assign('action', $this->request->getActionName());
         $this->assign('base_url', $this->request->getBaseUrl());
-        $ctl_url = $this->request->getBaseUrl() . '/' . $controllerName;
+        $mod_url = S2BASE_PHP5_ZF_USE_MODULE ?
+                   $this->request->getBaseUrl() . '/' . $this->moduleName :
+                   $this->request->getBaseUrl();
+        $ctl_url = $mod_url . '/' . $controllerName;
         $act_url = $ctl_url . '/' . $this->request->getActionName();
+        $this->assign('mod_url', $mod_url);
         $this->assign('ctl_url', $ctl_url);
         $this->assign('act_url', $act_url);
 

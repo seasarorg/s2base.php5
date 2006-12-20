@@ -1,5 +1,5 @@
 RewriteEngine on
-RewriteBase /zf
+RewriteBase /
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^(.*)$ z.php/$1

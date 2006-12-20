@@ -2,11 +2,16 @@
 class ActionCommand implements S2Base_GenerateCommand {
 
     protected $moduleName;
+    protected $controllerName;
     protected $actionName;
     protected $dispatcher;
     protected $controllerClassName;
     protected $actionMethodName;
     protected $formatActionName;
+    protected $srcModuleDir;
+    protected $srcCtlDir;
+    protected $testModuleDir;
+    protected $testCtlDir;
 
     public function __construct(){
         require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
@@ -27,11 +32,20 @@ class ActionCommand implements S2Base_GenerateCommand {
 
     public function execute(){
         try{
-            $this->moduleName = $this->getActionControllerName();
-            if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
+            if (S2BASE_PHP5_ZF_USE_MODULE) {
+                $this->moduleName = S2Base_CommandUtil::getModuleName();
+                if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
+                    return;
+                }
+            } else {
+                $this->moduleName = S2BASE_PHP5_ZF_DEFAULT_MODULE;
+                $this->validate($this->moduleName);
+            }
+            $this->controllerName = ModuleCommand::getActionControllerName($this->moduleName);
+            if(S2Base_CommandUtil::isListExitLabel($this->controllerName)){
                 return;
             }
-            $this->controllerClassName = $this->dispatcher->formatControllerName($this->moduleName);
+            $this->controllerClassName = $this->dispatcher->formatControllerName($this->controllerName);
             $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
             $this->formatActionName = $this->dispatcher->formatName($this->actionName, false);
             $this->validate($this->formatActionName);
@@ -48,12 +62,13 @@ class ActionCommand implements S2Base_GenerateCommand {
     }
 
     protected function validate($name){
-        S2Base_CommandUtil::validate($name,"Invalid action name. [ $name ]");
+        S2Base_CommandUtil::validate($name,"Invalid value. [ $name ]");
     }
 
     protected function finalConfirm(){
         print PHP_EOL . '[ generate information ]' . PHP_EOL;
-        print "  controller name       : {$this->moduleName}" . PHP_EOL;
+        print "  module name           : {$this->moduleName}" . PHP_EOL;
+        print "  controller name       : {$this->controllerName}" . PHP_EOL;
         print "  controller class name : {$this->controllerClassName}" . PHP_EOL;
         print "  action name           : {$this->actionName}" . PHP_EOL;
         print "  format action name    : {$this->formatActionName}" . PHP_EOL;
@@ -64,13 +79,17 @@ class ActionCommand implements S2Base_GenerateCommand {
     }
 
     protected function prepareFiles(){
+        $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
+        $this->srcCtlDir     = $this->srcModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
+        $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
+        $this->testCtlDir    = $this->testModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
         $this->prepareActionFile();
         $this->prepareHtmlFile();
         $this->prepareDiconFile();
     }
     
     protected function prepareActionFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
+        $srcFile = $this->srcModuleDir
                  . $this->controllerClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
@@ -101,8 +120,7 @@ class ActionCommand implements S2Base_GenerateCommand {
     }
 
     protected function prepareHtmlFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
                  . S2BASE_PHP5_ZF_TPL_SUFFIX; 
@@ -110,16 +128,17 @@ class ActionCommand implements S2Base_GenerateCommand {
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . "/skeleton/action/$htmlFile");
         $patterns = array("/@@MODULE_NAME@@/",
+                          "/@@CONTROLLER_NAME@@/",
                           "/@@ACTION_NAME@@/");
         $replacements = array($this->moduleName,
+                              $this->controllerName,
                               $this->actionName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareDiconFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_DICON_DIR
                  . $this->actionMethodName
                  . S2BASE_PHP5_DICON_SUFFIX;
@@ -127,7 +146,7 @@ class ActionCommand implements S2Base_GenerateCommand {
                      . '/skeleton/action/dicon.php');
         $patterns = array("/@@MODULE_NAME@@/",
                           "/@@CONTROLLER_CLASS_NAME@@/");
-        $replacements = array($this->moduleName,
+        $replacements = array($this->controllerName,
                               $this->controllerClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);

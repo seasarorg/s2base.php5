@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
-<title>@@MODULE_NAME@@</title>
+<title>@@MODULE_NAME@@ - @@CONTROLLER_NAME@@</title>
 </head>
 <body>
 

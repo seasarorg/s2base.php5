@@ -83,7 +83,8 @@ class ScaffoldCommand extends AbstractGoyaCommand {
 
     protected function finalConfirm(){
         print PHP_EOL. '[ generate information ]'  . PHP_EOL;
-        print "  module name               : {$this->moduleName}" . PHP_EOL;
+        print "  module name               : {$this->controllerName}" . PHP_EOL;
+        print "  controller name           : {$this->controllerName}" . PHP_EOL;
         print "  action name               : {$this->actionName}" . PHP_EOL;
         print "  format action name        : {$this->formatActionName}" . PHP_EOL;
         print "  action method name        : {$this->actionMethodName}" . PHP_EOL;
@@ -110,6 +111,11 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareFiles(){
+        $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
+        $this->srcCtlDir     = $this->srcModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
+        $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
+        $this->testCtlDir    = $this->testModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
+
         $this->prepareActionFile();
         $this->prepareHtmlFile();
         $this->prepareActionDiconFile();
@@ -162,7 +168,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     protected function prepareActionFileByFunc($func){
         $actionMethodName = $this->dispatcher->formatActionName($this->actionName . '-' . $func);
 
-        $srcFile = S2BASE_PHP5_MODULES_DIR
+        $srcFile = $this->srcModuleDir
                  . $this->controllerClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
 
@@ -188,7 +194,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     protected function prepareActionFileConfirm(){
         $actionMethodName = $this->dispatcher->formatActionName($this->actionName . '-Confirm');
 
-        $srcFile = S2BASE_PHP5_MODULES_DIR
+        $srcFile = $this->srcModuleDir
                  . $this->controllerClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
 
@@ -222,7 +228,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareActionFileList(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
+        $srcFile = $this->srcModuleDir
                  . $this->controllerClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
 
@@ -251,8 +257,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareHtmlFileList(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
                  . S2BASE_PHP5_ZF_TPL_SUFFIX; 
@@ -307,8 +312,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareHtmlFileInput(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
                  . '-input'
@@ -328,8 +332,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareHtmlFileConfirm(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
                  . '-confirm'
@@ -415,8 +418,12 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . "/skeleton/scaffold/html_header.php");
-            $patterns = array("/@@MODULE_NAME@@/","/@@ACTION_NAME@@/");
-            $replacements = array($this->moduleName,$this->actionName);
+            $patterns = array("/@@MODULE_NAME@@/",
+                              "/@@CONTROLLER_NAME@@/",
+                              "/@@ACTION_NAME@@/");
+            $replacements = array($this->moduleName,
+                                  $this->controllerName,
+                                  $this->actionName);
             $contents = preg_replace($patterns,$replacements,$tempContent);
         }
         return $contents;
@@ -435,18 +442,17 @@ class ScaffoldCommand extends AbstractGoyaCommand {
      * Service file setting
      */
     protected function prepareServiceClassFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_SERVICE_DIR
                  . $this->serviceClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . '/skeleton/scaffold/service.php');
         $daoProp = strtolower(substr($this->daoInterfaceName,0,1)) . substr($this->daoInterfaceName,1);
-        if ($this->serviceInterfaceName == $this->moduleServiceInterfaceName) {
+        if ($this->serviceInterfaceName == $this->ctlServiceInterfaceName) {
             $implementsInterface = $this->serviceInterfaceName;
         } else {
-            $implementsInterface = $this->serviceInterfaceName . ', ' . $this->moduleServiceInterfaceName;
+            $implementsInterface = $this->serviceInterfaceName . ', ' . $this->ctlServiceInterfaceName;
         }
         $patterns = array("/@@CLASS_NAME@@/",
                           "/@@INTERFACE_NAME@@/",
@@ -465,8 +471,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareServiceInterfaceFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_SERVICE_DIR
                  . $this->serviceInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
@@ -486,8 +491,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
      * Dao file setting
      */
     protected function prepareDaoFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_DAO_DIR
                  . $this->daoInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
@@ -520,8 +524,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     protected function prepareActionDiconFileByFunc($func){
         $actionMethodName = $this->dispatcher->formatActionName($this->actionName . '-' . $func);
 
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_DICON_DIR
                  . $actionMethodName
                  . S2BASE_PHP5_DICON_SUFFIX;
@@ -529,10 +532,12 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                      . "/skeleton/scaffold/action_dicon_$func.php");
         $patterns = array("/@@CONTROLLER_CLASS_NAME@@/",
                           "/@@MODULE_NAME@@/",
+                          "/@@CONTROLLER_NAME@@/",
                           "/@@SERVICE_CLASS@@/",
                           "/@@VALIDATOR_CLASS_NAME@@/");
         $replacements = array($this->controllerClassName,
                               $this->moduleName,
+                              $this->controllerName,
                               $this->serviceClassName,
                               ucfirst($this->formatActionName) . 'ConfirmValidator');
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
@@ -540,8 +545,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareServiceDiconFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_DICON_DIR
                  . $this->serviceClassName
                  . S2BASE_PHP5_DICON_SUFFIX;
@@ -558,8 +562,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
      * Dto file setting
      */
     protected function prepareDtoFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_ENTITY_DIR
                  . $this->dtoClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
@@ -575,9 +578,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
      * Validator file setting
      */
     protected function prepareValidatorFile(){
-        $validatorDir = S2BASE_PHP5_MODULES_DIR
-                      . $this->moduleName
-                      . '/validate';
+        $validatorDir = $this->srcCtlDir . self::VALIDATE_DIR;
         S2Base_CommandUtil::createDirectory($validatorDir);
         $this->prepareValidatorFileRegexp();
         $this->prepareValidatorFileConfirm();
@@ -589,8 +590,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
 
     protected function prepareValidatorIniFileConfirm() {
         //$actionMethodName = $this->dispatcher->formatActionName($this->actionName . '-confirm');
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . self::VALIDATE_DIR
                  . $this->actionName . '-confirm'
                  . '.regexp.ini';
@@ -623,8 +623,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     protected function prepareValidatorIniFileExecute() {
         //$actionMethodName = $this->dispatcher->formatActionName($this->actionName . '-execute');
 
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . self::VALIDATE_DIR
                  . $this->actionName . '-execute'
                  . '.regexp.ini';
@@ -639,8 +638,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     protected function prepareValidatorIniFileByFunc($func) {
         //$actionMethodName = $this->dispatcher->formatActionName($this->actionName . '-' . $func);
 
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . self::VALIDATE_DIR
                  . $this->actionName . '-' . $func
                  . '.regexp.ini';
@@ -655,8 +653,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareValidatorFileConfirm() {
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_INTERCEPTOR_DIR
                  . ucfirst($this->formatActionName) . 'ConfirmValidator'
                  . S2BASE_PHP5_CLASS_SUFFIX;
@@ -675,8 +672,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareValidatorFileRegexp() {
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_INTERCEPTOR_DIR
                  . 'RegexpValidator'
                  . S2BASE_PHP5_CLASS_SUFFIX;

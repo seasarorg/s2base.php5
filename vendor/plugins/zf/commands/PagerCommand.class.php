@@ -74,6 +74,7 @@ class PagerCommand extends AbstractGoyaCommand {
     protected function finalConfirm(){
         print PHP_EOL . '[ generate information ]' . PHP_EOL;
         print "  module name               : {$this->moduleName}" . PHP_EOL;
+        print "  controller name           : {$this->controllerName}" . PHP_EOL;
         print "  action name               : {$this->actionName} " . PHP_EOL;
 
         print "  action method name        : {$this->actionMethodName}" . PHP_EOL;
@@ -101,6 +102,11 @@ class PagerCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareFiles(){
+        $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
+        $this->srcCtlDir     = $this->srcModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
+        $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
+        $this->testCtlDir    = $this->testModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
+
         $this->prepareActionFile();
         $this->prepareActionDiconFile();
         $this->prepareServiceInterfaceFile();
@@ -126,7 +132,7 @@ class PagerCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareActionFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
+        $srcFile = $this->srcModuleDir
                  . $this->controllerClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
@@ -162,8 +168,7 @@ class PagerCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareHtmlFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
                  . S2BASE_PHP5_ZF_TPL_SUFFIX;
@@ -180,10 +185,12 @@ class PagerCommand extends AbstractGoyaCommand {
         }
 
         $patterns = array("/@@MODULE_NAME@@/",
+                          "/@@CONTROLLER_NAME@@/",
                           "/@@ACTION_NAME@@/",
                           "/@@PROPERTY_ROWS_TITLE@@/",
                           "/@@PROPERTY_ROWS@@/");
         $replacements = array($this->moduleName,
+                              $this->controllerName,
                               $this->actionName,
                               $this->getPropertyRowsTitle(),
                               $this->getPropertyRowsHtml());
@@ -192,8 +199,7 @@ class PagerCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareHtmlFileWithoutDao(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
                  . S2BASE_PHP5_ZF_TPL_SUFFIX; 
@@ -211,25 +217,24 @@ class PagerCommand extends AbstractGoyaCommand {
         }
 
         $patterns = array("/@@MODULE_NAME@@/","/@@ACTION_NAME@@/");
-        $replacements = array($this->moduleName,$this->actionName);
+        $replacements = array($this->controllerName,$this->actionName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         CmdCommand::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareServiceClassFile(){
         $actionName = $this->serviceClassName . "Impl";
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_SERVICE_DIR
                  . $this->serviceClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . '/skeleton/pager/service.php');
         $daoProp = strtolower(substr($this->daoInterfaceName,0,1)) . substr($this->daoInterfaceName,1);
-        if ($this->serviceInterfaceName == $this->moduleServiceInterfaceName) {
+        if ($this->serviceInterfaceName == $this->ctlServiceInterfaceName) {
             $implementsInterface = $this->serviceInterfaceName;
         } else {
-            $implementsInterface = $this->serviceInterfaceName . ', ' . $this->moduleServiceInterfaceName;
+            $implementsInterface = $this->serviceInterfaceName . ', ' . $this->ctlServiceInterfaceName;
         }
         $patterns = array("/@@CLASS_NAME@@/",
                           "/@@INTERFACE_NAME@@/",
@@ -247,17 +252,16 @@ class PagerCommand extends AbstractGoyaCommand {
 
     protected function prepareServiceClassFileWithoutDao(){
         $actionName = $this->serviceClassName . "Impl";
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_SERVICE_DIR
                  . $this->serviceClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . '/skeleton/pager/service_without_dao.php');
-        if ($this->serviceInterfaceName == $this->moduleServiceInterfaceName) {
+        if ($this->serviceInterfaceName == $this->ctlServiceInterfaceName) {
             $implementsInterface = $this->serviceInterfaceName;
         } else {
-            $implementsInterface = $this->serviceInterfaceName . ', ' . $this->moduleServiceInterfaceName;
+            $implementsInterface = $this->serviceInterfaceName . ', ' . $this->ctlServiceInterfaceName;
         }
         $patterns = array("/@@CLASS_NAME@@/","/@@INTERFACE_NAME@@/");
         $replacements = array($this->serviceClassName,$implementsInterface);
@@ -266,8 +270,7 @@ class PagerCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareServiceInterfaceFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_SERVICE_DIR
                  . $this->serviceInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
@@ -282,8 +285,7 @@ class PagerCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareDaoFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_DAO_DIR
                  . $this->daoInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
@@ -297,8 +299,7 @@ class PagerCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareServiceDiconFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_DICON_DIR
                  . $this->serviceClassName
                  . S2BASE_PHP5_DICON_SUFFIX;
@@ -312,8 +313,7 @@ class PagerCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareConditionDtoFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_ENTITY_DIR
                  . $this->conditionDtoClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;

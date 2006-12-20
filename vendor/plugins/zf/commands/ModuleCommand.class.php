@@ -20,6 +20,31 @@ class ModuleCommand implements S2Base_GenerateCommand {
         return $dispatcher->formatName($moduleName, false) . 'Service';
     }
 
+    public static function getActionControllerName($moduleName){
+        $controllers = self::getAllControllers($moduleName);
+        if(count($controllers) == 0){
+            throw new Exception("Controller not found at all.");
+        }
+        return S2Base_StdinManager::getValueFromArray($controllers,'Controller list');
+    }
+
+    public static function getAllControllers($moduleName){
+        $moduleDir = S2BASE_PHP5_MODULES_DIR . $moduleName;
+        $entries = scandir($moduleDir);
+        if(!$entries){
+            throw new Exception("invalid dir : [ $moduleDir ]");
+        }
+
+        $controllers = array();
+        foreach($entries as $entry) {
+            $path = S2BASE_PHP5_MODULES_DIR . $moduleName . S2BASE_PHP5_DS . $entry;
+            if(!preg_match("/^\./",$entry) and is_dir($path)){
+                array_push($controllers,$entry);
+            }
+        }
+        return $controllers;
+    }
+    
     public function getName(){
         return "module & controller";
     }
@@ -154,9 +179,12 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $htmlFile = 'index.php';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . "/skeleton/module/$htmlFile");
-        $tempContent = preg_replace("/@@MODULE_NAME@@/",
-                                    $this->controllerName,
-                                    $tempContent);
+
+        $keys = array("/@@MODULE_NAME@@/",
+                      "/@@CONTROLLER_NAME@@/");
+        $reps = array($this->moduleName,
+                      $this->controllerName);
+        $tempContent = preg_replace($keys, $reps, $tempContent);   
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 

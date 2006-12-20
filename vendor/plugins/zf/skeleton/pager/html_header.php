@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Language" content="ja">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <link rel="stylesheet" type="text/css" href="{$base_url}/css/base.css" media="screen,projection">
-<title>@@MODULE_NAME@@</title>
+<title>@@MODULE_NAME@@ - @@CONTROLLER_NAME@@</title>
 </head>
 <body>
 

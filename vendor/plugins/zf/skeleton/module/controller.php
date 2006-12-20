@@ -1,11 +1,13 @@
 <?php
 class @@CONTROLLER_CLASS_NAME@@ extends Zend_Controller_Action 
 {
-    private $service;
-    private $view;
+    private $service = null;
+    private $view = null;
 
     public function init() {
-        $this->view = Zend::registry(S2Base_ZfDispatcherSupportPlugin::VIEW_REGISTRY_KEY);
+        if (Zend::isRegistered(S2Base_ZfDispatcherSupportPlugin::VIEW_REGISTRY_KEY)) {
+            $this->view = Zend::registry(S2Base_ZfDispatcherSupportPlugin::VIEW_REGISTRY_KEY);
+        }
     }
 
     public function preDispatch() {
