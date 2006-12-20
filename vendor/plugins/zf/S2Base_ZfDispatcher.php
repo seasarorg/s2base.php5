@@ -2,10 +2,6 @@
 require_once('Zend/Controller/Dispatcher.php');
 class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
 
-    public function formatName($name, $preserveUnderscores = true) {
-        return $this->_formatName($name, $preserveUnderscores);
-    }
-
     /**
      * Dispatch to a controller/action
      *
@@ -51,7 +47,6 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
         } else {
             Zend::loadClass($className, $this->getDispatchDirectory());
         }
-
         /** S2BASE_PHP5 MODIFY START **/
         /**
          * Instantiate controller with request, response, and invocation 
@@ -73,7 +68,9 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
          */
 
         $action = $this->_getAction($request);
-        $controller = $this->instantiateController($request, $className);
+        $controller = $this->instantiateController($request,
+                                                   S2Base_ZfDispatcherSupportPlugin::getModuleName($request),
+                                                   $className);
         $doCall = false;
         /** S2BASE_PHP5 MODIFY END **/
 
@@ -96,8 +93,12 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
         $controller = null;
     }
 
-    protected function instantiateController($request, $controllerClassName) {
-        $controller = $this->getControllerFromS2Container($request, $controllerClassName);
+    public function formatName($name, $preserveUnderscores = true) {
+        return $this->_formatName($name, $preserveUnderscores);
+    }
+
+    protected function instantiateController($request, $moduleName, $controllerClassName) {
+        $controller = $this->getControllerFromS2Container($request, $moduleName, $controllerClassName);
         if ($controller == null) {
             $controller = new $controllerClassName($request, $this->getResponse(), $this->getParams());
         }
@@ -109,17 +110,17 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
         return $controller;
     }
 
-    protected function getControllerFromS2Container($request, $controllerClassName){
+    protected function getControllerFromS2Container($request, $moduleName, $controllerClassName){
         $controllerName = $request->getControllerName();
         $actionName = $request->getActionName();
         $formatedActionName = $this->_getAction($request);
         $actionDicon = S2BASE_PHP5_ROOT 
-                     . "/app/modules/$controllerName/dicon/$formatedActionName.dicon";
+                     . "/app/modules/$moduleName/$controllerName/dicon/$formatedActionName.dicon";
 
         $moduleIncFile = S2BASE_PHP5_ROOT 
-                     . "/app/modules/$controllerName/$controllerName.inc.php"; 
+                     . "/app/modules/$moduleName/$controllerName/$controllerName.inc.php"; 
         $actionIncFile = S2BASE_PHP5_ROOT 
-                     . "/app/modules/$controllerName/$actionName.inc.php"; 
+                     . "/app/modules/$moduleName/$controllerName/$actionName.inc.php"; 
         require_once($moduleIncFile);
         if (file_exists($actionIncFile)) {
             require_once($actionIncFile);

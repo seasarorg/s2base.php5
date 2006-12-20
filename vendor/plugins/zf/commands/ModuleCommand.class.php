@@ -1,35 +1,42 @@
 <?php
 class ModuleCommand implements S2Base_GenerateCommand {
     protected $moduleName;
-    protected $srcDirectory;
-    protected $testDirectory;
+    protected $srcModuleDir;
+    protected $srcCtlDir;
+    protected $testModuleDir;
+    protected $testCtlDir;
+    protected $controllerName;
     protected $controllerClassName;
     protected $dispatcher;
-    protected $moduleInterfaceName;
+    protected $ctlServiceInterfaceName;
 
     public function __construct(){
         require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
         $this->dispatcher = new S2Base_ZfDispatcher();
     }
 
-    public static function getModuleServiceInterfaceName($moduleName) {
+    public static function getCtlServiceInterfaceName($moduleName) {
         $dispatcher = new S2Base_ZfDispatcher();
         return $dispatcher->formatName($moduleName, false) . 'Service';
     }
 
     public function getName(){
-        return "controller (s2base module)";
+        return "module & controller";
     }
-
+    
     public function execute(){
         try{
-            $this->moduleName = S2Base_StdinManager::getValue('controller name ? : ');
+            $this->moduleName = $this->getModuleName();
+            if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
+                return;
+            }
             $this->moduleName = $this->formatModuleName($this->moduleName);
-            $this->controllerClassName = $this->dispatcher->formatControllerName($this->moduleName);
+            $this->validate($this->moduleName);
+            $this->controllerName = S2Base_StdinManager::getValue('controller name ? : ');
+            $this->controllerName = $this->formatModuleName($this->controllerName);
+            $this->controllerClassName = $this->dispatcher->formatControllerName($this->controllerName);
             $this->validate($this->controllerClassName);
-            $this->moduleInterfaceName = self::getModuleServiceInterfaceName($this->moduleName);
-            $this->srcDirectory = S2BASE_PHP5_MODULES_DIR . $this->moduleName;
-            $this->testDirectory = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName;
+            $this->ctlServiceInterfaceName = self::getCtlServiceInterfaceName($this->controllerName);
             if (!$this->finalConfirm()){
                 return;
             }
@@ -47,13 +54,26 @@ class ModuleCommand implements S2Base_GenerateCommand {
 
     protected function finalConfirm(){
         print PHP_EOL . '[ generate information ]' . PHP_EOL;
-        print "  controller name       : {$this->moduleName}" . PHP_EOL;
-        print "  controller class name : {$this->controllerClassName}" . PHP_EOL;
-        print "  module interface name : {$this->moduleInterfaceName}" . PHP_EOL;
+        print "  module name               : {$this->moduleName}" . PHP_EOL;
+        print "  controller name           : {$this->controllerName}" . PHP_EOL;
+        print "  controller class name     : {$this->controllerClassName}" . PHP_EOL;
+        print "  controller interface name : {$this->ctlServiceInterfaceName}" . PHP_EOL;
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
     protected function createDirectory(){
+        $this->srcModuleDir = S2BASE_PHP5_MODULES_DIR
+                            . $this->moduleName
+                            . S2BASE_PHP5_DS; 
+        $this->srcCtlDir = $this->srcModuleDir
+                         . $this->controllerName
+                         . S2BASE_PHP5_DS; 
+        $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR
+                             . $this->moduleName
+                             . S2BASE_PHP5_DS; 
+        $this->testCtlDir = $this->testModuleDir
+                          . $this->controllerName
+                          . S2BASE_PHP5_DS; 
         $dirs = array(
             S2BASE_PHP5_DAO_DIR,
             S2BASE_PHP5_DICON_DIR,
@@ -61,17 +81,19 @@ class ModuleCommand implements S2Base_GenerateCommand {
             S2BASE_PHP5_INTERCEPTOR_DIR,
             S2BASE_PHP5_SERVICE_DIR,
             S2BASE_PHP5_VIEW_DIR);
-        S2Base_CommandUtil::createDirectory($this->srcDirectory);
+        S2Base_CommandUtil::createDirectory($this->srcModuleDir);
+        S2Base_CommandUtil::createDirectory($this->srcCtlDir);
         foreach($dirs as $dir){
-            S2Base_CommandUtil::createDirectory($this->srcDirectory. $dir);
+            S2Base_CommandUtil::createDirectory($this->srcCtlDir. $dir);
         }
 
         $dirs = array(
             S2BASE_PHP5_DAO_DIR,
             S2BASE_PHP5_SERVICE_DIR);
-        S2Base_CommandUtil::createDirectory($this->testDirectory);
+        S2Base_CommandUtil::createDirectory($this->testModuleDir);
+        S2Base_CommandUtil::createDirectory($this->testCtlDir);
         foreach($dirs as $dir){
-            S2Base_CommandUtil::createDirectory($this->testDirectory. $dir);
+            S2Base_CommandUtil::createDirectory($this->testCtlDir. $dir);
         }
     }
 
@@ -83,7 +105,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
     }
 
     protected function prepareActionControllerClassFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
+        $srcFile = $this->srcModuleDir
                  . $this->controllerClassName
                  . S2BASE_PHP5_CLASS_SUFFIX; 
 
@@ -94,40 +116,37 @@ class ModuleCommand implements S2Base_GenerateCommand {
                       "/@@CONTROLLER_NAME@@/",
                       "/@@TEMPLATE_NAME@@/");
         $reps = array($this->controllerClassName,
-                      $this->moduleInterfaceName,
-                      $this->moduleName,
+                      $this->ctlServiceInterfaceName,
+                      $this->controllerName,
                       'index' . S2BASE_PHP5_ZF_TPL_SUFFIX);
         $tempContent = preg_replace($keys, $reps, $tempContent);   
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareModuleServiceInterfaceFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
-                 . '/service/'
-                 . $this->moduleInterfaceName
+        $srcFile = $this->srcCtlDir
+                 . 'service/'
+                 . $this->ctlServiceInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX; 
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . "/skeleton/module/service.php");
         $keys = array("/@@SERVICE_CLASS_NAME@@/");
-        $reps = array($this->moduleInterfaceName);
+        $reps = array($this->ctlServiceInterfaceName);
         $tempContent = preg_replace($keys, $reps, $tempContent);   
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareModuleIncFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName . S2BASE_PHP5_DS
-                 . "{$this->moduleName}.inc.php";
+        $srcFile = $this->srcCtlDir
+                 . "{$this->controllerName}.inc.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . '/skeleton/module/include.php');
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareIndexFile(){
-        $srcFile = S2BASE_PHP5_MODULES_DIR
-                 . $this->moduleName
+        $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . 'index'
                  . S2BASE_PHP5_ZF_TPL_SUFFIX; 
@@ -136,21 +155,40 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . "/skeleton/module/$htmlFile");
         $tempContent = preg_replace("/@@MODULE_NAME@@/",
-                                    $this->moduleName,
+                                    $this->controllerName,
                                     $tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     private function formatModuleName($name){
+        if (trim($name) == '') {
+            throw new Exception('invalid name. [empty]');
+        }
         if (preg_match("/_/",$name)){
             $name = strtolower($name);
             $name = preg_replace("/_/"," ",$name);
             $name = ucwords(trim($name));
             $name = preg_replace("/\s/","",$name);
-            $name = strtolower(substr($name,0,1)) . substr($name,1);
         }
         return $name;
     }
 
+    private function getModuleName() {
+        if (!S2BASE_PHP5_ZF_USE_MODULE) {
+            return S2BASE_PHP5_ZF_DEFAULT_MODULE;
+        }
+        
+        $modules = S2Base_CommandUtil::getAllModules();
+        if (count($modules) == 0) {
+            return S2Base_StdinManager::getValue('module name ? : ');
+        }
+        $createLabel = '(new module)';
+        $modules = array_merge(array($createLabel), $modules);
+        $result = S2Base_StdinManager::getValueFromArray($modules,"Module list");
+        if ($result == $createLabel) {
+            return S2Base_StdinManager::getValue('module name ? : ');
+        }
+        return $result;
+    }
 }
 ?>

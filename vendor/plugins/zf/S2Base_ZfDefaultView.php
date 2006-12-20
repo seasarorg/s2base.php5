@@ -8,10 +8,11 @@ class S2Base_ZfDefaultView
 
     public function __construct(){
         parent::__construct();
-        $this->request = Zend_Controller_Front::getInstance()->getRequest();
-        $this->response = Zend_Controller_Front::getInstance()->getResponse();
+        $request = Zend_Controller_Front::getInstance()->getRequest();
+        $moduleName = S2Base_ZfDispatcherSupportPlugin::getModuleName($request);
         $this->setScriptPath(S2BASE_PHP5_ROOT
                            . '/app/modules/'
+                           . $moduleName . '/'
                            . $this->request->getControllerName()
                            . '/view');
     }

@@ -10,6 +10,13 @@ class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
         self::$exitDispatchLoop = $val;
     }
 
+    public static function getModuleName(Zend_Controller_Request_Abstract $request) {
+        if (S2BASE_PHP5_ZF_USE_MODULE) {
+            return $request->getParam('module',false);
+        }
+        return S2BASE_PHP5_ZF_DEFAULT_MODULE;
+    }
+
     public function dispatchLoopStartup($request) {
         Zend::register(self::VIEW_REGISTRY_KEY, new self::$VIEW_CLASS);
     }
@@ -21,7 +28,12 @@ class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
         }
     }
 
-    public function preDispatch($request) {}
+    public function preDispatch($request) {
+        $moduleName = self::getModuleName($request);
+        Zend_Controller_Front::getInstance()->getDispatcher()->
+            addControllerDirectory(S2BASE_PHP5_ROOT . '/app/modules/' . $moduleName,
+                                   $moduleName);
+    }
 
     public function postDispatch($request) {
         if (self::$exitDispatchLoop) {

@@ -13,6 +13,8 @@ ini_set('error_log',S2BASE_PHP5_VAR_DIR . '/logs/php.log');
  * definition
  */
 define('S2BASE_PHP5_ZF_TPL_SUFFIX','.html'); 
+define('S2BASE_PHP5_ZF_USE_MODULE', true); 
+define('S2BASE_PHP5_ZF_DEFAULT_MODULE','Default'); 
 
 /**
  * Directory setting
@@ -46,5 +48,9 @@ S2Base_ZfSmartyView::$config['config_dir']  = S2BASE_PHP5_ROOT . '/var/smarty/co
 S2Base_ZfSmartyView::$config['cache_dir']   = S2BASE_PHP5_ROOT . '/var/smarty/cache';
 S2Base_ZfSmartyView::$config['caching']     = 0;
 
+/**
+ * for Zend_View
+ */
+//require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDefaultView.php';
+//S2Base_ZfDispatcherSupportPlugin::$VIEW_CLASS = 'S2Base_ZfDefaultView';
 ?>
-

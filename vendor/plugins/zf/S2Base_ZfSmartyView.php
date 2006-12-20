@@ -13,7 +13,8 @@ class S2Base_ZfSmartyView
     private $response = null;
     private $template = null;
     private $controllerName = null;
-
+    private $moduleName = null;
+    
     public function __construct(){
         parent::__construct();
         foreach(self::$config as $key=>$val){
@@ -24,9 +25,10 @@ class S2Base_ZfSmartyView
             $this->layout = S2BASE_PHP5_LAYOUT;
         }
 
-        $this->setScriptPath(S2BASE_PHP5_ROOT . '/app/modules');
         $this->request = Zend_Controller_Front::getInstance()->getRequest();
         $this->response = Zend_Controller_Front::getInstance()->getResponse();
+        $this->moduleName = S2Base_ZfDispatcherSupportPlugin::getModuleName($this->request);
+        $this->setScriptPath(S2BASE_PHP5_ROOT . '/app/modules/' . $this->moduleName);
     }
 
     public static function setRendered($value = true){
@@ -140,7 +142,7 @@ class S2Base_ZfSmartyView
         $this->template_dir = $this->scriptPath;
         $this->assign('request',$this->request);
         $this->assign('errors',self::$errors);
-        $this->assign('module', $controllerName);
+        $this->assign('module', $this->moduleName);
         $this->assign('controller', $controllerName);
         $this->assign('action', $this->request->getActionName());
         $this->assign('base_url', $this->request->getBaseUrl());
