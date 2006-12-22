@@ -86,7 +86,7 @@
         <!-- URI Based dependency -->
         <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pkgName="S2Base_Zf_Pager"
-                  uri="${package.url}/S2Base_Zf_Pager-0.6.0"/>
+                  uri="${package.url}/S2Base_Zf_Pager-0.6.1"/>
 
         <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pkgName="${package.name}"

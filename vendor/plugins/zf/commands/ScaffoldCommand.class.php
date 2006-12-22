@@ -83,7 +83,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
 
     protected function finalConfirm(){
         print PHP_EOL. '[ generate information ]'  . PHP_EOL;
-        print "  module name               : {$this->controllerName}" . PHP_EOL;
+        print "  module name               : {$this->moduleName}" . PHP_EOL;
         print "  controller name           : {$this->controllerName}" . PHP_EOL;
         print "  action name               : {$this->actionName}" . PHP_EOL;
         print "  format action name        : {$this->formatActionName}" . PHP_EOL;
