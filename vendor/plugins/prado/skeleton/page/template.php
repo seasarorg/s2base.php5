@@ -7,6 +7,7 @@
 <body>
 
 This is @@PAGE_NAME@@ template. <br>
+<com:TForm>
 <!-- Sample (don't use page class method)-->
 TTextHighlighter:<br>
 <com:TTextHighlighter ShowLineNumbers="true" EnableCopyCode="true">
@@ -26,7 +27,6 @@ TStatements:
 THyperLink:<com:THyperLink NavigateUrl="http://s2base.php5.sandbox.seasar.org/" Text="Welcome to S2Base.PHP5." Target="_blank"/><br>
 TDatePicker:<br>
 <com:TDatePicker />
-<com:TForm>
 <!-- Sample 02 (use page class method with Component) -->
 TButton:<com:TButton Text="click me" OnClick="buttonClicked" /><br>
 </com:TForm>

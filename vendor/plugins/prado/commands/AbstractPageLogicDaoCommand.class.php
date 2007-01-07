@@ -273,7 +273,7 @@ abstract class AbstractPageLogicDaoCommand implements S2Base_GenerateCommand {
         $logicName = $this->logicClassName . "Impl";
         $srcFile = S2BASE_PHP5_MODULES_DIR
                  . $this->moduleName
-                 . S2BASE_PHP5_LOGIC_DIR
+                 . S2BASE_PHP5_PRADO_LOGIC_DIR
                  . $this->logicClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_PRADO
@@ -296,7 +296,7 @@ abstract class AbstractPageLogicDaoCommand implements S2Base_GenerateCommand {
         $logicName = $this->logicClassName . "Impl";
         $srcFile = S2BASE_PHP5_MODULES_DIR
                  . $this->moduleName
-                 . S2BASE_PHP5_LOGIC_DIR
+                 . S2BASE_PHP5_PRADO_LOGIC_DIR
                  . $this->logicClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_PRADO
@@ -310,7 +310,7 @@ abstract class AbstractPageLogicDaoCommand implements S2Base_GenerateCommand {
     protected function prepareLogicInterfaceFile(){
         $srcFile = S2BASE_PHP5_MODULES_DIR
                  . $this->moduleName
-                 . S2BASE_PHP5_LOGIC_DIR
+                 . S2BASE_PHP5_PRADO_LOGIC_DIR
                  . $this->logicInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_PRADO
@@ -325,7 +325,7 @@ abstract class AbstractPageLogicDaoCommand implements S2Base_GenerateCommand {
         $testName = $this->logicClassName . "Test";
         $srcFile = S2BASE_PHP5_TEST_MODULES_DIR
                  . $this->moduleName
-                 . S2BASE_PHP5_LOGIC_DIR 
+                 . S2BASE_PHP5_PRADO_LOGIC_DIR 
                  . $testName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_PRADO
