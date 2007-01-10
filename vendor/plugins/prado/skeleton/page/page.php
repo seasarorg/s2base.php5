@@ -16,6 +16,8 @@ class @@CLASS_NAME@@ extends TPage {
 			$sender->Text="Name: {$param->CommandName}, Param: {$param->CommandParameter}";
 		else
 			$sender->Text="I'm clicked";
+			
+		$this->Result1->Text = $this->TextBox1->Text;		
 	}
 
 }

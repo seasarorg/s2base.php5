@@ -8,27 +8,10 @@
 
 This is @@PAGE_NAME@@ template. <br>
 <com:TForm>
-<!-- Sample (don't use page class method)-->
-TTextHighlighter:<br>
-<com:TTextHighlighter ShowLineNumbers="true" EnableCopyCode="true">
-<?php
-	$str = 'one|two|three|four';
-	// will output an array
-	print_r(explode('|', $str, 2));
-?>
-</com:TTextHighlighter><br>
-TStatements:
-<com:TStatements>
-	<prop:Statements>
-		$uid=$this->UniqueID;
-		echo "UniqueID is '$uid'.";
-	</prop:Statements>
-</com:TStatements><br>
-THyperLink:<com:THyperLink NavigateUrl="http://s2base.php5.sandbox.seasar.org/" Text="Welcome to S2Base.PHP5." Target="_blank"/><br>
-TDatePicker:<br>
-<com:TDatePicker />
-<!-- Sample 02 (use page class method with Component) -->
-TButton:<com:TButton Text="click me" OnClick="buttonClicked" /><br>
+	<!-- Sample -->
+	<com:TTextBox ID="TextBox1" Text="text" />
+	<com:TButton Text="click me" OnClick="buttonClicked" /><br>
+	<com:TLiteral Encode="true" ID="Result1" /><br>
 </com:TForm>
 </body>
 </html>

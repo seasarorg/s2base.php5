@@ -14,14 +14,8 @@ class @@CLASS_NAME@@ extends TPage {
 			$sender->Text="Name: {$param->CommandName}, Param: {$param->CommandParameter}";
 		else
 			$sender->Text="I'm clicked";
-	}
-
-	public function button2Clicked($sender,$param){
-		$this->Result1->Text="You have entered: ".$this->HtmlArea1->Text;
-	}
-
-	public function submitText($sender,$param){
-		$this->TextBox1->Text="You just entered '".$this->TextBox1->Text."'.";
+			
+		$this->Result1->Text = $this->TextBox1->Text;	
 	}
 
 }
