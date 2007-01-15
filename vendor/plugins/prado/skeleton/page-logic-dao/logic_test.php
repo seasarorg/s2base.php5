@@ -17,7 +17,7 @@ class @@CLASS_NAME@@ extends PHPUnit2_Framework_TestCase {
         $dicon = $moduleDir . "/dicon/@@LOGIC_CLASS@@" . S2BASE_PHP5_DICON_SUFFIX;
         include_once($moduleDir . "/{$this->module}.inc.php");
         $this->container = S2ContainerFactory::create($dicon);
-        $this->service = $this->container->getComponent("@@LOGIC_INTERFACE@@");
+        $this->logic = $this->container->getComponent("@@LOGIC_INTERFACE@@");
     }
 
     function tearDown() {

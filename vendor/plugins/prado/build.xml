@@ -2,7 +2,8 @@
 <project name="project" default="command" basedir=".">
     <target name="command">
         <php expression="require_once('vendor/plugins/prado/config/environment.inc.php')"/>
-        <php expression="define('DOCUMENT_ROOT_DIR','/usr/local/apache2/htdocs/')"/>
+        <php expression="define('DOCUMENT_ROOT_DIR','/var/www/public_html/')"/>
+        <php expression="define('DOCUMENT_ROOT_S2BASE_RELATION','/../../s2base')"/>
         <command>
             <!-- in prado plugin -->
             <fileset dir="${plugins.dir}/prado/commands">
