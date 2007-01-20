@@ -10,7 +10,7 @@ if(!is_writable($runtimePath))
 	die("Please make sure that the directory $runtimePath is writable by Web server process.");
 
 require_once($basePath . '/../@@DOCUMENT_ROOT_S2BASE_RELATION@@' . '/config/environment.inc.php');
-require_once($basePath . '/../@@DOCUMENT_ROOT_S2BASE_RELATION@@' .　'/vendor/plugins/prado/config/runtime_environment.inc.php');
+require_once($basePath . '/../@@DOCUMENT_ROOT_S2BASE_RELATION@@' . '/vendor/plugins/prado/config/runtime_environment.inc.php');
 require_once($basePath . '/../@@DOCUMENT_ROOT_S2BASE_RELATION@@' . '@@S2BASE_MODULE_ENVIRONMENT_INC_PATH@@');
 
 $application=new TApplication();
