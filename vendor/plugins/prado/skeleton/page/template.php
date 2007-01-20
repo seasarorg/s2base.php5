@@ -9,6 +9,7 @@
 This is @@PAGE_NAME@@ template. <br>
 <com:TForm>
 	<!-- Sample -->
+	Please input page name and click button. <br>
 	<com:TTextBox ID="TextBox1" Text="text" />
 	<com:TButton Text="click me" OnClick="buttonClicked" /><br>
 	<com:TLiteral Encode="true" ID="Result1" /><br>

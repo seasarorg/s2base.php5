@@ -9,9 +9,13 @@
 This is @@PAGE_NAME@@ template. <br>
 <com:TForm>
 	<!-- Sample -->
-	<com:TTextBox ID="TextBox1" Text="text" />
+	Please input page name and click button. <br>
+	<com:TTextBox ID="TextBox1" Text="" />
 	<com:TButton Text="click me" OnClick="buttonClicked" /><br>
 	<com:TLiteral Encode="true" ID="Result1" /><br>
+	
+	<com:TDataGrid ID="DataGrid" EnableViewState="false" HeaderStyle.BackColor="black" HeaderStyle.ForeColor="white"/>
+	
 </com:TForm>
 </body>
 </html>

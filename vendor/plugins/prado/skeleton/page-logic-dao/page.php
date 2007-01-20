@@ -10,13 +10,13 @@ class @@CLASS_NAME@@ extends TPage {
 	 * event Procedure Sample
 	 */
 	public function buttonClicked($sender,$param){
-		if($param instanceof TCommandEventParameter)
-			$sender->Text="Name: {$param->CommandName}, Param: {$param->CommandParameter}";
-		else
-			$sender->Text="I'm clicked";
-
-		$this->Result1->Text = $this->TextBox1->Text;
+		$this->gotoPage($this->TextBox1->Text);
 	}
 
+	protected function gotoPage($pageName)
+	{
+		$url = $this->getApplication()->getRequest()->constructUrl('page',$pageName);
+		$this->getApplication()->getResponse()->redirect($url);
+	}
 }
 ?>
