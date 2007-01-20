@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><!-- don't edit start --><title>Seasar - DI Container with AOP -</title><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen"><link href="seasar_p.css" type="text/css" rel="stylesheet" media="print"><script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script></head>
+
+
+<body onLoad="preload('ja')"><table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+<td align="left" valign="top" width="780"><table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
+<tbody><tr><td colspan="7"><img src="images/top01_b.gif" alt="" height="5" width="780"></td></tr>
+<tr><td width="235"><img src="images/top02_b.gif" alt="Seasar" height="117" width="235"></td>
+<td colspan="3"><img src="images/top03.gif" alt="DI Container with AOP" height="117" width="289"></td>
+<td colspan="3"><img src="images/spacer.gif" alt="" height="117" width="256"></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" alt="" id="menu01" onMouseOver="swap(1)" onMouseOut="restore(1)" border="0" height="30" width="78"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" alt="" id="menu02" onMouseOver="swap(2)" onMouseOut="restore(2)" border="0" height="30" width="101"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" alt="" id="menu03" onMouseOver="swap(3)" onMouseOut="restore(3)" border="0" height="30" width="110"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" alt="" id="menu04" onMouseOver="swap(4)" onMouseOut="restore(4)" border="0" height="30" width="113"></a></td>
+<td><img src="images/menu05_b_ja.gif" alt="" id="menu05" onMouseOver="swap(5)" onMouseOut="restore(5)" border="0" height="30" width="109"></td>
+<td width="34"><img src="images/menu06.gif" alt="" height="30" width="34"></td></tr><tr>
+<td colspan="6"><img src="images/spacer.gif" alt="" height="19" width="545"></td></tr></tbody></table>
+<table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
+<tbody><tr align="left" valign="top"><td width="18"><img src="images/spacer.gif" alt="" height="14" width="18"></td><td class="main" width="744">
+<!-- don't edit end -->
+<!-- document start -->
+
+<h2>with PRADO - セットアップ</h2>
+
+<h3>1 - S2Base.PHP5 のインストール</h3>
+<p>
+<a href="setup.html">セットアップ</a>に従って S2Base.PHP5 をインストールして下さい。
+</p>
+<h3>2 - PRADO のインストール</h3>
+<p>
+<a href="http://www.pradosoft.com/download/">PRADO</a>よりprado-3.xxxxxxx.zipをダウンロードし、解凍後にできるprado-3.xxxxxxxというディレクトリの名称を<br>
+pradoと変更し、s2base.php5/lib/配下に移動して下さい。
+</p>
+<h3>3 - build.xmlの編集</h3>
+<p>
+s2base.php5/vendor/plugins/prado/build.xmlにおいてデフォルトタスクに [ prado ] を設定すると共に、<br>
+WEB 公開ディレクトリとS2Base.PHP5インストールディレクトリを元に下記のように編集します。
+</p>
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;project name="project" default="prado" basedir="."&gt;
+    &lt;target name="command"&gt;     ↑
+                               prado に設定
+        &lt;php expression="define('DOCUMENT_ROOT_DIR','/var/www/public_html/')"/&gt;
+		                                                         ↑
+		                                         WEB 公開ディレクトリの絶対パスを記述       
+        &lt;php expression="define('DOCUMENT_ROOT_S2BASE_RELATION','../s2base.php5')"/&gt;
+		                                                         ↑
+		              WEB 公開ディレクトリからS2Base.php5インストールディレクトリへの相対パスを記述
+		               （/var/www/s2base.php5の場合）       
+    ・・・
+    &lt;/target&gt; 
+&lt;/project&gt;
+</pre>
+
+
+s2base.php5 ディレクトリにて phing コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
+<pre>
+% phing
+Buildfile: /var/www/s2base.php5/build.xml
+      [php] Evaluating PHP expression: ini_set('include_path',
+	                                                  'lib'.PATH_SEPARATOR.ini_get('include_path'))
+      [php] Evaluating PHP expression: require_once('S2Base/S2Base.phing.php')
+
+project > prepare:
+      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
+      [php] Evaluating PHP expression: require_once('S2Base/S2Base.cmd.php')
+
+project > prado:
+    [phing] Calling Buildfile '/var/www/s2base.php5/vendor/plugins/prado/build.xml'
+	                                                                        with target 'command'
+
+project > command:
+      [php] Evaluating PHP expression: require_once('vendor/plugins/prado/config/environment.inc.php')
+      [php] Evaluating PHP expression: define('DOCUMENT_ROOT_DIR','/var/www/public_html/')
+      [php] Evaluating PHP expression: define('DOCUMENT_ROOT_S2BASE_RELATION','../s2base.php5')
+
+[ Command list ]
+0 : (exit)
+1 : command
+2 : dao
+3 : dao method
+4 : dicon
+5 : dto
+6 : entity
+7 : logic dao
+8 : module
+9 : page
+10 : page dao
+11 : page logic dao
+12 : sqlite-cli
+choice ? : 0
+</pre>
+
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
+</tr><tr>
+<td width="14"><img src="images/spacer.gif" alt="" height="30" width="14"></td>
+<td width="766"><img src="images/spacer.gif" alt="" height="30" width="592"></td>
+</tr><tr>
+<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
+<td class="copyright" width="766">&#169; Copyright The Seasar Project and the others 2005-2006, all rights reserved.</td>
+</tr></tbody></table>
+</td><td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left" height="16" valign="top" width="780">&nbsp;</td>
+<td class="backcorner" align="left" height="16" valign="top">&nbsp;</td>
+</tr></tbody></table><!-- don't edit end -->
+</body></html>
