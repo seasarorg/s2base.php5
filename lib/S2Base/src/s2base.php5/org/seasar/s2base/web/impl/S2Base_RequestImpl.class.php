@@ -81,6 +81,13 @@ class S2Base_RequestImpl implements S2Base_Request {
     }
 
     /**
+     * @return array all request param
+     */
+    public function getParams(){
+        return $this->request;
+    }
+
+    /**
      * @see S2Base_Request::hasParam()
      */    
     public function hasParam($key){

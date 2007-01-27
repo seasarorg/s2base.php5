@@ -28,10 +28,10 @@
 /**
  * Initial setting
  */
-$s2baseDir = dirname(dirname(__FILE__));
-$args = $_SERVER['argv'];
+$s2baseDir   = dirname(dirname(__FILE__));
+$args        = $_SERVER['argv'];
 $projectType = 'default';
-$projectDir = null;
+$projectDir  = null;
 
 /**
  * Command Line Arguments setting
@@ -71,13 +71,20 @@ if (!is_dir($projectDir)) {
 /**
  * Main
  */
-print "[INFO ] s2base  directory : $s2baseDir" . PHP_EOL;
-print "[INFO ] project directory : $projectDir" . PHP_EOL;
+print "[INFO ] s2base  directory : $s2baseDir"   . PHP_EOL;
+print "[INFO ] project directory : $projectDir"  . PHP_EOL;
+print "[INFO ] project type      : $projectType" . PHP_EOL;
 
-$excludes = getExcludeList($projectType);
-$srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
-dircopy($srcDir,$projectDir,$excludes);
+switch($projectType) {
+    case 'smarty':
+        smartyProjectHandler($s2baseDir, $projectDir, $projectType);
+        break;
+    default:
+        defaultProjectHandler($s2baseDir, $projectDir, $projectType);
+        break;
+}
 
+exit;
 /**
  * End of Main
  */
@@ -108,7 +115,7 @@ function dircopy($src,$dest,$excludes) {
 
         $isExclude = false;
         foreach ($excludes as $key) {
-            if (preg_match("/$key/",$srcItem)){ 
+            if (preg_match($key, $srcItem)){ 
                 $isExclude = true;
             }
         }
@@ -145,22 +152,54 @@ function dircopy($src,$dest,$excludes) {
     }
 }
 
-/**
- * @param string $projectType
- */
-function getExcludeList($projectType) {
-    $excludes = array('dummy$');
-
-    if ($projectType != 'smarty') {
-        $excludes[] = 'var.+?smarty$';
-        $excludes[] = 'var.+?session$';
-        $excludes[] = 'plugins.+?smarty$';
-        $excludes[] = 'public$';
-        $excludes[] = 'commons.+?view$';
+function modifyBuildXmlFile($projectDir, $projectType) {
+    $buildFile = $projectDir . DIRECTORY_SEPARATOR . 'build.xml';
+    if (!file_exists($buildFile)) {
+        print "[ERROR] file not found [$buildFile] " . PHP_EOL;
+        exit;
     }
-    
-    return $excludes;
+    $xml = file_get_contents($buildFile);
+    if ($xml === false) {
+        print "[ERROR] could not read file [$buildFile] " . PHP_EOL;
+        exit;
+    }
+    $pattern = '/\sdefault="command"\s/';
+    $replacement = ' default="' . $projectType . '" ';
+    $xml = preg_replace($pattern, $replacement, $xml, 1);
+    $result = file_put_contents($buildFile, $xml, LOCK_EX);
+    if ($result === false) {
+        print "[ERROR] could not write file [$buildFile] " . PHP_EOL;
+        exit;
+    }
 }
+
+/**
+ *
+ */
+function smartyProjectHandler($s2baseDir, $projectDir, $projectType) {
+    $excludes = array('/dummy$/');
+    $excludes[] = '/plugins.maple$/';
+    $excludes[] = '/plugins.agavi$/';
+    $excludes[] = '/plugins.symfony$/';
+    $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
+    dircopy($srcDir,$projectDir,$excludes);
+    modifyBuildXmlFile($projectDir, $projectType);
+}
+
+/**
+ *
+ */
+function defaultProjectHandler($s2baseDir, $projectDir, $projectType) {
+    $excludes = array('/dummy$/');
+    $excludes[] = '/var.smarty$/';
+    $excludes[] = '/var.session$/';
+    $excludes[] = '/plugins.smarty$/';
+    $excludes[] = '/public$/';
+    $excludes[] = '/commons.view$/';
+    $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
+    dircopy($srcDir,$projectDir,$excludes);
+}
+
 /**
  * End of Functions
  */
