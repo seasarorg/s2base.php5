@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><!-- don't edit start --><title>Seasar - DI Container with AOP -</title><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen"><link href="seasar_p.css" type="text/css" rel="stylesheet" media="print"><script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script></head>
+
+
+<body onload="preload('ja')"><table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+<td align="left" valign="top" width="780"><table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
+<tbody><tr><td colspan="7"><img src="images/top01_b.gif" alt="" height="5" width="780"></td></tr>
+<tr><td width="235"><img src="images/top02_b.gif" alt="Seasar" height="117" width="235"></td>
+<td colspan="3"><img src="images/top03.gif" alt="DI Container with AOP" height="117" width="289"></td>
+<td colspan="3"><img src="images/spacer.gif" alt="" height="117" width="256"></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)" border="0" height="30" width="78"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)" border="0" height="30" width="101"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)" border="0" height="30" width="110"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)" border="0" height="30" width="113"></a></td>
+<td><img src="images/menu05_b_ja.gif" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)" border="0" height="30" width="109"></td>
+<td width="34"><img src="images/menu06.gif" alt="" height="30" width="34"></td></tr><tr>
+<td colspan="6"><img src="images/spacer.gif" alt="" height="19" width="545"></td></tr></tbody></table>
+<table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
+<tbody><tr align="left" valign="top"><td width="18"><img src="images/spacer.gif" alt="" height="14" width="18"></td><td class="main" width="744">
+<!-- don't edit end -->
+<!-- document start -->
+
+<ul>
+<li><a href="#setup">セットアップ</a></li>
+  <ul>
+    <li><a href="#dicon">dicon 設定</a></li>
+    <li><a href="#log4php">log4php を使用する場合の設定</a></li>
+  </ul>
+</ul>
+<br>
+
+<p>
+S2JavelinTraceInterceptor は、<a href="http://s2javelin.sandbox.seasar.org/s2javelin.html">Javaで実装された S2Javelin</a>
+ に含まれる JavelinTraceInterceptor を PHP に移植したものです。S2JavelinTraceInterceptor によって出力されるトレースログは、
+ArrowVision という表示用ツールによりビジュアルに表示することができます。
+ArrowVisionは、<a href="http://www.smg.co.jp/service/products/arrow_vision/index.html">エスエムジー株式会社のホームページ</a>から、
+無償でダウンロードすることができます。
+</p>
+
+<h2><a name="setup">セットアップ</a></h2>
+<h3><a name="dicon">dicon 設定</a></h3>
+<p>s2base.php5/app/commons/dicon/javelin.dicon に S2JavelinTraceInterceptor コンポーネントを定義済みの ダイコンファイルがあります。
+このダイコンファイルをアクションダイコンやサービスダイコンで include し、S2JavelinTraceInterceptor をアスペクトすることができます。
+ログファイルは、logFile プロパティで指定します。デフォルトでは、s2base.php5/var/logs/javelin.jvn です。(拡張子は .jvn として下さい。)
+</p>
+
+<p>javelin.dicon</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;components namespace="javelin"&gt;
+     &lt;component name="javelinTraceInterceptor"
+                class="S2JavelinTraceInterceptor"&gt;
+         &lt;property name="logArgs"&gt;true&lt;/property&gt;
+         &lt;property name="logReturn"&gt;true&lt;/property&gt;
+         &lt;property name="logStackTrace"&gt;false&lt;/property&gt;
+         &lt;property name="logFile"&gt;S2BASE_PHP5_VAR_DIR . "/logs/javelin.jvn"&lt;/property&gt;
+     &lt;/component&gt;
+&lt;/components&gt;
+</pre>
+
+<p>サービスダイコン</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;components&gt;
+    &lt;include path="%S2BASE_PHP5_ROOT%/app/commons/dicon/dao.dicon"/&gt;
+    &lt;include path="%S2BASE_PHP5_ROOT%/app/commons/dicon/javelin.dicon"/&gt;
+    &lt;component class="CdServiceImpl"&gt;
+        &lt;aspect pointcut="addCd"&gt;javelin.javelinTraceInterceptor&lt;/aspect&gt;
+    &lt;/component&gt;
+    &lt;component class="CdDao"&gt;
+        &lt;aspect pointcut="insert"&gt;javelin.javelinTraceInterceptor&lt;/aspect&gt;
+        &lt;aspect&gt;dao.interceptor&lt;/aspect&gt;
+    &lt;/component&gt;
+&lt;/components&gt;
+</pre>
+
+<br>
+<h3><a name="log4php">log4php を使用する場合の設定</a></h3>
+<p>
+S2Container の<a href="http://s2container.php5.sandbox.seasar.org/extension.html#log">ログ設定</a>で log4php を使用する設定とすると、S2JavelinTraceInterceptor は、シーケンス情報に加えて S2Dao が発行する SQL を取得することができます。
+SQL ログは ArrowVision で表示できます。<br>
+log4php 用の設定ファイルは、s2base.php5/config/log4php.properties にあります。
+</p>
+
+<pre>
+; [[ S2JavelinTraceInterceptor ]]
+log4php.category.S2JavelinTraceInterceptor = "DEBUG, Javelin"
+log4php.appender.Javelin                   = "LoggerAppenderFile"
+log4php.appender.Javelin.File              = "/tmp/javelin.jvn"
+log4php.appender.Javelin.layout            = "S2JavelinPatternLayout"
+log4php.appender.Javelin.layout.ConversionPattern = "%m%n"
+
+; [[ S2Dao Logger ]]
+log4php.category.S2Dao_BasicSelectHandler = "DEBUG, DaoSql"
+log4php.category.S2Dao_InsertAutoHandler  = "DEBUG, DaoSql"
+log4php.category.S2Dao_UpdateAutoHandler  = "DEBUG, DaoSql"
+log4php.category.S2Dao_DeleteAutoHandler  = "DEBUG, DaoSql"
+log4php.appender.DaoSql                   = "LoggerAppenderFile"
+log4php.appender.DaoSql.layout            = "S2JavelinPatternLayout"
+
+; [[ S2Dao Javelin ]]
+log4php.appender.DaoSql.File                     = "/tmp/javelin.jvn"
+log4php.appender.DaoSql.layout.ConversionPattern = "Write ,%d{Y/m/d H:i:s u},,DaoSQL,0,%M,%C,0,public,%t%n
+                                          &lt;&lt;javelin.FieldValue_START&gt;&gt;%n%m%n&lt;&lt;javelin.FieldValue_END&gt;&gt;%n%n"
+</pre>
+ログファイルはデフォルトで /tmp/javelin.jvn となります。S2Container のログ設定や log4php の設定は
+s2base.php/config/environment.inc.php の Log setting で行います。
+
+<pre>
+&lt;?php
+
+・・・
+・・・
+・・・
+
+/**
+ * Log level setting
+ */
+define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::DEBUG);
+・・・
+・・・
+・・・
+
+/**
+ * log4php setting
+ */
+S2Container_S2LogFactory::$LOGGER = S2Container_S2LogFactory::LOG4PHP;
+define('LOG4PHP_DIR', S2BASE_PHP5_ROOT . '/lib/log4php-version/src/log4php');
+define('LOG4PHP_CONFIGURATION', S2BASE_PHP5_ROOT . '/config/log4php.properties');
+require_once(LOG4PHP_DIR . '/LoggerManager.php');
+?&gt;
+</pre>
+S2CONTAINER_PHP5_LOG_LEVEL 定数を DEBUG レベルに設定することで、S2Dao が発行する SQL をロギングすることができます。
+
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
+</tr><tr>
+<td width="14"><img src="images/spacer.gif" alt="" height="30" width="14"></td>
+<td width="766"><img src="images/spacer.gif" alt="" height="30" width="592"></td>
+</tr><tr>
+<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
+<td class="copyright" width="766">&#169; Copyright The Seasar Project and the others 2005-2006, all rights reserved.</td>
+</tr></tbody></table>
+</td><td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left" height="16" valign="top" width="780">&nbsp;</td>
+<td class="backcorner" align="left" height="16" valign="top">&nbsp;</td>
+</tr></tbody></table><!-- don't edit end -->
+</body></html>
