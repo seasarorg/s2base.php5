@@ -1,71 +1,148 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html><head><!-- don't edit start --><title>Seasar - DI Container with AOP -</title><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="ja">
 <meta http-equiv="Content-Style-Type" content="text/css">
-<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen"><link href="seasar_p.css" type="text/css" rel="stylesheet" media="print"><script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script></head>
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, ã‚ªãƒ¼ãƒ—ãƒ³ã‚½ãƒ¼ã‚¹ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢, Java, ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯">
+<meta name="description" content="ç§ãŸã¡Seasarãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã¯ã‚ªãƒ¼ãƒ—ãƒ³ã‚½ãƒ¼ã‚¹ã¨ã„ã†ä»•çµ„ã¿ã®å…ƒã€é–‹ç™ºè€…ã®ã‚†ã¨ã‚Šã‚’å®Ÿç¾ã§ãã‚‹ãƒ—ãƒ­ãƒ€ã‚¯ãƒˆã®é–‹ç™ºã¨æä¾›ã‚’é€šã˜ã¦ã€ãƒ¦ãƒ¼ã‚¶ã¨é–‹ç™ºè€…ã¨ãŒå…±ã«å–œã³ã‚’åˆ†ã‹ã¡åˆãˆã‚‹ç’°å¢ƒå®Ÿç¾ã‚’ãŠæ‰‹ä¼ã„ã™ã‚‹ã“ã¨ã‚’ç›®æŒ‡ã—æ´»å‹•ã—ã¦ã„ã¾ã™ã€‚ ">
+<title>The Seasar Project - S2Base.PHP5</title>
 
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection">
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print"></head><body>
 
-<body onload="preload('ja')"><table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
-<td align="left" valign="top" width="780"><table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr><td colspan="7"><img src="images/top01_b.gif" alt="" height="5" width="780"></td></tr>
-<tr><td width="235"><img src="images/top02_b.gif" alt="Seasar" height="117" width="235"></td>
-<td colspan="3"><img src="images/top03.gif" alt="DI Container with AOP" height="117" width="289"></td>
-<td colspan="3"><img src="images/spacer.gif" alt="" height="117" width="256"></td>
-</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
-<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)" border="0" height="30" width="78"></a></td>
-<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)" border="0" height="30" width="101"></a></td>
-<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)" border="0" height="30" width="110"></a></td>
-<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)" border="0" height="30" width="113"></a></td>
-<td><img src="images/menu05_b_ja.gif" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)" border="0" height="30" width="109"></td>
-<td width="34"><img src="images/menu06.gif" alt="" height="30" width="34"></td></tr><tr>
-<td colspan="6"><img src="images/spacer.gif" alt="" height="19" width="545"></td></tr></tbody></table>
-<table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr align="left" valign="top"><td width="18"><img src="images/spacer.gif" alt="" height="14" width="18"></td><td class="main" width="744">
-<!-- don't edit end -->
-<!-- document start -->
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo">
+<h1 id="h01" class="hide">The Seasar Project</h1>
+<a href="http://www.seasar.org/">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390">
+</a>
+</div>
+
+<div id="tool">
+</div>
+
+<div id="navi">
+<p><font size="-1"><a href="index.html">S2Base.PHP5 ãƒ›ãƒ¼ãƒ </a> &raquo; with Symfony &raquo; ã‚³ãƒãƒ³ãƒ‰ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹</font></p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>ãƒ¡ãƒ‹ãƒ¥ãƒ¼</h2>
+
+<h3>ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ</h3>
+<ul>
+<li><a href="setup.html">ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—</a></li>
+<li><a href="dir.html">ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªæ§‹æˆ</a></li>
+<li><a href="cmdRef.html">ã‚³ãƒãƒ³ãƒ‰ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹</a></li>
+</ul>
 
 <ul>
-<li><a href="#cmd-ref">with Symfony - ƒRƒ}ƒ“ƒhƒŠƒtƒ@ƒŒƒ“ƒX</a></li>
-  <ul>
-    <li><a href="#init">init-* ƒRƒ}ƒ“ƒh</a></li>
-      <ul>
-        <li><a href="#init-project">init-project ƒRƒ}ƒ“ƒh</a></li>
-        <li><a href="#init-app">init-app ƒRƒ}ƒ“ƒh</a></li>
-        <li><a href="#init-module">init-module ƒRƒ}ƒ“ƒh</a></li>
-      </ul>
-    <li><a href="#cc">clear-cache ƒRƒ}ƒ“ƒh</a></li>
-    <li><a href="#service">service ƒRƒ}ƒ“ƒh</a></li>
-    <li><a href="#dao">dao ƒRƒ}ƒ“ƒh</a></li>
-  </ul>
+<li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
+<li><a href="withAgavi-setup.html">with Agavi</a> <i>(ver 0.10.2)</i></li>
+<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 0.6.3)</i>
+    <font size="-2">
+    <ul>
+        <li><a href="withSymfony-setup.html">ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—</a></li>
+        <li>ã‚³ãƒãƒ³ãƒ‰ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹
+            <ul>
+                <li><a href="#init">init-* ã‚³ãƒãƒ³ãƒ‰</a>
+                    <ul>
+                        <li><a href="#init-project">init-project ã‚³ãƒãƒ³ãƒ‰</a></li>
+                        <li><a href="#init-app">init-app ã‚³ãƒãƒ³ãƒ‰</a></li>
+                        <li><a href="#init-module">init-module ã‚³ãƒãƒ³ãƒ‰</a></li>
+                    </ul>
+                </li>
+                <li><a href="#cc">clear-cache ã‚³ãƒãƒ³ãƒ‰</a></li>
+                <li><a href="#service">service ã‚³ãƒãƒ³ãƒ‰</a></li>
+                <li><a href="#dao">dao ã‚³ãƒãƒ³ãƒ‰</a></li>
+            </ul>
+        </li>
+    </ul>
+    </font>
+</li>
+<li><a href="withSmarty-setup.html">with Smarty</a></li>
 </ul>
-<br>
 
-<h2><a name="cmd-ref">with Symfony - ƒRƒ}ƒ“ƒhƒŠƒtƒ@ƒŒƒ“ƒX</a></h2>
+<h3>ã‚µãƒ–ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ</h3>
+<ul>
+<li><a href="javelin.html">S2Javelin.PHP5</a></li>
+</ul>
 
-<h3><a name="init">init-* ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<h3>ãƒªãƒ³ã‚¯</h3>
+<ul>
+    <li><a href="http://www.seasar.org/">Seasar.org</a></li>
+    <li><a href="http://svn.seasar.org/browse/?root=sandbox.s2base.php5">SVN ãƒªãƒã‚¸ãƒˆãƒªãƒ–ãƒ©ã‚¦ã‚¶</a></li>
+    <li><a href="https://www.seasar.org/svn/sandbox/s2base.php5/">SVN ãƒªãƒã‚¸ãƒˆãƒª</a></li>
+    <li><a href="https://www.seasar.org/issues/browse/BASEPHP">Issue Tracker</a></li>
+    <li><a href="http://s2php5.jp/">s2php5.jp</a>
+        <ul>
+            <li><a href="http://labs.s2php5.jp/s2base">laboratory</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5">wiki</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5/plugins">plugins</a></li>
+            <li><a href="http://docs.s2php5.jp/s2base/api/">PHPDoc</a></li>
+        </ul>
+    </li>
+</ul>
+
+<h2>PHP ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ</h2>
+
+<h3>Seasar.PHP</h3>
+
+<ul>
+    <li><a href="http://s2container.php5.seasar.org/">S2Container.PHP5</a></li>
+    <li><a href="http://s2dao.php5.seasar.org/">S2Dao.PHP5</a></li>
+</ul>
+
+<h3>Sandbox.PHP</h3>
+
+<ul>
+    <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
+    <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
+</ul>
+
+
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+<h2 id="h02"><a name="init">init-* ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-symfony ƒ^ƒXƒN‚Å‚ÍAsymfony‚Ìinit-project/init-app/init-moduleƒRƒ}ƒ“ƒh‚ğƒ‰ƒbƒv‚µAS2Container‚Æ˜AŒg‚·‚é‚½‚ß‚Ìİ’è‚ğ©“®‚Ås‚¢‚Ü‚·B<br>
-©“®‚Åİ’è‚³‚ê‚é€–Ú‚Í‰º‹L‚É‚È‚è‚Ü‚·B
+ã€€symfony ã‚¿ã‚¹ã‚¯ã§ã¯ã€symfonyã®init-project/init-app/init-moduleã‚³ãƒãƒ³ãƒ‰ã‚’ãƒ©ãƒƒãƒ—ã—ã€S2Containerã¨é€£æºã™ã‚‹ãŸã‚ã®è¨­å®šã‚’è‡ªå‹•ã§è¡Œã„ã¾ã™ã€‚<br>
+è‡ªå‹•ã§è¨­å®šã•ã‚Œã‚‹é …ç›®ã¯ä¸‹è¨˜ã«ãªã‚Šã¾ã™ã€‚
 </p>
 <p>
 <ul>
-<li>/path/to/project/config/config.php - S2Container‚Æ˜AŒg‚·‚é‚½‚ß‚ÌŠî–{İ’è</li>
-<li>/path/to/project/config/autoload.yml - S2Container/S2Dao‚Ì“Ç‚İ‚İİ’è</li>
-<li>/path/to/project/apps/APP/lib/myFrontWebController.class.php - ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ªS2Container‚ğŒÄ‚Ño‚·‚½‚ß‚ÌƒNƒ‰ƒX</li>
-<li>/path/to/project/apps/APP/config/autoload.yml - ƒ‚ƒWƒ…[ƒ‹‚Ìdao‚âserviceƒNƒ‰ƒX“Ç‚İ‚İİ’è</li>
-<li>/path/to/project/apps/APP/modules/MODULEˆÈ‰º‚Édao/, dicon/, entity/, service/ƒfƒBƒŒƒNƒgƒŠ‚ğ¶¬</li>
+<li>/path/to/project/config/config.php - S2Containerã¨é€£æºã™ã‚‹ãŸã‚ã®åŸºæœ¬è¨­å®š</li>
+<li>/path/to/project/config/autoload.yml - S2Container/S2Daoã®èª­ã¿è¾¼ã¿è¨­å®š</li>
+<li>/path/to/project/apps/APP/lib/myFrontWebController.class.php - ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãŒS2Containerã‚’å‘¼ã³å‡ºã™ãŸã‚ã®ã‚¯ãƒ©ã‚¹</li>
+<li>/path/to/project/apps/APP/config/autoload.yml - ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®daoã‚„serviceã‚¯ãƒ©ã‚¹èª­ã¿è¾¼ã¿è¨­å®š</li>
+<li>/path/to/project/apps/APP/modules/MODULEä»¥ä¸‹ã«dao/, dicon/, entity/, service/ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ç”Ÿæˆ</li>
 </ul>
 </p>
 
-</p>
-
 <br>
-<h3><a name="init-project">init-project ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+<h3><a name="init-project">init-project ã‚³ãƒãƒ³ãƒ‰</a></h3>
+<h4>èª¬æ˜</h4>
 <p>
-symfony‚ÆS2Container‚ğ˜AŒg‚³‚¹‚½ƒvƒƒWƒFƒNƒg‚ğ¶¬‚µ‚Ü‚·BƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Æƒ‚ƒWƒ…[ƒ‹‚à“¯‚É¶¬‚µ‚Ü‚·B
+ã€€symfonyã¨S2Containerã‚’é€£æºã•ã›ãŸãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã—ã¾ã™ã€‚ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã¨ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚‚åŒæ™‚ã«ç”Ÿæˆã—ã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
+<h4>å®Ÿè¡Œä¾‹</h4>
 <pre>
 % phing
 Buildfile: /Users/seasar/s2base.php5/build.xml
@@ -87,22 +164,22 @@ project > command:
 2 : dao
 3 : init-*
 4 : service
-choice ? : 3                &lt;--- 3 : init-* ‚ğ‘I‘ğ
+choice ? : 3                &lt;--- 3 : init-* ã‚’é¸æŠ
 
 [ symfony commands list ]
 0 : (exit)
 1 : init-app
 2 : init-module
 3 : init-project
-choice ? : 3                &lt;--- 3 : init-project ‚ğ‘I‘ğ
+choice ? : 3                &lt;--- 3 : init-project ã‚’é¸æŠ
 
-ProjectFullPath[/Users/seasar/s2base.php5/s2symfony] ? :        &lt;--- ƒvƒƒWƒFƒNƒgƒfƒBƒŒƒNƒgƒŠ‚ğƒtƒ‹ƒpƒX‚Å“ü—Í
+ProjectFullPath[/Users/seasar/s2base.php5/s2symfony] ? :        &lt;--- ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ãƒ•ãƒ«ãƒ‘ã‚¹ã§å…¥åŠ›
 
-ProjectName ? : s2sf        &lt;--- ƒvƒƒWƒFƒNƒg–¼‚ğ“ü—Í
+ProjectName ? : s2sf        &lt;--- ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆåã‚’å…¥åŠ›
 
-ApplicationName ? : demo    &lt;--- ƒAƒvƒŠƒP[ƒVƒ‡ƒ“–¼‚ğ“ü—Í
+ApplicationName ? : demo    &lt;--- ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³åã‚’å…¥åŠ›
 
-ModuleName ? : frontend     &lt;--- ƒ‚ƒWƒ…[ƒ‹–¼‚ğ“ü—Í
+ModuleName ? : frontend     &lt;--- ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åã‚’å…¥åŠ›
 
 [ generate information ]
   project path       : /Users/seasar/s2base.php5/s2symfony
@@ -110,16 +187,16 @@ ModuleName ? : frontend     &lt;--- ƒ‚ƒWƒ…[ƒ‹–¼‚ğ“ü—Í
   application name   : demo
   module name        : frontend
 
-confirm ? (y/n) : y         &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y         &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 </pre>
 
 <br>
-<h3><a name="init-app">init-app ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+<h3><a name="init-app">init-app ã‚³ãƒãƒ³ãƒ‰</a></h3>
+<h4>èª¬æ˜</h4>
 <p>
-S2Container‚Æ˜AŒg‚³‚ê‚½ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Æƒ‚ƒWƒ…[ƒ‹‚ğ¶¬‚µ‚Ü‚·Binit-app‚ğs‚¤‚½‚ß‚É‚Íinit-projectƒRƒ}ƒ“ƒh‚ÅƒvƒƒWƒFƒNƒgƒfƒBƒŒƒNƒgƒŠ‚ª¶¬Ï‚İ‚Å‚ ‚é•K—v‚ª‚ ‚è‚Ü‚·B
+ã€€S2Containerã¨é€£æºã•ã‚ŒãŸã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã¨ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™ã€‚init-appã‚’è¡Œã†ãŸã‚ã«ã¯init-projectã‚³ãƒãƒ³ãƒ‰ã§ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒç”Ÿæˆæ¸ˆã¿ã§ã‚ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
+<h4>å®Ÿè¡Œä¾‹</h4>
 <pre>
 % phing
 Buildfile: /Users/seasar/s2base.php5/build.xml
@@ -141,37 +218,37 @@ project > command:
 2 : dao
 3 : init-*
 4 : service
-choice ? : 3                &lt;--- 3 : init-* ‚ğ‘I‘ğ
+choice ? : 3                &lt;--- 3 : init-* ã‚’é¸æŠ
 
 [ symfony commands list ]
 0 : (exit)
 1 : init-app
 2 : init-module
 3 : init-project
-choice ? : 1                &lt;--- 1 : init-app ‚ğ‘I‘ğ
+choice ? : 1                &lt;--- 1 : init-app ã‚’é¸æŠ
 
-ProjectFullPath[/Users/seasar/s2base.php5/s2symfony] ? :        &lt;--- ƒvƒƒWƒFƒNƒgƒfƒBƒŒƒNƒgƒŠ‚ğƒtƒ‹ƒpƒX‚Å“ü—Í
+ProjectFullPath[/Users/seasar/s2base.php5/s2symfony] ? :        &lt;--- ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ãƒ•ãƒ«ãƒ‘ã‚¹ã§å…¥åŠ›
 
-ApplicationName ? : euro    &lt;--- ƒAƒvƒŠƒP[ƒVƒ‡ƒ“–¼‚ğ“ü—Í
+ApplicationName ? : euro    &lt;--- ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³åã‚’å…¥åŠ›
 
-ModuleName ? : jazz         &lt;--- ƒ‚ƒWƒ…[ƒ‹–¼‚ğ“ü—Í
+ModuleName ? : jazz         &lt;--- ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åã‚’å…¥åŠ›
 
 [ generate information ]
   project path       : /Users/seasar/s2base.php5/s2symfony
   application name   : euro
   module name        : jazz
 
-confirm ? (y/n) : y         &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y         &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 </pre>
 
 <br>
-<h3><a name="init-module">init-module ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+<h3><a name="init-module">init-module ã‚³ãƒãƒ³ãƒ‰</a></h3>
+<h4>èª¬æ˜</h4>
 <p>
-S2Container‚Æ˜AŒg‚³‚ê‚½ƒ‚ƒWƒ…[ƒ‹‚ğ¶¬‚µ‚Ü‚·Binit-modules‚¤‚½‚ß‚É‚Íinit-appƒRƒ}ƒ“ƒh‚Å¶¬‚³‚ê‚½ƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒfƒBƒŒƒNƒgƒŠ‚ª•K—v‚Å‚·B<br>
-ƒ‚ƒWƒ…[ƒ‹‚ğ’Ç‰Á‚·‚é‚ÆA/path/to/project/apps/APP/config/autoload.yml‚Éƒ‚ƒWƒ…[ƒ‹î•ñ‚ğ’Ç‹L‚µ‚Ü‚·B
+ã€€S2Containerã¨é€£æºã•ã‚ŒãŸãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™ã€‚init-moduleè¡Œã†ãŸã‚ã«ã¯init-appã‚³ãƒãƒ³ãƒ‰ã§ç”Ÿæˆã•ã‚ŒãŸã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒå¿…è¦ã§ã™ã€‚<br>
+ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’è¿½åŠ ã™ã‚‹ã¨ã€/path/to/project/apps/APP/config/autoload.ymlã«ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«æƒ…å ±ã‚’è¿½è¨˜ã—ã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
+<h4>å®Ÿè¡Œä¾‹</h4>
 <pre>
 % phing
 
@@ -194,63 +271,73 @@ project > command:
 2 : dao
 3 : init-*
 4 : service
-choice ? : 3                &lt;--- 3 : init-* ‚ğ‘I‘ğ
+choice ? : 3                &lt;--- 3 : init-* ã‚’é¸æŠ
 
 [ symfony commands list ]
 0 : (exit)
 1 : init-app
 2 : init-module
 3 : init-project
-choice ? : 2                &lt;--- 2 : init-module ‚ğ‘I‘ğ
+choice ? : 2                &lt;--- 2 : init-module ã‚’é¸æŠ
 
-ProjectFullPath[/Users/seasar/s2base.php5/s2symfony] ? :        &lt;--- ƒvƒƒWƒFƒNƒgƒfƒBƒŒƒNƒgƒŠ‚ğƒtƒ‹ƒpƒX‚Å“ü—Í
+ProjectFullPath[/Users/seasar/s2base.php5/s2symfony] ? :        &lt;--- ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ãƒ•ãƒ«ãƒ‘ã‚¹ã§å…¥åŠ›
 
 [ sf application list ]
 0 : (exit)
 1 : demo
 2 : euro
-choice ? : 2                &lt;--- ƒAƒvƒŠƒP[ƒVƒ‡ƒ“–¼‚ğ‘I‘ğ
+choice ? : 2                &lt;--- ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³åã‚’é¸æŠ
 
-ModuleName ? : rock         &lt;--- ƒ‚ƒWƒ…[ƒ‹–¼‚ğ“ü—Í
+ModuleName ? : rock         &lt;--- ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åã‚’å…¥åŠ›
 
 [ generate information ]
   project path       : /Users/seasar/s2base.php5/s2symfony
   application name   : euro
   module name        : rock
 
-confirm ? (y/n) : y         &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y         &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 </pre>
 
+</div>
 <br>
-<h3><a name="cc">clear-cache ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<div class="section">
+<h2 id="h02"><a name="cc">clear-cache ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-symfony‚Ìclear-cacheƒRƒ}ƒ“ƒh‚ğƒ‰ƒbƒv‚µAƒvƒƒWƒFƒNƒg‚ÌƒLƒƒƒbƒVƒ…‚ğíœ‚µ‚Ü‚·B
+ã€€symfonyã®clear-cacheã‚³ãƒãƒ³ãƒ‰ã‚’ãƒ©ãƒƒãƒ—ã—ã€ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’å‰Šé™¤ã—ã¾ã™ã€‚
 </p>
 
+</div>
 <br>
-<h3><a name="service">service ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+<div class="section">
+<h2 id="h02"><a name="service">service ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-<a href="cmdRef.html#service">serviceƒRƒ}ƒ“ƒh</a>‚ğQÆ‚µ‚Ä‰º‚³‚¢B¶¬æ‚Íƒ‚ƒWƒ…[ƒ‹ƒfƒBƒŒƒNƒgƒŠ“à‚É‚È‚è‚Ü‚·B
+ã€€<a href="cmdRef.html#service">serviceã‚³ãƒãƒ³ãƒ‰</a>ã‚’å‚ç…§ã—ã¦ä¸‹ã•ã„ã€‚ç”Ÿæˆå…ˆã¯ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå†…ã«ãªã‚Šã¾ã™ã€‚
+</p>
+</div>
+<br>
+<div class="section">
+<h2 id="h02"><a name="dao">dao ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
+<p>
+ã€€<a href="cmdRef.html#dao">daoã‚³ãƒãƒ³ãƒ‰</a>ã‚’å‚ç…§ã—ã¦ä¸‹ã•ã„ã€‚ç”Ÿæˆå…ˆã¯ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå†…ã«ãªã‚Šã¾ã™ã€‚<br>
+gen-dao ã‚¿ã‚¹ã‚¯ã§ç”Ÿæˆã—ãŸdaoåŠã³entityã‚¯ãƒ©ã‚¹ã‚’åˆ©ç”¨ã™ã‚‹ã«ã¯/path/to/project/config/autoload.ymlå†…ã®ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã•ã‚Œã¦ã„ã‚‹é …ç›®ã‚’æœ‰åŠ¹ã«ã™ã‚‹ã“ã¨ã§åˆ©ç”¨å¯èƒ½ã¨ãªã‚Šã¾ã™ã€‚
+</p>
+</div>
+<br>
+<div class="section">
+<h2 id="h02"><a name="test">test ã‚¿ã‚¹ã‚¯</a></h2>
+<h3>èª¬æ˜</h3>
+<p>
+ã€€symfony ã‚¿ã‚¹ã‚¯ã® serviceã€daoã€goya ã§ã¯ã€ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªç›´ä¸‹ã® test ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«UnitTestã‚’ç”Ÿæˆã—ã¾ã™ã€‚ã“ã‚Œã‚‰ã®UnitTestã‚’ã‚µãƒ–ã‚¿ã‚¹ã‚¯ã¨ã—ã¦å®Ÿè¡Œã—ã¾ã™ã€‚
+</p>
+<h3>å®Ÿè¡Œä¾‹</h3>
+<p>
+ã€€phing ã‚³ãƒãƒ³ãƒ‰ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³ -Dãƒ—ãƒ­ãƒ‘ãƒ†ã‚£å ã‚’ä½¿ç”¨ã—ã¦ã€testã‚¿ã‚¹ã‚¯ã‚’å‘¼ã³å‡ºã—ã¾ã™ã€‚ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£åã¯ã€Œ st ã€ã§ã™ã€‚
 </p>
 
-<br>
-<h3><a name="dao">dao ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
-<p>
-<a href="cmdRef.html#dao">daoƒRƒ}ƒ“ƒh</a>‚ğQÆ‚µ‚Ä‰º‚³‚¢B¶¬æ‚Íƒ‚ƒWƒ…[ƒ‹ƒfƒBƒŒƒNƒgƒŠ“à‚É‚È‚è‚Ü‚·B<br>
-gen-dao ƒ^ƒXƒN‚Å¶¬‚µ‚½dao‹y‚ÑentityƒNƒ‰ƒX‚ğ—˜—p‚·‚é‚É‚Í/path/to/project/config/autoload.yml“à‚ÌƒRƒƒ“ƒgƒAƒEƒg‚³‚ê‚Ä‚¢‚é€–Ú‚ğ—LŒø‚É‚·‚é‚±‚Æ‚Å—˜—p‰Â”\‚Æ‚È‚è‚Ü‚·B
-</p>
-
-<br>
-<h3><a name="test">test ƒ^ƒXƒN</a></h3>
-<h4>à–¾</h4>
-<p>
-symfony ƒ^ƒXƒN‚Ì serviceAdaoAgoya ‚Å‚ÍAƒvƒƒWƒFƒNƒgƒfƒBƒŒƒNƒgƒŠ’¼‰º‚Ì test ƒfƒBƒŒƒNƒgƒŠ‚ÉUnitTest‚ğ¶¬‚µ‚Ü‚·B‚±‚ê‚ç‚ÌUnitTest‚ğƒTƒuƒ^ƒXƒN‚Æ‚µ‚ÄÀs‚µ‚Ü‚·B
-</p>
-<h4>Às—á</h4>
-phing ƒRƒ}ƒ“ƒh‚ÌƒIƒvƒVƒ‡ƒ“ -DƒvƒƒpƒeƒB–¼ ‚ğg—p‚µ‚ÄAtestƒ^ƒXƒN‚ğŒÄ‚Ño‚µ‚Ü‚·BƒvƒƒpƒeƒB–¼‚Íu st v‚Å‚·B
 <pre>
 % phing -Dst=test
 Buildfile: /Users/seasar/s2base.php5/build.xml
@@ -265,10 +352,10 @@ project > symfony:
 
 project > test:
  [property] Loading /Users/seasar/s2base.php5/var/cache/sf.project.cache
-ProjectFullPath  [/Users/seasar/s2base.php5/s2symfony]?     &lt;--- ƒvƒƒWƒFƒNƒg‚ÌƒfƒBƒŒƒNƒgƒŠ‚ğƒtƒ‹ƒpƒX‚Å“ü—Í
-AppName ? euro                                              &lt;--- ƒAƒvƒŠƒP[ƒVƒ‡ƒ“–¼‚ğ“ü—Í
-ModuleName ? jazz                                           &lt;--- ƒ‚ƒWƒ…[ƒ‹–¼‚ğ“ü—Í
-TestDirectory  [dao,service]?                               &lt;--- ƒeƒXƒg‚·‚éƒfƒBƒŒƒNƒgƒŠ‚ğw’è(ƒfƒtƒHƒ‹ƒg‚Ídao‚Æservice)
+ProjectFullPath  [/Users/seasar/s2base.php5/s2symfony]?     &lt;--- ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ãƒ•ãƒ«ãƒ‘ã‚¹ã§å…¥åŠ›
+AppName ? euro                                              &lt;--- ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³åã‚’å…¥åŠ›
+ModuleName ? jazz                                           &lt;--- ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åã‚’å…¥åŠ›
+TestDirectory  [dao,service]?                               &lt;--- ãƒ†ã‚¹ãƒˆã™ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’æŒ‡å®š(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯daoã¨service)
 
 project > doTest:
   [foreach] Calling Buildfile '/Users/seasar/s2base.php5/vendor/plugins/symfony/build.xml' with target 'doTest'
@@ -282,19 +369,16 @@ BUILD FINISHED
 Total time: 6.9865 seconds
 </pre>
 
-<!-- document end -->
-<!-- don't edit start -->
-</td>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="30" width="14"></td>
-<td width="766"><img src="images/spacer.gif" alt="" height="30" width="592"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-<td class="copyright" width="766">&#169; Copyright The Seasar Project and the others 2005-2006, all rights reserved.</td>
-</tr></tbody></table>
-</td><td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
-<td class="backunder" align="left" height="16" valign="top" width="780">&nbsp;</td>
-<td class="backcorner" align="left" height="16" valign="top">&nbsp;</td>
-</tr></tbody></table><!-- don't edit end -->
+</div>
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&#169; Copyright The Seasar Foundation and the others 2004-2006, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
 </body></html>
