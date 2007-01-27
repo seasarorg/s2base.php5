@@ -1,55 +1,144 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html><head><!-- don't edit start --><title>Seasar - DI Container with AOP -</title><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="ja">
 <meta http-equiv="Content-Style-Type" content="text/css">
-<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen"><link href="seasar_p.css" type="text/css" rel="stylesheet" media="print"><script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script></head>
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, オープンソースソフトウェア, Java, フレームワーク">
+<meta name="description" content="私たちSeasarプロジェクトはオープンソースという仕組みの元、開発者のゆとりを実現できるプロダクトの開発と提供を通じて、ユーザと開発者とが共に喜びを分かち合える環境実現をお手伝いすることを目指し活動しています。 ">
+<title>The Seasar Project - S2Base.PHP5</title>
+
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection">
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print"></head><body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo">
+<h1 id="h01" class="hide">The Seasar Project</h1>
+<a href="http://www.seasar.org/">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390">
+</a>
+</div>
+
+<div id="tool">
+</div>
+
+<div id="navi">
+<p><font size="-1"><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; ドキュメント &raquo; ディレクトリ構成</font></p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>メニュー</h2>
+
+<h3>ドキュメント</h3>
+<ul>
+<li><a href="setup.html">セットアップ</a></li>
+<li>ディレクトリ構成
+    <font size="-2">
+    <ul>
+        <li><a href="#dir-pro">プロジェクトのディレクトリ構成</a></li>
+        <li><a href="#dir-mod">モジュールのディレクトリ構成</a></li>
+    </ul>
+    </font>
+</li>
+<li><a href="cmdRef.html">コマンドリファレンス</a></li>
+</ul>
+
+<ul>
+<li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
+<li><a href="withAgavi-setup.html">with Agavi</a> <i>(ver 0.10.2)</i></li>
+<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 0.6.3)</i></li>
+<li><a href="withSmarty-setup.html">with Smarty</a></li>
+</ul>
+
+<h3>サブプロジェクト</h3>
+<ul>
+<li><a href="javelin.html">S2Javelin.PHP5</a></li>
+</ul>
 
 
-<body onload="preload('ja')"><table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
-<td align="left" valign="top" width="780"><table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr><td colspan="7"><img src="images/top01_b.gif" alt="" height="5" width="780"></td></tr>
-<tr><td width="235"><img src="images/top02_b.gif" alt="Seasar" height="117" width="235"></td>
-<td colspan="3"><img src="images/top03.gif" alt="DI Container with AOP" height="117" width="289"></td>
-<td colspan="3"><img src="images/spacer.gif" alt="" height="117" width="256"></td>
-</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
-<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)" border="0" height="30" width="78"></a></td>
-<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)" border="0" height="30" width="101"></a></td>
-<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)" border="0" height="30" width="110"></a></td>
-<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)" border="0" height="30" width="113"></a></td>
-<td><img src="images/menu05_b_ja.gif" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)" border="0" height="30" width="109"></td>
-<td width="34"><img src="images/menu06.gif" alt="" height="30" width="34"></td></tr><tr>
-<td colspan="6"><img src="images/spacer.gif" alt="" height="19" width="545"></td></tr></tbody></table>
-<table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr align="left" valign="top"><td width="18"><img src="images/spacer.gif" alt="" height="14" width="18"></td><td class="main" width="744">
-<!-- don't edit end -->
-<!-- document start -->
+<h3>リンク</h3>
+<ul>
+    <li><a href="http://www.seasar.org/">Seasar.org</a></li>
+    <li><a href="http://svn.seasar.org/browse/?root=sandbox.s2base.php5">SVN リポジトリブラウザ</a></li>
+    <li><a href="https://www.seasar.org/svn/sandbox/s2base.php5/">SVN リポジトリ</a></li>
+    <li><a href="https://www.seasar.org/issues/browse/BASEPHP">Issue Tracker</a></li>
+    <li><a href="http://s2php5.jp/">s2php5.jp</a>
+        <ul>
+            <li><a href="http://labs.s2php5.jp/s2base">laboratory</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5">wiki</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5/plugins">plugins</a></li>
+            <li><a href="http://docs.s2php5.jp/s2base/api/">PHPDoc</a></li>
+        </ul>
+    </li>
+</ul>
 
-<h2>�f�B���N�g���\��</h2>
+<h2>PHP プロジェクト</h2>
+
+<h3>Seasar.PHP</h3>
+
+<ul>
+    <li><a href="http://s2container.php5.seasar.org/">S2Container.PHP5</a></li>
+    <li><a href="http://s2dao.php5.seasar.org/">S2Dao.PHP5</a></li>
+</ul>
+
+<h3>Sandbox.PHP</h3>
+
+<ul>
+    <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
+    <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
+</ul>
+
+
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+<h2 id="h02"><a name="dir-pro">プロジェクトのディレクトリ構成</a></h2>
 <p>
-s2base.php5-version.zip ���𓀂���Ǝ��̃f�B���N�g�����W�J����܂��B
+　s2base.php5-version.zip を解凍すると次のディレクトリが展開されます。
 </p>
 <pre>
 s2base.php5
-|-- app       �E�E�E �A�v���P�[�V�����{�̊i�[�f�B���N�g��
-|-- config    �E�E�E �ݒ�t�@�C���ۑ��f�B���N�g��
-|-- lib       �E�E�E ���C�u�����֘A�f�B���N�g��
-|-- public    �E�E�E WEB���J�f�B���N�g��
-|-- test      �E�E�E �e�X�g�p�f�B���N�g��
-|-- var       �E�E�E ���O�E�L���b�V���f�B���N�g��
-`-- vendor    �E�E�E �O���t���[�����[�N�A���C�u�������Ƃ̘A�g���W���[��
+|-- app       ・・・ アプリケーション本体格納ディレクトリ
+|-- config    ・・・ 設定ファイル保存ディレクトリ
+|-- lib       ・・・ ライブラリ関連ディレクトリ
+|-- public    ・・・ WEB公開ディレクトリ
+|-- test      ・・・ テスト用ディレクトリ
+|-- var       ・・・ ログ・キャッシュディレクトリ
+`-- vendor    ・・・ 外部フレームワーク、ライブラリ等との連携モジュール
 </pre>
 
-public�f�B���N�g���́A<a href="withSmarty-setup.html">Smarty �Ƒg���킹��</a>�ꍇ�Ɏg�p���܂��B
+publicディレクトリは、<a href="withSmarty-setup.html">Smarty と組合わせる</a>場合に使用します。
 
-<br><br>
-<h3>���W���[���f�B���N�g���\��</h3>
+</div>
+<br>
+
+<div class="section">
+<h2 id="h02"><a name="dir-mod">モジュールのディレクトリ構成</a></h2>
 <p>
-S2Base�ł̊J���̓��W���[���P�ʂōs���܂��B<a href="cmdRef.html#module">module �R�}���h</a>�����s�����W���[�������uDefault�v�Ƃ���ƁA���̃f�B���N�g���Q�� app/modules �f�B���N�g���� test/modules �f�B���N�g���ɍ쐬����܂��B
+　S2Baseでの開発はモジュール単位で行います。<a href="cmdRef.html#module">module コマンド</a>を
+実行しモジュール名を「Default」とすると、次のディレクトリ群が app/modules ディレクトリと
+ test/modules ディレクトリに作成されます。
 </p>
 
 <pre>
 s2base.php5
 |-- app
-|   |-- �E�E�E
+|   |-- ・・・
 |   |-- modules
 |   |   `-- Default
 |   |       |-- dao
@@ -65,54 +154,52 @@ s2base.php5
 
 </pre>
 
-app/modules �f�B���N�g���ɍ쐬�����f�B���N�g���Q�́A���̃��C���C���[�W�ɑΉ����܂��B
+app/modules ディレクトリに作成されるディレクトリ群は、次のレイヤイメージに対応します。
 <br>
 <br>
 <img src="images/system.png"/>
 <br>
-��ԍ��̉��F�̃{�b�N�X�́AS2Base�ō쐬�������W���[�����g�p���郌�C���ŁAWEB�w��CLI�w�ƂȂ�܂��B
+一番左の黄色のボックスは、S2Baseで作成したモジュールを使用するレイヤで、WEB層やCLI層となります。
 
 <ul>
 <li>
 dao<br>
-�f�[�^�x�[�X�ɃA�N�Z�X����I�u�W�F�N�g�ł��B�ڍׂ�<a href="http://s2dao.php5.sandbox.seasar.org/">S2Dao</a>���Q�Ɖ������B
+データベースにアクセスするオブジェクトです。詳細は<a href="http://s2dao.php5.sandbox.seasar.org/">S2Dao</a>を参照下さい。
 </li>
 
 <li>
 dicon<br>
-[�_�C�R��] �ƌĂт܂��B<a href="http://s2container.php5.sandbox.seasar.org/DIContainer.html#DefReference">S2Container �̐ݒ�t�@�C��</a>�ł��BXML�`���ŋL�q���܂��B
+[ダイコン] と呼びます。<a href="http://s2container.php5.sandbox.seasar.org/DIContainer.html#DefReference">S2Container の設定ファイル</a>です。XML形式で記述します。
 </li>
 
 <li>
 entity<br>
-�f�[�^�x�[�X�̃e�[�u���ɑΉ�����N���X�ł��B<a href="http://s2dao.php5.sandbox.seasar.org/reference.html#Entity">S2Dao</a> �ŗp���܂��B
+データベースのテーブルに対応するクラスです。<a href="http://s2dao.php5.sandbox.seasar.org/reference.html#Entity">S2Dao</a> で用います。
 </li>
 
 <li>
 interceptor<br>
-<a href="http://s2container.php5.sandbox.seasar.org/aop.html">S2Aop</a> �� MethodInterceptor ����������N���X�ɂȂ�܂��B
+<a href="http://s2container.php5.sandbox.seasar.org/aop.html">S2Aop</a> の MethodInterceptor を実装するクラスになります。
 </li>
 
 <li>
 service<br>
-�v���[���� PHP �N���X�ł��B�T�[�r�X(���W�b�N)���������܂��B
+プレーンな PHP クラスです。サービス(ロジック)を実装します。
 </li>
 
 </ul>
 
-<!-- document end -->
-<!-- don't edit start -->
-</td>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="30" width="14"></td>
-<td width="766"><img src="images/spacer.gif" alt="" height="30" width="592"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-<td class="copyright" width="766">&#169; Copyright The Seasar Project and the others 2005-2006, all rights reserved.</td>
-</tr></tbody></table>
-</td><td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
-<td class="backunder" align="left" height="16" valign="top" width="780">&nbsp;</td>
-<td class="backcorner" align="left" height="16" valign="top">&nbsp;</td>
-</tr></tbody></table><!-- don't edit end -->
+</div>
+<br>
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&#169; Copyright The Seasar Foundation and the others 2004-2006, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
 </body></html>
