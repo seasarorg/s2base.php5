@@ -1,10 +1,10 @@
 <?php
 class @@CLASS_NAME@@ extends TPage {
-    private $logic;
+    private $service;
 
     /*
-    public function setLogic(#-Logic_Interface-# $logic){
-        $this->logic = $logic;
+    public function setService(#-Service_Interface-# $service){
+        $this->service = $serive;
     }
     */
 

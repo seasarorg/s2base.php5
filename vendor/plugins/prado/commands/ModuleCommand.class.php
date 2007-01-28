@@ -44,8 +44,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
             S2BASE_PHP5_DICON_DIR,
             S2BASE_PHP5_ENTITY_DIR,
             S2BASE_PHP5_INTERCEPTOR_DIR,
-            S2BASE_PHP5_PRADO_LOGIC_DIR,
-            S2BASE_PHP5_VIEW_DIR);
+            S2BASE_PHP5_PRADO_SERVICE_DIR);
         S2Base_CommandUtil::createDirectory($this->srcDirectory);
         foreach($dirs as $dir){
             S2Base_CommandUtil::createDirectory($this->srcDirectory. $dir);
@@ -54,7 +53,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
 		// Test Dir
         $dirs = array(
             S2BASE_PHP5_DAO_DIR,
-            S2BASE_PHP5_PRADO_LOGIC_DIR);
+            S2BASE_PHP5_PRADO_SERVICE_DIR);
         S2Base_CommandUtil::createDirectory($this->testDirectory);
         foreach($dirs as $dir){
             S2Base_CommandUtil::createDirectory($this->testDirectory. $dir);

@@ -12,13 +12,7 @@
 
             <!-- in default command-->
             <fileset dir="${cmd.dir}">
-                <include name="CmdCommand*.php"/>
-                <include name="DaoCommand*.php"/>
-                <include name="DaoMethodCommand*.php"/>
-                <include name="DiconCommand*.php"/>
-                <include name="DtoCommand*.php"/>
-                <include name="EntityCommand*.php"/>
-                <include name="SqliteCommand*.php"/>
+                <exclude name="ModuleCommand*.php"/>
             </fileset>
         </command>
     </target>
