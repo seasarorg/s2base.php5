@@ -35,9 +35,8 @@
 
 /**
  * PRADO Page Service for Cooperating with S2Container.PHP5
- * (abstract class)
  */
-abstract class S2TPageService extends TPageService
+class S2TPageService extends TPageService
 {
 	/**
 	 * File extension for Seasar class files.
@@ -45,7 +44,7 @@ abstract class S2TPageService extends TPageService
 	const SEASAR_CLASS_FILE_EXT='.class.php';
 
 	/**
-	 * File extension for Seasar class files.
+	 * File extension for Seasar page files.
 	 */
 	const SEASAR_PAGE_FILE_EXT='.html';
 
@@ -89,87 +88,101 @@ abstract class S2TPageService extends TPageService
 	 */
 	public function run()
 	{
-
-		throw new THttpException(501,'pageservice_register_mistake',$this->getRequestedPagePath());
-
+		Prado::trace("Running page service",'System.Web.Services.TPageService');
+		$this->_page = $this->createPage($this->getRequestedPagePath());
+		$this->runPage($this->_page,$this->_properties);
 	}
 
 	/**
-	 * Runs the service.
-	 * This will create the requested page, initializes it with the property values
-	 * specified in the configuration, and executes the page.
+	 * Executes a page.
+	 * @param TPage the page instance to be run
+	 * @param array list of initial page properties
 	 */
-	protected function _run($page_ext)
+	protected function runPage($page,$properties)
 	{
-		Prado::trace("Running page service",'System.Web.Services.TPageService');
-		$path=$this->getBasePath().'/'.strtr($this->getRequestedPagePath(),'.','/');
-
-		if(is_file($path.$page_ext))
-		{
-			// set create page class and page template(***.page)
-			$this->_page = $this->createPage($path);
-			$this->_page->setTemplate($this->getTemplateManager()->getTemplateByFileName($path.$page_ext));
-		}
-		else
-			throw new THttpException(404,'pageservice_page_unknown',$this->getRequestedPagePath());
-
-		$this->_page->run($this->getResponse()->createHtmlWriter());
+		foreach($properties as $name=>$value)
+			$page->setSubProperty($name,$value);
+		$page->run($this->getResponse()->createHtmlWriter());
 	}
-
+	
     /**
 	 * Create Page Component
      * 
      * @param String $path Page path
      * @return TPage|null 
      * 
-	 *   1) with PRADO Framework
-	 *   2) with PRADO Framework and S2Container
+	 *   1) with PRADO Framework and S2Container
+	 *   2) with PRADO Framework
 	 *   3) (Default Page)
      */
-	private function createPage($path)
+	protected function createPage($path)
 	{
-			$page = null;
-			if(is_file($path.self::SEASAR_CLASS_FILE_EXT))
-			{
-				// get page from S2Container
-				if($className = $this->getClassName($path, self::SEASAR_CLASS_FILE_EXT)) {
-					$cantainer = $this->createContainer($className);
-					$page=$this->getPage($cantainer, $className);
+		$path=$this->getBasePath().'/'.strtr($path,'.','/');
+		$hasTemplateFile=is_file($path.self::PAGE_FILE_EXT);
+		$hasSeasarClassFile=is_file($path.self::SEASAR_CLASS_FILE_EXT);
+		$hasClassFile=is_file($path.Prado::CLASS_FILE_EXT);
 
-				}else{
-					throw new TConfigurationException('pageservice_pageclass_unknown',$className);
-				}
-
+		$page = null;
+		if($hasSeasarClassFile) {
+			// get page from S2Container
+			if($className = $this->getClassName($path, self::SEASAR_CLASS_FILE_EXT)) {
+				$cantainer = $this->createContainer($className);
+				$page=$this->getPage($cantainer, $className);
+			}else{
+				throw new TConfigurationException('pageservice_pageclass_unknown',$className);
 			}
-			elseif(is_file($path.Prado::CLASS_FILE_EXT))
-			{
-				// get page from PRADO
-				if($className = $this->getClassName($path, Prado::CLASS_FILE_EXT)) {
-					$page=Prado::createComponent($className);
-				}else{
-					throw new TConfigurationException('pageservice_pageclass_unknown',$className);
-				}
-
-			}
-			else
-			{
-				// get TPage
-				$className=$this->getBasePageClass();
+		}
+		elseif($hasClassFile)
+		{
+			// get page from PRADO
+			if($className = $this->getClassName($path, Prado::CLASS_FILE_EXT)) {
 				$page=Prado::createComponent($className);
+			}else{
+				throw new TConfigurationException('pageservice_pageclass_unknown',$className);
 			}
+		}
+		else
+		{
+			// get TPage
+			$className=$this->getBasePageClass();
+			$page=Prado::createComponent($className);
+		}
+		$page->setPagePath($this->getRequestedPagePath());
+		if($hasTemplateFile) {
+			$page->setTemplate($this->getTemplateManager()->getTemplateByFileName($path.self::PAGE_FILE_EXT));
+		}else{
+			throw new THttpException(404,'pageservice_page_unknown',$this->getRequestedPagePath());			
+		}
 
-			$page->setPagePath($this->getRequestedPagePath());
-			// initialize page properties with those set in configurations
-			foreach($this->_properties as $name=>$value)
-				$page->setSubProperty($name,$value);
-
-			return $page;
+		return $page;
 	}
-
+	
+	/**
+	 * create S2Container by page class name
+     * @param String $className Class Name
+     * @return S2Container 
+	 */
+	protected function createContainer($className)
+	{
+		$pageDiconPath = $this->getBasePath().'/../dicon/'.$className.'.dicon';
+		S2Container_SingletonS2ContainerFactory::$INITIALIZE = false;
+		if(is_file($pageDiconPath))
+		{
+			$container=S2Container_SingletonS2ContainerFactory::getContainer($pageDiconPath);
+		}else{
+			throw new TConfigurationException('pageservice_dicon_file_not_exist',$className);
+		}
+		$container->init();
+		return $container;
+	}
+	
 	/**
 	 * get page class name by page class file name and extention.
+     * @param String $path path of PageFile
+     * @param String $ext extension of PageFile
+     * @return S2Container 
 	 */
-	private function getClassName($path, $ext)
+	protected function getClassName($path, $ext)
 	{
 		$className=basename($path);
 		if(!class_exists($className,false))
@@ -182,63 +195,10 @@ abstract class S2TPageService extends TPageService
 	}
 
 	/**
-	 * create Default Page Container
-	 */
-	protected function createDefaultPageContainer($className)
-	{
-		$pageDiconPath = $this->getBasePath().'/../dicon/'.$className.'.dicon';
-		S2Container_SingletonS2ContainerFactory::$INITIALIZE = false;
-		if(is_file($pageDiconPath))
-		{
-			$container=S2Container_SingletonS2ContainerFactory::getContainer($pageDiconPath);
-		}else{
-			throw new TConfigurationException('pageservice_dicon_file_not_exist',$className);
-		}
-		return $container;
-	}
-
-	/**
-	 * create S2Container by page class name
-	 */
-	abstract protected function createContainer($className);
-
-	/**
 	 * get Page Component from S2Container
-	 */
-	abstract protected function getPage($container, $className);
-
-}
-
-
-/**
- * PRADO Page Service for Cooperating with S2Container.PHP5
- * (Default Impl class)
- */
-class S2DefaultTPageService extends S2TPageService
-{
-
-	/**
-	 * Runs the service.
-	 * This will create the requested page, initializes it with the property values
-	 * specified in the configuration, and executes the page.
-	 */
-	public function run()
-	{
-		$this->_run(self::PAGE_FILE_EXT);
-	}
-
-	/**
-	 * create S2Container by page class name
-	 */
-	protected function createContainer($className)
-	{
-		$container = $this->createDefaultPageContainer($className);
-		$container->init();
-		return $container;
-	}
-
-	/**
-	 * get Page Component from S2Container
+     * @param S2Container S2Coontainer instance
+     * @param String $className Class Name
+     * @return instance of Page Class 
 	 */
 	protected function getPage($container, $className)
 	{
@@ -250,7 +210,5 @@ class S2DefaultTPageService extends S2TPageService
 			return Prado::createComponent($this->getBasePageClass());
 		}
 	}
-	
 }
-
 ?>

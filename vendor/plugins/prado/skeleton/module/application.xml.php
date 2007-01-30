@@ -2,6 +2,6 @@
 
 <application id="@@MODULE_NAME@@">
   <services>
-  	<service id="page" class="S2DefaultTPageService" DefaultPage="Home"/>
+  	<service id="page" class="S2TPageService" DefaultPage="Home"/>
   </services>
 </application>
