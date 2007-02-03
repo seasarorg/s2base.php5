@@ -35,9 +35,6 @@ require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcherSupportPlugin.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfView.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfSmartyView.php';
-require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfRequestValidator.php';
-require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfValidatorFactory.php';
-require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfAbstractValidator.php';
 
 /**
  * Smarty config
