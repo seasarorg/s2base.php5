@@ -21,39 +21,29 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
         /**
          * Get controller class
          */
-        $className = $this->_getController($request, $directories);
+        $className = $this->_getController($request);
 
         /**
          * If no class name returned, report exceptional behaviour
          */
         if (!$className) {
-            throw Zend::exception('Zend_Controller_Dispatcher_Exception', '"' . $request->getControllerName() . '" controller does not exist');
+            throw new Zend_Controller_Dispatcher_Exception('"' . $request->getControllerName() . '" controller does not exist');
         }
 
         /**
          * Load the controller class file
          *
-         * Attempts to load the controller class file from {@link getDispatchDirectory()}, 
-         * using the module prefix if a module was requested.
+         * Attempts to load the controller class file from {@link getControllerDirectory()}.
          */
-        $moduleClass = $this->_getModuleClass($request, $className);
-        if ($className != $moduleClass) {
-            $classLoaded = $this->loadClass($moduleClass, $this->getDispatchDirectory());
-            if (!$classLoaded) {
-                Zend::loadClass($className, $this->getDispatchDirectory());
-            } else {
-                $className = $classLoaded;
-            }
-        } else {
-            Zend::loadClass($className, $this->getDispatchDirectory());
-        }
+        Zend::loadClass($className, $this->getControllerDirectory());
+
         /** S2BASE_PHP5 MODIFY START **/
         /**
          * Instantiate controller with request, response, and invocation 
          * arguments; throw exception if it's not an action controller
         $controller = new $className($request, $this->getResponse(), $this->getParams());
         if (!$controller instanceof Zend_Controller_Action) {
-            throw Zend::exception('Zend_Controller_Dispatcher_Exception', "Controller '$className' is not an instance of Zend_Controller_Action");
+            throw new Zend_Controller_Dispatcher_Exception("Controller '$className' is not an instance of Zend_Controller_Action");
         }
          */
 
@@ -66,6 +56,7 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
          * If method does not exist, default to __call()
         $doCall = !method_exists($controller, $action);
          */
+
 
         $action = $this->_getAction($request);
         $controller = $this->instantiateController($request,
@@ -93,8 +84,8 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
         $controller = null;
     }
 
-    public function formatName($name, $preserveUnderscores = true) {
-        return $this->_formatName($name, $preserveUnderscores);
+    public function formatName($unformatted, $isAction = false) {
+        return $this->_formatName($unformatted, $isAction);
     }
 
     protected function instantiateController($request, $moduleName, $controllerClassName) {
@@ -104,7 +95,7 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
         }
 
         if (!$this->isValidController($controller)) {
-            throw Zend::exception('Zend_Controller_Dispatcher_Exception', "Controller '$controllerClassName' is not an instance of Zend_Controller_Action");
+            throw new Zend_Controller_Dispatcher_Exception("Controller '$controllerClassName' is not an instance of Zend_Controller_Action");
         }
         
         return $controller;

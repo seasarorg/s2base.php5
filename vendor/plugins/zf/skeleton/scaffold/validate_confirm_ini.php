@@ -1,6 +1,7 @@
 ﻿;
 ;page   = "template name"            required
 ;      or "forward:action name"
+;      or "exception:exception message"
 ;class  = "Validator Class Name"     required
 ;
 ;[param name]

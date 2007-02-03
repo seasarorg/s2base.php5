@@ -10,9 +10,7 @@ class @@CONTROLLER_CLASS_NAME@@ extends Zend_Controller_Action
         }
     }
 
-    public function preDispatch() {
-        S2Base_ZfRequestValidator::execute($this->getRequest(), $this->view);
-    }
+    public function preDispatch() {}
 
     public function __call($methodName, $args) {}
 

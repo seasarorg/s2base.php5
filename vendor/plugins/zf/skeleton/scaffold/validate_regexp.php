@@ -49,9 +49,11 @@ class RegexpValidator extends S2Base_ZfAbstractValidator {
 
     protected function invalidAction($invalidParams) {
         $this->validateRuleKey(self::PAGE_KEY, 'default', $this->rule);
-        $page = $this->rule[self::PAGE_KEY];
+        $page = trim($this->rule[self::PAGE_KEY]);
         $matches = array();
-        if (preg_match('/^forward\s*:(.+)/', trim($page), $matches)) {
+        if (preg_match('/^exception\s*:(.+)/', $page, $matches)) {
+            throw new Exception(trim($matches[1]));
+        } else if (preg_match('/^forward\s*:(.+)/', $page, $matches)) {
             $this->request->setActionName(trim($matches[1]));
             $this->request->setDispatched(false);
         } else {

@@ -6,8 +6,8 @@ class ActionCommand implements S2Base_GenerateCommand {
     protected $actionName;
     protected $dispatcher;
     protected $controllerClassName;
+    protected $controllerClassFile;
     protected $actionMethodName;
-    protected $formatActionName;
     protected $srcModuleDir;
     protected $srcCtlDir;
     protected $testModuleDir;
@@ -46,9 +46,11 @@ class ActionCommand implements S2Base_GenerateCommand {
                 return;
             }
             $this->controllerClassName = $this->dispatcher->formatControllerName($this->controllerName);
+            $this->controllerClassFile = $this->controllerClassName;
+            if (S2BASE_PHP5_ZF_USE_MODULE) {
+                $this->controllerClassName = $this->moduleName . '_' . $this->controllerClassName;
+            }
             $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
-            $this->formatActionName = $this->dispatcher->formatName($this->actionName, false);
-            $this->validate($this->formatActionName);
             $this->actionMethodName = $this->dispatcher->formatActionName($this->actionName);
             $this->validate($this->actionMethodName);
             if (!$this->finalConfirm()){
@@ -71,7 +73,6 @@ class ActionCommand implements S2Base_GenerateCommand {
         print "  controller name       : {$this->controllerName}" . PHP_EOL;
         print "  controller class name : {$this->controllerClassName}" . PHP_EOL;
         print "  action name           : {$this->actionName}" . PHP_EOL;
-        print "  format action name    : {$this->formatActionName}" . PHP_EOL;
         print "  action method name    : {$this->actionMethodName}" . PHP_EOL;
         print "  action dicon file     : {$this->actionMethodName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
         print "  action template file  : {$this->actionName}" . S2BASE_PHP5_ZF_TPL_SUFFIX . PHP_EOL;
@@ -90,7 +91,7 @@ class ActionCommand implements S2Base_GenerateCommand {
     
     protected function prepareActionFile(){
         $srcFile = $this->srcModuleDir
-                 . $this->controllerClassName
+                 . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                     . '/skeleton/action/action.php');

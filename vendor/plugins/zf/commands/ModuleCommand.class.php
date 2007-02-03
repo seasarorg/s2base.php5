@@ -7,6 +7,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
     protected $testCtlDir;
     protected $controllerName;
     protected $controllerClassName;
+    protected $controllerClassFile;
     protected $dispatcher;
     protected $ctlServiceInterfaceName;
 
@@ -30,6 +31,10 @@ class ModuleCommand implements S2Base_GenerateCommand {
 
     public static function getAllControllers($moduleName){
         $moduleDir = S2BASE_PHP5_MODULES_DIR . $moduleName;
+        if (!is_dir($moduleDir)) {
+            throw new Exception("dir not exists : [ $moduleDir ]");
+        }
+
         $entries = scandir($moduleDir);
         if(!$entries){
             throw new Exception("invalid dir : [ $moduleDir ]");
@@ -60,6 +65,10 @@ class ModuleCommand implements S2Base_GenerateCommand {
             $this->controllerName = S2Base_StdinManager::getValue('controller name ? : ');
             $this->controllerName = $this->formatModuleName($this->controllerName);
             $this->controllerClassName = $this->dispatcher->formatControllerName($this->controllerName);
+            $this->controllerClassFile = $this->controllerClassName;
+            if (S2BASE_PHP5_ZF_USE_MODULE) {
+                $this->controllerClassName = $this->moduleName . '_' . $this->controllerClassName;
+            }
             $this->validate($this->controllerClassName);
             $this->ctlServiceInterfaceName = self::getCtlServiceInterfaceName($this->controllerName);
             if (!$this->finalConfirm()){
@@ -131,7 +140,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
 
     protected function prepareActionControllerClassFile(){
         $srcFile = $this->srcModuleDir
-                 . $this->controllerClassName
+                 . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX; 
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF

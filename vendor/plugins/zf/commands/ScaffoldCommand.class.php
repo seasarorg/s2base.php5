@@ -169,7 +169,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $actionMethodName = $this->dispatcher->formatActionName($this->actionName . '-' . $func);
 
         $srcFile = $this->srcModuleDir
-                 . $this->controllerClassName
+                 . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX;
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
@@ -195,7 +195,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $actionMethodName = $this->dispatcher->formatActionName($this->actionName . '-Confirm');
 
         $srcFile = $this->srcModuleDir
-                 . $this->controllerClassName
+                 . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX;
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
@@ -229,7 +229,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
 
     protected function prepareActionFileList(){
         $srcFile = $this->srcModuleDir
-                 . $this->controllerClassName
+                 . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX;
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF

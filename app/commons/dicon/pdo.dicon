@@ -9,7 +9,7 @@
         <property name="password">"pass"</property>
         <property name="option">
             array(PDO::ATTR_ORACLE_NULLS => PDO::NULL_EMPTY_STRING,
-                  PDO::ATTR_AUTOCOMMIT => false);
+                  PDO::ATTR_AUTOCOMMIT => true);
         </property>
     </component>
 

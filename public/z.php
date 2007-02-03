@@ -14,9 +14,7 @@ try{
     $request = new Zend_Controller_Request_Http();
     $request->setBaseUrl();
     $fc = Zend_Controller_Front::getInstance();
-    if (S2BASE_PHP5_ZF_USE_MODULE) {
-        $fc->setParam('useModules', true);
-    }
+    $fc->setParam('useModules', (boolean)S2BASE_PHP5_ZF_USE_MODULE);
     $fc->throwExceptions(true);
     $fc->registerPlugin(new S2Base_ZfDispatcherSupportPlugin());
     $fc->setDispatcher(new S2Base_ZfDispatcher());

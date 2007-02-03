@@ -154,6 +154,7 @@ class S2Base_ZfSmartyView
         $this->assign('mod_url', $mod_url);
         $this->assign('ctl_url', $ctl_url);
         $this->assign('act_url', $act_url);
+        $this->assign('tpl_dir', $this->template_dir);
 
         if (preg_match('/^file:/',$name)){
             $viewFile = $name;

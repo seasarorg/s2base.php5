@@ -133,7 +133,7 @@ class PagerCommand extends AbstractGoyaCommand {
 
     protected function prepareActionFile(){
         $srcFile = $this->srcModuleDir
-                 . $this->controllerClassName
+                 . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                     . '/skeleton/pager/action.php');

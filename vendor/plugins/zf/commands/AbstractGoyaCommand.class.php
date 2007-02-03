@@ -21,6 +21,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
 
     protected $dispatcher;
     protected $controllerClassName;
+    protected $controllerClassFile;
     protected $ctlServiceInterfaceName;
 
     protected $srcModuleDir;
@@ -58,6 +59,10 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
             }
 
             $this->controllerClassName = $this->dispatcher->formatControllerName($this->controllerName);
+            $this->controllerClassFile = $this->controllerClassName;
+            if (S2BASE_PHP5_ZF_USE_MODULE) {
+                $this->controllerClassName = $this->moduleName . '_' . $this->controllerClassName;
+            }
             $this->ctlServiceInterfaceName = ModuleCommand::getCtlServiceInterfaceName($this->controllerName);
             $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
             $this->formatActionName = $this->dispatcher->formatName($this->actionName);
@@ -239,7 +244,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
 
     protected function prepareActionFile(){
         $srcFile = $this->srcModuleDir
-                 . $this->controllerClassName
+                 . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                     . '/skeleton/goya/action.php');
