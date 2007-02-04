@@ -31,38 +31,61 @@
 </p>
 <h3>2 - PRADO のインストール</h3>
 <p>
-<a href="http://www.pradosoft.com/download/">PRADO</a>よりprado-3.xxxxxxx.zipをダウンロードし、解凍後にできるprado-3.xxxxxxxというディレクトリの名称を<br>
-pradoと変更し、s2base.php5/lib/配下に移動して下さい。
+<ol>
+<li>
+<a href="http://www.pradosoft.com/download/">PRADO</a>よりprado-3.xxxxxxx.zipをダウンロードし解凍してください。
+</li>
+<li>
+prado-3.xxxxxxxというディレクトリの名称をpradoと変更し、Web公開ディレクトリ直下に移動して下さい。
+</li>
+</ol>
 </p>
 <h3>3 - build.xmlの編集</h3>
 <p>
-s2base.php5/vendor/plugins/prado/build.xmlにおいてデフォルトタスクに [ prado ] を設定すると共に、<br>
-WEB 公開ディレクトリとS2Base.PHP5インストールディレクトリを元に下記のように編集します。
+s2base.php5/vendor/plugins/prado/build.xmlにおいて下記編集作業を行ってください。
+<ol>
+<li>
+デフォルトタスクに [ prado ] を設定する
+</li>
+<li>
+WEB公開ディレクトリ名を設定する。
+</li>
+<li>
+WEB公開ディレクトリからS2Base.PHP5インストールディレクトリの相対パスを設定する。
+</li>
+</ol>
 </p>
 <pre>
 &lt;?xml version="1.0"?&gt;
 &lt;project name="project" default="prado" basedir="."&gt;
     &lt;target name="command"&gt;     ↑
-                               prado に設定
+    ・・・　　                  prado に設定
         &lt;php expression="define('DOCUMENT_ROOT_DIR','/var/www/public_html/')"/&gt;
-		                                                         ↑
-		                                         WEB 公開ディレクトリの絶対パスを記述       
+		                                                  ↑
+		                                 WEB公開ディレクトリの絶対パスを記述       
         &lt;php expression="define('DOCUMENT_ROOT_S2BASE_RELATION','../s2base.php5')"/&gt;
-		                                                         ↑
-		              WEB 公開ディレクトリからS2Base.php5インストールディレクトリへの相対パスを記述
+		                                                  ↑
+		              WEB公開ディレクトリからS2Base.php5インストールディレクトリへの相対パスを記述
 		               （/var/www/s2base.php5の場合）       
     ・・・
     &lt;/target&gt; 
 &lt;/project&gt;
 </pre>
+上記設定の対象となっているディレクトリ構造については、<a href="">PRADOプラグイン使用時のディレクトリ構造</a>を参照してください。
 
+<h3>4 - 動作確認</h3>
+<h4>PRADOの動作確認</h4>
+PRADOの動作確認チェッカーやサンプルプログラムは下記URL経由で実行できます。(導入サーバーをlocalhostとして記載)<br>
+　<a href="http://localhost/prado/">http://localhost/prado/</a><br>
+詳細に関しては<a href="http://pradosoft.com/">PRADO公式サイト</a>を参照してください。
 
-s2base.php5 ディレクトリにて phing コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
+<h4>S2Baseの動作確認</h4>
+s2base.php5 ディレクトリにおいて phingコマンドを実行します。コマンドリストが表示されるとインストールが完了です。
 <pre>
-% phing
-Buildfile: /var/www/s2base.php5/build.xml
-      [php] Evaluating PHP expression: ini_set('include_path',
-	                                                  'lib'.PATH_SEPARATOR.ini_get('include_path'))
+%phing
+Buildfile: /private/var/www/s2base.php5/build.xml
+      [php] Evaluating PHP expression: ini_set('include_path','lib'.PATH_SEPARATOR.
+	                                                             ini_get('include_path'))
       [php] Evaluating PHP expression: require_once('S2Base/S2Base.phing.php')
 
 project > prepare:
@@ -70,13 +93,13 @@ project > prepare:
       [php] Evaluating PHP expression: require_once('S2Base/S2Base.cmd.php')
 
 project > prado:
-    [phing] Calling Buildfile '/var/www/s2base.php5/vendor/plugins/prado/build.xml'
-	                                                                        with target 'command'
+    [phing] Calling Buildfile '/private/var/www/s2base.php5/vendor/plugins/prado/build.xml' 
+	                                                                    with target 'command'
 
 project > command:
-      [php] Evaluating PHP expression: require_once('vendor/plugins/prado/config/environment.inc.php')
       [php] Evaluating PHP expression: define('DOCUMENT_ROOT_DIR','/var/www/public_html/')
       [php] Evaluating PHP expression: define('DOCUMENT_ROOT_S2BASE_RELATION','../s2base.php5')
+      [php] Evaluating PHP expression: require_once('vendor/plugins/prado/config/environment.inc.php')
 
 [ Command list ]
 0 : (exit)
@@ -86,13 +109,15 @@ project > command:
 4 : dicon
 5 : dto
 6 : entity
-7 : logic dao
-8 : module
-9 : page
-10 : page dao
-11 : page logic dao
-12 : sqlite-cli
-choice ? : 0
+7 : goya
+8 : interceptor
+9 : logic
+10 : module
+11 : page
+12 : service
+13 : sqlite-cli
+choice ? : 
+
 </pre>
 
 <!-- document end -->

@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><!-- don't edit start --><title>Seasar - DI Container with AOP -</title><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen"><link href="seasar_p.css" type="text/css" rel="stylesheet" media="print"><script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script></head>
+
+
+<body onLoad="preload('ja')"><table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+<td align="left" valign="top" width="780"><table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
+<tbody><tr><td colspan="7"><img src="images/top01_b.gif" alt="" height="5" width="780"></td></tr>
+<tr><td width="235"><img src="images/top02_b.gif" alt="Seasar" height="117" width="235"></td>
+<td colspan="3"><img src="images/top03.gif" alt="DI Container with AOP" height="117" width="289"></td>
+<td colspan="3"><img src="images/spacer.gif" alt="" height="117" width="256"></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" alt="" id="menu01" onMouseOver="swap(1)" onMouseOut="restore(1)" border="0" height="30" width="78"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" alt="" id="menu02" onMouseOver="swap(2)" onMouseOut="restore(2)" border="0" height="30" width="101"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" alt="" id="menu03" onMouseOver="swap(3)" onMouseOut="restore(3)" border="0" height="30" width="110"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" alt="" id="menu04" onMouseOver="swap(4)" onMouseOut="restore(4)" border="0" height="30" width="113"></a></td>
+<td><img src="images/menu05_b_ja.gif" alt="" id="menu05" onMouseOver="swap(5)" onMouseOut="restore(5)" border="0" height="30" width="109"></td>
+<td width="34"><img src="images/menu06.gif" alt="" height="30" width="34"></td></tr><tr>
+<td colspan="6"><img src="images/spacer.gif" alt="" height="19" width="545"></td></tr></tbody></table>
+<table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
+<tbody><tr align="left" valign="top"><td width="18"><img src="images/spacer.gif" alt="" height="14" width="18"></td><td class="main" width="744">
+<!-- don't edit end -->
+<!-- document start -->
+
+<ul>
+<li><a href="#cmd-ref">with PRADO - コマンドリファレンス</a></li>
+  <ul>
+   <li><a href="cmdRef.html#command">command コマンド</a></li>
+   <li><a href="cmdRef.html#dao">dao コマンド</a></li>
+   <li><a href="cmdRef.html#dicon">dicon コマンド</a></li>
+   <li><a href="cmdRef.html#entity">entity コマンド</a></li>
+   <li><a href="cmdRef.html#goya">goya コマンド</a></li>
+   <li><a href="cmdRef.html#interceptor">interceptor コマンド</a></li>
+   <li><a href="#module">module コマンド</a></li>
+   <li><a href="#action">page コマンド</a></li>
+   <li><a href="cmdRef.html#service">service コマンド</a></li>
+   <li><a href="cmdRef.html#test">test タスク</a></li>
+   <li><a href="cmdRef.html#gen-dao">gen-dao タスク</a></li>
+  </ul>
+</ul>
+<br>
+
+<h2><a name="cmd-ref">with PRADO - コマンドリファレンス</a></h2>
+
+<h3><a name="module">module コマンド</a></h3>
+<h4>説明</h4>
+<p>
+PRADOプラグインにおいては、module コマンドはPRADOアプリケーション格納のための各種ディレクトリを作成します。作成されるディレクトリの詳細は<a href="withPRADO-dir.html">PRADOプラグイン使用時のディレクトリ構成</a>を参照してください。
+</p>
+<h4>実行例</h4>
+<pre>
+% phing
+
+(略)
+
+[ Command list ]
+0 : (exit)
+1 : command
+2 : dao
+3 : dao method
+4 : dicon
+5 : dto
+6 : entity
+7 : goya
+8 : interceptor
+9 : logic
+10 : module
+11 : page
+12 : service
+13 : sqlite-cli
+choice ? : 10               &lt;--- 10 : module を選択
+
+module name ? : default     &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+
+[ generate information ]
+  module name : default     &lt;--- モジュール情報を確認
+
+confirm ? (y/n) : y
+[INFO ] create : /private/var/www/s2base.php5/app/modules/default
+[INFO ] create : /private/var/www/s2base.php5/app/modules/default/dao/
+[INFO ] create : /private/var/www/s2base.php5/app/modules/default/dicon/
+[INFO ] create : /private/var/www/s2base.php5/app/modules/default/entity/
+[INFO ] create : /private/var/www/s2base.php5/app/modules/default/interceptor/
+[INFO ] create : /private/var/www/s2base.php5/app/modules/default/service/
+[INFO ] create : /private/var/www/s2base.php5/test/modules/default
+[INFO ] create : /private/var/www/s2base.php5/test/modules/default/dao/
+[INFO ] create : /private/var/www/s2base.php5/test/modules/default/service/
+[INFO ] create : /var/www/public_html/default
+[INFO ] create : /var/www/public_html/default/assets/
+[INFO ] create : /var/www/public_html/default/protected/
+[INFO ] create : /var/www/public_html/default/protected/pages/
+[INFO ] create : /var/www/public_html/default/protected/dicon/
+[INFO ] create : /var/www/public_html/default/protected/runtime/
+[INFO ] create : /private/var/www/s2base.php5/app/modules/default/default.inc.php
+[INFO ] create : /var/www/public_html/default/index.php
+[INFO ] create : /var/www/public_html/default/protected/application.xml
+
+[ Command list ]
+0 : (exit)
+1 : command
+(略)
+choice ? : 0
+
+BUILD FINISHED
+
+Total time: 18 minutes  58.02 seconds
+% ls /var/www/s2base.php5/app/modules/default/
+dao             default.inc.php dicon           entity          interceptor     service
+%
+</pre>
+
+<br>
+<h3><a name="action">page コマンド</a></h3>
+<h4>説明</h4>
+<p>
+page コマンドは、ページ名に対して命名規則に従いページクラス、ダイコンファイル、ページテンプレートを作成します。<br>
+ページ名が「 Hello 」の場合、アクションクラスは Hello、ダイコンファイルは Hello.dicon、html テンプレートは Hello.page となります。<br>
+PRADOにおいては、ページ名において大文字小文字を区別しますので、「Hello」と「hello」は異なったページとなります。
+</p>
+<h4>実行例</h4>
+<pre>
+% phing
+(略)
+[ Command list ]
+0 : (exit)
+1 : command
+2 : dao
+3 : dao method
+4 : dicon
+5 : dto
+6 : entity
+7 : goya
+8 : interceptor
+9 : logic
+10 : module
+11 : page
+12 : service
+13 : sqlite-cli
+choice ? : 11              &lt;--- 11 : page を選択
+
+[ Module list ]
+0 : (exit)
+1 : default
+choice ? : 1              &lt;--- 2 : defaultモジュールを選択
+
+page name ? : Home        &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+
+[ generate information ]
+  module name            : default
+  page name            : Home
+  page class name      : Home
+  page dicon file name : Home.dicon
+  page template file   : Home.page
+
+confirm ? (y/n) : y       &lt;--- 表示される情報を確認
+[INFO ] create : /var/www/public_html/default/protected/pages/Home.class.php
+[INFO ] create : /var/www/public_html/default/protected/pages/Home.page
+[INFO ] create : /var/www/public_html/default/protected/dicon/Home.dicon
+
+[ Command list ]
+0 : (exit)
+1 : command
+(略)
+choice ? : 
+</pre>
+
+<a href="index.html">戻る</a>
+
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
+</tr><tr>
+<td width="14"><img src="images/spacer.gif" alt="" height="30" width="14"></td>
+<td width="766"><img src="images/spacer.gif" alt="" height="30" width="592"></td>
+</tr><tr>
+<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
+<td class="copyright" width="766">&#169; Copyright The Seasar Project and the others 2005-2006, all rights reserved.</td>
+</tr></tbody></table>
+</td><td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left" height="16" valign="top" width="780">&nbsp;</td>
+<td class="backcorner" align="left" height="16" valign="top">&nbsp;</td>
+</tr></tbody></table><!-- don't edit end -->
+</body></html>
