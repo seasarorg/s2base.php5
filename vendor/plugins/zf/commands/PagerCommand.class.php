@@ -1,16 +1,29 @@
 <?php
 class PagerCommand extends AbstractGoyaCommand {
-    const CONDITION_DTO_SUFFIX = 'ConditionDto';
-    private $conditionDtoClassName;
-    private $conditionDtoSessionKey;
-    private $entityPropertyNames;
+    const DTO_SUFFIX = 'ConditionDto';
+    private $dtoClassName;
+    private $dtoSessionKey;
+
+    public function getDtoClassName() {
+        return $this->dtoClassName;
+    }
+    public function setDtoClassName($dtoClassName) {
+        $this->dtoClassName = $dtoClassName;
+    }
+
+    public function getDtoSessionKey() {
+        return $this->dtoSessionKey;
+    }
+    public function setDtoSessionKey($dtoSessionKey) {
+        $this->dtoSessionKey = $dtoSessionKey;
+    }
 
     public function getName(){
         return "goya pager";
     }
 
     public function execute(){
-        $this->entityPropertyNames = array();
+        //$this->entityPropertyNames = array();
         parent::execute();
     }
 
@@ -32,14 +45,14 @@ class PagerCommand extends AbstractGoyaCommand {
 
     protected function getGoyaInfoWithCommonsDao($actionName){
         if(parent::getGoyaInfoWithCommonsDao($actionName)) {
-            $this->conditionDtoClassName = ucfirst($this->formatActionName) . self::CONDITION_DTO_SUFFIX;
-            $this->conditionDtoSessionKey = $this->formatActionName . self::CONDITION_DTO_SUFFIX;
-            $this->entityPropertyNames = $this->getEntityPropertyNames($this->entityClassName);
+            $this->dtoClassName = ucfirst($this->formatActionName) . self::DTO_SUFFIX;
+            $this->dtoSessionKey = $this->formatActionName . self::DTO_SUFFIX;
+            //$this->entityPropertyNames = $this->getEntityPropertyNames($this->entityClassName);
             return true;
         }
         return false;
     }
-
+/*
     protected function getGoyaInfoWithDB($actionName) {
         if(parent::getGoyaInfoWithDB($actionName)) {
             $this->mergeEntityPropertyNamesFromCols();
@@ -47,7 +60,8 @@ class PagerCommand extends AbstractGoyaCommand {
         }
         return false;
     }
-
+*/
+/*
     protected function getGoyaInfoInteractive($actionName) {
         if(parent::getGoyaInfoInteractive($actionName)) {
             if ($this->entityExtends) {
@@ -58,17 +72,18 @@ class PagerCommand extends AbstractGoyaCommand {
         }
         return false;
     }
+*/
 
-    protected function setupPropertyWithDao($actionName){
+    public function setupPropertyWithDao($actionName){
         parent::setupPropertyWithDao($actionName);
-        $this->conditionDtoClassName = ucfirst($this->formatActionName) . self::CONDITION_DTO_SUFFIX;
-        $this->conditionDtoSessionKey = $this->formatActionName . self::CONDITION_DTO_SUFFIX;
+        $this->dtoClassName = ucfirst($this->formatActionName) . self::DTO_SUFFIX;
+        $this->dtoSessionKey = $this->formatActionName . self::DTO_SUFFIX;
     }
 
     protected function setupPropertyWithoutDao($actionName){
         parent::setupPropertyWithoutDao($actionName);
-        $this->conditionDtoClassName = ucfirst($this->formatActionName) . self::CONDITION_DTO_SUFFIX;
-        $this->conditionDtoSessionKey = $this->formatActionName . self::CONDITION_DTO_SUFFIX;
+        $this->dtoClassName = ucfirst($this->formatActionName) . self::DTO_SUFFIX;
+        $this->dtoSessionKey = $this->formatActionName . self::DTO_SUFFIX;
     }
 
     protected function finalConfirm(){
@@ -84,8 +99,8 @@ class PagerCommand extends AbstractGoyaCommand {
         print "  service class name        : {$this->serviceClassName}" . PHP_EOL;
         print "  service test class name   : {$this->serviceClassName}Test" . PHP_EOL;
         print "  service dicon file name   : {$this->serviceClassName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
-        print "  condition dto class name  : {$this->conditionDtoClassName}" . PHP_EOL;
-        print "  condition dto session key : {$this->conditionDtoSessionKey}" . PHP_EOL;
+        print "  condition dto class name  : {$this->dtoClassName}" . PHP_EOL;
+        print "  condition dto session key : {$this->dtoSessionKey}" . PHP_EOL;
         if ($this->useDao) {
             print "  dao interface name        : {$this->daoInterfaceName}" . PHP_EOL;
             print "  dao test class name       : {$this->daoInterfaceName}Test" . PHP_EOL;
@@ -101,7 +116,7 @@ class PagerCommand extends AbstractGoyaCommand {
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
-    protected function prepareFiles(){
+    public function prepareFiles(){
         $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
         $this->srcCtlDir     = $this->srcModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
         $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
@@ -144,8 +159,8 @@ class PagerCommand extends AbstractGoyaCommand {
                           "/@@CONDITION_DTO_SESSION_KEY@@/");
         $replacements = array($this->actionMethodName,
                               $this->actionName . S2BASE_PHP5_ZF_TPL_SUFFIX,
-                              $this->conditionDtoClassName,
-                              $this->conditionDtoSessionKey);
+                              $this->dtoClassName,
+                              $this->dtoSessionKey);
         $tempAction = preg_replace($patterns,$replacements,$tempAction);
 
         $tempContent = S2Base_CommandUtil::readFile($srcFile);
@@ -245,7 +260,7 @@ class PagerCommand extends AbstractGoyaCommand {
                               $implementsInterface,
                               $this->daoInterfaceName,
                               $daoProp,
-                              $this->conditionDtoClassName);
+                              $this->dtoClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         CmdCommand::writeFile($srcFile,$tempContent);
     }
@@ -293,7 +308,7 @@ class PagerCommand extends AbstractGoyaCommand {
                      . '/skeleton/pager/dao.php');
 
         $patterns = array("/@@CLASS_NAME@@/","/@@ENTITY_NAME@@/","/@@CONDITION_DTO_NAME@@/");
-        $replacements = array($this->daoInterfaceName,$this->entityClassName, $this->conditionDtoClassName);
+        $replacements = array($this->daoInterfaceName,$this->entityClassName, $this->dtoClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         CmdCommand::writeFile($srcFile,$tempContent);
     }
@@ -315,12 +330,12 @@ class PagerCommand extends AbstractGoyaCommand {
     protected function prepareConditionDtoFile(){
         $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_ENTITY_DIR
-                 . $this->conditionDtoClassName
+                 . $this->dtoClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . '/skeleton/pager/condition_dto.php');
         $patterns = array("/@@CONDITION_DTO_NAME@@/");
-        $replacements = array($this->conditionDtoClassName);
+        $replacements = array($this->dtoClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         CmdCommand::writeFile($srcFile,$tempContent);
     }
@@ -331,11 +346,12 @@ class PagerCommand extends AbstractGoyaCommand {
             print PHP_EOL;
             print "!!!  Please add this method definition to {$this->daoInterfaceName} interface." . PHP_EOL;
             print "!!!      public function findByConditionDtoList(" . PHP_EOL;
-            print "!!!                          {$this->conditionDtoClassName} \$dto);";
+            print "!!!                          {$this->dtoClassName} \$dto);";
             print PHP_EOL;
         }
     }
 
+/*
     private function mergeEntityPropertyNamesFromCols() {
         foreach ($this->cols as $col) {
             array_push($this->entityPropertyNames,
@@ -343,7 +359,9 @@ class PagerCommand extends AbstractGoyaCommand {
         }
         $this->entityPropertyNames = array_unique($this->entityPropertyNames);
     }
+*/
 
+/*
     private function getEntityPropertyNames($entityClassName) {
         $beanDesc = S2Container_BeanDescFactory::getBeanDesc(new ReflectionClass($entityClassName));
         $c = $beanDesc->getPropertyDescSize();
@@ -373,5 +391,6 @@ class PagerCommand extends AbstractGoyaCommand {
         }
         return $src . "</tr>";
     }
+*/
 }
 ?>

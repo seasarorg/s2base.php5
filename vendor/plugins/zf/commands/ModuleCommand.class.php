@@ -63,12 +63,16 @@ class ModuleCommand implements S2Base_GenerateCommand {
             $this->moduleName = $this->formatModuleName($this->moduleName);
             $this->validate($this->moduleName);
             $this->controllerName = S2Base_StdinManager::getValue('controller name ? : ');
+/*
             $this->controllerName = $this->formatModuleName($this->controllerName);
             $this->controllerClassName = $this->dispatcher->formatControllerName($this->controllerName);
             $this->controllerClassFile = $this->controllerClassName;
             if (S2BASE_PHP5_ZF_USE_MODULE) {
                 $this->controllerClassName = $this->moduleName . '_' . $this->controllerClassName;
             }
+*/
+            list($this->controllerName, $this->controllerClassName, $this->controllerClassFile) = 
+                self::getControllerNames($this->dispatcher, $this->moduleName, $this->controllerName);
             $this->validate($this->controllerClassName);
             $this->ctlServiceInterfaceName = self::getCtlServiceInterfaceName($this->controllerName);
             if (!$this->finalConfirm()){
@@ -82,6 +86,16 @@ class ModuleCommand implements S2Base_GenerateCommand {
         }
     }
 
+    public static function getControllerNames($dispatcher, $moduleName, $controllerName) {
+        $controllerName = self::formatModuleName($controllerName);
+        $controllerClassName = $dispatcher->formatControllerName($controllerName);
+        $controllerClassFile = $controllerClassName;
+        if (S2BASE_PHP5_ZF_USE_MODULE) {
+            $controllerClassName = $moduleName . '_' . $controllerClassName;
+        }
+        return array($controllerName, $controllerClassName, $controllerClassFile);
+    }
+    
     protected function validate($name){
         S2Base_CommandUtil::validate($name,"Invalid module name. [ $name ]");
     }
@@ -95,7 +109,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
-    protected function createDirectory(){
+    public function createDirectory(){
         $this->srcModuleDir = S2BASE_PHP5_MODULES_DIR
                             . $this->moduleName
                             . S2BASE_PHP5_DS; 
@@ -131,14 +145,14 @@ class ModuleCommand implements S2Base_GenerateCommand {
         }
     }
 
-    protected function prepareFiles(){
+    public function prepareFiles(){
         $this->prepareActionControllerClassFile();
         $this->prepareModuleServiceInterfaceFile();
         $this->prepareModuleIncFile();
         $this->prepareIndexFile();
     }
 
-    protected function prepareActionControllerClassFile(){
+    public function prepareActionControllerClassFile(){
         $srcFile = $this->srcModuleDir
                  . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX; 
@@ -157,7 +171,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
-    protected function prepareModuleServiceInterfaceFile(){
+    public function prepareModuleServiceInterfaceFile(){
         $srcFile = $this->srcCtlDir
                  . 'service/'
                  . $this->ctlServiceInterfaceName
@@ -171,7 +185,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
-    protected function prepareModuleIncFile(){
+    public function prepareModuleIncFile(){
         $srcFile = $this->srcCtlDir
                  . "{$this->controllerName}.inc.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
@@ -179,7 +193,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
-    protected function prepareIndexFile(){
+    public function prepareIndexFile(){
         $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . 'index'
@@ -197,7 +211,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
-    private function formatModuleName($name){
+    public function formatModuleName($name){
         if (trim($name) == '') {
             throw new Exception('invalid name. [empty]');
         }
@@ -207,7 +221,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
             $name = ucwords(trim($name));
             $name = preg_replace("/\s/","",$name);
         }
-        return $name;
+        return ucfirst($name);
     }
 
     private function getModuleName() {
@@ -227,5 +241,70 @@ class ModuleCommand implements S2Base_GenerateCommand {
         }
         return $result;
     }
+
+    public function setModuleName($moduleName) {
+        $this->moduleName = $moduleName;
+    }
+
+    public function getSrcModuleDir() {
+        return $this->srcModuleDir;
+    }
+    public function setSrcModuleDir($srcModuleDir) {
+        $this->srcModuleDir = $srcModuleDir;
+    }
+
+    public function getSrcCtlDir() {
+        return $this->srcCtlDir;
+    }
+    public function setSrcCtlDir($srcCtlDir) {
+        $this->srcCtlDir = $srcCtlDir;
+    }
+
+    public function getTestModuleDir() {
+        return $this->testModuleDir;
+    }
+    public function setTestModuleDir($testModuleDir) {
+        $this->testModuleDir = $testModuleDir;
+    }
+
+    public function getTestCtlDir() {
+        return $this->testCtlDir;
+    }
+    public function setTestCtlDir($testCtlDir) {
+        $this->testCtlDir = $testCtlDir;
+    }
+
+    public function getControllerName() {
+        return $this->controllerName;
+    }
+    public function setControllerName($controllerName) {
+        $this->controllerName = $controllerName;
+    }
+
+    public function getControllerClassName() {
+        return $this->controllerClassName;
+    }
+    public function setControllerClassName($controllerClassName) {
+        $this->controllerClassName = $controllerClassName;
+    }
+
+    public function getControllerClassFile() {
+        return $this->controllerClassFile;
+    }
+    public function setControllerClassFile($controllerClassFile) {
+        $this->controllerClassFile = $controllerClassFile;
+    }
+
+    public function getDispatcher() {
+        return $this->dispatcher;
+    }
+    public function setDispatcher($dispatcher) {
+        $this->dispatcher = $dispatcher;
+    }
+
+    public function setCtlServiceInterfaceName($ctlServiceInterfaceName) {
+        $this->ctlServiceInterfaceName = $ctlServiceInterfaceName;
+    }
+
 }
 ?>

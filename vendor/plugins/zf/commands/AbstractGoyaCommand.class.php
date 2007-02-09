@@ -29,6 +29,8 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
     protected $testModuleDir;
     protected $testCtlDir;
 
+    protected $entityPropertyNames;
+
     public function __construct(){
         require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
         $this->dispatcher = new S2Base_ZfDispatcher();
@@ -44,6 +46,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
 
     public function execute(){
         try{
+            $this->entityPropertyNames = array();
             if (S2BASE_PHP5_ZF_USE_MODULE) {
                 $this->moduleName = S2Base_CommandUtil::getModuleName();
                 if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
@@ -58,11 +61,16 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                 return;
             }
 
+            /*
             $this->controllerClassName = $this->dispatcher->formatControllerName($this->controllerName);
             $this->controllerClassFile = $this->controllerClassName;
             if (S2BASE_PHP5_ZF_USE_MODULE) {
                 $this->controllerClassName = $this->moduleName . '_' . $this->controllerClassName;
             }
+            */
+            list($this->controllerName, $this->controllerClassName, $this->controllerClassFile) = 
+                ModuleCommand::getControllerNames($this->dispatcher, $this->moduleName, $this->controllerName);
+
             $this->ctlServiceInterfaceName = ModuleCommand::getCtlServiceInterfaceName($this->controllerName);
             $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
             $this->formatActionName = $this->dispatcher->formatName($this->actionName);
@@ -115,6 +123,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $this->entityClassName = preg_replace("/Dao$/","Entity",$daoName);
         $this->tableName = 'auto defined';
         $this->cols = array('auto defined');
+        $this->entityPropertyNames = $this->getEntityPropertyNames($this->entityClassName);
 
         return true;
     }
@@ -141,6 +150,8 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $entityClassNameTmp = S2Base_StdinManager::getValue("entity class name ? [{$this->entityClassName}] : ");
         $this->entityClassName = trim($entityClassNameTmp) == '' ? $this->entityClassName : $entityClassNameTmp;
         $this->validate($this->entityClassName);
+
+        $this->mergeEntityPropertyNamesFromCols();
         return true;
     }
 
@@ -156,6 +167,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                 return false;
             }
             $this->tableName = "extended";
+            $this->entityPropertyNames = $this->getEntityPropertyNames($this->extendsEntityClassName);
         } else {
             $tableNameTmp = EntityCommand::guessTableName($this->entityClassName);
             $this->tableName = S2Base_StdinManager::getValue("table name ? [{$tableNameTmp}] : ");
@@ -167,6 +179,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
 
         $cols = S2Base_StdinManager::getValue("columns ? (id,name,--,,) : ");
         $this->cols = EntityCommand::validateCols($cols);
+        $this->mergeEntityPropertyNamesFromCols();
 
         return true;
     }
@@ -187,6 +200,24 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
 
     protected function validate($name){
         S2Base_CommandUtil::validate($name,"Invalid value. [ $name ]");
+    }
+
+    protected function getEntityPropertyNames($entityClassName) {
+        $beanDesc = S2Container_BeanDescFactory::getBeanDesc(new ReflectionClass($entityClassName));
+        $c = $beanDesc->getPropertyDescSize();
+        $props = array();
+        for($i=0; $i<$c; $i++){
+            $props[] = $beanDesc->getPropertyDesc($i)->getPropertyName();
+        }
+        return $props;
+    }
+
+    public function mergeEntityPropertyNamesFromCols() {
+        foreach ($this->cols as $col) {
+            array_push($this->entityPropertyNames,
+                       EntityCommand::getPropertyNameFromCol($col));
+        }
+        $this->entityPropertyNames = array_unique($this->entityPropertyNames);
     }
 
     protected function finalConfirm(){
@@ -224,11 +255,11 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $this->testCtlDir    = $this->testModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
 
         $this->prepareActionFile();
-        $this->prepareHtmlFile();
         $this->prepareActionDiconFile();
         $this->prepareServiceInterfaceFile();
         $this->prepareServiceTestFile();
         if ($this->useDao) {
+            $this->prepareHtmlFile();
             $this->prepareServiceDiconFile();
             $this->prepareServiceClassFile();
             $this->prepareDaoTestFile();
@@ -237,6 +268,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                 $this->prepareEntityFile();
             }
         } else {
+            $this->prepareHtmlFileWithoutDao();
             $this->prepareServiceClassFileWithoutDao();
             $this->prepareServiceDiconFileWithoutDao();
         }
@@ -246,9 +278,13 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $srcFile = $this->srcModuleDir
                  . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                    . '/skeleton/goya/action.php');
-
+        if ($this->useDao) {
+            $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                        . '/skeleton/goya/action.php');
+        } else {
+            $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                        . '/skeleton/goya/action_without_dao.php');
+        }
         $patterns = array("/@@ACTION_NAME@@/",
                           "/@@TEMPLATE_NAME@@/");
         $replacements = array($this->actionMethodName,
@@ -274,7 +310,39 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         }
     }
 
+
     protected function prepareHtmlFile(){
+        $srcFile = $this->srcCtlDir
+                 . S2BASE_PHP5_VIEW_DIR
+                 . $this->actionName
+                 . S2BASE_PHP5_ZF_TPL_SUFFIX;
+        $tempContent = '';
+        if (!defined('S2BASE_PHP5_LAYOUT')) {
+            $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                          . "/skeleton/goya/html_header.php");
+        }
+        $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                      . "/skeleton/goya/html.php");
+        if (!defined('S2BASE_PHP5_LAYOUT')) {
+            $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                          . "/skeleton/goya/html_footer.php");
+        }
+
+        $patterns = array("/@@MODULE_NAME@@/",
+                          "/@@CONTROLLER_NAME@@/",
+                          "/@@ACTION_NAME@@/",
+                          "/@@PROPERTY_ROWS_TITLE@@/",
+                          "/@@PROPERTY_ROWS@@/");
+        $replacements = array($this->moduleName,
+                              $this->controllerName,
+                              $this->actionName,
+                              $this->getPropertyRowsTitle(),
+                              $this->getPropertyRowsHtml());
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        CmdCommand::writeFile($srcFile,$tempContent);
+    }
+
+    protected function prepareHtmlFileWithoutDao(){
         $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
@@ -359,8 +427,13 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_SERVICE_DIR
                  . $this->serviceInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/goya/service_interface.php');
+        if ($this->useDao) {
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                         . '/skeleton/goya/service_interface.php');
+        } else {
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                         . '/skeleton/goya/service_interface_without_dao.php');
+        }
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
                              $this->serviceInterfaceName,
                              $tempContent);   
@@ -482,6 +555,205 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $replacements = array($this->serviceClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
+    }
+
+    protected function getPropertyRowsTitle() {
+        $src = '<tr>' . PHP_EOL;
+        foreach ($this->entityPropertyNames as $prop) {
+            $src .= '<th>';
+            $src .= ucfirst($prop);
+            $src .= '</th>' . PHP_EOL;
+        }
+        return $src . '</tr>' . PHP_EOL;
+    }
+
+    protected function getPropertyRowsHtml() {
+        $src = '<tr>' . PHP_EOL;
+        foreach ($this->entityPropertyNames as $prop) {
+            $src .= '<td>';
+            $src .= '{$row->get' . ucfirst($prop) . '()|escape}';
+            $src .= '</td>' . PHP_EOL;
+        }
+        return $src . '</tr>' . PHP_EOL;
+    }
+
+    public function getModuleName() {
+        return $this->moduleName;
+    }
+    public function setModuleName($moduleName) {
+        $this->moduleName = $moduleName;
+    }
+
+    public function getControllerName() {
+        return $this->controllerName;
+    }
+    public function setControllerName($controllerName) {
+        $this->controllerName = $controllerName;
+    }
+
+    public function getActionName() {
+        return $this->actionName;
+    }
+    public function setActionName($actionName) {
+        $this->actionName = $actionName;
+    }
+
+    public function getActionMethodName() {
+        return $this->actionMethodName;
+    }
+    public function setActionMethodName($actionMethodName) {
+        $this->actionMethodName = $actionMethodName;
+    }
+
+    public function getFormatActionName() {
+        return $this->formatActionName;
+    }
+    public function setFormatActionName($formatActionName) {
+        $this->formatActionName = $formatActionName;
+    }
+
+    public function getServiceClassName() {
+        return $this->serviceClassName;
+    }
+    public function setServiceClassName($serviceClassName) {
+        $this->serviceClassName = $serviceClassName;
+    }
+
+    public function getServiceInterfaceName() {
+        return $this->serviceInterfaceName;
+    }
+    public function setServiceInterfaceName($serviceInterfaceName) {
+        $this->serviceInterfaceName = $serviceInterfaceName;
+    }
+
+    public function getDaoInterfaceName() {
+        return $this->daoInterfaceName;
+    }
+    public function setDaoInterfaceName($daoInterfaceName) {
+        $this->daoInterfaceName = $daoInterfaceName;
+    }
+
+    public function getEntityClassName() {
+        return $this->entityClassName;
+    }
+    public function setEntityClassName($entityClassName) {
+        $this->entityClassName = $entityClassName;
+    }
+
+    public function getExtendsEntityClassName() {
+        return $this->extendsEntityClassName;
+    }
+    public function setExtendsEntityClassName($extendsEntityClassName) {
+        $this->extendsEntityClassName = $extendsEntityClassName;
+    }
+
+    public function getEntityExtends() {
+        return $this->entityExtends;
+    }
+    public function setEntityExtends($entityExtends) {
+        $this->entityExtends = $entityExtends;
+    }
+
+    public function getTableName() {
+        return $this->tableName;
+    }
+    public function setTableName($tableName) {
+        $this->tableName = $tableName;
+    }
+
+    public function getTableNames() {
+        return $this->tableNames;
+    }
+    public function setTableNames($tableNames) {
+        $this->tableNames = $tableNames;
+    }
+
+    public function getCols() {
+        return $this->cols;
+    }
+    public function setCols($cols) {
+        $this->cols = $cols;
+    }
+
+    public function getUseCommonsDao() {
+        return $this->useCommonsDao;
+    }
+    public function setUseCommonsDao($useCommonsDao) {
+        $this->useCommonsDao = $useCommonsDao;
+    }
+
+    public function getUseDB() {
+        return $this->useDB;
+    }
+    public function setUseDB($useDB) {
+        $this->useDB = $useDB;
+    }
+
+    public function getUseDao() {
+        return $this->useDao;
+    }
+    public function setUseDao($useDao) {
+        $this->useDao = $useDao;
+    }
+
+    public function getDispatcher() {
+        return $this->dispatcher;
+    }
+    public function setDispatcher($dispatcher) {
+        $this->dispatcher = $dispatcher;
+    }
+
+    public function getControllerClassName() {
+        return $this->controllerClassName;
+    }
+    public function setControllerClassName($controllerClassName) {
+        $this->controllerClassName = $controllerClassName;
+    }
+
+    public function getControllerClassFile() {
+        return $this->controllerClassFile;
+    }
+    public function setControllerClassFile($controllerClassFile) {
+        $this->controllerClassFile = $controllerClassFile;
+    }
+
+    public function getCtlServiceInterfaceName() {
+        return $this->ctlServiceInterfaceName;
+    }
+    public function setCtlServiceInterfaceName($ctlServiceInterfaceName) {
+        $this->ctlServiceInterfaceName = $ctlServiceInterfaceName;
+    }
+
+    public function getSrcModuleDir() {
+        return $this->srcModuleDir;
+    }
+    public function setSrcModuleDir($srcModuleDir) {
+        $this->srcModuleDir = $srcModuleDir;
+    }
+
+    public function getSrcCtlDir() {
+        return $this->srcCtlDir;
+    }
+    public function setSrcCtlDir($srcCtlDir) {
+        $this->srcCtlDir = $srcCtlDir;
+    }
+
+    public function getTestModuleDir() {
+        return $this->testModuleDir;
+    }
+    public function setTestModuleDir($testModuleDir) {
+        $this->testModuleDir = $testModuleDir;
+    }
+
+    public function getTestCtlDir() {
+        return $this->testCtlDir;
+    }
+    public function setTestCtlDir($testCtlDir) {
+        $this->testCtlDir = $testCtlDir;
+    }
+
+    public function setEntityPropertyNames($entityPropertyNames) {
+        $this->entityPropertyNames = $entityPropertyNames;
     }
 }
 ?>

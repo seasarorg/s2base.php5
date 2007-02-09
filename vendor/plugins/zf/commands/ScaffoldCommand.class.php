@@ -2,17 +2,37 @@
 class ScaffoldCommand extends AbstractGoyaCommand {
     const DTO_SUFFIX = 'Dto';
     const VALIDATE_DIR = '/validate/';
-    private $dtoClassName;
-    private $entityPropertyNames;
-    private $primaryKey;
-    private $primaryProp;
+    protected $dtoClassName;
+    protected $primaryKey;
+    protected $primaryProp;
 
+    public function getDtoClassName() {
+        return $this->dtoClassName;
+    }
+    public function setDtoClassName($dtoClassName) {
+        $this->dtoClassName = $dtoClassName;
+    }
+
+    public function getPrimaryKey() {
+        return $this->primaryKey;
+    }
+    public function setPrimaryKey($primaryKey) {
+        $this->primaryKey = $primaryKey;
+    }
+
+    public function getPrimaryProp() {
+        return $this->primaryProp;
+    }
+    public function setPrimaryProp($primaryProp) {
+        $this->primaryProp = $primaryProp;
+    }
+    
     public function getName(){
         return "goya scaffold";
     }
 
     public function execute(){
-        $this->entityPropertyNames = array();
+        //$this->entityPropertyNames = array();
         parent::execute();
     }
 
@@ -68,6 +88,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         return true;
     }
 
+/*
     protected function mergeEntityPropertyNamesFromCols() {
         foreach ($this->cols as $col) {
             array_push($this->entityPropertyNames,
@@ -75,8 +96,8 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         }
         $this->entityPropertyNames = array_unique($this->entityPropertyNames);
     }
-
-    protected function setupPropertyWithDao($actionName){
+*/
+    public function setupPropertyWithDao($actionName){
         parent::setupPropertyWithDao($actionName);
         $this->dtoClassName = ucfirst($this->formatActionName) . self::DTO_SUFFIX;
     }
@@ -110,7 +131,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
-    protected function prepareFiles(){
+    public function prepareFiles(){
         $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
         $this->srcCtlDir     = $this->srcModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
         $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
