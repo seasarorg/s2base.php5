@@ -51,6 +51,7 @@ class ActionCommand implements S2Base_GenerateCommand {
                 $this->controllerClassName = $this->moduleName . '_' . $this->controllerClassName;
             }
             $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
+            $this->validate($this->actionName);
             $this->actionMethodName = $this->dispatcher->formatActionName($this->actionName);
             $this->validate($this->actionMethodName);
             if (!$this->finalConfirm()){
