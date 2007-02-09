@@ -1,4 +1,8 @@
-﻿var actions = {
+﻿var onloadAction = function() {
+    Rico.Corner.round('round')
+}
+
+var actions = {
     '#hoge' : function(el){
         el.onclick = function(){
             s2base.ajaxGetUpdate('?act=index', 'result')
@@ -19,5 +23,6 @@
     }
 }
 
+Behaviour.addLoadEvent(onloadAction)
 Behaviour.register(actions)
 

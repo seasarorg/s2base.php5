@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Style-Type" content="text/css">
 <link rel="stylesheet" type="text/css" href="css/base.css" media="screen,projection">
 <script type="text/javascript" src="http://prototype.conio.net/dist/prototype-1.4.0.js"></script>
+<script type="text/javascript" src="http://openrico.org/rico/download_file/1.1.2/rico.js"></script>
 <script type="text/javascript" src="http://bennolan.com/behaviour/behaviour.js"></script>
 <script type="text/javascript" src="js/s2base.js"></script>
 <script type="text/javascript" src="js/@@MODULE_NAME@@/@@TPL_NAME@@.js"></script>
@@ -21,7 +22,9 @@ This is @@TPL_NAME@@ template. <br>
 <a href="" id="hoge">ajax</a><br>
 
 <br>
-<div id="result">ajax result</div>
+<div id="round" style="background-color:gray">
+  <div id="result">ajax result</div>
+</div>
 
 </body>
 </html>
