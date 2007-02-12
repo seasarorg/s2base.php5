@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------+
 // | PHP version 5                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright 2005-2006 the Seasar Foundation and the Others.            |
+// | Copyright 2005-2007 the Seasar Foundation and the Others.            |
 // +----------------------------------------------------------------------+
 // | Licensed under the Apache License, Version 2.0 (the "License");      |
 // | you may not use this file except in compliance with the License.     |
@@ -20,11 +20,11 @@
 // | Authors: ueyama                                                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: S2Base_Prado.class.php 172 2006-12-01 10:04:24Z ueyama $
+// $Id: S2Base_Prado.class.php 172 2007-2-12 10:04:24Z ueyama $
 /**
  * S2Base.PHP5 PRADO plugin Core Module
  * 
- * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @copyright  2005-2007 the Seasar Foundation and the Others.
  * @license    http://www.apache.org/licenses/LICENSE-2.0
  * @version    Release: 0.1.0
  * @link       http://s2base.php5.seasar.org/
@@ -42,11 +42,6 @@ class S2TPageService extends TPageService
 	 * File extension for Seasar class files.
 	 */
 	const SEASAR_CLASS_FILE_EXT='.class.php';
-
-	/**
-	 * File extension for Seasar page files.
-	 */
-	const SEASAR_PAGE_FILE_EXT='.html';
 
 	/**
 	 * @var TPage the requested page
@@ -88,7 +83,7 @@ class S2TPageService extends TPageService
 	 */
 	public function run()
 	{
-		Prado::trace("Running page service",'System.Web.Services.TPageService');
+		Prado::trace("Running page service",'S2TPageService');
 		$this->_page = $this->createPage($this->getRequestedPagePath());
 		$this->runPage($this->_page,$this->_properties);
 	}

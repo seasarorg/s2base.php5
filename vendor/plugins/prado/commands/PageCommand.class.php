@@ -1,6 +1,5 @@
 <?php
 class PageCommand implements S2Base_GenerateCommand {
-    //const PAGE_CLASS_SUFFIX = 'Page';
     protected $moduleName;
     protected $pageName;
     protected $pageClassName;
@@ -17,7 +16,6 @@ class PageCommand implements S2Base_GenerateCommand {
             }
             $this->pageName = S2Base_StdinManager::getValue('page name ? : ');
             $this->validate($this->pageName);
-            //$this->pageClassName = ucfirst($this->pageName) . self::PAGE_CLASS_SUFFIX;
             $this->pageClassName = ucfirst($this->pageName);
             if (!$this->finalConfirm()){
                 return;
