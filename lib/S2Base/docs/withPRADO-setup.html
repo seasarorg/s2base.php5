@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="ja">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, オープンソースソフトウェア, Java, フレームワーク">
+<meta name="description" content="私たちSeasarプロジェクトはオープンソースという仕組みの元、開発者のゆとりを実現できるプロダクトの開発と提供を通じて、ユーザと開発者とが共に喜びを分かち合える環境実現をお手伝いすることを目指し活動しています。 ">
+<title>The Seasar Project - S2Base.PHP5</title>
+
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection">
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print"></head><body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo">
+<h1 id="h01" class="hide">The Seasar Project</h1>
+<a href="http://www.seasar.org/">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390">
+</a>
+</div>
+
+<div id="tool">
+</div>
+
+<div id="navi">
+<p><font size="-1"><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; with PRADO &raquo; セットアップ</font></p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>メニュー</h2>
+
+<h3>ドキュメント</h3>
+<ul>
+<li><a href="setup.html">セットアップ</a></li>
+<li><a href="dir.html">ディレクトリ構成</a></li>
+<li><a href="cmdRef.html">コマンドリファレンス</a></li>
+</ul>
+
+<ul>
+<li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
+<li><a href="withAgavi-setup.html">with Agavi</a> <i>(ver 0.10.2)</i></li>
+<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 0.6.3)</i></li>
+<li><a href="withSmarty-setup.html">with Smarty</a></li>
+<li>with PRADO <i>(ver 0.1.0)</i>
+    <font size="-2">
+    <ul>
+        <li>セットアップ</li>
+        <li><a href="withPRADO-cmdRef.html">コマンドリファレンス</a></li>
+        <li><a href="withPRADO-dir.html">ディレクトリ構成</a></li>
+    </ul>
+    </font>
+</li>
+</ul>
+
+<h3>サブプロジェクト</h3>
+<ul>
+<li><a href="javelin.html">S2Javelin.PHP5</a></li>
+</ul>
+
+
+<h3>リンク</h3>
+<ul>
+    <li><a href="http://www.seasar.org/">Seasar.org</a></li>
+    <li><a href="http://svn.seasar.org/browse/?root=sandbox.s2base.php5">SVN リポジトリブラウザ</a></li>
+    <li><a href="https://www.seasar.org/svn/sandbox/s2base.php5/">SVN リポジトリ</a></li>
+    <li><a href="https://www.seasar.org/issues/browse/BASEPHP">Issue Tracker</a></li>
+    <li><a href="http://s2php5.jp/">s2php5.jp</a>
+        <ul>
+            <li><a href="http://labs.s2php5.jp/s2base">laboratory</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5">wiki</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5/plugins">plugins</a></li>
+            <li><a href="http://docs.s2php5.jp/s2base/api/">PHPDoc</a></li>
+        </ul>
+    </li>
+</ul>
+
+<h2>PHP プロジェクト</h2>
+
+<h3>Seasar.PHP</h3>
+
+<ul>
+    <li><a href="http://s2container.php5.seasar.org/">S2Container.PHP5</a></li>
+    <li><a href="http://s2dao.php5.seasar.org/">S2Dao.PHP5</a></li>
+</ul>
+
+<h3>Sandbox.PHP</h3>
+
+<ul>
+    <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
+    <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
+</ul>
+
+
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+<h2 id="h02">with PRADO - セットアップ</h2>
+
+<h3>S2Base.PHP5 のインストール</h3>
+<p>
+　<a href="setup.html">セットアップ</a>に従って S2Base.PHP5 をインストールして下さい。
+</p>
+<h3>PRADO のインストール</h3>
+<ol>
+<li>
+<a href="http://www.pradosoft.com/download/">PRADO</a>をダウンロードし解凍してください。
+</li>
+<li>
+解凍の結果作成されたディレクトリの名称をpradoと変更し、Web公開ディレクトリ直下に移動して下さい。
+</li>
+</ol>
+<h3>build.xmlの編集</h3>
+s2base.php5/vendor/plugins/prado/build.xmlにおいて下記編集作業を行ってください。
+<ol>
+<li>
+デフォルトタスクに [ prado ] を設定する
+</li>
+<li>
+WEB公開ディレクトリ名を設定する。
+</li>
+<li>
+WEB公開ディレクトリからS2Base.PHP5インストールディレクトリの相対パスを設定する。
+</li>
+</ol>
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;project name="project" default="prado" basedir="."&gt;
+    &lt;target name="command"&gt;     ↑
+    ・・・　　                  prado に設定
+        &lt;php expression="define('DOCUMENT_ROOT_DIR','/var/www/public_html/')"/&gt;
+		                                                  ↑
+		                                 WEB公開ディレクトリの絶対パスを記述       
+        &lt;php expression="define('DOCUMENT_ROOT_S2BASE_RELATION','../s2base.php5')"/&gt;
+		                                                  ↑
+		              WEB公開ディレクトリからS2Base.php5インストールディレクトリへの相対パスを記述
+		               （/var/www/s2base.php5の場合）       
+    ・・・
+    &lt;/target&gt; 
+&lt;/project&gt;
+</pre>
+上記設定の対象となっているディレクトリ構造については、<a href="">PRADOプラグイン使用時のディレクトリ構造</a>を参照してください。
+
+<h3>動作確認</h3>
+<h4>PRADOの動作確認</h4>
+PRADOの動作確認チェッカーやサンプルプログラムは下記URL経由で実行できます。(導入サーバーをlocalhostとして記載)<br>
+　<a href="http://localhost/prado/">http://localhost/prado/</a><br>
+詳細に関しては<a href="http://pradosoft.com/">PRADO公式サイト</a>を参照してください。
+
+<h4>S2Baseの動作確認</h4>
+s2base.php5 ディレクトリにおいて phingコマンドを実行します。コマンドリストが表示されるとインストールが完了です。
+<pre>
+%phing
+Buildfile: /private/var/www/s2base.php5/build.xml
+      [php] Evaluating PHP expression: ini_set('include_path','lib'.PATH_SEPARATOR.
+	                                                             ini_get('include_path'))
+      [php] Evaluating PHP expression: require_once('S2Base/S2Base.phing.php')
+
+project > prepare:
+      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
+      [php] Evaluating PHP expression: require_once('S2Base/S2Base.cmd.php')
+
+project > prado:
+    [phing] Calling Buildfile '/private/var/www/s2base.php5/vendor/plugins/prado/build.xml' 
+	                                                                    with target 'command'
+
+project > command:
+      [php] Evaluating PHP expression: define('DOCUMENT_ROOT_DIR','/var/www/public_html/')
+      [php] Evaluating PHP expression: define('DOCUMENT_ROOT_S2BASE_RELATION','../s2base.php5')
+      [php] Evaluating PHP expression: require_once('vendor/plugins/prado/config/environment.inc.php')
+
+[ Command list ]
+0 : (exit)
+1 : command
+2 : dao
+3 : dao method
+4 : dicon
+5 : dto
+6 : entity
+7 : goya
+8 : interceptor
+9 : logic
+10 : module
+11 : page
+12 : service
+13 : sqlite-cli
+choice ? : 
+
+</pre>
+
+</div>
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&#169; Copyright The Seasar Foundation and the others 2004-2006, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body></html>
