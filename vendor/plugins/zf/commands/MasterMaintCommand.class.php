@@ -24,14 +24,9 @@ class MasterMaintCommand implements S2Base_GenerateCommand {
             $this->pagerCommand = new PagerCommand();
             $this->scaffoldCommand = new ScaffoldCommand();
 
-            if (S2BASE_PHP5_ZF_USE_MODULE) {
-                $this->moduleName = S2Base_CommandUtil::getModuleName();
-                if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
-                    return;
-                }
-            } else {
-                $this->moduleName = S2BASE_PHP5_ZF_DEFAULT_MODULE;
-                $this->validate($this->moduleName);
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+            if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
+                return;
             }
             $this->existsControllers = ModuleCommand::getAllControllers($this->moduleName);
             $this->tableNames = $this->dbms->getTables();

@@ -17,14 +17,9 @@ class ServiceCommand implements S2Base_GenerateCommand {
 
     public function execute(){
         try{
-           if (S2BASE_PHP5_ZF_USE_MODULE) {
-                $this->moduleName = S2Base_CommandUtil::getModuleName();
-                if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
-                    return;
-                }
-            } else {
-                $this->moduleName = S2BASE_PHP5_ZF_DEFAULT_MODULE;
-                $this->validate($this->moduleName);
+             $this->moduleName = S2Base_CommandUtil::getModuleName();
+            if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
+                return;
             }
             $this->controllerName = ModuleCommand::getActionControllerName($this->moduleName);
             if(S2Base_CommandUtil::isListExitLabel($this->controllerName)){

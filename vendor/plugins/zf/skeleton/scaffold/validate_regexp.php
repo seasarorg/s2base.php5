@@ -50,6 +50,12 @@ class RegexpValidator extends S2Base_ZfAbstractValidator {
     protected function invalidAction($invalidParams) {
         $this->validateRuleKey(self::PAGE_KEY, 'default', $this->rule);
         $page = trim($this->rule[self::PAGE_KEY]);
+        foreach($invalidParams as $key => $val) {
+            if (isset($this->rule[$key][self::PAGE_KEY])) {
+                $page = trim($this->rule[$key][self::PAGE_KEY]);
+                break;
+            }
+        }
         $matches = array();
         if (preg_match('/^exception\s*:(.+)/', $page, $matches)) {
             throw new Exception(trim($matches[1]));

@@ -7,12 +7,12 @@ class @@CLASS_NAME@@
 
     public function getWithLimit($limit) {
         $arrayobject = $this->@@DAO_PROPERTY@@->findAllList();
-        $limit = $arrayobject->offsetExists($limit) ? $limit : $arrayobject->count();
+        if ($limit > $arrayobject->count()) {
+            return $arrayobject;
+        }
         $dtos = new ArrayObject();
-        $iterator = $arrayobject->getIterator();
-        while ($iterator->key() < $limit) {
-            $dtos->append($iterator->current());
-            $iterator->next();
+        for ($i = 0; $i < $limit; $i++) {
+            $dtos->append($arrayobject->offsetGet($i));
         }
         return $dtos;
     }

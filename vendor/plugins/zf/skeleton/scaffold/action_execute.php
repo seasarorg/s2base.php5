@@ -20,8 +20,8 @@
                 break;
         }
         unset($_SESSION['@@DTO_SESSION_KEY@@']);
-        $url = S2BASE_PHP5_ZF_USE_MODULE ?
-               '/' . $this->getRequest()->getModuleName() : '';
+        $url = $this->getRequest()->getModuleName() === null ? '' :
+               '/' . $this->getRequest()->getModuleName();
         $url .= "/{$this->getRequest()->getControllerName()}/@@ACTION_NAME@@";
         $this->_redirect($url);
     }

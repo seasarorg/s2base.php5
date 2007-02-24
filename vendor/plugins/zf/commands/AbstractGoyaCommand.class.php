@@ -47,27 +47,14 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
     public function execute(){
         try{
             $this->entityPropertyNames = array();
-            if (S2BASE_PHP5_ZF_USE_MODULE) {
-                $this->moduleName = S2Base_CommandUtil::getModuleName();
-                if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
-                    return;
-                }
-            } else {
-                $this->moduleName = S2BASE_PHP5_ZF_DEFAULT_MODULE;
-                $this->validate($this->moduleName);
+            $this->moduleName = S2Base_CommandUtil::getModuleName();
+            if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
+                return;
             }
             $this->controllerName = ModuleCommand::getActionControllerName($this->moduleName);
             if(S2Base_CommandUtil::isListExitLabel($this->controllerName)){
                 return;
             }
-
-            /*
-            $this->controllerClassName = $this->dispatcher->formatControllerName($this->controllerName);
-            $this->controllerClassFile = $this->controllerClassName;
-            if (S2BASE_PHP5_ZF_USE_MODULE) {
-                $this->controllerClassName = $this->moduleName . '_' . $this->controllerClassName;
-            }
-            */
             list($this->controllerName, $this->controllerClassName, $this->controllerClassFile) = 
                 ModuleCommand::getControllerNames($this->dispatcher, $this->moduleName, $this->controllerName);
 

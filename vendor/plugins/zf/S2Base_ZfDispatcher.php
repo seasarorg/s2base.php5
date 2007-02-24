@@ -1,6 +1,6 @@
 <?php
-require_once('Zend/Controller/Dispatcher.php');
-class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
+require_once('Zend/Controller/Dispatcher/Standard.php');
+class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher_Standard {
 
     /**
      * Dispatch to a controller/action
@@ -14,71 +14,37 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
         $this->setResponse($response);
 
         /**
-         * Get controller directories
-         */
-        $directories  = $this->getControllerDirectory();
-
-        /**
          * Get controller class
          */
-        $className = $this->_getController($request);
+        if (!$this->isDispatchable($request)) {
+            if (!$this->getParam('useDefaultControllerAlways')) {
+                require_once 'Zend/Controller/Dispatcher/Exception.php';
+                throw new Zend_Controller_Dispatcher_Exception('Invalid controller specified (' . $request->getControllerName() . ')');
+            }
 
-        /**
-         * If no class name returned, report exceptional behaviour
-         */
-        if (!$className) {
-            throw new Zend_Controller_Dispatcher_Exception('"' . $request->getControllerName() . '" controller does not exist');
+            $className = $this->getDefaultControllerClass($request);
+        } else {
+            $className = $this->getControllerClass($request);
+            if (!$className) {
+                $className = $this->getDefaultControllerClass($request);
+            }
         }
 
         /**
          * Load the controller class file
-         *
-         * Attempts to load the controller class file from {@link getControllerDirectory()}.
          */
-        Zend::loadClass($className, $this->getControllerDirectory());
+        $className = $this->loadClass($className);
 
-        /** S2BASE_PHP5 MODIFY START **/
-        /**
-         * Instantiate controller with request, response, and invocation 
-         * arguments; throw exception if it's not an action controller
-        $controller = new $className($request, $this->getResponse(), $this->getParams());
-        if (!$controller instanceof Zend_Controller_Action) {
-            throw new Zend_Controller_Dispatcher_Exception("Controller '$className' is not an instance of Zend_Controller_Action");
-        }
-         */
-
-        /**
-         * Retrieve the action name
-        $action = $this->_getAction($request);
-         */
-
-        /**
-         * If method does not exist, default to __call()
-        $doCall = !method_exists($controller, $action);
-         */
-
-
-        $action = $this->_getAction($request);
+        $action = $this->getActionMethod($request);
         $controller = $this->instantiateController($request,
                                                    S2Base_ZfDispatcherSupportPlugin::getModuleName($request),
                                                    $className);
-        $doCall = false;
-        /** S2BASE_PHP5 MODIFY END **/
 
         /**
          * Dispatch the method call
          */
         $request->setDispatched(true);
-        $controller->preDispatch();
-        if ($request->isDispatched()) {
-            // preDispatch() didn't change the action, so we can continue
-            if ($doCall) {
-                $controller->__call($action, array());
-            } else {
-                $controller->$action();
-            }
-            $controller->postDispatch();
-        }
+        $controller->dispatch($action);
 
         // Destroy the page controller instance and reflection objects
         $controller = null;
@@ -104,7 +70,7 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher {
     protected function getControllerFromS2Container($request, $moduleName, $controllerClassName){
         $controllerName = $request->getControllerName();
         $actionName = $request->getActionName();
-        $formatedActionName = $this->_getAction($request);
+        $formatedActionName = $this->getActionMethod($request);
         $actionDicon = S2BASE_PHP5_ROOT 
                      . "/app/modules/$moduleName/$controllerName/dicon/$formatedActionName.dicon";
 

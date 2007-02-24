@@ -14,12 +14,10 @@ try{
     $request = new Zend_Controller_Request_Http();
     $request->setBaseUrl();
     $fc = Zend_Controller_Front::getInstance();
-    $fc->setParam('useModules', (boolean)S2BASE_PHP5_ZF_USE_MODULE);
     $fc->throwExceptions(true);
     $fc->registerPlugin(new S2Base_ZfDispatcherSupportPlugin());
     $fc->setDispatcher(new S2Base_ZfDispatcher());
     $fc->setRequest($request);
-    $fc->setControllerDirectory(array());
     $response = $fc->dispatch();
 }catch(Exception $e){
     print '<pre><font color="red">' . $e->__toString() . '</font></pre>' . PHP_EOL;

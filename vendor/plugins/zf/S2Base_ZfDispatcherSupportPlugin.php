@@ -11,10 +11,32 @@ class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
     }
 
     public static function getModuleName(Zend_Controller_Request_Abstract $request) {
-        if (S2BASE_PHP5_ZF_USE_MODULE) {
-            return $request->getModuleName();
+        $moduleName = $request->getModuleName();
+        if ($moduleName === null) {
+            return S2BASE_PHP5_ZF_DEFAULT_MODULE;
         }
-        return S2BASE_PHP5_ZF_DEFAULT_MODULE;
+        return $moduleName;
+    }
+
+    public function routeStartup(Zend_Controller_Request_Abstract $request) {
+        $moduleDir = S2BASE_PHP5_ROOT . '/app/modules/';
+        $modules = scandir($moduleDir);
+        foreach ($modules as $module) {
+            if (preg_match('/^\./', $module) or
+                !is_dir($moduleDir . $module)) {
+                continue;
+            }
+            Zend_Controller_Front::getInstance()->
+                               addControllerDirectory($moduleDir . $module, $module);
+        }
+        
+        if (!in_array(S2BASE_PHP5_ZF_DEFAULT_MODULE, $modules)) {
+            Zend_Controller_Front::getInstance()->
+                               addControllerDirectory($moduleDir, S2BASE_PHP5_ZF_DEFAULT_MODULE);
+        }
+    }
+
+    public function routeShutdown(Zend_Controller_Request_Abstract $request) {
     }
 
     public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {
@@ -24,11 +46,6 @@ class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
     }
 
     public function preDispatch(Zend_Controller_Request_Abstract $request) {
-        $controllerDir = S2BASE_PHP5_ROOT . '/app/modules';
-        if (!S2BASE_PHP5_ZF_USE_MODULE) {
-            $controllerDir .= '/' . S2BASE_PHP5_ZF_DEFAULT_MODULE;
-        }
-        Zend_Controller_Front::getInstance()->getDispatcher()->addControllerDirectory($controllerDir);
     }
 
     public function postDispatch(Zend_Controller_Request_Abstract $request) {

@@ -13,8 +13,7 @@ ini_set('error_log',S2BASE_PHP5_VAR_DIR . '/logs/php.log');
  * definition
  */
 define('S2BASE_PHP5_ZF_TPL_SUFFIX','.html'); 
-define('S2BASE_PHP5_ZF_USE_MODULE', false); 
-define('S2BASE_PHP5_ZF_DEFAULT_MODULE','Default'); 
+define('S2BASE_PHP5_ZF_DEFAULT_MODULE','default'); 
 
 /**
  * Directory setting
@@ -35,6 +34,10 @@ require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcherSupportPlugin.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfView.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfSmartyView.php';
+
+//require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfAbstractValidator.php';
+//require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfRequestValidator.php';
+//require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfValidatorFactory.php';
 
 /**
  * Smarty config

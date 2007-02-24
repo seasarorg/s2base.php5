@@ -28,7 +28,7 @@ class S2Base_ZfSmartyView
         $this->request = Zend_Controller_Front::getInstance()->getRequest();
         $this->response = Zend_Controller_Front::getInstance()->getResponse();
         $this->moduleName = S2Base_ZfDispatcherSupportPlugin::getModuleName($this->request);
-        $this->setScriptPath(S2BASE_PHP5_ROOT . '/app/modules/' . $this->moduleName);
+        $this->setScriptPath(S2BASE_PHP5_ROOT . '/app/modules/');
     }
 
     public static function setRendered($value = true){
@@ -146,9 +146,9 @@ class S2Base_ZfSmartyView
         $this->assign('controller', $controllerName);
         $this->assign('action', $this->request->getActionName());
         $this->assign('base_url', $this->request->getBaseUrl());
-        $mod_url = S2BASE_PHP5_ZF_USE_MODULE ?
-                   $this->request->getBaseUrl() . '/' . $this->moduleName :
-                   $this->request->getBaseUrl();
+        $mod_url = $this->moduleName === S2BASE_PHP5_ZF_DEFAULT_MODULE ?
+                   $this->request->getBaseUrl() :
+                   $this->request->getBaseUrl() . '/' . $this->moduleName;
         $ctl_url = $mod_url . '/' . $controllerName;
         $act_url = $ctl_url . '/' . $this->request->getActionName();
         $this->assign('mod_url', $mod_url);
@@ -162,7 +162,9 @@ class S2Base_ZfSmartyView
             if (!preg_match('/' . S2BASE_PHP5_ZF_TPL_SUFFIX . '$/', $name)) {
                 $name .= S2BASE_PHP5_ZF_TPL_SUFFIX;
             }
-            $viewFile = $controllerName
+            $viewFile = $this->moduleName
+                      . DIRECTORY_SEPARATOR
+                      . $controllerName
                       . DIRECTORY_SEPARATOR
                       . 'view'
                       . DIRECTORY_SEPARATOR

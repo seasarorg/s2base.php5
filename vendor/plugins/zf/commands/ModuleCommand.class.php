@@ -60,20 +60,13 @@ class ModuleCommand implements S2Base_GenerateCommand {
             if(S2Base_CommandUtil::isListExitLabel($this->moduleName)){
                 return;
             }
-            $this->moduleName = $this->formatModuleName($this->moduleName);
             $this->validate($this->moduleName);
+            $this->moduleName = self::formatModuleName($this->moduleName);
             $this->controllerName = S2Base_StdinManager::getValue('controller name ? : ');
-/*
-            $this->controllerName = $this->formatModuleName($this->controllerName);
-            $this->controllerClassName = $this->dispatcher->formatControllerName($this->controllerName);
-            $this->controllerClassFile = $this->controllerClassName;
-            if (S2BASE_PHP5_ZF_USE_MODULE) {
-                $this->controllerClassName = $this->moduleName . '_' . $this->controllerClassName;
-            }
-*/
+            $this->validate($this->controllerName);
             list($this->controllerName, $this->controllerClassName, $this->controllerClassFile) = 
                 self::getControllerNames($this->dispatcher, $this->moduleName, $this->controllerName);
-            $this->validate($this->controllerClassName);
+            //$this->validate($this->controllerClassName);
             $this->ctlServiceInterfaceName = self::getCtlServiceInterfaceName($this->controllerName);
             if (!$this->finalConfirm()){
                 return;
@@ -90,8 +83,9 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $controllerName = self::formatModuleName($controllerName);
         $controllerClassName = $dispatcher->formatControllerName($controllerName);
         $controllerClassFile = $controllerClassName;
-        if (S2BASE_PHP5_ZF_USE_MODULE) {
-            $controllerClassName = $moduleName . '_' . $controllerClassName;
+        if ($moduleName != S2BASE_PHP5_ZF_DEFAULT_MODULE) {
+            $controllerClassName = $dispatcher->formatModuleName($moduleName)
+                                 . '_' . $controllerClassName;
         }
         return array($controllerName, $controllerClassName, $controllerClassFile);
     }
@@ -211,30 +205,34 @@ class ModuleCommand implements S2Base_GenerateCommand {
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
-    public function formatModuleName($name){
+    public static function formatModuleName($name){
         if (trim($name) == '') {
             throw new Exception('invalid name. [empty]');
         }
+        $name = preg_replace("/^_+/","",$name);
+        $name = preg_replace("/_+$/","",$name);
         if (preg_match("/_/",$name)){
-            $name = strtolower($name);
-            $name = preg_replace("/_/"," ",$name);
-            $name = ucwords(trim($name));
-            $name = preg_replace("/\s/","",$name);
+            $words = explode('_', $name);
+            $fw = array_shift($words);
+            $name = implode(' ', $words);
+            $name = ucwords($name);
+            $name = preg_replace("/\s/", '', $name);
+            $name = $fw . $name;
         }
-        return ucfirst($name);
+        return $name;
     }
 
     private function getModuleName() {
-        if (!S2BASE_PHP5_ZF_USE_MODULE) {
-            return S2BASE_PHP5_ZF_DEFAULT_MODULE;
+        $createLabel = '(new module)';
+
+        $modules = S2Base_CommandUtil::getAllModules();
+
+        if (count($modules) == 0) {
+            array_unshift($modules, $createLabel, S2BASE_PHP5_ZF_DEFAULT_MODULE);
+        } else {
+            array_unshift($modules, $createLabel);
         }
         
-        $modules = S2Base_CommandUtil::getAllModules();
-        if (count($modules) == 0) {
-            return S2Base_StdinManager::getValue('module name ? : ');
-        }
-        $createLabel = '(new module)';
-        $modules = array_merge(array($createLabel), $modules);
         $result = S2Base_StdinManager::getValueFromArray($modules,"Module list");
         if ($result == $createLabel) {
             return S2Base_StdinManager::getValue('module name ? : ');
