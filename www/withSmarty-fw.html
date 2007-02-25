@@ -1,95 +1,177 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html><head><!-- don't edit start --><title>Seasar - DI Container with AOP -</title><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="ja">
 <meta http-equiv="Content-Style-Type" content="text/css">
-<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen"><link href="seasar_p.css" type="text/css" rel="stylesheet" media="print"><script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script></head>
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, オープンソースソフトウェア, Java, フレームワーク">
+<meta name="description" content="私たちSeasarプロジェクトはオープンソースという仕組みの元、開発者のゆとりを実現できるプロダクトの開発と提供を通じて、ユーザと開発者とが共に喜びを分かち合える環境実現をお手伝いすることを目指し活動しています。 ">
+<title>The Seasar Project - S2Base.PHP5</title>
 
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection">
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print"></head><body>
 
-<body onload="preload('ja')"><table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
-<td align="left" valign="top" width="780"><table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr><td colspan="7"><img src="images/top01_b.gif" alt="" height="5" width="780"></td></tr>
-<tr><td width="235"><img src="images/top02_b.gif" alt="Seasar" height="117" width="235"></td>
-<td colspan="3"><img src="images/top03.gif" alt="DI Container with AOP" height="117" width="289"></td>
-<td colspan="3"><img src="images/spacer.gif" alt="" height="117" width="256"></td>
-</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
-<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)" border="0" height="30" width="78"></a></td>
-<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)" border="0" height="30" width="101"></a></td>
-<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)" border="0" height="30" width="110"></a></td>
-<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)" border="0" height="30" width="113"></a></td>
-<td><img src="images/menu05_b_ja.gif" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)" border="0" height="30" width="109"></td>
-<td width="34"><img src="images/menu06.gif" alt="" height="30" width="34"></td></tr><tr>
-<td colspan="6"><img src="images/spacer.gif" alt="" height="19" width="545"></td></tr></tbody></table>
-<table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr align="left" valign="top"><td width="18"><img src="images/spacer.gif" alt="" height="14" width="18"></td><td class="main" width="744">
-<!-- don't edit end -->
-<!-- document start -->
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo">
+<h1 id="h01" class="hide">The Seasar Project</h1>
+<a href="http://www.seasar.org/">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390">
+</a>
+</div>
+
+<div id="tool">
+</div>
+
+<div id="navi">
+<p><font size="-1"><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; with Smarty &raquo; フレームワーク概要</font></p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>メニュー</h2>
+
+<h3>ドキュメント</h3>
+<ul>
+<li><a href="setup.html">セットアップ</a></li>
+<li><a href="dir.html">ディレクトリ構成</a></li>
+<li><a href="cmdRef.html">コマンドリファレンス</a></li>
+</ul>
 
 <ul>
-<li><a href="#fw">with Smarty - �t���[�����[�N�T�v</a></li>
-  <ul>
-    <li><a href="#page">�y�[�W�J��</a></li>
-      <ul>
-        <li><a href="#mod-act">���W���[���ƃA�N�V����</a></li>
-        <li><a href="#template">�e���v���[�g�̎w��</a></li>
-        <li><a href="#redirect">�A�N�V�����̃��_�C���N�g</a></li>
-        <li><a href="#layout">���C�A�E�g�̎w��</a></li>
-      </ul>
-    <li><a href="#action-execute">�A�N�V�����N���X�� execute ���\�b�h</a></li>
-    <li><a href="#conf">�����œǂݍ��܂��ݒ�t�@�C��</a></li>
-    <li><a href="#smarty-conf">Smarty �̊��ݒ�</a></li>
-    <li><a href="#service">�A�N�V��������T�[�r�X�𗘗p����</a></li>
-    <li><a href="#filter">�A�N�V�����Ƀt�B���^��K�p����</a></li>
-    <li><a href="#validate">Validate�t�B���^���쐬����</a></li>
-  </ul>
+<li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
+<li><a href="withAgavi-setup.html">with Agavi</a> <i>(ver 0.10.2)</i></li>
+<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 0.6.3)</i></li>
+<li><a href="withSmarty-setup.html">with Smarty</a>
+    <font size="-2">
+    <ul>
+        <li><a href="withSmarty-setup.html">セットアップ</a></li>
+        <li><a href="withSmarty-cmdRef.html">コマンドリファレンス</a></li>
+        <li>フレームワーク概要
+            <ul>
+                <li><a href="#start">はじめに</a></li>
+                <li><a href="#page">ページ遷移</a></li>
+                    <ul>
+                        <li><a href="#mod-act">モジュールとアクション</a></li>
+                        <li><a href="#template">テンプレートの指定</a></li>
+                        <li><a href="#redirect">アクションのリダイレクト</a></li>
+                        <li><a href="#layout">レイアウトの指定</a></li>
+                    </ul>
+                <li><a href="#action-execute">アクションクラスの execute メソッド</a></li>
+                <li><a href="#conf">自動で読み込まれる設定ファイル</a></li>
+                <li><a href="#smarty-conf">Smarty の環境設定</a></li>
+                <li><a href="#service">アクションからサービスを利用する</a></li>
+                <li><a href="#filter">アクションにフィルタを適用する</a></li>
+                <li><a href="#validate">Validateフィルタを作成する</a></li>
+            </ul>
+        </li>
+    </ul>
+    </font>
+</li>
+<li><a href="withPRADO-setup.html">with PRADO</a></li>
 </ul>
-<br>
 
-<h2><a name="fw">with Smarty - �t���[�����[�N�T�v</a></h2>
+<h3>サブプロジェクト</h3>
+<ul>
+<li><a href="javelin.html">S2Javelin.PHP5</a></li>
+</ul>
+
+
+<h3>リンク</h3>
+<ul>
+    <li><a href="http://www.seasar.org/">Seasar.org</a></li>
+    <li><a href="http://svn.seasar.org/browse/?root=sandbox.s2base.php5">SVN リポジトリブラウザ</a></li>
+    <li><a href="https://www.seasar.org/svn/sandbox/s2base.php5/">SVN リポジトリ</a></li>
+    <li><a href="https://www.seasar.org/issues/browse/BASEPHP">Issue Tracker</a></li>
+    <li><a href="http://s2php5.jp/">s2php5.jp</a>
+        <ul>
+            <li><a href="http://labs.s2php5.jp/s2base">laboratory</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5">wiki</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5/plugins">plugins</a></li>
+            <li><a href="http://docs.s2php5.jp/s2base/api/">PHPDoc</a></li>
+        </ul>
+    </li>
+</ul>
+
+<h2>PHP プロジェクト</h2>
+
+<h3>Seasar.PHP</h3>
+
+<ul>
+    <li><a href="http://s2container.php5.seasar.org/">S2Container.PHP5</a></li>
+    <li><a href="http://s2dao.php5.seasar.org/">S2Dao.PHP5</a></li>
+</ul>
+
+<h3>Sandbox.PHP</h3>
+
+<ul>
+    <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
+    <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
+</ul>
+
+
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+<h2 id="h02"><a name="start">はじめに</a></h2>
 <p>
-S2Base.PHP5 �ɂ́ASmarty ���R���g���[���Ƃ���V���v���ȃt���[�����[�N���܂܂�Ă��܂��B
-Smarty �� S2Base.PHP5 ��g���킹��ꍇ�́A���̃t���[�����[�N�������p�������B
+　S2Base.PHP5 には、Smarty をコントローラとするシンプルなフレームワークが含まれています。<br>
+Smarty と S2Base.PHP5 を組合わせる場合は、このフレームワークをご利用下さい。
 </p>
-
+</div>
 <br>
-<h3><a name="page">�y�[�W�J��</a></h3>
-<p>
-</p>
+<div class="section">
+<h2 id="h02"><a name="page">ページ遷移</a></h2>
 
-<h4><a name="mod-act">���W���[���ƃA�N�V����</a></h4>
+<h3><a name="mod-act">モジュールとアクション</a></h3>
 <p>
-withSmarty�t���[�����[�N�ł́A�f�B�X�p�b�`�y�[�W( public/d.php ) �Ƀ��W���[�����ƃA�N�V�����������N�G�X�g����
-�y�[�W�J�ڂ𐧌䂵�܂��B�f�t�H���g�ł́A���W���[�����w�肷�郊�N�G�X�g�p�����[�^���́u mod �v�A�A�N�V�������w�肷�郊�N�G�X�g�p�����[�^���́u act �v�ł��B
-�Ⴆ�΁ADefault ���W���[���� hello �A�N�V�����ɃA�N�Z�X����ꍇ�́A���̂悤�ɂȂ�܂��B
+　withSmartyフレームワークでは、ディスパッチページ( public/d.php ) にモジュール名とアクション名をリクエストして
+ページ遷移を制御します。デフォルトでは、モジュールを指定するリクエストパラメータ名は「 mod 」、アクションを指定するリクエストパラメータ名は「 act 」です。
+例えば、Default モジュールの hello アクションにアクセスする場合は、次のようになります。
 </p>
 <pre>
   http://localhost/s2base/d.php?mod=Default&act=hello
 </pre>
 
-��L�̏ꍇ�ADefault���W���[���� view/hello.tpl �e���v���[�g�� Smarty ���������āA���̌��ʂ��\������܂��B
-Default ���W���[���� action/HelloAction.class.php �����݂����ꍇ�́ASmarty ���e���v���[�g����������O�� HelloAction�N���X�� execute ���\�b�h�����s����܂��B
+上記の場合、Defaultモジュールの view/hello.tpl テンプレートを Smarty が処理して、その結果が表示されます。
+Default モジュールに action/HelloAction.class.php が存在した場合は、Smarty がテンプレートを処理する前に HelloActionクラスの execute メソッドが実行されます。
 <br>
 <br>
-���N�G�X�g�p�����[�^����f�t�H���g���W���[�����A�A�N�V���������́Ad.php �ɂĐݒ�ł��܂��B
+リクエストパラメータ名やデフォルトモジュール名、アクション名等は、d.php にて設定できます。
 <pre>
 % more public/d.php
 &lt;?php
-�E�E�E
+・・・
 define('S2BASE_PHP5_REQUEST_MODULE_KEY','mod');
 define('S2BASE_PHP5_REQUEST_ACTION_KEY','act');
 define('S2BASE_PHP5_DEFAULT_MODULE_NAME','Default');
 define('S2BASE_PHP5_DEFAULT_ACTION_NAME','index');
-�E�E�E
+・・・
 ?&gt;
 </pre>
 
-���W���[���̍쐬��A�N�V�������̌���ɂ��ẮA<a href="withSmarty-cmdRef.html#module">module �R�}���h</a>�A<a href="withSmarty-cmdRef.html#action">action �R�}���h</a>���Q�Ɖ������B�A
+モジュールの作成やアクション名の決定については、<a href="withSmarty-cmdRef.html#module">module コマンド</a>、<a href="withSmarty-cmdRef.html#action">action コマンド</a>を参照下さい。、
 
-<h4><a name="template">�e���v���[�g�̎w��</a></h4>
+<h3><a name="template">テンプレートの指定</a></h3>
 <p>
-�e���v���[�g�t�@�C���́A�f�t�H���g�ł̓f�B�X�p�b�`�y�[�W�Ƀ��N�G�X�g���ꂽ�A�N�V������.tpl �ɂȂ�܂��B
-�Ⴆ�΃��W���[������ Default �ŃA�N�V�������� hello �̏ꍇ�́A�e���v���[�g�t�@�C���� app/modules/Default/view/hello.tpl �ɂȂ�܂��B
+　テンプレートファイルは、デフォルトではディスパッチページにリクエストされたアクション名.tpl になります。
+例えばモジュール名が Default でアクション名が hello の場合は、テンプレートファイルは app/modules/Default/view/hello.tpl になります。
 </p>
 
-hello�A�N�V�����p�̃A�N�V�����N���X HelloAction ��p�ӂ����ꍇ�́AHelloAction::execute ���\�b�h�̖߂�l�Ƃ��ăe���v���[�g�t�@�C�����w��ł��܂��B
+helloアクション用のアクションクラス HelloAction を用意した場合は、HelloAction::execute メソッドの戻り値としてテンプレートファイルを指定できます。
 
 <pre>
 &lt;?php
@@ -98,21 +180,21 @@ class HelloAction
 
     public function execute(S2Base_Request $request,
                             S2Base_View $view){
-        return 'hello2.tpl';     &lt;--- �e���v���[�g�� view/hello2.tpl �ɂȂ�܂��B
+        return 'hello2.tpl';     &lt;--- テンプレートは view/hello2.tpl になります。
     }
 }
 ?&gt;
 </pre>
 
 
-�A�N�V�����N���X�� execute ���\�b�h�̖߂�l�� null �̏ꍇ�́A�f�t�H���g�̃e���v���[�g�t�@�C��( view/hello.tpl )���g�p����܂��B<br>
-����ȃP�[�X�Ƃ��āA�A�N�V�����N���X�� execute ���\�b�h�̖߂�l�� <a href="http://smarty.php.net/manual/en/template.resources.php">file: �v���t�B�b�N�X</a>�� <a href="#redirect">redirect: �v���t�B�b�N�X</a>��t�����邱�Ƃ��ł��܂��B
+アクションクラスの execute メソッドの戻り値が null の場合は、デフォルトのテンプレートファイル( view/hello.tpl )が使用されます。<br>
+特殊なケースとして、アクションクラスの execute メソッドの戻り値に <a href="http://smarty.php.net/manual/en/template.resources.php">file: プレフィックス</a>と <a href="#redirect">redirect: プレフィックス</a>を付加することができます。
 
 
-<h4><a name="redirect">�A�N�V�����̃��_�C���N�g</a></h4>
+<h3><a name="redirect">アクションのリダイレクト</a></h3>
 <p>
-�A�N�V�����N���X�� execute ���\�b�h�̖߂�l�� redirect �v���t�B�b�N�X���w�肵�āA�ʂ̃A�N�V�����Ƀ��_�C���N�g�ł��܂��B<br>
-[ redirect:���W���[����:�A�N�V������ ] �Ƃ��āA���W���[�����ƃA�N�V���������w�肵�܂��B
+　アクションクラスの execute メソッドの戻り値に redirect プレフィックスを指定して、別のアクションにリダイレクトできます。<br>
+[ redirect:モジュール名:アクション名 ] として、モジュール名とアクション名を指定します。
 </p>
 
 <pre>
@@ -122,38 +204,39 @@ class HelloAction
 
     public function execute(S2Base_Request $request,
                             S2Base_View $view){
-        return 'redirect:Default:goodbye';    &lt;--- [ redirect:���W���[����:�A�N�V������ ]
-        //return 'redirect:goodbye';          &lt;--- ���W���[�����͏ȗ��ł��܂��B
+        return 'redirect:Default:goodbye';    &lt;--- [ redirect:モジュール名:アクション名 ]
+        //return 'redirect:goodbye';          &lt;--- モジュール名は省略できます。
     }
 }
 ?&gt;
 </pre>
 
-<h4><a name="layout">���C�A�E�g�̎w��</a></h4>
+<h3><a name="layout">レイアウトの指定</a></h3>
 <p>
-���C�A�E�g�̎w��� S2BASE_PHP5_LAYOUT �萔�ōs���܂��Bvendor/plugins/smarty/config/environment.inc.php �Œ�`���܂��B
+　レイアウトの指定は S2BASE_PHP5_LAYOUT 定数で行います。vendor/plugins/smarty/config/environment.inc.php で定義します。
 </p>
 <pre>
 % more vendor/plugins/smarty/config/environment.inc.php
-�E�E�E
+・・・
 
 /**
  * global lyaout setting
  */
 //define('S2BASE_PHP5_LAYOUT','file:' . S2BASE_PHP5_ROOT . '/app/commons/view/layout.tpl');
-    ��
-    �f�t�H���g�ł̓R�����g�A�E�g����Ă��܂��B
-�E�E�E
+    ↑
+    デフォルトではコメントアウトされています。
+・・・
 %
 </pre>
 
-���C�A�E�g�t�@�C�����Ńe���v���[�g�t�@�C���� $content_for_layout �ϐ��ŎQ�Ƃł��܂��Bapp/commons/view/layout.tpl ���Q�Ɖ������B
+レイアウトファイル内でテンプレートファイルは $content_for_layout 変数で参照できます。app/commons/view/layout.tpl を参照下さい。
 
+</div>
 <br>
-<br>
-<h3><a name="action-execute">�A�N�V�����N���X�� execute ���\�b�h</a></h3>
+<div class="section">
+<h2 id="h02"><a name="action-execute">アクションクラスの execute メソッド</a></h2>
 <p>
-�A�N�V�����N���X�� execute ���\�b�h�́ASmarty ���e���v���[�g����������O�Ɏ��s����܂��B���N�G�X�g�p�����[�^�̏�����A�T�[�r�X�̌Ăяo���A���ʂ̃A�T�C�����̏������L�q���܂��Bexecute ���\�b�h�̈����� 2 �ł��B
+　アクションクラスの execute メソッドは、Smarty がテンプレートを処理する前に実行されます。リクエストパラメータの処理や、サービスの呼び出し、結果のアサイン等の処理を記述します。execute メソッドの引数は 2 つです。
 </p>
 
 <pre>
@@ -171,42 +254,45 @@ class HelloAction
 ?&gt;
 </pre>
 
-<h4>S2Base_Request $request</h4>
+<h3>S2Base_Request $request</h3>
 <p>
-$_GET �܂��� $_POST �̃R�s�[��ێ����܂��BgetParam ���\�b�h�Ń��N�G�X�g�p�����[�^�����w�肵�ăf�[�^���擾�ł��܂��B
-setParam ���\�b�h�Ńf�[�^�����w�肵�ăf�[�^��ǉ��ł��܂��B
+　$_GET または $_POST のコピーを保持します。getParam メソッドでリクエストパラメータ名を指定してデータを取得できます。
+setParam メソッドでデータ名を指定してデータを追加できます。
 </p>
 
-<h4>S2Base_View $view</h4>
+<h3>S2Base_View $view</h3>
 <p>
-Smarty �I�u�W�F�N�g�ł��B���N�G�X�g�̏������ʂ�T�[�r�X���ʓ����e���v���[�g�� assign ���܂��B
+　Smarty オブジェクトです。リクエストの処理結果やサービス結果等をテンプレートに assign します。
 </p>
 
-
-
+</div>
 <br>
-<h3><a name="conf">�����œǂݍ��܂��ݒ�t�@�C��</a></h3>
+
+<div class="section">
+<h2 id="h02"><a name="conf">自動で読み込まれる設定ファイル</a></h2>
 <ol>
-<li>config/environment.inc.php (�K�{)<br>
-�f�B�X�p�b�`�y�[�W( public/d.php )�̐擪�œǂݍ��܂�܂��B
+<li>config/environment.inc.php (必須)<br>
+ディスパッチページ( public/d.php )の先頭で読み込まれます。
 </li>
-<li>vendor/plugins/smarty/config/environment.inc.php (�K�{)<br>
-�f�B�X�p�b�`�y�[�W( public/d.php )�̐擪�� environment.inc.php �ɑ����ēǂݍ��܂�܂��B
+<li>vendor/plugins/smarty/config/environment.inc.php (必須)<br>
+ディスパッチページ( public/d.php )の先頭で environment.inc.php に続いて読み込まれます。
 </li>
-<li>app/modules/���W���[����/���W���[����.inc.php<br>
-<a href="withSmarty-cmdRef.html#module">module �R�}���h</a>�Ő�������܂��B
-�R���g���[���ƃA�N�V�������C���X�^���X������钼�O�ɓǂݍ��܂�܂��B
+<li>app/modules/モジュール名/モジュール名.inc.php<br>
+<a href="withSmarty-cmdRef.html#module">module コマンド</a>で生成されます。
+コントローラとアクションがインスタンス化される直前に読み込まれます。
 </li>
-<li>app/modules/���W���[����/action/�A�N�V�����N���X��.inc.php<br>
-<a href="withSmarty-cmdRef.html#action">action �R�}���h</a>�Ő�������܂��B
-�R���g���[���ƃA�N�V�������C���X�^���X������钼�O�ɁA���W���[����.inc.php �ɑ����ēǂݍ��܂�܂��B
+<li>app/modules/モジュール名/action/アクションクラス名.inc.php<br>
+<a href="withSmarty-cmdRef.html#action">action コマンド</a>で生成されます。
+コントローラとアクションがインスタンス化される直前に、モジュール名.inc.php に続いて読み込まれます。
 </li>
 </ol>
-
+</div>
 <br>
-<h3><a name="smarty-conf">Smarty �̊��ݒ�</a></h3>
+
+<div class="section">
+<h2 id="h02"><a name="smarty-conf">Smarty の環境設定</a></h2>
 <p>
-Smarty �̊��ݒ�́Avendor/plugins/smarty/config/environment.inc.php �ōs���܂��B
+　Smarty の環境設定は、vendor/plugins/smarty/config/environment.inc.php で行います。
 </p>
 
 <pre>
@@ -220,17 +306,19 @@ S2Base_SmartyController::$config['cache_dir']   = S2BASE_PHP5_VAR_DIR . '/smarty
 S2Base_SmartyController::$config['caching']     = 0;
 </pre>
 
-S2Base_SmartyController �N���X�� config �v���p�e�B��<a href="http://smarty.php.net/manual/en/api.variables.php">���ݒ�ϐ���</a>�Ƃ��̒l��ݒ肵�܂��B
+S2Base_SmartyController クラスの config プロパティに<a href="http://smarty.php.net/manual/en/api.variables.php">環境設定変数名</a>とその値を設定します。
 
+</div>
 <br>
-<br>
-<h3><a name="service">�A�N�V��������T�[�r�X�𗘗p����</a></h3>
+
+<div class="section">
+<h2 id="h02"><a name="service">アクションからサービスを利用する</a></h2>
 <p>
-�A�N�V�����N���X���� <a href="cmdRef.html#service">service �R�}���h</a>�� <a href="cmdRef.html#goya">goya �R�}���h</a>�ō쐬�����T�[�r�X�𗘗p����ꍇ�A�A�N�V�����_�C�R���ɂăT�[�r�X�_�C�R���� <a href="http://s2container.php5.sandbox.seasar.org/DIContainer.html#includeTag">include</a> ���A�A�N�V�����N���X�ŃT�[�r�X�N���X�p�̃Z�b�^�[���\�b�h���������܂��B
-HelloAction �N���X���� <a href="cmdRef.html#service">service �R�}���h</a>�ō쐬���������Z�T�[�{�X�𗘗p����ꍇ�͎��̂悤�ɂȂ�܂��B
+　アクションクラスから <a href="cmdRef.html#service">service コマンド</a>や <a href="cmdRef.html#goya">goya コマンド</a>で作成したサービスを利用する場合、アクションダイコンにてサービスダイコンを <a href="http://s2container.php5.sandbox.seasar.org/DIContainer.html#includeTag">include</a> し、アクションクラスでサービスクラス用のセッターメソッドを実装します。
+HelloAction クラスから <a href="cmdRef.html#service">service コマンド</a>で作成した足し算サーボスを利用する場合は次のようになります。
 </p>
 
-<h4>�T�[�r�X�_�C�R���� include</h4>
+<h3>サービスダイコンの include</h3>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
@@ -241,7 +329,7 @@ HelloAction �N���X���� <a href="cmdRef.html#service">service �R�}���h</a>�ō쐬�
 &lt;/components&gt;
 </pre>
 
-<h4>�T�[�r�X�N���X�p�̃Z�b�^�[���\�b�h������</h4>
+<h3>サービスクラス用のセッターメソッドを実装</h3>
 <pre>
 &lt;?php
 class HelloAction
@@ -250,25 +338,26 @@ class HelloAction
 
     public function execute(S2Base_Request $request,
                             S2Base_View $view){
-        $result = $this->service->add(2,3);               &lt;--- �T�[�r�X�̗��p
+        $result = $this->service->add(2,3);               &lt;--- サービスの利用
         $view->assign('result',$result);
     }
 
-    public function setService(CulcService $service){     &lt;--- �T�[�r�X�p�̃Z�b�^���\�b�h
+    public function setService(CulcService $service){     &lt;--- サービス用のセッタメソッド
         $this->service = $service;
     }
 }
 ?&gt;
 </pre>
 
-���̃��W���[���̃T�[�r�X�𗘗p����ꍇ�́A���W���[���ݒ�t�@�C�� (���W���[����.inc.php) ���ǂݍ���ŉ������B
+他のモジュールのサービスを利用する場合は、モジュール設定ファイル (モジュール名.inc.php) も読み込んで下さい。
 
+</div>
 <br>
-<br>
-<h3><a name="filter">�A�N�V�����Ƀt�B���^��K�p����</a></h3>
+<div class="section">
+<h2 id="h02"><a name="filter">アクションにフィルタを適用する</a></h2>
 <p>
-�A�N�V������ <a href="withSmarty-cmdRef.html#interceptor">interceptor �R�}���h</a>�ō쐬�����t�B���^��K�p����ꍇ�́A�A�N�V�����_�C�R���� <a href="http://s2container.php5.sandbox.seasar.org/DIContainer.html#aspectTag">aspect</a> �ݒ���s�܂��B
-HelloAction �N���X�� TestBeforeFilter ��K�p����ꍇ�͎��̂悤�ɂȂ�܂��B
+　アクションに <a href="withSmarty-cmdRef.html#interceptor">interceptor コマンド</a>で作成したフィルタを適用する場合は、アクションダイコンで <a href="http://s2container.php5.sandbox.seasar.org/DIContainer.html#aspectTag">aspect</a> 設定を行ます。
+HelloAction クラスに TestBeforeFilter を適用する場合は次のようになります。
 </p>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -283,23 +372,24 @@ HelloAction �N���X�� TestBeforeFilter ��K�p����ꍇ�͎��̂悤�ɂȂ�܂��B
 &lt;/components&gt;
 </pre>
 
+</div>
 <br>
-<br>
-<h3><a name="validate">Validate�t�B���^���쐬����</a></h3>
+<div class="section">
+<h2 id="h02"><a name="validate">Validateフィルタを作成する</a></h2>
 <p>
-<a href="withSmarty-cmdRef.html#interceptor">interceptor �R�}���h</a>�� validate �^�C�v���w�肵�� NumericValidator ���쐬���܂��B NumericValidator �́A<a href="http://jp.php.net/manual/ja/function.is-numeric.php">is_numeric�֐�</a>���g�p���ă��N�G�X�g�p�����[�^�l�� numeric �����m�F���܂��B
-validate�ݒ�ini�t�@�C���� suffix ���� [ numeric ] �Ƃ��܂��Bvalidate�ݒ�ini�t�@�C���́A�Z�N�V�������Ƀ��N�G�X�g�p�����[�^�����g�p���A���N�G�X�g�p�����[�^�l�� numeric �łȂ��ꍇ�̑J�ڐ�ƃ��b�Z�[�W��ݒ肵�܂��B
+　<a href="withSmarty-cmdRef.html#interceptor">interceptor コマンド</a>の validate タイプを指定して NumericValidator を作成します。 NumericValidator は、<a href="http://jp.php.net/manual/ja/function.is-numeric.php">is_numeric関数</a>を使用してリクエストパラメータ値が numeric かを確認します。
+validate設定iniファイルの suffix 名は [ numeric ] とします。validate設定iniファイルは、セクション名にリクエストパラメータ名を使用し、リクエストパラメータ値が numeric でない場合の遷移先とメッセージを設定します。
 </p>
 
 <pre>
-% more app/modules/smarty/validate/�A�N�V������.numeric.ini
+% more app/modules/smarty/validate/アクション名.numeric.ini
 [id]
-page = "error.tpl"              &lt;--- �J�ڐ�e���v���[�g�t�@�C��
-msg  = "id must be numeric"     &lt;--- �G���[���b�Z�[�W
+page = "error.tpl"              &lt;--- 遷移先テンプレートファイル
+msg  = "id must be numeric"     &lt;--- エラーメッセージ
 %
 </pre>
 
-<a href="withSmarty-cmdRef.html#interceptor">interceptor �R�}���h</a>�� NumericValidator ���쐬���܂��B
+<a href="withSmarty-cmdRef.html#interceptor">interceptor コマンド</a>で NumericValidator を作成します。
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -347,27 +437,27 @@ Total time: 15.6232 seconds
 %
 </pre>
 
-NumericValidator ���������܂��B
+NumericValidator を実装します。
 <pre>
 % more app/modules/smarty/interceptor/NumericValidator.class.php
 &lt;?php
 /**
  * available properties.
- *    protected $invocation;     &lt;--- S2Container_MethodInvocation �I�u�W�F�N�g
- *    protected $request;        &lt;--- S2Base_Request �I�u�W�F�N�g
- *    protected $moduleName;     &lt;--- ���W���[���� ( string )
- *    protected $actionName;     &lt;--- �A�N�V������ ( string )
- *    protected $action;         &lt;--- �A�N�V�����I�u�W�F�N�g
- *    protected $view;           &lt;--- S2Base_SmartyController �I�u�W�F�N�g
- *    protected $rule;           &lt;--- validate�ݒ�ini�t�@�C���� parse_ini_file �֐��̌��ʔz��
- *    protected $controller;     &lt;--- S2Base_SmartyController �I�u�W�F�N�g ( $view �Ɠ����ł� )
+ *    protected $invocation;     &lt;--- S2Container_MethodInvocation オブジェクト
+ *    protected $request;        &lt;--- S2Base_Request オブジェクト
+ *    protected $moduleName;     &lt;--- モジュール名 ( string )
+ *    protected $actionName;     &lt;--- アクション名 ( string )
+ *    protected $action;         &lt;--- アクションオブジェクト
+ *    protected $view;           &lt;--- S2Base_SmartyController オブジェクト
+ *    protected $rule;           &lt;--- validate設定iniファイルの parse_ini_file 関数の結果配列
+ *    protected $controller;     &lt;--- S2Base_SmartyController オブジェクト ( $view と同じです )
  */
 class NumericValidator extends S2Base_AbstractValidateFilter {
     public function getSuffix(){
-        return "numeric";            &lt;--- validate�ݒ�ini�t�@�C���� suffix �� (�A�N�V������.numeric.ini �ƂȂ�܂��B)
+        return "numeric";            &lt;--- validate設定iniファイルの suffix 名 (アクション名.numeric.ini となります。)
     }
 
-    public function validate(){      &lt;--- validate �������������܂��B
+    public function validate(){      &lt;--- validate 処理を実装します。
 
         if($this-&gt;rule == null){
             return;
@@ -379,10 +469,10 @@ class NumericValidator extends S2Base_AbstractValidateFilter {
             if (!is_numeric($paramVal)){
                 $page = $val['page'];
                 $this-&gt;controller-&gt;putError('numeric_validator',$val['msg'] . " [ $paramVal ]");
-            }                        ��
-        }             �R���g���[���ɓo�^�����G���[���b�Z�[�W�́A�e���v���[�g�t�@�C���ł� {$errors} �ŎQ�Ƃł��܂��B
+            }                        ↑
+        }             コントローラに登録したエラーメッセージは、テンプレートファイルでは {$errors} で参照できます。
 
-        $this-&gt;rule = null;          &lt;--- rule �z��͕ێ������̂ŏ�����
+        $this-&gt;rule = null;          &lt;--- rule 配列は保持されるので初期化
         return $page;
     }
 }
@@ -390,21 +480,18 @@ class NumericValidator extends S2Base_AbstractValidateFilter {
 %
 </pre>
 
-�쐬�����t�B���^�̓K�p�ɂ��ẮA�u<a href="#filter">�A�N�V�����Ƀt�B���^��K�p����</a>�v���Q�Ɖ������B
+作成したフィルタの適用については、「<a href="#filter">アクションにフィルタを適用する</a>」を参照下さい。
 
-<!-- document end -->
-<!-- don't edit start -->
-</td>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="30" width="14"></td>
-<td width="766"><img src="images/spacer.gif" alt="" height="30" width="592"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-<td class="copyright" width="766">&#169; Copyright The Seasar Project and the others 2005-2006, all rights reserved.</td>
-</tr></tbody></table>
-</td><td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
-<td class="backunder" align="left" height="16" valign="top" width="780">&nbsp;</td>
-<td class="backcorner" align="left" height="16" valign="top">&nbsp;</td>
-</tr></tbody></table><!-- don't edit end -->
+</div>
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&#169; Copyright The Seasar Foundation and the others 2004-2006, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
 </body></html>

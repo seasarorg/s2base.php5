@@ -1,89 +1,167 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html><head><!-- don't edit start --><title>Seasar - DI Container with AOP -</title><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="ja">
 <meta http-equiv="Content-Style-Type" content="text/css">
-<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen"><link href="seasar_p.css" type="text/css" rel="stylesheet" media="print"><script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script></head>
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, オープンソースソフトウェア, Java, フレームワーク">
+<meta name="description" content="私たちSeasarプロジェクトはオープンソースという仕組みの元、開発者のゆとりを実現できるプロダクトの開発と提供を通じて、ユーザと開発者とが共に喜びを分かち合える環境実現をお手伝いすることを目指し活動しています。 ">
+<title>The Seasar Project - S2Base.PHP5</title>
+
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection">
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print"></head><body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo">
+<h1 id="h01" class="hide">The Seasar Project</h1>
+<a href="http://www.seasar.org/">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390">
+</a>
+</div>
+
+<div id="tool">
+</div>
+
+<div id="navi">
+<p><font size="-1"><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; with PRADO &raquo; セットアップ</font></p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>メニュー</h2>
+
+<h3>ドキュメント</h3>
+<ul>
+<li><a href="setup.html">セットアップ</a></li>
+<li><a href="dir.html">ディレクトリ構成</a></li>
+<li><a href="cmdRef.html">コマンドリファレンス</a></li>
+</ul>
+
+<ul>
+<li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
+<li><a href="withAgavi-setup.html">with Agavi</a> <i>(ver 0.10.2)</i></li>
+<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 0.6.3)</i></li>
+<li><a href="withSmarty-setup.html">with Smarty</a></li>
+<li>with PRADO
+    <font size="-2">
+    <ul>
+        <li>セットアップ</li>
+        <li><a href="withPRADO-cmdRef.html">コマンドリファレンス</a></li>
+        <li><a href="withPRADO-dir.html">ディレクトリ構成</a></li>
+    </ul>
+    </font>
+</li>
+</ul>
+
+<h3>サブプロジェクト</h3>
+<ul>
+<li><a href="javelin.html">S2Javelin.PHP5</a></li>
+</ul>
 
 
-<body onLoad="preload('ja')"><table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
-<td align="left" valign="top" width="780"><table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr><td colspan="7"><img src="images/top01_b.gif" alt="" height="5" width="780"></td></tr>
-<tr><td width="235"><img src="images/top02_b.gif" alt="Seasar" height="117" width="235"></td>
-<td colspan="3"><img src="images/top03.gif" alt="DI Container with AOP" height="117" width="289"></td>
-<td colspan="3"><img src="images/spacer.gif" alt="" height="117" width="256"></td>
-</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
-<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" alt="" id="menu01" onMouseOver="swap(1)" onMouseOut="restore(1)" border="0" height="30" width="78"></a></td>
-<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" alt="" id="menu02" onMouseOver="swap(2)" onMouseOut="restore(2)" border="0" height="30" width="101"></a></td>
-<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" alt="" id="menu03" onMouseOver="swap(3)" onMouseOut="restore(3)" border="0" height="30" width="110"></a></td>
-<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" alt="" id="menu04" onMouseOver="swap(4)" onMouseOut="restore(4)" border="0" height="30" width="113"></a></td>
-<td><img src="images/menu05_b_ja.gif" alt="" id="menu05" onMouseOver="swap(5)" onMouseOut="restore(5)" border="0" height="30" width="109"></td>
-<td width="34"><img src="images/menu06.gif" alt="" height="30" width="34"></td></tr><tr>
-<td colspan="6"><img src="images/spacer.gif" alt="" height="19" width="545"></td></tr></tbody></table>
-<table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr align="left" valign="top"><td width="18"><img src="images/spacer.gif" alt="" height="14" width="18"></td><td class="main" width="744">
-<!-- don't edit end -->
-<!-- document start -->
+<h3>リンク</h3>
+<ul>
+    <li><a href="http://www.seasar.org/">Seasar.org</a></li>
+    <li><a href="http://svn.seasar.org/browse/?root=sandbox.s2base.php5">SVN リポジトリブラウザ</a></li>
+    <li><a href="https://www.seasar.org/svn/sandbox/s2base.php5/">SVN リポジトリ</a></li>
+    <li><a href="https://www.seasar.org/issues/browse/BASEPHP">Issue Tracker</a></li>
+    <li><a href="http://s2php5.jp/">s2php5.jp</a>
+        <ul>
+            <li><a href="http://labs.s2php5.jp/s2base">laboratory</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5">wiki</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5/plugins">plugins</a></li>
+            <li><a href="http://docs.s2php5.jp/s2base/api/">PHPDoc</a></li>
+        </ul>
+    </li>
+</ul>
 
-<h2>with PRADO - �Z�b�g�A�b�v</h2>
+<h2>PHP プロジェクト</h2>
 
-<h3>1 - S2Base.PHP5 �̃C���X�g�[��</h3>
+<h3>Seasar.PHP</h3>
+
+<ul>
+    <li><a href="http://s2container.php5.seasar.org/">S2Container.PHP5</a></li>
+    <li><a href="http://s2dao.php5.seasar.org/">S2Dao.PHP5</a></li>
+</ul>
+
+<h3>Sandbox.PHP</h3>
+
+<ul>
+    <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
+    <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
+</ul>
+
+
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+<h2 id="h02">with PRADO - セットアップ</h2>
+
+<h3>S2Base.PHP5 のインストール</h3>
 <p>
-<a href="setup.html">�Z�b�g�A�b�v</a>�ɏ]���� S2Base.PHP5 ���C���X�g�[�����ĉ������B
+　<a href="setup.html">セットアップ</a>に従って S2Base.PHP5 をインストールして下さい。
 </p>
-<h3>2 - PRADO �̃C���X�g�[��</h3>
-<p>
+<h3>PRADO のインストール</h3>
 <ol>
 <li>
-<a href="http://www.pradosoft.com/download/">PRADO</a>���prado-3.xxxxxxx.zip���_�E�����[�h���𓀂��Ă��������B
+<a href="http://www.pradosoft.com/download/">PRADO</a>をダウンロードし解凍してください。
 </li>
 <li>
-prado-3.xxxxxxx�Ƃ����f�B���N�g���̖��̂�prado�ƕύX���AWeb���J�f�B���N�g�������Ɉړ����ĉ������B
+解凍の結果作成されたディレクトリの名称をpradoと変更し、Web公開ディレクトリ直下に移動して下さい。
 </li>
 </ol>
-</p>
-<h3>3 - build.xml�̕ҏW</h3>
-<p>
-s2base.php5/vendor/plugins/prado/build.xml�ɂ����ĉ��L�ҏW��Ƃ��s���Ă��������B
+<h3>build.xmlの編集</h3>
+s2base.php5/vendor/plugins/prado/build.xmlにおいて下記編集作業を行ってください。
 <ol>
 <li>
-�f�t�H���g�^�X�N�� [ prado ] ��ݒ肷��
+WEB公開ディレクトリ名を設定する。
 </li>
 <li>
-WEB���J�f�B���N�g������ݒ肷��B
-</li>
-<li>
-WEB���J�f�B���N�g������S2Base.PHP5�C���X�g�[���f�B���N�g���̑��΃p�X��ݒ肷��B
+WEB公開ディレクトリからS2Base.PHP5インストールディレクトリの相対パスを設定する。
 </li>
 </ol>
-</p>
 <pre>
 &lt;?xml version="1.0"?&gt;
-&lt;project name="project" default="prado" basedir="."&gt;
-    &lt;target name="command"&gt;     ��
-    �E�E�E�@�@                  prado �ɐݒ�
+&lt;project name="project" default="command" basedir="."&gt;
+    &lt;target name="command"&gt;
         &lt;php expression="define('DOCUMENT_ROOT_DIR','/var/www/public_html/')"/&gt;
-		                                                  ��
-		                                 WEB���J�f�B���N�g���̐�΃p�X���L�q       
+		                                                  ↑
+		                                 WEB公開ディレクトリの絶対パスを記述       
         &lt;php expression="define('DOCUMENT_ROOT_S2BASE_RELATION','../s2base.php5')"/&gt;
-		                                                  ��
-		              WEB���J�f�B���N�g������S2Base.php5�C���X�g�[���f�B���N�g���ւ̑��΃p�X���L�q
-		               �i/var/www/s2base.php5�̏ꍇ�j       
-    �E�E�E
+		                                                  ↑
+		              WEB公開ディレクトリからS2Base.php5インストールディレクトリへの相対パスを記述
+		               （/var/www/s2base.php5の場合）       
+    ・・・
     &lt;/target&gt; 
 &lt;/project&gt;
 </pre>
-��L�ݒ�̑ΏۂƂȂ��Ă���f�B���N�g���\���ɂ��ẮA<a href="">PRADO�v���O�C���g�p���̃f�B���N�g���\��</a>���Q�Ƃ��Ă��������B
+上記設定の対象となっているディレクトリ構造については、<a href="">PRADOプラグイン使用時のディレクトリ構造</a>を参照してください。
 
-<h3>4 - ����m�F</h3>
-<h4>PRADO�̓���m�F</h4>
-PRADO�̓���m�F�`�F�b�J�[��T���v���v���O�����͉��LURL�o�R�Ŏ��s�ł��܂��B(�����T�[�o�[��localhost�Ƃ��ċL��)<br>
-�@<a href="http://localhost/prado/">http://localhost/prado/</a><br>
-�ڍׂɊւ��Ă�<a href="http://pradosoft.com/">PRADO�����T�C�g</a>���Q�Ƃ��Ă��������B
+<h3>動作確認</h3>
+<h4>PRADOの動作確認</h4>
+PRADOの動作確認チェッカーやサンプルプログラムは下記URL経由で実行できます。(導入サーバーをlocalhostとして記載)<br>
+　<a href="http://localhost/prado/">http://localhost/prado/</a><br>
+詳細に関しては<a href="http://pradosoft.com/">PRADO公式サイト</a>を参照してください。
 
-<h4>S2Base�̓���m�F</h4>
-s2base.php5 �f�B���N�g���ɂ����� phing�R�}���h�����s���܂��B�R�}���h���X�g���\�������ƃC���X�g�[���������ł��B
+<h4>S2Baseの動作確認</h4>
+s2base.php5 ディレクトリにおいて phingコマンド(phing -f prado.xml)を実行します。コマンドリストが表示されるとインストールが完了です。
 <pre>
-%phing
-Buildfile: /private/var/www/s2base.php5/build.xml
+%phing -f prado.xml
+Buildfile: /private/var/www/s2base.php5/prado.xml
       [php] Evaluating PHP expression: ini_set('include_path','lib'.PATH_SEPARATOR.
 	                                                             ini_get('include_path'))
       [php] Evaluating PHP expression: require_once('S2Base/S2Base.phing.php')
@@ -105,34 +183,27 @@ project > command:
 0 : (exit)
 1 : command
 2 : dao
-3 : dao method
-4 : dicon
-5 : dto
-6 : entity
-7 : goya
-8 : interceptor
-9 : logic
-10 : module
-11 : page
-12 : service
-13 : sqlite-cli
+3 : dicon
+4 : entity
+5 : goya
+6 : interceptor
+7 : module
+8 : page
+9 : service
 choice ? : 
 
 </pre>
 
-<!-- document end -->
-<!-- don't edit start -->
-</td>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="30" width="14"></td>
-<td width="766"><img src="images/spacer.gif" alt="" height="30" width="592"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-<td class="copyright" width="766">&#169; Copyright The Seasar Project and the others 2005-2006, all rights reserved.</td>
-</tr></tbody></table>
-</td><td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
-<td class="backunder" align="left" height="16" valign="top" width="780">&nbsp;</td>
-<td class="backcorner" align="left" height="16" valign="top">&nbsp;</td>
-</tr></tbody></table><!-- don't edit end -->
+</div>
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&#169; Copyright The Seasar Foundation and the others 2004-2006, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
 </body></html>

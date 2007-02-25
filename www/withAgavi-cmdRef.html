@@ -1,49 +1,129 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html><head><!-- don't edit start --><title>Seasar - DI Container with AOP -</title><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="ja">
 <meta http-equiv="Content-Style-Type" content="text/css">
-<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen"><link href="seasar_p.css" type="text/css" rel="stylesheet" media="print"><script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script></head>
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, ã‚ªãƒ¼ãƒ—ãƒ³ã‚½ãƒ¼ã‚¹ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢, Java, ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯">
+<meta name="description" content="ç§ãŸã¡Seasarãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã¯ã‚ªãƒ¼ãƒ—ãƒ³ã‚½ãƒ¼ã‚¹ã¨ã„ã†ä»•çµ„ã¿ã®å…ƒã€é–‹ç™ºè€…ã®ã‚†ã¨ã‚Šã‚’å®Ÿç¾ã§ãã‚‹ãƒ—ãƒ­ãƒ€ã‚¯ãƒˆã®é–‹ç™ºã¨æä¾›ã‚’é€šã˜ã¦ã€ãƒ¦ãƒ¼ã‚¶ã¨é–‹ç™ºè€…ã¨ãŒå…±ã«å–œã³ã‚’åˆ†ã‹ã¡åˆãˆã‚‹ç’°å¢ƒå®Ÿç¾ã‚’ãŠæ‰‹ä¼ã„ã™ã‚‹ã“ã¨ã‚’ç›®æŒ‡ã—æ´»å‹•ã—ã¦ã„ã¾ã™ã€‚ ">
+<title>The Seasar Project - S2Base.PHP5</title>
 
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection">
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print"></head><body>
 
-<body onload="preload('ja')"><table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
-<td align="left" valign="top" width="780"><table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr><td colspan="7"><img src="images/top01_b.gif" alt="" height="5" width="780"></td></tr>
-<tr><td width="235"><img src="images/top02_b.gif" alt="Seasar" height="117" width="235"></td>
-<td colspan="3"><img src="images/top03.gif" alt="DI Container with AOP" height="117" width="289"></td>
-<td colspan="3"><img src="images/spacer.gif" alt="" height="117" width="256"></td>
-</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
-<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)" border="0" height="30" width="78"></a></td>
-<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)" border="0" height="30" width="101"></a></td>
-<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)" border="0" height="30" width="110"></a></td>
-<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)" border="0" height="30" width="113"></a></td>
-<td><img src="images/menu05_b_ja.gif" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)" border="0" height="30" width="109"></td>
-<td width="34"><img src="images/menu06.gif" alt="" height="30" width="34"></td></tr><tr>
-<td colspan="6"><img src="images/spacer.gif" alt="" height="19" width="545"></td></tr></tbody></table>
-<table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr align="left" valign="top"><td width="18"><img src="images/spacer.gif" alt="" height="14" width="18"></td><td class="main" width="744">
-<!-- don't edit end -->
-<!-- document start -->
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo">
+<h1 id="h01" class="hide">The Seasar Project</h1>
+<a href="http://www.seasar.org/">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390">
+</a>
+</div>
+
+<div id="tool">
+</div>
+
+<div id="navi">
+<p><font size="-1"><a href="index.html">S2Base.PHP5 ãƒ›ãƒ¼ãƒ </a> &raquo; with Agavi &raquo; ã‚³ãƒãƒ³ãƒ‰ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹</font></p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>ãƒ¡ãƒ‹ãƒ¥ãƒ¼</h2>
+
+<h3>ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ</h3>
+<ul>
+<li><a href="setup.html">ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—</a></li>
+<li><a href="dir.html">ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªæ§‹æˆ</a></li>
+<li><a href="cmdRef.html">ã‚³ãƒãƒ³ãƒ‰ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹</a></li>
+</ul>
 
 <ul>
-<li><a href="#cmd-ref">with Agavi - ƒRƒ}ƒ“ƒhƒŠƒtƒ@ƒŒƒ“ƒX</a></li>
-  <ul>
-    <li><a href="#project">project ƒRƒ}ƒ“ƒh</a></li>
-    <li><a href="#module">module ƒRƒ}ƒ“ƒh</a></li>
-    <li><a href="#action">action ƒRƒ}ƒ“ƒh</a></li>
-    <li><a href="#service">service ƒRƒ}ƒ“ƒh</a></li>
-    <li><a href="#dao">dao ƒRƒ}ƒ“ƒh</a></li>
-    <li><a href="#test">test ƒ^ƒXƒN</a></li>
-  </ul>
+<li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
+<li><a href="withAgavi-setup.html">with Agavi</a> <i>(ver 0.10.2)</i>
+    <font size="-2">
+    <ul>
+        <li><a href="withAgavi-setup.html">ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—</a></li>
+        <li>ã‚³ãƒãƒ³ãƒ‰ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹
+            <ul>
+                <li><a href="#project">project ã‚³ãƒãƒ³ãƒ‰</a></li>
+                <li><a href="#module">module ã‚³ãƒãƒ³ãƒ‰</a></li>
+                <li><a href="#action">action ã‚³ãƒãƒ³ãƒ‰</a></li>
+                <li><a href="#service">service ã‚³ãƒãƒ³ãƒ‰</a></li>
+                <li><a href="#dao">dao ã‚³ãƒãƒ³ãƒ‰</a></li>
+                <li><a href="#test">test ã‚¿ã‚¹ã‚¯</a></li>
+            </ul>
+        </i>
+        <li><a href="withAgavi-changes.html">é€£æºæ™‚ã«è‡ªå‹•ã§å¤‰æ›´ã•ã‚Œã‚‹è¨­å®š</a></i>
+    </ul>
+    </font>
+</li>
+<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 0.6.3)</i></li>
+<li><a href="withSmarty-setup.html">with Smarty</a></li>
+<li><a href="withPRADO-setup.html">with PRADO</a></li>
 </ul>
-<br>
 
-<h2><a name="cmd-ref">with Agavi - ƒRƒ}ƒ“ƒhƒŠƒtƒ@ƒŒƒ“ƒX</a></h2>
+<h3>ã‚µãƒ–ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ</h3>
+<ul>
+<li><a href="javelin.html">S2Javelin.PHP5</a></li>
+</ul>
 
-<h3><a name="project">project ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<h3>ãƒªãƒ³ã‚¯</h3>
+<ul>
+    <li><a href="http://www.seasar.org/">Seasar.org</a></li>
+    <li><a href="http://svn.seasar.org/browse/?root=sandbox.s2base.php5">SVN ãƒªãƒã‚¸ãƒˆãƒªãƒ–ãƒ©ã‚¦ã‚¶</a></li>
+    <li><a href="https://www.seasar.org/svn/sandbox/s2base.php5/">SVN ãƒªãƒã‚¸ãƒˆãƒª</a></li>
+    <li><a href="https://www.seasar.org/issues/browse/BASEPHP">Issue Tracker</a></li>
+    <li><a href="http://s2php5.jp/">s2php5.jp</a>
+        <ul>
+            <li><a href="http://labs.s2php5.jp/s2base">laboratory</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5">wiki</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5/plugins">plugins</a></li>
+            <li><a href="http://docs.s2php5.jp/s2base/api/">PHPDoc</a></li>
+        </ul>
+    </li>
+</ul>
+
+<h2>PHP ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ</h2>
+
+<h3>Seasar.PHP</h3>
+
+<ul>
+    <li><a href="http://s2container.php5.seasar.org/">S2Container.PHP5</a></li>
+    <li><a href="http://s2dao.php5.seasar.org/">S2Dao.PHP5</a></li>
+</ul>
+
+<h3>Sandbox.PHP</h3>
+
+<ul>
+    <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
+    <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
+</ul>
+
+
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+<h2 id="h02"><a name="project">project ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-agavi‚ÌprojectƒRƒ}ƒ“ƒh‚ğƒ‰ƒbƒv‚µAS2Container.PHP5/S2Dao.PHP5‚Æ˜AŒg‚·‚é‚½‚ß‚Ìƒtƒ@ƒCƒ‹’Ç‰Á‚âİ’è‚ğ©“®‚Ås‚¢‚Ü‚·B•ÏX‚³‚ê‚½ƒtƒ@ƒCƒ‹‚Ìæ‚èˆµ‚¢‚É‚Â‚¢‚Ä‚Í<a href="withAgavi-changes.html">˜AŒg‚É©“®‚Å•ÏX‚³‚ê‚éİ’è</a>‚ğQÆ‚µ‚Ä‰º‚³‚¢Bmodules/MODULE_NAMEˆÈ‰º‚É’Ç‰Á‚Åì¬‚³‚ê‚éƒfƒBƒŒƒNƒgƒŠ‚Ídao/Adicon/Aentity/Ainterceptor/Aservice/‚É‚È‚è‚Ü‚·BdiconƒfƒBƒŒƒNƒgƒŠ‚É‚Íaction–¼‚Æ‘Î‰‚µ‚½diconƒtƒ@ƒCƒ‹‚ªì¬‚³‚ê‚Ü‚·B
+ã€€agaviã®projectã‚³ãƒãƒ³ãƒ‰ã‚’ãƒ©ãƒƒãƒ—ã—ã€S2Container.PHP5/S2Dao.PHP5ã¨é€£æºã™ã‚‹ãŸã‚ã®ãƒ•ã‚¡ã‚¤ãƒ«è¿½åŠ ã‚„è¨­å®šã‚’è‡ªå‹•ã§è¡Œã„ã¾ã™ã€‚å¤‰æ›´ã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ã®å–ã‚Šæ‰±ã„ã«ã¤ã„ã¦ã¯<a href="withAgavi-changes.html">é€£æºæ™‚ã«è‡ªå‹•ã§å¤‰æ›´ã•ã‚Œã‚‹è¨­å®š</a>ã‚’å‚ç…§ã—ã¦ä¸‹ã•ã„ã€‚modules/MODULE_NAMEä»¥ä¸‹ã«è¿½åŠ ã§ä½œæˆã•ã‚Œã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¯dao/ã€dicon/ã€entity/ã€interceptor/ã€service/ã«ãªã‚Šã¾ã™ã€‚diconãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ã¯actionåã¨å¯¾å¿œã—ãŸdiconãƒ•ã‚¡ã‚¤ãƒ«ãŒä½œæˆã•ã‚Œã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
+<h3>å®Ÿè¡Œä¾‹</h3>
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -65,16 +145,16 @@ project > command:
 3 : action
 4 : module
 5 : project
-choice ? : 5                &lt;--- 5 : project ‚ğ‘I‘ğ
+choice ? : 5                &lt;--- 5 : project ã‚’é¸æŠ
 
-ProjectFullPath[/seasar.php/workspace/s2base.php5] ? : /Users/seasar  &lt;--- ”CˆÓ‚ÌƒfƒBƒŒƒNƒgƒŠ‚ğƒtƒ‹ƒpƒX‚Å“ü—Í
-                                                                       (ƒfƒtƒHƒ‹ƒg‚ÍS2Base.PHP5ƒCƒ“ƒXƒg[ƒ‹ƒfƒBƒŒƒNƒgƒŠ)
+ProjectFullPath[/seasar.php/workspace/s2base.php5] ? : /Users/seasar  &lt;--- ä»»æ„ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ãƒ•ãƒ«ãƒ‘ã‚¹ã§å…¥åŠ›
+                                                                       (ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯S2Base.PHP5ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª)
 
-ModuleName[Default] ? :     &lt;---ƒ‚ƒWƒ…[ƒ‹–¼‚ğ“ü—Í(ƒfƒtƒHƒ‹ƒg‚ÍDefault)
+ModuleName[Default] ? :     &lt;---ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åã‚’å…¥åŠ›(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯Default)
 
-ActionName[Index] ? :       &lt;---ƒAƒNƒVƒ‡ƒ“–¼‚ğ“ü—Í(ƒfƒtƒHƒ‹ƒg‚ÍIndex)
+ActionName[Index] ? :       &lt;---ã‚¢ã‚¯ã‚·ãƒ§ãƒ³åã‚’å…¥åŠ›(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯Index)
 
-ViewName[Input,Success] ? : &lt;---ƒrƒ…[–¼‚ğ“ü—Í(ƒfƒtƒHƒ‹ƒg‚ÍInput,Success)
+ViewName[Input,Success] ? : &lt;---ãƒ“ãƒ¥ãƒ¼åã‚’å…¥åŠ›(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯Input,Success)
 
 [ generate information ]
   project path        : /Users/seasar
@@ -82,7 +162,7 @@ ViewName[Input,Success] ? : &lt;---ƒrƒ…[–¼‚ğ“ü—Í(ƒfƒtƒHƒ‹ƒg‚ÍInput,Success)
   action name         : Index
   view name           : Input,Success
 
-confirm ? (y/n) : y         &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y         &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 
 [INFO ] generate agavi project (heavy) : /Users/seasar
 [INFO ] create : /Users/seasar/webapp/lib/s2agavi
@@ -108,14 +188,16 @@ BUILD FINISHED
 
 Total time: 11.1295 seconds
 </pre>
-
+</div>
 <br>
-<h3><a name="module">module ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<div class="section">
+<h2 id="h02"><a name="module">module ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-agavi‚ÌmoduleƒRƒ}ƒ“ƒh‚ğƒ‰ƒbƒv‚µAautoload.ini‚Éƒ‚ƒWƒ…[ƒ‹î•ñ‚ğ’Ç‹L‚µ‚Ü‚·Bmodules/MODULE_NAMEˆÈ‰º‚Éì¬‚³‚ê‚éƒfƒBƒŒƒNƒgƒŠ‚âƒtƒ@ƒCƒ‹‚ÍprojectƒRƒ}ƒ“ƒh‚Æ“¯—l‚Å‚·B
+ã€€agaviã®moduleã‚³ãƒãƒ³ãƒ‰ã‚’ãƒ©ãƒƒãƒ—ã—ã€autoload.iniã«ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«æƒ…å ±ã‚’è¿½è¨˜ã—ã¾ã™ã€‚modules/MODULE_NAMEä»¥ä¸‹ã«ä½œæˆã•ã‚Œã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚„ãƒ•ã‚¡ã‚¤ãƒ«ã¯projectã‚³ãƒãƒ³ãƒ‰ã¨åŒæ§˜ã§ã™ã€‚
 </p>
-<h4>Às—á</h4>
+<h3>å®Ÿè¡Œä¾‹</h3>
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -137,16 +219,16 @@ project > command:
 3 : action
 4 : module
 5 : project
-choice ? : 4                &lt;--- 4 : module ‚ğ‘I‘ğ
+choice ? : 4                &lt;--- 4 : module ã‚’é¸æŠ
 
-ProjectFullPath[/Users/seasar] ? :     &lt;--- ƒvƒƒWƒFƒNƒg‚ÌƒfƒBƒŒƒNƒgƒŠ‚ğƒtƒ‹ƒpƒX‚Å“ü—Í
-                                           (ƒfƒtƒHƒ‹ƒg‚ÍprojectƒRƒ}ƒ“ƒh‚Å“ü—Í‚³‚ê‚½î•ñ)
+ProjectFullPath[/Users/seasar] ? :     &lt;--- ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ãƒ•ãƒ«ãƒ‘ã‚¹ã§å…¥åŠ›
+                                           (ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯projectã‚³ãƒãƒ³ãƒ‰ã§å…¥åŠ›ã•ã‚ŒãŸæƒ…å ±)
 
-ModuleName[Default] ? :  Demo   &lt;---ƒ‚ƒWƒ…[ƒ‹–¼‚ğ“ü—Í(ƒfƒtƒHƒ‹ƒg‚ÍDefault)
+ModuleName[Default] ? :  Demo   &lt;---ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åã‚’å…¥åŠ›(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯Default)
 
-ActionName[Index] ? :       &lt;---ƒAƒNƒVƒ‡ƒ“–¼‚ğ“ü—Í(ƒfƒtƒHƒ‹ƒg‚ÍIndex)
+ActionName[Index] ? :       &lt;---ã‚¢ã‚¯ã‚·ãƒ§ãƒ³åã‚’å…¥åŠ›(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯Index)
 
-ViewName[Input,Success] ? : &lt;---ƒrƒ…[–¼‚ğ“ü—Í(ƒfƒtƒHƒ‹ƒg‚ÍInput,Success)
+ViewName[Input,Success] ? : &lt;---ãƒ“ãƒ¥ãƒ¼åã‚’å…¥åŠ›(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯Input,Success)
 
 [ generate information ]
   project path        : /Users/seasar
@@ -154,7 +236,7 @@ ViewName[Input,Success] ? : &lt;---ƒrƒ…[–¼‚ğ“ü—Í(ƒfƒtƒHƒ‹ƒg‚ÍInput,Success)
   action name         : Index
   view name           : Input,Success
   
-confirm ? (y/n) : y         &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y         &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 
 [INFO ] generate agavi module : Demo
 [INFO ] create : /Users/seasar/webapp/modules/Demo/dao/
@@ -173,13 +255,16 @@ BUILD FINISHED
 Total time: 11.1295 seconds
 </pre>
 
+</div>
 <br>
-<h3><a name="action">action ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<div class="section">
+<h2 id="h02"><a name="action">action ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-agavi‚ÌactionƒRƒ}ƒ“ƒh‚ğƒ‰ƒbƒv‚µA‘Î‰‚·‚édiconƒtƒ@ƒCƒ‹‚ğì¬‚µ‚Ü‚·B
+ã€€agaviã®actionã‚³ãƒãƒ³ãƒ‰ã‚’ãƒ©ãƒƒãƒ—ã—ã€å¯¾å¿œã™ã‚‹diconãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã—ã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
+<h3>å®Ÿè¡Œä¾‹</h3>
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -221,7 +306,7 @@ ViewName[Input,Success] ? : Success
   action name         : List
   view name           : Success
 
-confirm ? (y/n) : y         &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y         &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 
 [INFO ] generate agavi action : List
 [INFO ] create : /Users/seasar/webapp/modules/Demo/dicon/List.dicon
@@ -230,29 +315,36 @@ BUILD FINISHED
 
 Total time: 11.1295 seconds
 </pre>
-
+</div>
 <br>
-<h3><a name="service">service ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<div class="section">
+<h2 id="h02"><a name="service">service ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-<a href="cmdRef.html#service">serviceƒRƒ}ƒ“ƒh</a>‚ğQÆ‚µ‚Ä‰º‚³‚¢B¶¬æ‚ÍƒvƒƒWƒFƒNƒgƒfƒBƒŒƒNƒgƒŠ“à‚É‚È‚è‚Ü‚·B
+ã€€<a href="cmdRef.html#service">serviceã‚³ãƒãƒ³ãƒ‰</a>ã‚’å‚ç…§ã—ã¦ä¸‹ã•ã„ã€‚ç”Ÿæˆå…ˆã¯ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå†…ã«ãªã‚Šã¾ã™ã€‚
 </p>
 
+</div>
 <br>
-<h3><a name="dao">dao ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
-<p>
-<a href="cmdRef.html#dao">daoƒRƒ}ƒ“ƒh</a>‚ğQÆ‚µ‚Ä‰º‚³‚¢B¶¬æ‚ÍƒvƒƒWƒFƒNƒgƒfƒBƒŒƒNƒgƒŠ“à‚É‚È‚è‚Ü‚·B
-</p>
 
-<br>
-<h3><a name="test">test ƒ^ƒXƒN</a></h3>
-<h4>à–¾</h4>
+<div class="section">
+<h2 id="h02"><a name="dao">dao ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-agavi ƒ^ƒXƒN‚Ì serviceAdaoAgoya ‚Å‚ÍAƒvƒƒWƒFƒNƒgƒfƒBƒŒƒNƒgƒŠ’¼‰º‚Ì tests ƒfƒBƒŒƒNƒgƒŠ‚ÉUnitTest‚ğ¶¬‚µ‚Ü‚·B‚±‚ê‚ç‚ÌUnitTest‚ğƒTƒuƒ^ƒXƒN‚Æ‚µ‚ÄÀs‚µ‚Ü‚·B
+ã€€<a href="cmdRef.html#dao">daoã‚³ãƒãƒ³ãƒ‰</a>ã‚’å‚ç…§ã—ã¦ä¸‹ã•ã„ã€‚ç”Ÿæˆå…ˆã¯ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå†…ã«ãªã‚Šã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
-phing ƒRƒ}ƒ“ƒh‚ÌƒIƒvƒVƒ‡ƒ“ -DƒvƒƒpƒeƒB–¼ ‚ğg—p‚µ‚ÄAtestƒ^ƒXƒN‚ğŒÄ‚Ño‚µ‚Ü‚·BƒvƒƒpƒeƒB–¼‚Íu st v‚Å‚·B
+</div>
+<br>
+
+<div class="section">
+<h2 id="h02"><a name="test">test ã‚¿ã‚¹ã‚¯</a></h2>
+<h3>èª¬æ˜</h3>
+<p>
+ã€€agavi ã‚¿ã‚¹ã‚¯ã® serviceã€daoã€goya ã§ã¯ã€ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªç›´ä¸‹ã® tests ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«UnitTestã‚’ç”Ÿæˆã—ã¾ã™ã€‚ã“ã‚Œã‚‰ã®UnitTestã‚’ã‚µãƒ–ã‚¿ã‚¹ã‚¯ã¨ã—ã¦å®Ÿè¡Œã—ã¾ã™ã€‚
+</p>
+<h3>å®Ÿè¡Œä¾‹</h3>
+ã€€phing ã‚³ãƒãƒ³ãƒ‰ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³ -Dãƒ—ãƒ­ãƒ‘ãƒ†ã‚£å ã‚’ä½¿ç”¨ã—ã¦ã€testã‚¿ã‚¹ã‚¯ã‚’å‘¼ã³å‡ºã—ã¾ã™ã€‚ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£åã¯ã€Œ st ã€ã§ã™ã€‚
 <pre>
 % phing -Dst=test
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -266,10 +358,10 @@ project > agavi:
 
 project > test:
  [property] Loading /seasar.php/workspace/s2base.php5/var/cache/ag.project.cache
-ProjectFullPath  [/Users/seasar]?     &lt;--- ƒvƒƒWƒFƒNƒg‚ÌƒfƒBƒŒƒNƒgƒŠ‚ğƒtƒ‹ƒpƒX‚Å“ü—Í
-                                           (ƒfƒtƒHƒ‹ƒg‚ÍprojectƒRƒ}ƒ“ƒh‚Å“ü—Í‚³‚ê‚½î•ñ)
-ModuleName ? Default                  &lt;--- ƒ‚ƒWƒ…[ƒ‹–¼‚ğ“ü—Í
-TestDirectory  [dao,service]?         &lt;--- ƒeƒXƒg‚·‚éƒfƒBƒŒƒNƒgƒŠ‚ğw’è(ƒfƒtƒHƒ‹ƒg‚Ídao‚Æservice)
+ProjectFullPath  [/Users/seasar]?     &lt;--- ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ãƒ•ãƒ«ãƒ‘ã‚¹ã§å…¥åŠ›
+                                           (ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯projectã‚³ãƒãƒ³ãƒ‰ã§å…¥åŠ›ã•ã‚ŒãŸæƒ…å ±)
+ModuleName ? Default                  &lt;--- ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åã‚’å…¥åŠ›
+TestDirectory  [dao,service]?         &lt;--- ãƒ†ã‚¹ãƒˆã™ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’æŒ‡å®š(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯daoã¨service)
   [foreach] Calling Buildfile '/seasar.php/workspace/s2base.php5/vendor/plugins/agavi/build.xml' with target 'doTest'
 
 project > doTest:
@@ -286,19 +378,16 @@ BUILD FINISHED
 Total time: 6.9865 seconds
 </pre>
 
-<!-- document end -->
-<!-- don't edit start -->
-</td>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="30" width="14"></td>
-<td width="766"><img src="images/spacer.gif" alt="" height="30" width="592"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-<td class="copyright" width="766">&#169; Copyright The Seasar Project and the others 2005-2006, all rights reserved.</td>
-</tr></tbody></table>
-</td><td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
-<td class="backunder" align="left" height="16" valign="top" width="780">&nbsp;</td>
-<td class="backcorner" align="left" height="16" valign="top">&nbsp;</td>
-</tr></tbody></table><!-- don't edit end -->
+</div>
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&#169; Copyright The Seasar Foundation and the others 2004-2006, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
 </body></html>

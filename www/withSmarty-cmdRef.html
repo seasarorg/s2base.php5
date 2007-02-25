@@ -1,47 +1,127 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html><head><!-- don't edit start --><title>Seasar - DI Container with AOP -</title><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="ja">
 <meta http-equiv="Content-Style-Type" content="text/css">
-<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen"><link href="seasar_p.css" type="text/css" rel="stylesheet" media="print"><script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script></head>
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, ã‚ªãƒ¼ãƒ—ãƒ³ã‚½ãƒ¼ã‚¹ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢, Java, ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯">
+<meta name="description" content="ç§ãŸã¡Seasarãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã¯ã‚ªãƒ¼ãƒ—ãƒ³ã‚½ãƒ¼ã‚¹ã¨ã„ã†ä»•çµ„ã¿ã®å…ƒã€é–‹ç™ºè€…ã®ã‚†ã¨ã‚Šã‚’å®Ÿç¾ã§ãã‚‹ãƒ—ãƒ­ãƒ€ã‚¯ãƒˆã®é–‹ç™ºã¨æä¾›ã‚’é€šã˜ã¦ã€ãƒ¦ãƒ¼ã‚¶ã¨é–‹ç™ºè€…ã¨ãŒå…±ã«å–œã³ã‚’åˆ†ã‹ã¡åˆãˆã‚‹ç’°å¢ƒå®Ÿç¾ã‚’ãŠæ‰‹ä¼ã„ã™ã‚‹ã“ã¨ã‚’ç›®æŒ‡ã—æ´»å‹•ã—ã¦ã„ã¾ã™ã€‚ ">
+<title>The Seasar Project - S2Base.PHP5</title>
 
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection">
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print"></head><body>
 
-<body onload="preload('ja')"><table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
-<td align="left" valign="top" width="780"><table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr><td colspan="7"><img src="images/top01_b.gif" alt="" height="5" width="780"></td></tr>
-<tr><td width="235"><img src="images/top02_b.gif" alt="Seasar" height="117" width="235"></td>
-<td colspan="3"><img src="images/top03.gif" alt="DI Container with AOP" height="117" width="289"></td>
-<td colspan="3"><img src="images/spacer.gif" alt="" height="117" width="256"></td>
-</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
-<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)" border="0" height="30" width="78"></a></td>
-<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)" border="0" height="30" width="101"></a></td>
-<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)" border="0" height="30" width="110"></a></td>
-<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)" border="0" height="30" width="113"></a></td>
-<td><img src="images/menu05_b_ja.gif" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)" border="0" height="30" width="109"></td>
-<td width="34"><img src="images/menu06.gif" alt="" height="30" width="34"></td></tr><tr>
-<td colspan="6"><img src="images/spacer.gif" alt="" height="19" width="545"></td></tr></tbody></table>
-<table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr align="left" valign="top"><td width="18"><img src="images/spacer.gif" alt="" height="14" width="18"></td><td class="main" width="744">
-<!-- don't edit end -->
-<!-- document start -->
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo">
+<h1 id="h01" class="hide">The Seasar Project</h1>
+<a href="http://www.seasar.org/">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390">
+</a>
+</div>
+
+<div id="tool">
+</div>
+
+<div id="navi">
+<p><font size="-1"><a href="index.html">S2Base.PHP5 ãƒ›ãƒ¼ãƒ </a> &raquo; with Smarty &raquo; ã‚³ãƒãƒ³ãƒ‰ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹</font></p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>ãƒ¡ãƒ‹ãƒ¥ãƒ¼</h2>
+
+<h3>ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ</h3>
+<ul>
+<li><a href="setup.html">ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—</a></li>
+<li><a href="dir.html">ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªæ§‹æˆ</a></li>
+<li><a href="cmdRef.html">ã‚³ãƒãƒ³ãƒ‰ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹</a></li>
+</ul>
 
 <ul>
-<li><a href="#cmd-ref">with Smarty - ƒRƒ}ƒ“ƒhƒŠƒtƒ@ƒŒƒ“ƒX</a></li>
-  <ul>
-    <li><a href="#module">module ƒRƒ}ƒ“ƒh</a></li>
-    <li><a href="#action">action ƒRƒ}ƒ“ƒh</a></li>
-    <li><a href="#interceptor">interceptor ƒRƒ}ƒ“ƒh</a></li>
-    <li><a href="#goya">goya ƒRƒ}ƒ“ƒh</a></li>
-  </ul>
+<li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
+<li><a href="withAgavi-setup.html">with Agavi</a> <i>(ver 0.10.2)</i></li>
+<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 0.6.3)</i></li>
+<li><a href="withSmarty-setup.html">with Smarty</a>
+    <font size="-2">
+    <ul>
+        <li><a href="withSmarty-setup.html">ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—</a></li>
+        <li>ã‚³ãƒãƒ³ãƒ‰ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹
+            <ul>
+                <li><a href="#module">module ã‚³ãƒãƒ³ãƒ‰</a></li>
+                <li><a href="#action">action ã‚³ãƒãƒ³ãƒ‰</a></li>
+                <li><a href="#interceptor">interceptor ã‚³ãƒãƒ³ãƒ‰</a></li>
+                <li><a href="#goya">goya ã‚³ãƒãƒ³ãƒ‰</a></li>
+            </ul>
+        </li>
+        <li><a href="withSmarty-fw.html">ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯æ¦‚è¦</a></li>
+    </ul>
+    </font>
+</li>
+<li><a href="withPRADO-setup.html">with PRADO</a></li>
 </ul>
-<br>
 
-<h2><a name="cmd-ref">with Smarty - ƒRƒ}ƒ“ƒhƒŠƒtƒ@ƒŒƒ“ƒX</a></h2>
+<h3>ã‚µãƒ–ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ</h3>
+<ul>
+<li><a href="javelin.html">S2Javelin.PHP5</a></li>
+</ul>
 
-<h3><a name="module">module ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<h3>ãƒªãƒ³ã‚¯</h3>
+<ul>
+    <li><a href="http://www.seasar.org/">Seasar.org</a></li>
+    <li><a href="http://svn.seasar.org/browse/?root=sandbox.s2base.php5">SVN ãƒªãƒã‚¸ãƒˆãƒªãƒ–ãƒ©ã‚¦ã‚¶</a></li>
+    <li><a href="https://www.seasar.org/svn/sandbox/s2base.php5/">SVN ãƒªãƒã‚¸ãƒˆãƒª</a></li>
+    <li><a href="https://www.seasar.org/issues/browse/BASEPHP">Issue Tracker</a></li>
+    <li><a href="http://s2php5.jp/">s2php5.jp</a>
+        <ul>
+            <li><a href="http://labs.s2php5.jp/s2base">laboratory</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5">wiki</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5/plugins">plugins</a></li>
+            <li><a href="http://docs.s2php5.jp/s2base/api/">PHPDoc</a></li>
+        </ul>
+    </li>
+</ul>
+
+<h2>PHP ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ</h2>
+
+<h3>Seasar.PHP</h3>
+
+<ul>
+    <li><a href="http://s2container.php5.seasar.org/">S2Container.PHP5</a></li>
+    <li><a href="http://s2dao.php5.seasar.org/">S2Dao.PHP5</a></li>
+</ul>
+
+<h3>Sandbox.PHP</h3>
+
+<ul>
+    <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
+    <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
+</ul>
+
+
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+<h2 id="h02"><a name="module">module ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-Smarty ‚Æ‘g‡‚í‚¹‚éê‡Amodule ƒRƒ}ƒ“ƒh‚Í<a href="dir.html">ƒ‚ƒWƒ…[ƒ‹ƒfƒBƒŒƒNƒgƒŠ</a>‚É action ƒfƒBƒŒƒNƒgƒŠ‚Æ view ƒfƒBƒŒƒNƒgƒŠ‚ğ’Ç‰Á‚µ‚Ü‚·B
+ã€€Smarty ã¨çµ„åˆã‚ã›ã‚‹å ´åˆã€module ã‚³ãƒãƒ³ãƒ‰ã¯<a href="dir.html">ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</a>ã« action ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¨ view ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’è¿½åŠ ã—ã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
+<h3>å®Ÿè¡Œä¾‹</h3>
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -63,12 +143,12 @@ project &gt; com:
 7 : entity
 8 : goya
 9 : service
-choice ? : 3               &lt;--- 3 : module ‚ğ‘I‘ğ
+choice ? : 3               &lt;--- 3 : module ã‚’é¸æŠ
 
-module name ? : smarty     &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+module name ? : smarty     &lt;--- è‹±æ•°å­— [_a-zA-Z0-9] ãŒä½¿ç”¨å¯èƒ½ã§ã™ã€‚
 
 [ generate information ]
-  module name : Hoge       &lt;--- ƒ‚ƒWƒ…[ƒ‹î•ñ‚ğŠm”F
+  module name : Hoge       &lt;--- ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«æƒ…å ±ã‚’ç¢ºèª
 
 confirm ? (y/n) : y
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty
@@ -88,24 +168,26 @@ confirm ? (y/n) : y
 [ Command list ]
 0 : (exit)
 1 : action
-EEE
+ãƒ»ãƒ»ãƒ»
 
 BUILD FINISHED
 
 Total time: 8.1588 seconds
 % ls app/modules/smarty
-action  dao  dicon  entity  interceptor  service  smarty.inc.php  view     &lt;--- action ‚Æ view ‚ğ’Ç‰Á
+action  dao  dicon  entity  interceptor  service  smarty.inc.php  view     &lt;--- action ã¨ view ã‚’è¿½åŠ 
 %
 </pre>
-
+</div>
 <br>
-<h3><a name="action">action ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<div class="section">
+<h2 id="h02"><a name="action">action ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-action ƒRƒ}ƒ“ƒh‚ÍAƒAƒNƒVƒ‡ƒ“–¼‚É‘Î‚µ‚Ä–½–¼‹K‘¥‚É]‚¢ƒAƒNƒVƒ‡ƒ“ƒNƒ‰ƒXAİ’èINIƒtƒ@ƒCƒ‹Aƒ_ƒCƒRƒ“ƒtƒ@ƒCƒ‹Ahtml ƒeƒ“ƒvƒŒ[ƒg‚ğì¬‚µ‚Ü‚·B
-ƒAƒNƒVƒ‡ƒ“–¼‚ªu hello v‚Ìê‡AƒAƒNƒVƒ‡ƒ“ƒNƒ‰ƒX‚Í HelloActionAİ’èINIƒtƒ@ƒCƒ‹‚Í HelloAction.inc.phpAƒ_ƒCƒRƒ“ƒtƒ@ƒCƒ‹‚Í HelloAction.diconAhtml ƒeƒ“ƒvƒŒ[ƒg‚Í hello.tpl ‚Æ‚È‚è‚Ü‚·B
+ã€€action ã‚³ãƒãƒ³ãƒ‰ã¯ã€ã‚¢ã‚¯ã‚·ãƒ§ãƒ³åã«å¯¾ã—ã¦å‘½åè¦å‰‡ã«å¾“ã„ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¯ãƒ©ã‚¹ã€è¨­å®šINIãƒ•ã‚¡ã‚¤ãƒ«ã€ãƒ€ã‚¤ã‚³ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ã€html ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’ä½œæˆã—ã¾ã™ã€‚
+ã‚¢ã‚¯ã‚·ãƒ§ãƒ³åãŒã€Œ hello ã€ã®å ´åˆã€ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¯ãƒ©ã‚¹ã¯ HelloActionã€è¨­å®šINIãƒ•ã‚¡ã‚¤ãƒ«ã¯ HelloAction.inc.phpã€ãƒ€ã‚¤ã‚³ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ã¯ HelloAction.diconã€html ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã¯ hello.tpl ã¨ãªã‚Šã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
+<h3>å®Ÿè¡Œä¾‹</h3>
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -127,15 +209,15 @@ project &gt; com:
 7 : entity
 8 : goya
 9 : service
-choice ? : 1              &lt;--- 1 : action ‚ğ‘I‘ğ
+choice ? : 1              &lt;--- 1 : action ã‚’é¸æŠ
 
 [ Module list ]
 0 : (exit)
 1 : Default
 2 : smarty
-choice ? : 2              &lt;--- 2 : smarty ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
+choice ? : 2              &lt;--- 2 : smarty ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’é¸æŠ
 
-action name ? : hello     &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+action name ? : hello     &lt;--- è‹±æ•°å­— [_a-zA-Z0-9] ãŒä½¿ç”¨å¯èƒ½ã§ã™ã€‚
 
 [ generate information ]
   module name            : smarty
@@ -145,7 +227,7 @@ action name ? : hello     &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
   action inc file name   : HelloAction.inc.php
   action tpl file name   : hello.tpl
 
-confirm ? (y/n) : y       &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y       &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/action/HelloAction.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/action/HelloAction.inc.php
@@ -155,58 +237,59 @@ confirm ? (y/n) : y       &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
 [ Command list ]
 0 : (exit)
 1 : action
-EEE
+ãƒ»ãƒ»ãƒ»
 
 BUILD FINISHED
 
 Total time: 10.9976 seconds
 %
 </pre>
-
+</div>
 <br>
-<h3><a name="interceptor">interceptor ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+<div class="section">
+<h2 id="h02"><a name="interceptor">interceptor ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-ƒAƒNƒVƒ‡ƒ“‚âƒT[ƒrƒX‚É“K—p‚·‚éƒCƒ“ƒ^[ƒZƒvƒ^[‚ğì¬‚µ‚Ü‚·BƒCƒ“ƒ^[ƒZƒvƒ^[‚Í5í—Ş‚ ‚è‚Ü‚·B
+ã€€ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚„ã‚µãƒ¼ãƒ“ã‚¹ã«é©ç”¨ã™ã‚‹ã‚¤ãƒ³ã‚¿ãƒ¼ã‚»ãƒ—ã‚¿ãƒ¼ã‚’ä½œæˆã—ã¾ã™ã€‚ã‚¤ãƒ³ã‚¿ãƒ¼ã‚»ãƒ—ã‚¿ãƒ¼ã¯5ç¨®é¡ã‚ã‚Šã¾ã™ã€‚
 <table border="1" class="main">
 <tr bgcolor="#d1f3f4" align="center">
-<th>ƒ^ƒCƒv</th>
-<th>à–¾</th>
+<th>ã‚¿ã‚¤ãƒ—</th>
+<th>èª¬æ˜</th>
 </tr>
 
 <tr>
 <td>default</td>
-<td><a href="cmdRef.html#interceptor">interceptor ƒRƒ}ƒ“ƒh</a>‚Æ“¯‚¶‚à‚Ì‚Å‚·BS2Container_AbstractInterceptor ‚ğŒp³‚µ‚½ interceptor ‚ğ¶¬‚µ‚Ü‚·B</td>
+<td><a href="cmdRef.html#interceptor">interceptor ã‚³ãƒãƒ³ãƒ‰</a>ã¨åŒã˜ã‚‚ã®ã§ã™ã€‚S2Container_AbstractInterceptor ã‚’ç¶™æ‰¿ã—ãŸ interceptor ã‚’ç”Ÿæˆã—ã¾ã™ã€‚</td>
 </tr>
 
 <tr>
 <td>arround</td>
-<td>å‚ÉƒAƒNƒVƒ‡ƒ“‚É“K—p‚·‚éƒtƒBƒ‹ƒ^‚É‚È‚è‚Ü‚·BS2Base_AbstractFilterInterceptor ‚ğŒp³‚µAbefore ƒƒ\ƒbƒh‚Æ after ƒƒ\ƒbƒh‚ğÀ‘•‚µ‚Ü‚·B</td>
+<td>ä¸»ã«ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã«é©ç”¨ã™ã‚‹ãƒ•ã‚£ãƒ«ã‚¿ã«ãªã‚Šã¾ã™ã€‚S2Base_AbstractFilterInterceptor ã‚’ç¶™æ‰¿ã—ã€before ãƒ¡ã‚½ãƒƒãƒ‰ã¨ after ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè£…ã—ã¾ã™ã€‚</td>
 </tr>
 
 <tr>
 <td>before</td>
-<td>å‚ÉƒAƒNƒVƒ‡ƒ“‚É“K—p‚·‚éƒtƒBƒ‹ƒ^‚É‚È‚è‚Ü‚·BS2Base_AbstractBeforeFilter ‚ğŒp³‚µAbefore ƒƒ\ƒbƒh‚ğÀ‘•‚µ‚Ü‚·B</td>
+<td>ä¸»ã«ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã«é©ç”¨ã™ã‚‹ãƒ•ã‚£ãƒ«ã‚¿ã«ãªã‚Šã¾ã™ã€‚S2Base_AbstractBeforeFilter ã‚’ç¶™æ‰¿ã—ã€before ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè£…ã—ã¾ã™ã€‚</td>
 </tr>
 
 <tr>
 <td>after</td>
-<td>å‚ÉƒAƒNƒVƒ‡ƒ“‚É“K—p‚·‚éƒtƒBƒ‹ƒ^‚É‚È‚è‚Ü‚·BS2Base_AbstractAfterFilter ‚ğŒp³‚µAafter ƒƒ\ƒbƒh‚ğÀ‘•‚µ‚Ü‚·B</td>
+<td>ä¸»ã«ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã«é©ç”¨ã™ã‚‹ãƒ•ã‚£ãƒ«ã‚¿ã«ãªã‚Šã¾ã™ã€‚S2Base_AbstractAfterFilter ã‚’ç¶™æ‰¿ã—ã€after ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè£…ã—ã¾ã™ã€‚</td>
 </tr>
 
 <tr>
 <td>validate</td>
 <td>
-å‚ÉƒAƒNƒVƒ‡ƒ“‚É“K—p‚·‚é before ƒtƒBƒ‹ƒ^‚É‚È‚è‚Ü‚·BS2Base_AbstractValidateFilter ‚ğŒp³‚µAvalidateƒƒ\ƒbƒh ‚Æ getSuffix ƒƒ\ƒbƒh‚ğÀ‘•‚µ‚Ü‚·B
-<br>validate ƒtƒBƒ‹ƒ^‚ÍAvalidate ƒƒ\ƒbƒh‚ğÀs‚·‚é‘O‚É rule ƒvƒƒpƒeƒB‚ğİ’è‚µ‚Ü‚·Bİ’èƒtƒ@ƒCƒ‹‚ÍAƒ‚ƒWƒ…[ƒ‹ƒfƒBƒŒƒNƒgƒŠ/validate/ƒAƒNƒVƒ‡ƒ“–¼.Suffix–¼.ini ‚Å‚·Brule ƒvƒƒpƒeƒB‚É‚ÍA<a href="http://jp2.php.net/manual/ja/function.parse-ini-file.php">parse_ini_fileŠÖ”</a>‚Ì–ß‚è’l‚ªİ’è‚³‚ê‚Ü‚·B( process_sections : true )
-<br>—á‚¦‚Îƒ‚ƒWƒ…[ƒ‹–¼‚ª smarty AƒAƒNƒVƒ‡ƒ“–¼‚ª helloAgetSuffix ƒƒ\ƒbƒh‚ªu test v‚ğ•Ô‚·ê‡‚Ì validator İ’èƒtƒ@ƒCƒ‹‚ÍA[ app/modules/smarty/validate/hello.test.ini ] ‚Æ‚È‚è‚Ü‚·B( validate ƒfƒBƒŒƒNƒgƒŠ‚Íè“®‚É‚Äì¬‰º‚³‚¢B)
+ä¸»ã«ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã«é©ç”¨ã™ã‚‹ before ãƒ•ã‚£ãƒ«ã‚¿ã«ãªã‚Šã¾ã™ã€‚S2Base_AbstractValidateFilter ã‚’ç¶™æ‰¿ã—ã€validateãƒ¡ã‚½ãƒƒãƒ‰ ã¨ getSuffix ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè£…ã—ã¾ã™ã€‚
+<br>validate ãƒ•ã‚£ãƒ«ã‚¿ã¯ã€validate ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè¡Œã™ã‚‹å‰ã« rule ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã‚’è¨­å®šã—ã¾ã™ã€‚è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã¯ã€ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª/validate/ã‚¢ã‚¯ã‚·ãƒ§ãƒ³å.Suffixå.ini ã§ã™ã€‚rule ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã«ã¯ã€<a href="http://jp2.php.net/manual/ja/function.parse-ini-file.php">parse_ini_fileé–¢æ•°</a>ã®æˆ»ã‚Šå€¤ãŒè¨­å®šã•ã‚Œã¾ã™ã€‚( process_sections : true )
+<br>ä¾‹ãˆã°ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åãŒ smarty ã€ã‚¢ã‚¯ã‚·ãƒ§ãƒ³åãŒ helloã€getSuffix ãƒ¡ã‚½ãƒƒãƒ‰ãŒã€Œ test ã€ã‚’è¿”ã™å ´åˆã® validator è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã¯ã€[ app/modules/smarty/validate/hello.test.ini ] ã¨ãªã‚Šã¾ã™ã€‚( validate ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¯æ‰‹å‹•ã«ã¦ä½œæˆä¸‹ã•ã„ã€‚)
 </td>
 </tr>
 
 </table>
 
 </p>
-<h4>Às—á</h4>
+<h3>å®Ÿè¡Œä¾‹</h3>
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -228,13 +311,13 @@ project &gt; com:
 7 : entity
 8 : goya
 9 : service
-choice ? : 2              &lt;--- 2 : interceptor ‚ğ‘I‘ğ
+choice ? : 2              &lt;--- 2 : interceptor ã‚’é¸æŠ
 
 [ Module list ]
 0 : (exit)
 1 : Default
 2 : smarty
-choice ? : 2              &lt;--- 2 : smarty ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
+choice ? : 2              &lt;--- 2 : smarty ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’é¸æŠ
 
 [ Type list ]
 0 : (exit)
@@ -243,22 +326,22 @@ choice ? : 2              &lt;--- 2 : smarty ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
 3 : before
 4 : after
 5 : validate
-choice ? : 3                        &lt;--- 3 : before ‚ğ‘I‘ğ
+choice ? : 3                        &lt;--- 3 : before ã‚’é¸æŠ
 
-class name ? : TestBeforeFilter     &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+class name ? : TestBeforeFilter     &lt;--- è‹±æ•°å­— [_a-zA-Z0-9] ãŒä½¿ç”¨å¯èƒ½ã§ã™ã€‚
 
 [ generate information ]
   module name            : smarty
   type                   : before
   interceptor class name : TestBeforeFilter
 
-confirm ? (y/n) : y                 &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y                 &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/interceptor/TestBeforeFilter.class.php
 
 [ Command list ]
 0 : (exit)
 1 : action
-EEE
+ãƒ»ãƒ»ãƒ»
 
 BUILD FINISHED
 
@@ -268,13 +351,13 @@ Total time: 36.2075 seconds
 &lt;?php
 /**
  * available properties.
- *    protected $invocation;     &lt;--- S2Container_MethodInvocation ƒIƒuƒWƒFƒNƒg
- *    protected $request;        &lt;--- S2Base_Request ƒIƒuƒWƒFƒNƒg
- *    protected $moduleName;     &lt;--- ƒ‚ƒWƒ…[ƒ‹–¼ ( string )
- *    protected $actionName;     &lt;--- ƒAƒNƒVƒ‡ƒ“–¼ ( string )
- *    protected $action;         &lt;--- ƒAƒNƒVƒ‡ƒ“ƒIƒuƒWƒFƒNƒg
- *    protected $view;           &lt;--- S2Base_SmartyController ƒIƒuƒWƒFƒNƒg
- *    protected $controller;     &lt;--- S2Base_SmartyController ƒIƒuƒWƒFƒNƒg ( $view ‚Æ“¯‚¶‚Å‚·)
+ *    protected $invocation;     &lt;--- S2Container_MethodInvocation ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *    protected $request;        &lt;--- S2Base_Request ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *    protected $moduleName;     &lt;--- ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«å ( string )
+ *    protected $actionName;     &lt;--- ã‚¢ã‚¯ã‚·ãƒ§ãƒ³å ( string )
+ *    protected $action;         &lt;--- ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *    protected $view;           &lt;--- S2Base_SmartyController ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *    protected $controller;     &lt;--- S2Base_SmartyController ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ ( $view ã¨åŒã˜ã§ã™)
  */
 class TestBeforeFilter extends S2Base_AbstractBeforeFilter {
     public function before(){
@@ -284,13 +367,17 @@ class TestBeforeFilter extends S2Base_AbstractBeforeFilter {
 ?&gt;
 %
 </pre>
-
+</div>
 <br>
-<h3><a name="goya">goya ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
-<p>goya ƒRƒ}ƒ“ƒh‚ÍƒAƒNƒVƒ‡ƒ“–¼‚ğŒˆ‚ß‚é‚ÆA–½–¼‹K‘¥‚É]‚Á‚ÄƒAƒNƒVƒ‡ƒ“AƒT[ƒrƒXAdaoAenitityAƒ_ƒCƒRƒ“ƒtƒ@ƒCƒ‹AƒeƒXƒgƒNƒ‰ƒX‚ğ¶¬‚µ‚Ü‚·B actionƒRƒ}ƒ“ƒhAservice ƒRƒ}ƒ“ƒh‚Æ dao ƒRƒ}ƒ“ƒh‚ğ“¯‚ÉÀs‚·‚é‚±‚Æ‚Æ‚Ù‚Ú“¯‚¶ˆ—‚É‚È‚è‚Ü‚·B
-—á‚¦‚ÎƒT[ƒrƒX–¼‚ğu cdList v‚Æ‚·‚é‚ÆAƒAƒNƒVƒ‡ƒ“‚Í CdListActionAƒT[ƒrƒX‚Í CdListServiceAdao ‚Í CdListDaoAentity ‚Í CdListEntitiy ‚Æ‚È‚è‚Ü‚·B</p>
-<h4>Às—á</h4>
+
+<div class="section">
+<h2 id="h02"><a name="goya">goya ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
+<p>
+ã€€goya ã‚³ãƒãƒ³ãƒ‰ã¯ã‚¢ã‚¯ã‚·ãƒ§ãƒ³åã‚’æ±ºã‚ã‚‹ã¨ã€å‘½åè¦å‰‡ã«å¾“ã£ã¦ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã€ã‚µãƒ¼ãƒ“ã‚¹ã€daoã€enitityã€ãƒ€ã‚¤ã‚³ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ã€ãƒ†ã‚¹ãƒˆã‚¯ãƒ©ã‚¹ã‚’ç”Ÿæˆã—ã¾ã™ã€‚ actionã‚³ãƒãƒ³ãƒ‰ã€service ã‚³ãƒãƒ³ãƒ‰ã¨ dao ã‚³ãƒãƒ³ãƒ‰ã‚’åŒæ™‚ã«å®Ÿè¡Œã™ã‚‹ã“ã¨ã¨ã»ã¼åŒã˜å‡¦ç†ã«ãªã‚Šã¾ã™ã€‚
+ä¾‹ãˆã°ã‚µãƒ¼ãƒ“ã‚¹åã‚’ã€Œ cdList ã€ã¨ã™ã‚‹ã¨ã€ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã¯ CdListActionã€ã‚µãƒ¼ãƒ“ã‚¹ã¯ CdListServiceã€dao ã¯ CdListDaoã€entity ã¯ CdListEntitiy ã¨ãªã‚Šã¾ã™ã€‚
+</p>
+<h3>å®Ÿè¡Œä¾‹</h3>
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -318,20 +405,20 @@ project &gt; command:
 8 : service
 9 : command
 10 : dao
-choice ? : 4                 &lt;--- 4 : goya ‚ğ‘I‘ğ
+choice ? : 4                 &lt;--- 4 : goya ã‚’é¸æŠ
 
 [ Module list ]
 0 : (exit)
 1 : smarty
-choice ? : 1                 &lt;--- 1 : smarty ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
+choice ? : 1                 &lt;--- 1 : smarty ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’é¸æŠ
 
-action name ? : cdList       &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+action name ? : cdList       &lt;--- è‹±æ•°å­— [_a-zA-Z0-9] ãŒä½¿ç”¨å¯èƒ½ã§ã™ã€‚
 
-use dao ? (y/n) : y          &lt;--- Dao ‚ğg—p‚µ‚Ü‚·B
+use dao ? (y/n) : y          &lt;--- Dao ã‚’ä½¿ç”¨ã—ã¾ã™ã€‚
 
-table name ? [CDLIST] : CD   &lt;--- ƒf[ƒ^ƒx[ƒX‚Ìƒe[ƒuƒ‹–¼‚ğİ’è
+table name ? [CDLIST] : CD   &lt;--- ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®ãƒ†ãƒ¼ãƒ–ãƒ«åã‚’è¨­å®š
 
-columns ? (id,name,--,) : id,title,content        &lt;--- ƒJƒ“ƒ}‹æØ‚è‚ÅƒJƒ‰ƒ€–¼‚ğ“ü—Í
+columns ? (id,name,--,) : id,title,content        &lt;--- ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§ã‚«ãƒ©ãƒ åã‚’å…¥åŠ›
 
 [ generate information ]
   module name             : smarty
@@ -350,7 +437,7 @@ columns ? (id,name,--,) : id,title,content        &lt;--- ƒJƒ“ƒ}‹æØ‚è‚ÅƒJƒ‰ƒ€–¼
   table name              : CD
   columns                 : id, title, content
 
-confirm ? (y/n) : y                               &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y                               &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/action/CdListAction.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/view/cdList.tpl
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/smarty/dicon/CdListAction.dicon
@@ -382,19 +469,16 @@ Total time: 42.6726 seconds
 %
 </pre>
 
-<!-- document end -->
-<!-- don't edit start -->
-</td>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="30" width="14"></td>
-<td width="766"><img src="images/spacer.gif" alt="" height="30" width="592"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-<td class="copyright" width="766">&#169; Copyright The Seasar Project and the others 2005-2006, all rights reserved.</td>
-</tr></tbody></table>
-</td><td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
-<td class="backunder" align="left" height="16" valign="top" width="780">&nbsp;</td>
-<td class="backcorner" align="left" height="16" valign="top">&nbsp;</td>
-</tr></tbody></table><!-- don't edit end -->
+</div>
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&#169; Copyright The Seasar Foundation and the others 2004-2006, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
 </body></html>
