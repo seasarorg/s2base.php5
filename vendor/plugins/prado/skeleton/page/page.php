@@ -4,7 +4,7 @@ class @@CLASS_NAME@@ extends TPage {
 
     /*
     public function setService(#-Service_Interface-# $service){
-        $this->service = $serive;
+        $this->service = $service;
     }
     */
 
@@ -12,7 +12,7 @@ class @@CLASS_NAME@@ extends TPage {
 	 * event Procedure Sample
 	 */
 	public function buttonClicked($sender,$param){
-		$this->gotoPage($this->TextBox1->Text);		
+		$this->gotoPage($this->TextBox1->Text);
 	}
 	
 	protected function gotoPage($pageName)
