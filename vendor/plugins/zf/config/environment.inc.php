@@ -35,10 +35,6 @@ require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcherSupportPlugin.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfView.php';
 require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfSmartyView.php';
 
-//require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfAbstractValidator.php';
-//require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfRequestValidator.php';
-//require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfValidatorFactory.php';
-
 /**
  * Smarty config
  *     S2Base_ZfSmartyView::$config['property name'] = property value

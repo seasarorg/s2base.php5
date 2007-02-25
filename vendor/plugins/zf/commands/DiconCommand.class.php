@@ -39,9 +39,6 @@ class DiconCommand implements S2Base_GenerateCommand {
             if(S2Base_CommandUtil::isListExitLabel($this->controllerName)){
                 return;
             }
-            list($this->controllerName, $this->controllerClassName, $this->controllerClassFile) = 
-                ModuleCommand::getControllerNames($this->dispatcher, $this->moduleName, $this->controllerName);
-
             $this->diconName = S2Base_StdinManager::getValue('dicon name ? : ');
             $this->validate($this->diconName);
             if (!$this->finalConfirm()){

@@ -154,7 +154,13 @@ class S2Base_ZfSmartyView
         $this->assign('mod_url', $mod_url);
         $this->assign('ctl_url', $ctl_url);
         $this->assign('act_url', $act_url);
-        $this->assign('tpl_dir', $this->template_dir);
+        $ctlViewDir = $this->moduleName
+                    . DIRECTORY_SEPARATOR
+                    . $controllerName
+                    . DIRECTORY_SEPARATOR
+                    . 'view';
+        $this->assign('ctl_view_dir', $this->scriptPath . DIRECTORY_SEPARATOR . $ctlViewDir);
+        $this->assign('commons_view_dir', S2BASE_PHP5_ROOT . '/app/commons/view');
 
         if (preg_match('/^file:/',$name)){
             $viewFile = $name;
@@ -162,13 +168,7 @@ class S2Base_ZfSmartyView
             if (!preg_match('/' . S2BASE_PHP5_ZF_TPL_SUFFIX . '$/', $name)) {
                 $name .= S2BASE_PHP5_ZF_TPL_SUFFIX;
             }
-            $viewFile = $this->moduleName
-                      . DIRECTORY_SEPARATOR
-                      . $controllerName
-                      . DIRECTORY_SEPARATOR
-                      . 'view'
-                      . DIRECTORY_SEPARATOR
-                      . $name;
+            $viewFile = $ctlViewDir . DIRECTORY_SEPARATOR . $name;
             if (!file_exists($this->template_dir . DIRECTORY_SEPARATOR . $viewFile)) {
                 throw new Exception('template file not found. [' . 
                      $this->template_dir . DIRECTORY_SEPARATOR . $viewFile . ']');
