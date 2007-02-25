@@ -51,7 +51,7 @@
 <li><a href="withAgavi-setup.html">with Agavi</a> <i>(ver 0.10.2)</i></li>
 <li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 0.6.3)</i></li>
 <li><a href="withSmarty-setup.html">with Smarty</a></li>
-<li>with PRADO <i>(ver 0.1.0)</i>
+<li>with PRADO
     <font size="-2">
     <ul>
         <li>セットアップ</li>
@@ -128,9 +128,6 @@
 s2base.php5/vendor/plugins/prado/build.xmlにおいて下記編集作業を行ってください。
 <ol>
 <li>
-デフォルトタスクに [ prado ] を設定する
-</li>
-<li>
 WEB公開ディレクトリ名を設定する。
 </li>
 <li>
@@ -139,9 +136,8 @@ WEB公開ディレクトリからS2Base.PHP5インストールディレクトリ
 </ol>
 <pre>
 &lt;?xml version="1.0"?&gt;
-&lt;project name="project" default="prado" basedir="."&gt;
-    &lt;target name="command"&gt;     ↑
-    ・・・　　                  prado に設定
+&lt;project name="project" default="command" basedir="."&gt;
+    &lt;target name="command"&gt;
         &lt;php expression="define('DOCUMENT_ROOT_DIR','/var/www/public_html/')"/&gt;
 		                                                  ↑
 		                                 WEB公開ディレクトリの絶対パスを記述       
@@ -162,10 +158,10 @@ PRADOの動作確認チェッカーやサンプルプログラムは下記URL経
 詳細に関しては<a href="http://pradosoft.com/">PRADO公式サイト</a>を参照してください。
 
 <h4>S2Baseの動作確認</h4>
-s2base.php5 ディレクトリにおいて phingコマンドを実行します。コマンドリストが表示されるとインストールが完了です。
+s2base.php5 ディレクトリにおいて phingコマンド(phing -f prado.xml)を実行します。コマンドリストが表示されるとインストールが完了です。
 <pre>
-%phing
-Buildfile: /private/var/www/s2base.php5/build.xml
+%phing -f prado.xml
+Buildfile: /private/var/www/s2base.php5/prado.xml
       [php] Evaluating PHP expression: ini_set('include_path','lib'.PATH_SEPARATOR.
 	                                                             ini_get('include_path'))
       [php] Evaluating PHP expression: require_once('S2Base/S2Base.phing.php')
@@ -187,17 +183,13 @@ project > command:
 0 : (exit)
 1 : command
 2 : dao
-3 : dao method
-4 : dicon
-5 : dto
-6 : entity
-7 : goya
-8 : interceptor
-9 : logic
-10 : module
-11 : page
-12 : service
-13 : sqlite-cli
+3 : dicon
+4 : entity
+5 : goya
+6 : interceptor
+7 : module
+8 : page
+9 : service
 choice ? : 
 
 </pre>

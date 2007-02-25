@@ -51,7 +51,7 @@
 <li><a href="withAgavi-setup.html">with Agavi</a> <i>(ver 0.10.2)</i></li>
 <li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 0.6.3)</i></li>
 <li><a href="withSmarty-setup.html">with Smarty</a></li>
-<li>with PRADO <i>(ver 0.1.0)</i>
+<li>with PRADO
     <font size="-2">
     <ul>
         <li><a href="withPRADO-setup.html">セットアップ</a></li>
@@ -121,7 +121,7 @@ PRADOプラグインにおいては、module コマンドはPRADOアプリケー
 </p>
 <h3>実行例</h3>
 <pre>
-% phing
+% phing -f prado.xml
 
 (略)
 
@@ -129,18 +129,14 @@ PRADOプラグインにおいては、module コマンドはPRADOアプリケー
 0 : (exit)
 1 : command
 2 : dao
-3 : dao method
-4 : dicon
-5 : dto
-6 : entity
-7 : goya
-8 : interceptor
-9 : logic
-10 : module
-11 : page
-12 : service
-13 : sqlite-cli
-choice ? : 10               &lt;--- 10 : module を選択
+3 : dicon
+4 : entity
+5 : goya
+6 : interceptor
+7 : module
+8 : page
+9 : service
+choice ? : 7               &lt;--- 7 : module を選択
 
 module name ? : default     &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
 
@@ -197,18 +193,14 @@ PRADOにおいては、ページ名において大文字小文字を区別しま
 0 : (exit)
 1 : command
 2 : dao
-3 : dao method
-4 : dicon
-5 : dto
-6 : entity
-7 : goya
-8 : interceptor
-9 : logic
-10 : module
-11 : page
-12 : service
-13 : sqlite-cli
-choice ? : 11              &lt;--- 11 : page を選択
+3 : dicon
+4 : entity
+5 : goya
+6 : interceptor
+7 : module
+8 : page
+9 : service
+choice ? : 8              &lt;--- 8 : page を選択
 
 [ Module list ]
 0 : (exit)
