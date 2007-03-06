@@ -78,7 +78,7 @@ class DiconCommand implements S2Base_GenerateCommand {
                  . $this->diconName
                  . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                     . 'dicon/dicon.php');
+                     . 'dicon/dicon.tpl');
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 }

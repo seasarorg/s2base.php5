@@ -152,7 +152,7 @@ class ModelCommand implements S2Base_GenerateCommand {
                  . $this->modelClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/model/model.php');
+                     . '/skeleton/model/model.tpl');
 
         $patterns = array("/@@CLASS_NAME@@/",
                           "/@@INTERFACE_NAME@@/",
@@ -173,7 +173,7 @@ class ModelCommand implements S2Base_GenerateCommand {
                  . $this->modelInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/model/interface.php');
+                     . '/skeleton/model/interface.tpl');
         $tempContent = preg_replace("/@@INTERFACE_NAME@@/",
                              $this->modelInterfaceName,
                              $tempContent);   
@@ -188,7 +188,7 @@ class ModelCommand implements S2Base_GenerateCommand {
                  . $testName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/model/test.php');
+                     . '/skeleton/model/test.tpl');
 
         $patterns = array("/@@CLASS_NAME@@/",
                           "/@@MODULE_NAME@@/",
@@ -210,7 +210,7 @@ class ModelCommand implements S2Base_GenerateCommand {
                  . $this->modelClassName
                  . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/model/dicon.php');
+                     . '/skeleton/model/dicon.tpl');
         $tempContent = preg_replace("/@@MODEL_CLASS@@/",
                                     $this->modelClassName,
                                     $tempContent);   

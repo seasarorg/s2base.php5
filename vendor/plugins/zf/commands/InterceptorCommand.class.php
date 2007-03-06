@@ -78,7 +78,7 @@ class InterceptorCommand implements S2Base_GenerateCommand {
                  . $this->interceptorClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                     . "interceptor/default.php");
+                     . "interceptor/default.tpl");
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
                              $this->interceptorClassName,
                              $tempContent);   

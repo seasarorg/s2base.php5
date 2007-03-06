@@ -83,7 +83,7 @@ class ServiceCommand implements S2Base_GenerateCommand {
                  . $this->serviceClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                     . 'service/service.php');
+                     . 'service/service.tpl');
 
         $implementsInterface = $this->serviceInterfaceName;
         if ($this->isImplementsModuleService) {
@@ -104,7 +104,7 @@ class ServiceCommand implements S2Base_GenerateCommand {
                  . $this->serviceInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                     . 'service/interface.php');
+                     . 'service/interface.tpl');
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
                              $this->serviceInterfaceName,
                              $tempContent);   
@@ -118,7 +118,7 @@ class ServiceCommand implements S2Base_GenerateCommand {
                  . $testName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/service/test.php');
+                     . '/skeleton/service/test.tpl');
 
         $patterns = array("/@@CLASS_NAME@@/",
                           "/@@MODULE_NAME@@/",
@@ -140,7 +140,7 @@ class ServiceCommand implements S2Base_GenerateCommand {
                  . $this->serviceClassName
                  . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                     . 'service/dicon.php');
+                     . 'service/dicon.tpl');
         $tempContent = preg_replace("/@@SERVICE_CLASS@@/",
                                     $this->serviceClassName,
                                     $tempContent);   

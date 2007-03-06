@@ -194,7 +194,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . S2BASE_PHP5_CLASS_SUFFIX;
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/scaffold/action_$func.php");
+                     . "/skeleton/scaffold/action_$func.tpl");
 
         $patterns = array("/@@ACTION_METHOD_NAME@@/",
                           "/@@DTO_SESSION_KEY@@/",
@@ -220,7 +220,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . S2BASE_PHP5_CLASS_SUFFIX;
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/action_confirm.php');
+                     . '/skeleton/scaffold/action_confirm.tpl');
         $serviceProp = strtolower(substr($this->serviceInterfaceName,0,1)) . substr($this->serviceInterfaceName,1);
         $patterns = array("/@@ACTION_METHOD_NAME@@/",
                           "/@@ACTION_NAME@@/",
@@ -254,7 +254,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . S2BASE_PHP5_CLASS_SUFFIX;
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/action_list.php');
+                     . '/skeleton/scaffold/action_list.tpl');
         $serviceProp = strtolower(substr($this->serviceInterfaceName,0,1)) . substr($this->serviceInterfaceName,1);
         $patterns = array("/@@ACTION_METHOD_NAME@@/",
                           "/@@ACTION_NAME@@/",
@@ -286,7 +286,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $contents = $this->prepareHtmlFileHeader();
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/scaffold/html_list.php");
+                     . "/skeleton/scaffold/html_list.tpl");
         $patterns = array("/@@PROPERTY_ROWS_TITLE@@/",
                           "/@@PROPERTY_ROWS@@/",
                           "/@@ACTION_NAME@@/");
@@ -342,7 +342,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $contents = $this->prepareHtmlFileHeader();
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/scaffold/html_input.php");
+                     . "/skeleton/scaffold/html_input.tpl");
         $patterns = array("/@@FORM@@/");
         $replacements = array($this->getInputHtmlForm());
         $contents .= preg_replace($patterns,$replacements,$tempContent);
@@ -362,7 +362,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $contents = $this->prepareHtmlFileHeader();
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/scaffold/html_confirm.php");
+                     . "/skeleton/scaffold/html_confirm.tpl");
         $patterns = array("/@@FORM@@/");
         $replacements = array($this->getConfirmHtmlForm());
         $contents .= preg_replace($patterns,$replacements,$tempContent);
@@ -438,7 +438,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $contents = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/scaffold/html_header.php");
+                     . "/skeleton/scaffold/html_header.tpl");
             $patterns = array("/@@MODULE_NAME@@/",
                               "/@@CONTROLLER_NAME@@/",
                               "/@@ACTION_NAME@@/");
@@ -454,7 +454,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $contents = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $contents = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                      . "/skeleton/scaffold/html_footer.php");
+                      . "/skeleton/scaffold/html_footer.tpl");
         }
         return $contents;
     }
@@ -468,7 +468,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . $this->serviceClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/service.php');
+                     . '/skeleton/scaffold/service.tpl');
         $daoProp = strtolower(substr($this->daoInterfaceName,0,1)) . substr($this->daoInterfaceName,1);
         if ($this->serviceInterfaceName == $this->ctlServiceInterfaceName) {
             $implementsInterface = $this->serviceInterfaceName;
@@ -497,7 +497,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . $this->serviceInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/service_interface.php');
+                     . '/skeleton/scaffold/service_interface.tpl');
 
         $patterns = array("/@@CLASS_NAME@@/",
                           "/@@ENTITY_CLASS_NAME@@/");
@@ -517,7 +517,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . $this->daoInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/dao.php');
+                     . '/skeleton/scaffold/dao.tpl');
 
         $patterns = array("/@@CLASS_NAME@@/",
                           "/@@ENTITY_NAME@@/",
@@ -550,7 +550,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . $actionMethodName
                  . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/scaffold/action_dicon_$func.php");
+                     . "/skeleton/scaffold/action_dicon_$func.tpl");
         $patterns = array("/@@CONTROLLER_CLASS_NAME@@/",
                           "/@@MODULE_NAME@@/",
                           "/@@CONTROLLER_NAME@@/",
@@ -571,7 +571,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . $this->serviceClassName
                  . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/pager/service_dicon.php');
+                     . '/skeleton/pager/service_dicon.tpl');
 
         $patterns = array("/@@SERVICE_CLASS@@/","/@@DAO_CLASS@@/");
         $replacements = array($this->serviceClassName,$this->daoInterfaceName);
@@ -588,7 +588,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . $this->dtoClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/dto.php');
+                     . '/skeleton/scaffold/dto.tpl');
         $patterns = array("/@@CONDITION_DTO_NAME@@/");
         $replacements = array($this->dtoClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
@@ -616,7 +616,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . $this->actionName . '-confirm'
                  . '.regexp.ini';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/validate_confirm_ini.php');
+                     . '/skeleton/scaffold/validate_confirm_ini.tpl');
         $patterns = array("/@@RETURN_PAGE@@/",
                           "/@@PARAMS@@/",
                           "/@@ACTION_NAME@@/");
@@ -649,7 +649,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . $this->actionName . '-execute'
                  . '.regexp.ini';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/validate_execute_ini.php');
+                     . '/skeleton/scaffold/validate_execute_ini.tpl');
         $patterns = array("/@@ACTION_NAME@@/");
         $replacements = array($this->actionName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
@@ -664,7 +664,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . $this->actionName . '-' . $func
                  . '.regexp.ini';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/validate_ini.php');
+                     . '/skeleton/scaffold/validate_ini.tpl');
         $patterns = array("/@@PARAM_KEY@@/",
                           "/@@RETURN_ACTION_NAME@@/");
         $replacements = array($this->primaryProp,
@@ -679,7 +679,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . ucfirst($this->formatActionName) . 'ConfirmValidator'
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/validate_confirm.php');
+                     . '/skeleton/scaffold/validate_confirm.tpl');
         $patterns = array("/@@ACTION_NAME@@/",
                           "/@@DTO_CLASS_NAME@@/",
                           "/@@CONTROLLER_CLASS_NAME@@/",
@@ -698,7 +698,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . 'RegexpValidator'
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/validate_regexp.php');
+                     . '/skeleton/scaffold/validate_regexp.tpl');
         $patterns = array();
         $replacements = array();
         $tempContent = preg_replace($patterns,$replacements,$tempContent);

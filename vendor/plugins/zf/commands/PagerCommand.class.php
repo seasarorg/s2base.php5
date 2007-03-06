@@ -151,7 +151,7 @@ class PagerCommand extends AbstractGoyaCommand {
                  . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                    . '/skeleton/pager/action.php');
+                    . '/skeleton/pager/action.tpl');
 
         $patterns = array("/@@ACTION_NAME@@/",
                           "/@@TEMPLATE_NAME@@/",
@@ -190,13 +190,13 @@ class PagerCommand extends AbstractGoyaCommand {
         $tempContent = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/pager/html_header.php");
+                          . "/skeleton/pager/html_header.tpl");
         }
         $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                      . "/skeleton/pager/html.php");
+                      . "/skeleton/pager/html.tpl");
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/pager/html_footer.php");
+                          . "/skeleton/pager/html_footer.tpl");
         }
 
         $patterns = array("/@@MODULE_NAME@@/",
@@ -222,13 +222,13 @@ class PagerCommand extends AbstractGoyaCommand {
         $tempContent = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/pager/html_header.php");
+                          . "/skeleton/pager/html_header.tpl");
         }
         $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                      . "/skeleton/pager/html_without_dao.php");
+                      . "/skeleton/pager/html_without_dao.tpl");
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/pager/html_footer.php");
+                          . "/skeleton/pager/html_footer.tpl");
         }
 
         $patterns = array("/@@MODULE_NAME@@/","/@@ACTION_NAME@@/");
@@ -244,7 +244,7 @@ class PagerCommand extends AbstractGoyaCommand {
                  . $this->serviceClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/pager/service.php');
+                     . '/skeleton/pager/service.tpl');
         $daoProp = strtolower(substr($this->daoInterfaceName,0,1)) . substr($this->daoInterfaceName,1);
         if ($this->serviceInterfaceName == $this->ctlServiceInterfaceName) {
             $implementsInterface = $this->serviceInterfaceName;
@@ -272,7 +272,7 @@ class PagerCommand extends AbstractGoyaCommand {
                  . $this->serviceClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/pager/service_without_dao.php');
+                     . '/skeleton/pager/service_without_dao.tpl');
         if ($this->serviceInterfaceName == $this->ctlServiceInterfaceName) {
             $implementsInterface = $this->serviceInterfaceName;
         } else {
@@ -290,7 +290,7 @@ class PagerCommand extends AbstractGoyaCommand {
                  . $this->serviceInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/pager/service_interface.php');
+                     . '/skeleton/pager/service_interface.tpl');
 
         $patterns = array("/@@CLASS_NAME@@/");
         $replacements = array($this->serviceInterfaceName);
@@ -305,7 +305,7 @@ class PagerCommand extends AbstractGoyaCommand {
                  . $this->daoInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/pager/dao.php');
+                     . '/skeleton/pager/dao.tpl');
 
         $patterns = array("/@@CLASS_NAME@@/","/@@ENTITY_NAME@@/","/@@CONDITION_DTO_NAME@@/");
         $replacements = array($this->daoInterfaceName,$this->entityClassName, $this->dtoClassName);
@@ -319,7 +319,7 @@ class PagerCommand extends AbstractGoyaCommand {
                  . $this->serviceClassName
                  . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/pager/service_dicon.php');
+                     . '/skeleton/pager/service_dicon.tpl');
 
         $patterns = array("/@@SERVICE_CLASS@@/","/@@DAO_CLASS@@/");
         $replacements = array($this->serviceClassName,$this->daoInterfaceName);
@@ -333,7 +333,7 @@ class PagerCommand extends AbstractGoyaCommand {
                  . $this->dtoClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/pager/condition_dto.php');
+                     . '/skeleton/pager/condition_dto.tpl');
         $patterns = array("/@@CONDITION_DTO_NAME@@/");
         $replacements = array($this->dtoClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);

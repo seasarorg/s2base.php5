@@ -152,7 +152,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_CLASS_SUFFIX; 
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/module/controller.php");
+                     . "/skeleton/module/controller.tpl");
         $keys = array("/@@CONTROLLER_CLASS_NAME@@/",
                       "/@@SERVICE_CLASS_NAME@@/",
                       "/@@CONTROLLER_NAME@@/",
@@ -172,7 +172,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_CLASS_SUFFIX; 
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/module/service.php");
+                     . "/skeleton/module/service.tpl");
         $keys = array("/@@SERVICE_CLASS_NAME@@/");
         $reps = array($this->ctlServiceInterfaceName);
         $tempContent = preg_replace($keys, $reps, $tempContent);   
@@ -181,9 +181,9 @@ class ModuleCommand implements S2Base_GenerateCommand {
 
     public function prepareModuleIncFile(){
         $srcFile = $this->srcCtlDir
-                 . "{$this->controllerName}.inc.php";
+                 . "{$this->controllerName}.inc.tpl";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/module/include.php');
+                     . '/skeleton/module/include.tpl');
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
@@ -193,7 +193,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
                  . 'index'
                  . S2BASE_PHP5_ZF_TPL_SUFFIX; 
 
-        $htmlFile = 'index.php';
+        $htmlFile = 'index.tpl';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . "/skeleton/module/$htmlFile");
 

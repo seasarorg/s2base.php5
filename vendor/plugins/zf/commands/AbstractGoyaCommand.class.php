@@ -267,10 +267,10 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_CLASS_SUFFIX;
         if ($this->useDao) {
             $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                        . '/skeleton/goya/action.php');
+                        . '/skeleton/goya/action.tpl');
         } else {
             $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                        . '/skeleton/goya/action_without_dao.php');
+                        . '/skeleton/goya/action_without_dao.tpl');
         }
         $patterns = array("/@@ACTION_NAME@@/",
                           "/@@TEMPLATE_NAME@@/");
@@ -306,13 +306,13 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $tempContent = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/goya/html_header.php");
+                          . "/skeleton/goya/html_header.tpl");
         }
         $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                      . "/skeleton/goya/html.php");
+                      . "/skeleton/goya/html.tpl");
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/goya/html_footer.php");
+                          . "/skeleton/goya/html_footer.tpl");
         }
 
         $patterns = array("/@@MODULE_NAME@@/",
@@ -334,7 +334,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
                  . S2BASE_PHP5_ZF_TPL_SUFFIX; 
-        $htmlFile = 'html.php';
+        $htmlFile = 'html.tpl';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . "/skeleton/action/$htmlFile");
         $patterns = array("/@@MODULE_NAME@@/",
@@ -353,7 +353,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . $this->actionMethodName
                  . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/goya/action_dicon.php');
+                     . '/skeleton/goya/action_dicon.tpl');
         $patterns = array("/@@MODULE_NAME@@/",
                           "/@@CONTROLLER_NAME@@/",
                           "/@@SERVICE_CLASS@@/",
@@ -372,7 +372,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . $this->serviceClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/goya/service.php');
+                     . '/skeleton/goya/service.tpl');
         $daoProp = strtolower(substr($this->daoInterfaceName,0,1)) . substr($this->daoInterfaceName,1);
         if ($this->serviceInterfaceName == $this->ctlServiceInterfaceName) {
             $implementsInterface = $this->serviceInterfaceName;
@@ -397,7 +397,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . $this->serviceClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/goya/service_without_dao.php');
+                     . '/skeleton/goya/service_without_dao.tpl');
         if ($this->serviceInterfaceName == $this->ctlServiceInterfaceName) {
             $implementsInterface = $this->serviceInterfaceName;
         } else {
@@ -416,10 +416,10 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_CLASS_SUFFIX;
         if ($this->useDao) {
             $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                         . '/skeleton/goya/service_interface.php');
+                         . '/skeleton/goya/service_interface.tpl');
         } else {
             $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                         . '/skeleton/goya/service_interface_without_dao.php');
+                         . '/skeleton/goya/service_interface_without_dao.tpl');
         }
         $tempContent = preg_replace("/@@CLASS_NAME@@/",
                              $this->serviceInterfaceName,
@@ -434,7 +434,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . $testName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/goya/service_test.php');
+                     . '/skeleton/goya/service_test.tpl');
 
         $patterns = array("/@@CLASS_NAME@@/",
                           "/@@MODULE_NAME@@/",
@@ -456,7 +456,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . $this->daoInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/goya/dao.php');
+                     . '/skeleton/goya/dao.tpl');
 
         $patterns = array("/@@CLASS_NAME@@/","/@@ENTITY_NAME@@/");
         $replacements = array($this->daoInterfaceName,$this->entityClassName);
@@ -471,7 +471,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . $testClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/goya/dao_test.php');
+                     . '/skeleton/goya/dao_test.tpl');
 
         $patterns = array("/@@CLASS_NAME@@/",
                           "/@@MODULE_NAME@@/",
@@ -496,7 +496,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $toStringSrc = EntityCommand::getToStringSrc($this->cols);
         if ($this->isEntityExtends) {
             $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/goya/entity_extends.php');
+                     . '/skeleton/goya/entity_extends.tpl');
             $patterns = array("/@@CLASS_NAME@@/",
                               "/@@ACCESSOR@@/",
                               "/@@EXTENDS_CLASS@@/",
@@ -507,7 +507,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                                   $toStringSrc);
         }else{
             $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/goya/entity.php');
+                     . '/skeleton/goya/entity.tpl');
             $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/","/@@TO_STRING@@/");
             $replacements = array($this->entityClassName,$this->tableName,$accessorSrc,$toStringSrc);
         }
@@ -522,7 +522,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . $this->serviceClassName
                  . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/goya/service_dicon.php');
+                     . '/skeleton/goya/service_dicon.tpl');
 
         $patterns = array("/@@SERVICE_CLASS@@/","/@@DAO_CLASS@@/");
         $replacements = array($this->serviceClassName,$this->daoInterfaceName);
@@ -536,7 +536,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . $this->serviceClassName
                  . S2BASE_PHP5_DICON_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/goya/service_dicon_without_dao.php');
+                     . '/skeleton/goya/service_dicon_without_dao.tpl');
 
         $patterns = array("/@@SERVICE_CLASS@@/");
         $replacements = array($this->serviceClassName);

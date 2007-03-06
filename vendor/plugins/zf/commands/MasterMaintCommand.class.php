@@ -161,7 +161,7 @@ class MasterMaintCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_CLASS_SUFFIX; 
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/master-maint/controller.php");
+                     . "/skeleton/master-maint/controller.tpl");
         $keys = array("/@@CONTROLLER_CLASS_NAME@@/",
                       "/@@SERVICE_CLASS_NAME@@/",
                       "/@@CONTROLLER_NAME@@/",
@@ -190,13 +190,13 @@ class MasterMaintCommand implements S2Base_GenerateCommand {
         $tempContent = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/pager/html_header.php");
+                          . "/skeleton/pager/html_header.tpl");
         }
         $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                      . "/skeleton/master-maint/html.php");
+                      . "/skeleton/master-maint/html.tpl");
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/pager/html_footer.php");
+                          . "/skeleton/pager/html_footer.tpl");
         }
 
         $keys = array("/@@MODULE_NAME@@/",
