@@ -21,6 +21,7 @@
         <property name="st" value="command" /> 
 
         <php expression="require_once('config/environment.inc.php')"/>
+        <php expression="require_once('vendor/plugins/zf/config/environment.inc.php')"/>
         <php expression="require_once('S2Base/S2Base.cmd.php')"/>
     </target>
 

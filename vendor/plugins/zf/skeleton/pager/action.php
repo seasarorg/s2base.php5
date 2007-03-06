@@ -12,10 +12,10 @@
             $conditionDto->setOffset((integer)$request->getParam('s2pager_offset'));
         }
         $dtos = $this->service->getByConditionDto($conditionDto);
-        $this->view->assign('dtos',$dtos);
+        $this->_view->assign('dtos',$dtos);
 
         $helper = new S2Dao_PagerViewHelper($conditionDto, $pageLimit);
-        $this->view->assign('helper', $helper);
+        $this->_view->assign('helper', $helper);
 
         $begin = $helper->getDisplayPageIndexBegin();
         $end   = $helper->getDisplayPageIndexEnd();
@@ -23,6 +23,6 @@
         for ( $i = $begin; $i <= $end; $i++ ) {
             $pageIndex[] = $i;
         }
-        $this->view->assign('pageIndex',$pageIndex);
+        $this->_view->assign('pageIndex',$pageIndex);
     }
     /** S2BASE_PHP5 ACTION METHOD **/

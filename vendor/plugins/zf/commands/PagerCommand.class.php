@@ -210,7 +210,7 @@ class PagerCommand extends AbstractGoyaCommand {
                               $this->getPropertyRowsTitle(),
                               $this->getPropertyRowsHtml());
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareHtmlFileWithoutDao(){
@@ -234,7 +234,7 @@ class PagerCommand extends AbstractGoyaCommand {
         $patterns = array("/@@MODULE_NAME@@/","/@@ACTION_NAME@@/");
         $replacements = array($this->controllerName,$this->actionName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareServiceClassFile(){
@@ -262,7 +262,7 @@ class PagerCommand extends AbstractGoyaCommand {
                               $daoProp,
                               $this->dtoClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareServiceClassFileWithoutDao(){
@@ -296,7 +296,7 @@ class PagerCommand extends AbstractGoyaCommand {
         $replacements = array($this->serviceInterfaceName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
 
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareDaoFile(){
@@ -310,7 +310,7 @@ class PagerCommand extends AbstractGoyaCommand {
         $patterns = array("/@@CLASS_NAME@@/","/@@ENTITY_NAME@@/","/@@CONDITION_DTO_NAME@@/");
         $replacements = array($this->daoInterfaceName,$this->entityClassName, $this->dtoClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareServiceDiconFile(){
@@ -324,7 +324,7 @@ class PagerCommand extends AbstractGoyaCommand {
         $patterns = array("/@@SERVICE_CLASS@@/","/@@DAO_CLASS@@/");
         $replacements = array($this->serviceClassName,$this->daoInterfaceName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareConditionDtoFile(){
@@ -337,7 +337,7 @@ class PagerCommand extends AbstractGoyaCommand {
         $patterns = array("/@@CONDITION_DTO_NAME@@/");
         $replacements = array($this->dtoClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     private function showMethodDefinitionMessage(){

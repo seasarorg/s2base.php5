@@ -297,7 +297,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
 
         $contents .= $this->prepareHtmlFileFooter();
 
-        CmdCommand::writeFile($srcFile,$contents);
+        S2Base_CommandUtil::writeFile($srcFile,$contents);
     }
 
     protected function getPropertyRowsTitle() {
@@ -349,7 +349,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
 
         $contents .= $this->prepareHtmlFileFooter();
 
-        CmdCommand::writeFile($srcFile,$contents);
+        S2Base_CommandUtil::writeFile($srcFile,$contents);
     }
 
     protected function prepareHtmlFileConfirm(){
@@ -369,7 +369,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
 
         $contents .= $this->prepareHtmlFileFooter();
 
-        CmdCommand::writeFile($srcFile,$contents);
+        S2Base_CommandUtil::writeFile($srcFile,$contents);
 
     }
 
@@ -488,7 +488,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                               $this->dtoClassName,
                               $this->entityClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareServiceInterfaceFile(){
@@ -505,7 +505,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                               $this->entityClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
 
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     /**
@@ -528,7 +528,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                               $this->dtoClassName,
                               $this->primaryProp);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     /**
@@ -576,7 +576,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $patterns = array("/@@SERVICE_CLASS@@/","/@@DAO_CLASS@@/");
         $replacements = array($this->serviceClassName,$this->daoInterfaceName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     /**
@@ -592,7 +592,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $patterns = array("/@@CONDITION_DTO_NAME@@/");
         $replacements = array($this->dtoClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     /**
@@ -624,7 +624,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                               $this->getConfirmValidateInfo(),
                               ucfirst($this->formatActionName));
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function getConfirmValidateInfo() {
@@ -653,7 +653,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $patterns = array("/@@ACTION_NAME@@/");
         $replacements = array($this->actionName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareValidatorIniFileByFunc($func) {
@@ -670,7 +670,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $replacements = array($this->primaryProp,
                               $this->actionName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareValidatorFileConfirm() {
@@ -689,7 +689,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                               $this->controllerClassName,
                               $this->entityClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareValidatorFileRegexp() {
@@ -702,7 +702,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $patterns = array();
         $replacements = array();
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 }
 ?>

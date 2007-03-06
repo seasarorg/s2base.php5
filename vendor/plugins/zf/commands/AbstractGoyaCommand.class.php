@@ -326,7 +326,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                               $this->getPropertyRowsTitle(),
                               $this->getPropertyRowsHtml());
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
     protected function prepareHtmlFileWithoutDao(){

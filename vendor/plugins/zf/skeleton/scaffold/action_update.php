@@ -6,9 +6,8 @@
         if (count($dto) == 0) {
             throw new Exception("primarty key not found.[$pk]");
         }
-        $this->view->assign('dto',$dto);
-        $this->view->assign('func', 'update');
-
-        $this->view->setTpl('@@ACTION_NAME@@-input.html');
+        $this->_view->assign('dto',$dto);
+        $this->_view->assign('func', 'update');
+        $this->_view->setTpl('@@ACTION_NAME@@-input.html');
     }
     /** S2BASE_PHP5 ACTION METHOD **/

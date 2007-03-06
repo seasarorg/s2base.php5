@@ -1,13 +1,8 @@
 
     public function @@ACTION_METHOD_NAME@@(){
         $func = $this->getRequest()->getParam('func');
-        session_start();
-        session_regenerate_id(true);
-        if (!isset($_SESSION['@@DTO_SESSION_KEY@@'])) {
-            throw new Exception("session dto not found.[@@DTO_SESSION_KEY@@]");
-        }
-        $dto = $_SESSION['@@DTO_SESSION_KEY@@'];
-
+        $sn = new Zend_Session_Namespace('action_@@ACTION_NAME@@');
+        $dto = $sn->@@DTO_SESSION_KEY@@;
         switch ($func) {
             case 'create':
                 $this->service->createByDto($dto);

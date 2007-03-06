@@ -6,11 +6,10 @@
     }
 
     public function @@ACTION_METHOD_NAME@@(){
-        $this->view->assign('func', $this->getRequest()->getParam('func'));
+        $this->_view->assign('func', $this->getRequest()->getParam('func'));
         $dto = $this->create@@ENTITY_CLASS_NAME@@FromRequest($this->getRequest());
-        $this->view->assign('dto', $dto);
-        session_start();
-        session_regenerate_id(true);
-        $_SESSION['@@DTO_SESSION_KEY@@'] = $dto;
+        $this->_view->assign('dto', $dto);
+        $sn = new Zend_Session_Namespace('action_@@ACTION_NAME@@');
+        $sn->@@DTO_SESSION_KEY@@ = $dto;
     }
     /** S2BASE_PHP5 ACTION METHOD **/

@@ -6,11 +6,20 @@
             <fileset dir="${plugins.dir}/zf/commands">
                <include name="*Command*.php"/>
             </fileset>
-
-            <!-- default -->
-            <fileset dir="${cmd.dir}">
-                <include name="*Command*.php"/>
-            </fileset>
         </command>
+    </target>
+
+    <target name="test">
+        <php expression="require_once('vendor/plugins/zf/config/environment.inc.php')"/>
+        <echo>test directory : test/${td}</echo>
+        <echo>test target : ${tt}</echo>
+        <phpunit2 haltonfailure="false" haltonerror="false">
+            <formatter type="plain" usefile="false"/>
+            <batchtest>
+                <fileset dir="test/${td}">
+                    <include name="${tt}"/>
+                </fileset>
+            </batchtest>
+        </phpunit2>
     </target>
 </project>

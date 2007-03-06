@@ -5,11 +5,11 @@
         if (count($dto) == 0) {
             throw new Exception("primarty key not found.[$pk]");
         }
-        $this->view->assign('dto', $dto);
-        $this->view->assign('func', 'delete');
-        session_start();
-        session_regenerate_id(true);
-        $_SESSION['@@DTO_SESSION_KEY@@'] = $dto;
-        $this->view->setTpl('@@ACTION_NAME@@-confirm.html');
+        $this->_view->assign('dto', $dto);
+        $this->_view->assign('func', 'delete');
+
+        $sn = new Zend_Session_Namespace('action_@@ACTION_NAME@@');
+        $sn->@@DTO_SESSION_KEY@@ = $dto;
+        $this->_view->setTpl('@@ACTION_NAME@@-confirm.html');
     }
     /** S2BASE_PHP5 ACTION METHOD **/

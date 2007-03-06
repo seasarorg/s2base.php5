@@ -24,6 +24,7 @@
             <fileset dir="../..">
                 <include name="vendor/plugins/zf/**" />
                 <exclude name="vendor/plugins/zf/*Validator*" />
+                <exclude name="vendor/plugins/zf/commands/Dicon*" />
                 <exclude name="vendor/plugins/zf/commands/Pager*" />
                 <exclude name="vendor/plugins/zf/commands/Scaffold*" />
                 <exclude name="vendor/plugins/zf/commands/Master*" />
