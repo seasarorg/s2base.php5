@@ -15,6 +15,7 @@ try{
     $fc = Zend_Controller_Front::getInstance();
     $fc->throwExceptions(true);
     $fc->registerPlugin(new S2Base_ZfDispatcherSupportPlugin());
+    $fc->registerPlugin(new S2Base_ZfValidatorSupportPlugin());
     $fc->setDispatcher(new S2Base_ZfDispatcher());
     $fc->setRequest($request);
     $response = $fc->dispatch();
