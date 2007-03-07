@@ -1,5 +1,5 @@
 
-    public static function create@@ENTITY_CLASS_NAME@@FromRequest($request){
+    public function create@@ENTITY_CLASS_NAME@@FromRequest($request){
         $dto = new @@ENTITY_CLASS_NAME@@();
         @@CREATE_DTO_METHOD@@
         return $dto;

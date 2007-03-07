@@ -1,13 +1,10 @@
 <?php
 class S2Base_ZfDb {
     private function __construct(){}
-    private static $container = null;
-    
-    public static function factory() {
-        if (self::$container === null) {
-            self::$container = S2ContainerFactory::create(PDO_DICON);
-        }
-        $cd = self::$container->getComponentDef('dataSource');
+
+    public static function factory($pdoDicon) {
+        $container = S2ContainerFactory::create($pdoDicon);
+        $cd = $container->getComponentDef('dataSource');
         $username = null;
         $password = null;
         if ($cd->hasPropertyDef('user')) {
@@ -28,8 +25,8 @@ class S2Base_ZfDb {
         return Zend_Db::factory($pdoType, $params);
     }
 
-    public static function setDefaultPdoAdapter() {
-        Zend_Db_Table::setDefaultAdapter(self::factory());
+    public static function setDefaultPdoAdapter($pdoDicon = PDO_DICON) {
+        Zend_Db_Table::setDefaultAdapter(self::factory($pdoDicon));
     }
 }
 ?>

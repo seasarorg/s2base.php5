@@ -385,7 +385,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $src .= '{$dto->get' . ucfirst($prop) . '()}"/>' . PHP_EOL;
         $src .= '</td>' . PHP_EOL;
         $src .= "<td>";
-        $src .= '<font color="pink">{$errors.' . $prop . '|escape}</font>';
+        $src .= '<font color="pink">{$errors.validate.' . $prop . '.msg|escape}</font>';
         $src .= "</td></tr>" . PHP_EOL;
         $src .= '{else}' . PHP_EOL;
         $src .= '{$dto->get' . ucfirst($prop) . '()|escape}' . PHP_EOL;
@@ -408,7 +408,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
             $src .= "</td>" . PHP_EOL;
 
             $src .= "<td>";
-            $src .= '<font color="pink">{$errors.' . $prop . '|escape}</font>';
+            $src .= '<font color="pink">{$errors.validate.' . $prop . '.msg|escape}</font>';
             $src .= "</td></tr>" . PHP_EOL;
         }
         $src .= "</table>" . PHP_EOL;
@@ -614,13 +614,13 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $srcFile = $this->srcCtlDir
                  . self::VALIDATE_DIR
                  . $this->actionName . '-confirm'
-                 . '.regexp.ini';
+                 . '.ini';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . '/skeleton/scaffold/validate_confirm_ini.tpl');
-        $patterns = array("/@@RETURN_PAGE@@/",
+        $patterns = array("/@@RETURN_ACTION@@/",
                           "/@@PARAMS@@/",
                           "/@@ACTION_NAME@@/");
-        $replacements = array($this->actionName. '-input',
+        $replacements = array($this->actionName. '-create',
                               $this->getConfirmValidateInfo(),
                               ucfirst($this->formatActionName));
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
@@ -630,13 +630,14 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     protected function getConfirmValidateInfo() {
         $ret = '';
         foreach ($this->entityPropertyNames as $prop) {
-            $ret .= "[$prop]" . PHP_EOL;
+            $ret .= "[$prop : default]" . PHP_EOL;
+            $ret .= 'validate = "regex"' . PHP_EOL;
             if ($prop == $this->primaryProp) {
-                $ret .= 'regexp = "^.{1,8}$"' . PHP_EOL;
+                $ret .= 'regex.pattern = "/^.{1,8}$/"' . PHP_EOL;
             } else {
-                $ret .= 'regexp = "^.{0,8}$"' . PHP_EOL;
+                $ret .= 'regex.pattern = "/^.{0,8}$/"' . PHP_EOL;
             }
-            $ret .= 'msg    = "invalid value"' . PHP_EOL . PHP_EOL;
+            $ret .= 'regex.msg    = "invalid value"' . PHP_EOL . PHP_EOL;
         }
         return $ret;
     }
@@ -647,7 +648,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $srcFile = $this->srcCtlDir
                  . self::VALIDATE_DIR
                  . $this->actionName . '-execute'
-                 . '.regexp.ini';
+                 . '.ini';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . '/skeleton/scaffold/validate_execute_ini.tpl');
         $patterns = array("/@@ACTION_NAME@@/");
@@ -662,7 +663,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $srcFile = $this->srcCtlDir
                  . self::VALIDATE_DIR
                  . $this->actionName . '-' . $func
-                 . '.regexp.ini';
+                 . '.ini';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . '/skeleton/scaffold/validate_ini.tpl');
         $patterns = array("/@@PARAM_KEY@@/",

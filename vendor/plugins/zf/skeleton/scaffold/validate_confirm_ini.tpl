@@ -9,12 +9,13 @@
 ;msg    = "invalid value"            required
 ;
 
-page   = "@@RETURN_PAGE@@"
-class  = "@@ACTION_NAME@@ConfirmValidator"
+[default]
+action   = "@@RETURN_ACTION@@"
 
 @@PARAMS@@
 
-[func]
-regexp = "^create$|^update$|^delete$"
-msg    = "invalid value"
+[func : default]
+validate = "regex"
+regex.pattern = "/^create$|^update$|^delete$/"
+regex.msg    = "invalid value"
 

@@ -1,14 +1,8 @@
 <?php
-require_once('Zend/Controller/Plugin/Abstract.php');
 class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
 {
     const VIEW_REGISTRY_KEY = 's2base_view';
     public static $VIEW_CLASS = 'S2Base_ZfSmartyView';
-    private static $exitDispatchLoop = false;
-
-    public static function setExitDispatchLoop($val = true) {
-        self::$exitDispatchLoop = $val;
-    }
 
     public static function getModuleName(Zend_Controller_Request_Abstract $request) {
         $moduleName = $request->getModuleName();
@@ -48,12 +42,6 @@ class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
     public function preDispatch(Zend_Controller_Request_Abstract $request) {
     }
 
-    public function postDispatch(Zend_Controller_Request_Abstract $request) {
-        if (self::$exitDispatchLoop) {
-            $request->setDispatched();
-        }
-    }
-
     public function dispatchLoopShutdown() {
         if (Zend::isRegistered(self::VIEW_REGISTRY_KEY)) {
             $view = Zend::registry(self::VIEW_REGISTRY_KEY);
@@ -62,6 +50,5 @@ class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
             }
         }
     }
-
 }
 ?>

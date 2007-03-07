@@ -1,5 +1,4 @@
 <?php
-require_once('Zend/View/Interface.php');
 class S2Base_ZfSmartyView
     extends Smarty
     implements Zend_View_Interface, S2Base_ZfView {
@@ -136,6 +135,10 @@ class S2Base_ZfSmartyView
         }
         self::setRendered();
         
+        if ($this->request->has(S2Base_ZfValidatorSupportPlugin::ERRORS_KEY)) {
+            $this->putError('validate',$this->request->getParam(S2Base_ZfValidatorSupportPlugin::ERRORS_KEY));
+        }
+
         $controllerName = $this->controllerName != null ?
                           $this->controllerName :
                           $this->request->getControllerName();

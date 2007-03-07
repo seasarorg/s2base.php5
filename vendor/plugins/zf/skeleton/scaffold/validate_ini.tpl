@@ -9,10 +9,11 @@
 ;msg    = "invalid value"            required
 ;
 
-page   = "forward:@@RETURN_ACTION_NAME@@"
-class  = "RegexpValidator"
+[default]
+action   = "@@RETURN_ACTION_NAME@@"
 
-[@@PARAM_KEY@@]
-regexp = "^.{1,8}$"
-msg    = "invalid value"
+[@@PARAM_KEY@@ : default]
+validate = "regex"
+regex.pattern = "/^\d{1,8}$/"
+regex.msg    = "invalid value"
 

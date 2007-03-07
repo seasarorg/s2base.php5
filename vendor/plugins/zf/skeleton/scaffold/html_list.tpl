@@ -1,6 +1,6 @@
 <font color="pink">
-{foreach from=$errors item=val key=key}
-{$key|escape} : {$val|escape}
+{foreach from=$errors.validate item=val key=key}
+{$key|escape} : {$val.msg|escape}
 {/foreach}
 </font>
 <br>

@@ -1,5 +1,4 @@
 <?php
-require_once('Zend/View.php');
 class S2Base_ZfDefaultView
     extends Zend_View
     implements S2Base_ZfView {

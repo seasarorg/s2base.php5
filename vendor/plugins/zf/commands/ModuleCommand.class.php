@@ -1,5 +1,7 @@
 <?php
 class ModuleCommand implements S2Base_GenerateCommand {
+    const MODEL_DIR = 'model';
+
     protected $moduleName;
     protected $srcModuleDir;
     protected $srcCtlDir;
@@ -122,7 +124,8 @@ class ModuleCommand implements S2Base_GenerateCommand {
             S2BASE_PHP5_ENTITY_DIR,
             S2BASE_PHP5_INTERCEPTOR_DIR,
             S2BASE_PHP5_SERVICE_DIR,
-            S2BASE_PHP5_VIEW_DIR);
+            S2BASE_PHP5_VIEW_DIR,
+            S2BASE_PHP5_DS . self::MODEL_DIR);
         S2Base_CommandUtil::createDirectory($this->srcModuleDir);
         S2Base_CommandUtil::createDirectory($this->srcCtlDir);
         foreach($dirs as $dir){
@@ -131,7 +134,8 @@ class ModuleCommand implements S2Base_GenerateCommand {
 
         $dirs = array(
             S2BASE_PHP5_DAO_DIR,
-            S2BASE_PHP5_SERVICE_DIR);
+            S2BASE_PHP5_SERVICE_DIR,
+            S2BASE_PHP5_DS . self::MODEL_DIR);
         S2Base_CommandUtil::createDirectory($this->testModuleDir);
         S2Base_CommandUtil::createDirectory($this->testCtlDir);
         foreach($dirs as $dir){
@@ -181,7 +185,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
 
     public function prepareModuleIncFile(){
         $srcFile = $this->srcCtlDir
-                 . "{$this->controllerName}.inc.tpl";
+                 . "{$this->controllerName}.inc.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . '/skeleton/module/include.tpl');
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);

@@ -9,10 +9,11 @@
 ;msg    = "invalid value"            required
 ;
 
-page   = "forward:@@ACTION_NAME@@"
-class  = "RegexpValidator"
+[default]
+action   = "@@ACTION_NAME@@"
 
-[func]
-regexp = "^create$|^update$|^delete$"
-msg    = "invalid value"
+[func : default]
+validate = "regex"
+regex.pattern = "/^create$|^update$|^delete$/"
+regex.msg    = "invalid value"
 

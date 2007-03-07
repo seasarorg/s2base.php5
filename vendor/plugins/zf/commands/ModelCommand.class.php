@@ -1,8 +1,5 @@
 <?php
 class ModelCommand implements S2Base_GenerateCommand {
-
-    const MODEL_DIR = 'model';
-
     protected $moduleName;
     protected $controllerName;
     protected $modelInterfaceName;
@@ -135,10 +132,6 @@ class ModelCommand implements S2Base_GenerateCommand {
         $this->srcCtlDir     = $this->srcModuleDir . $this->controllerName . S2BASE_PHP5_DS;
         $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
         $this->testCtlDir    = $this->testModuleDir . $this->controllerName . S2BASE_PHP5_DS;
-
-        S2Base_CommandUtil::createDirectory($this->srcCtlDir . self::MODEL_DIR);
-        S2Base_CommandUtil::createDirectory($this->testCtlDir . self::MODEL_DIR);
-
         $this->prepareModelImplFile();
         $this->prepareModelInterfaceFile();
         $this->prepareModelTestFile();
@@ -147,7 +140,7 @@ class ModelCommand implements S2Base_GenerateCommand {
 
     protected function prepareModelImplFile(){
         $srcFile = $this->srcCtlDir
-                 . self::MODEL_DIR
+                 . ModuleCommand::MODEL_DIR
                  . S2BASE_PHP5_DS
                  . $this->modelClassName
                  . S2BASE_PHP5_CLASS_SUFFIX;
@@ -168,7 +161,7 @@ class ModelCommand implements S2Base_GenerateCommand {
 
     protected function prepareModelInterfaceFile(){
         $srcFile = $this->srcCtlDir
-                 . self::MODEL_DIR
+                 . ModuleCommand::MODEL_DIR
                  . S2BASE_PHP5_DS
                  . $this->modelInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
@@ -183,7 +176,7 @@ class ModelCommand implements S2Base_GenerateCommand {
     protected function prepareModelTestFile(){
         $testName = $this->modelClassName . "Test";
         $srcFile = $this->testCtlDir
-                 . self::MODEL_DIR
+                 . ModuleCommand::MODEL_DIR
                  . S2BASE_PHP5_DS
                  . $testName
                  . S2BASE_PHP5_CLASS_SUFFIX;
