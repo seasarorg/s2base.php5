@@ -47,32 +47,10 @@ class PagerCommand extends AbstractGoyaCommand {
         if(parent::getGoyaInfoWithCommonsDao($actionName)) {
             $this->dtoClassName = ucfirst($this->formatActionName) . self::DTO_SUFFIX;
             $this->dtoSessionKey = $this->formatActionName . self::DTO_SUFFIX;
-            //$this->entityPropertyNames = $this->getEntityPropertyNames($this->entityClassName);
             return true;
         }
         return false;
     }
-/*
-    protected function getGoyaInfoWithDB($actionName) {
-        if(parent::getGoyaInfoWithDB($actionName)) {
-            $this->mergeEntityPropertyNamesFromCols();
-            return true;
-        }
-        return false;
-    }
-*/
-/*
-    protected function getGoyaInfoInteractive($actionName) {
-        if(parent::getGoyaInfoInteractive($actionName)) {
-            if ($this->entityExtends) {
-                $this->entityPropertyNames = $this->getEntityPropertyNames($this->extendsEntityClassName);
-            }
-            $this->mergeEntityPropertyNamesFromCols();
-            return true;
-        }
-        return false;
-    }
-*/
 
     public function setupPropertyWithDao($actionName){
         parent::setupPropertyWithDao($actionName);
@@ -124,6 +102,7 @@ class PagerCommand extends AbstractGoyaCommand {
 
         $this->prepareActionFile();
         $this->prepareActionDiconFile();
+        $this->prepareValidateIniFile();
         $this->prepareServiceInterfaceFile();
         $this->prepareServiceTestFile();
         $this->prepareConditionDtoFile();
@@ -351,46 +330,18 @@ class PagerCommand extends AbstractGoyaCommand {
         }
     }
 
-/*
-    private function mergeEntityPropertyNamesFromCols() {
-        foreach ($this->cols as $col) {
-            array_push($this->entityPropertyNames,
-                       EntityCommand::getPropertyNameFromCol($col));
-        }
-        $this->entityPropertyNames = array_unique($this->entityPropertyNames);
+    protected function prepareValidateIniFile(){
+        $srcFile = $this->srcCtlDir
+                 . ModuleCommand::VALIDATE_DIR
+                 . S2BASE_PHP5_DS
+                 . $this->actionName
+                 . '.ini';
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                     . '/skeleton/pager/validate.ini.tpl');
+        $patterns = array("/@@ACTION_NAME@@/");
+        $replacements = array($this->actionName);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
-*/
-
-/*
-    private function getEntityPropertyNames($entityClassName) {
-        $beanDesc = S2Container_BeanDescFactory::getBeanDesc(new ReflectionClass($entityClassName));
-        $c = $beanDesc->getPropertyDescSize();
-        $props = array();
-        for($i=0; $i<$c; $i++){
-            $props[] = $beanDesc->getPropertyDesc($i)->getPropertyName();
-        }
-        return $props;
-    }
-
-    private function getPropertyRowsTitle() {
-        $src = "<tr>";
-        foreach ($this->entityPropertyNames as $prop) {
-            $src .= "<th>";
-            $src .= ucfirst($prop);
-            $src .= "</th>";
-        }
-        return $src . "</tr>";
-    }
-
-    private function getPropertyRowsHtml() {
-        $src = "<tr>";
-        foreach ($this->entityPropertyNames as $prop) {
-            $src .= "<td>";
-            $src .= '{$row->get' . ucfirst($prop) . '()|escape}';
-            $src .= "</td>";
-        }
-        return $src . "</tr>";
-    }
-*/
 }
 ?>

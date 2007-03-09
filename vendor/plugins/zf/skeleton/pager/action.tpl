@@ -3,13 +3,13 @@
     {
         $listLimit = 10;
         $pageLimit = 5;
-        $request = $this->getRequest();
         $support = new S2Dao_PagerSupport($listLimit,
                            '@@CONDITION_DTO_NAME@@',
                            '@@CONDITION_DTO_SESSION_KEY@@');
         $conditionDto = $support->getPagerCondition();
-        if($request->getParam('s2pager_offset') != null){
-            $conditionDto->setOffset((integer)$request->getParam('s2pager_offset'));
+        if ($this->getRequest()->has('s2pager_offset') and
+            !$this->getRequest()->getParam(S2Base_ZfValidateSupportPlugin::ERR_KEY)){
+            $conditionDto->setOffset($this->getRequest()->getParam('s2pager_offset'));
         }
         $dtos = $this->service->getByConditionDto($conditionDto);
         $this->_view->assign('dtos',$dtos);

@@ -29,16 +29,16 @@ session_save_path(S2BASE_PHP5_VAR_DIR . '/session');
  * Library setting
  */
 require_once('Smarty/libs/Smarty.class.php');
-require_once 'Zend/Controller/Front.php';
-require_once 'Zend/Controller/Request/Http.php';
+require_once('Zend/Controller/Front.php');
+require_once('Zend/Controller/Request/Http.php');
 require_once('Zend/Controller/Plugin/Abstract.php');
 require_once('Zend/Controller/Dispatcher/Standard.php');
 require_once('Zend/Session.php');
-require_once 'Zend/Db.php';
-require_once 'Zend/Db/Table.php';
-require_once 'Zend/Config/Ini.php';
-require_once('Zend/View.php');
+require_once('Zend/Db.php');
+require_once('Zend/Db/Table.php');
+require_once('Zend/Config/Ini.php');
 require_once('Zend/View/Interface.php');
+require_once('Zend/View.php');
 S2ContainerClassLoader::import(S2BASE_PHP5_PLUGIN_ZF);
 
 /**

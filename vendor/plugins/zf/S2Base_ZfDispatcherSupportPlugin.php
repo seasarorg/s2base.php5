@@ -1,6 +1,7 @@
 <?php
 class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
 {
+    const PARAM_MAX = 50;
     const VIEW_REGISTRY_KEY = 's2base_view';
     public static $VIEW_CLASS = 'S2Base_ZfSmartyView';
 
@@ -31,6 +32,22 @@ class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
     }
 
     public function routeShutdown(Zend_Controller_Request_Abstract $request) {
+        if (!$this->validate(self::getModuleName($request))){
+            throw new Exception("invalid module.");
+        }
+        if (!$this->validate($request->getControllerName())){
+            throw new Exception("invalid controller.");
+        }
+        if (!$this->validate($request->getActionName())){
+            throw new Exception("invalid action.");
+        }
+    }
+
+    private function validate($param) {
+        if (preg_match('/^\w{1,' . self::PARAM_MAX .'}$/', $param)) {
+            return true;
+        }
+        return false;
     }
 
     public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {

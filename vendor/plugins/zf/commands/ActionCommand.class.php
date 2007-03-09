@@ -81,6 +81,7 @@ class ActionCommand implements S2Base_GenerateCommand {
         $this->prepareActionFile();
         $this->prepareHtmlFile();
         $this->prepareDiconFile();
+        $this->prepareValidateIniFile();
     }
     
     protected function prepareActionFile(){
@@ -144,6 +145,17 @@ class ActionCommand implements S2Base_GenerateCommand {
         $replacements = array($this->controllerName,
                               $this->controllerClassName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
+    }
+
+    protected function prepareValidateIniFile(){
+        $srcFile = $this->srcCtlDir
+                 . ModuleCommand::VALIDATE_DIR
+                 . S2BASE_PHP5_DS
+                 . $this->actionName
+                 . '.ini';
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                     . '/skeleton/action/validate.ini.tpl');
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 }

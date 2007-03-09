@@ -1,6 +1,6 @@
 
     public function @@ACTION_METHOD_NAME@@() {
-        if ($this->getRequest()->has(S2Base_ZfValidatorSupportPlugin::ERRORS_KEY)) {
+        if ($this->getRequest()->has(S2Base_ZfValidateSupportPlugin::ERR_KEY)) {
             $dto = $this->createScaffoldEntityFromRequest($this->getRequest());
         } else {
             $dto = new @@ENTITY_CLASS_NAME@@();

@@ -135,8 +135,8 @@ class S2Base_ZfSmartyView
         }
         self::setRendered();
         
-        if ($this->request->has(S2Base_ZfValidatorSupportPlugin::ERRORS_KEY)) {
-            $this->putError('validate',$this->request->getParam(S2Base_ZfValidatorSupportPlugin::ERRORS_KEY));
+        if ($this->request->has(S2Base_ZfValidateSupportPlugin::ERRORS_KEY)) {
+            $this->putError('validate',$this->request->getParam(S2Base_ZfValidateSupportPlugin::ERRORS_KEY));
         }
 
         $controllerName = $this->controllerName != null ?

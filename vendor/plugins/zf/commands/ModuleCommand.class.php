@@ -1,6 +1,7 @@
 <?php
 class ModuleCommand implements S2Base_GenerateCommand {
     const MODEL_DIR = 'model';
+    const VALIDATE_DIR = 'validate';
 
     protected $moduleName;
     protected $srcModuleDir;
@@ -125,7 +126,8 @@ class ModuleCommand implements S2Base_GenerateCommand {
             S2BASE_PHP5_INTERCEPTOR_DIR,
             S2BASE_PHP5_SERVICE_DIR,
             S2BASE_PHP5_VIEW_DIR,
-            S2BASE_PHP5_DS . self::MODEL_DIR);
+            S2BASE_PHP5_DS . self::MODEL_DIR,
+            S2BASE_PHP5_DS . self::VALIDATE_DIR);
         S2Base_CommandUtil::createDirectory($this->srcModuleDir);
         S2Base_CommandUtil::createDirectory($this->srcCtlDir);
         foreach($dirs as $dir){
