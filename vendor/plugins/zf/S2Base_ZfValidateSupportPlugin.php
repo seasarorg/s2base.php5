@@ -2,28 +2,29 @@
 class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
 {
     const VALIDATE_DIR = 'validate';
-    const DEFAULT_KEY = 'default';
-    const ERRORS_KEY  = 's2base_validate_errors';
-    const ERR_KEY     = 's2base_validate_error';
+    const DEFAULT_KEY  = 'default';
+    const ERRORS_KEY   = 's2base_validate_errors';
+    const ERR_KEY      = 's2base_validate_error';
 
-    const ALNUM_KEY   = 'alnum';
-    const ALPHA_KEY   = 'alpha';
-    const DATE_KEY    = 'date';
-    const FLOAT_KEY   = 'float';
-    const INT_KEY     = 'int';
-    const IP_KEY      = 'ip';
+    const ALNUM_KEY  = 'alnum';
+    const ALPHA_KEY  = 'alpha';
+    const DATE_KEY   = 'date';
+    const FLOAT_KEY  = 'float';
+    const INT_KEY    = 'int';
+    const IP_KEY     = 'ip';
+    const CCNUM_KEY  = 'ccnum';
+    const DIGITS_KEY = 'digits';
+    const HEX_KEY    = 'hex';
 
-    const EMAIL_KEY   = 'emailaddress';
-    const HOST_KEY    = 'hostname';
-
-    private static $VALIDATE_CLASSES = array(self::ALNUM_KEY => 'Zend_Validate_Alnum',
-                                             self::ALPHA_KEY => 'Zend_Validate_Alpha',
-                                             self::DATE_KEY  => 'Zend_Validate_Date',
-                                             self::FLOAT_KEY => 'Zend_Validate_Float',
-                                             self::INT_KEY   => 'Zend_Validate_Int',
-                                             self::IP_KEY    => 'Zend_Validate_Ip',
-                                             self::EMAIL_KEY => 'Zend_Validate_EmailAddress',
-                                             self::HOST_KEY  => 'Zend_Validate_Hostname');
+    private static $VALIDATE_CLASSES = array(self::ALNUM_KEY  => 'Zend_Validate_Alnum',
+                                             self::ALPHA_KEY  => 'Zend_Validate_Alpha',
+                                             self::DATE_KEY   => 'Zend_Validate_Date',
+                                             self::FLOAT_KEY  => 'Zend_Validate_Float',
+                                             self::INT_KEY    => 'Zend_Validate_Int',
+                                             self::IP_KEY     => 'Zend_Validate_Ip',
+                                             self::CCNUM_KEY  => 'Zend_Validate_Ccnum',
+                                             self::DIGITS_KEY => 'Zend_Validate_Digits',
+                                             self::HEX_KEY    => 'Zend_Validate_Hex');
 
     private $validators = array();
     private $validateFactories = array();
@@ -114,6 +115,9 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
             case self::FLOAT_KEY:
             case self::INT_KEY:
             case self::IP_KEY:
+            case self::CCNUM_KEY:
+            case self::DIGITS_KEY:
+            case self::HEX_KEY:
                 if (isset($this->validators[$valKey])) {
                     $validator = $this->validators[$valKey];
                 } else {
@@ -123,29 +127,7 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
                     $this->validators[$valKey] = $validator;
                 }
                 break;
-            case self::EMAIL_KEY:
-            case self::HOST_KEY:
-                $allowValue = null;
-                if ($paramConfig->$valKey !== null and $paramConfig->$valKey->allow !== null) {
-                    $allowValue = $paramConfig->$valKey->allow;
-                }
-                if (isset($this->validators[$valKey])) {
-                    $validator = $this->validators[$valKey];
-                    if ($allowValue !== null) {
-                        $validator->setAllow($allowValue);
-                    }
-                } else {
-                    $valClassName = self::$VALIDATE_CLASSES[$valKey];
-                    Zend::loadClass($valClassName);
-                    if ($allowValue === null) {
-                        $validator = new $valClassName();
-                    } else {
-                        $validator = new $valClassName($allowValue);
-                    }
-                    $this->validators[$valKey] = $validator;
-                }
-                break;
-            default:
+             default:
                 if (isset($this->validateFactories[$valKey])) {
                     $validator =  $this->validateFactories[$valKey]->getInstance($paramName, $paramConfig);
                     if (! $validator instanceof Zend_Validate_Interface) {

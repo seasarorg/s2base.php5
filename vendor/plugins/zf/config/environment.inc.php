@@ -5,15 +5,15 @@
 error_reporting(E_ERROR);
 error_reporting(E_WARNING);
 error_reporting(E_ALL);
-ini_set('display_errors','On');
-ini_set('log_errors','On');
-ini_set('error_log',S2BASE_PHP5_VAR_DIR . '/logs/php.log');
+ini_set('display_errors', 'On');
+ini_set('log_errors', 'On');
+ini_set('error_log', S2BASE_PHP5_VAR_DIR . '/logs/php.log');
 
 /**
  * definition
  */
-define('S2BASE_PHP5_ZF_TPL_SUFFIX','.html'); 
-define('S2BASE_PHP5_ZF_DEFAULT_MODULE','default'); 
+define('S2BASE_PHP5_ZF_TPL_SUFFIX', '.html'); 
+define('S2BASE_PHP5_ZF_DEFAULT_MODULE', 'default'); 
 
 /**
  * Directory setting
@@ -29,15 +29,14 @@ session_save_path(S2BASE_PHP5_VAR_DIR . '/session');
  * Library setting
  */
 require_once('Smarty/libs/Smarty.class.php');
+
 require_once('Zend/Controller/Front.php');
 require_once('Zend/Controller/Request/Http.php');
-require_once('Zend/Controller/Plugin/Abstract.php');
 require_once('Zend/Controller/Dispatcher/Standard.php');
 require_once('Zend/Session.php');
 require_once('Zend/Db.php');
 require_once('Zend/Db/Table.php');
 require_once('Zend/Config/Ini.php');
-require_once('Zend/View/Interface.php');
 require_once('Zend/View.php');
 S2ContainerClassLoader::import(S2BASE_PHP5_PLUGIN_ZF);
 

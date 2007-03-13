@@ -19,12 +19,20 @@
 ;
 ;
 ;「リクエストパラメータ名」セクションは、defaultセクションを継承し上記設定項目を引き継ぎます。
-; validate項目に設定する検証タイプは、Zend/Validate/***.php の「***」になります。
-;   Alpha.php ---> alpha
-;   Regex.php ---> regex
+; validate項目に設定できる検証タイプは次になります。それぞれ、Zend_Validate_*** クラスが使用されます。
+;   - alnum   (Zend_Validate_Alnum)
+;   - alpha   (Zend_Validate_Alpha)
+;   - date    (Zend_Validate_Date)
+;   - float   (Zend_Validate_Float)
+;   - int     (Zend_Validate_Int)
+;   - ip      (Zend_Validate_Ip)
+;   - ccnum   (Zend_Validate_Ccnum)
+;   - digits  (Zend_Validate_Digits)
+;   - hex     (Zend_Validate_Hex)
+;   - regex   (Zend_Validate_Regex)
 ;
 ; [リクエストパラメータ名 : default]
-; validate      = "カンマ区切りで検証タイプを設定します。( regex, alpha, , )"
+; validate      = "カンマ区切りで検証タイプを設定します。( regex, , )"
 ; regex.pattern = "検証タイプ名をprefixとして各検証タイプに必要な項目を設定します。"
 ; regex.msg     = "検証タイプ名をprefixとして各検証タイプの検証失敗メッセージを設定します。"
 ;
@@ -35,5 +43,5 @@
 ; [foo : default]
 ; validate      = "regex"
 ; regex.pattern = "/^\d+$/"
-; regex.msg     = "hoge"
+; regex.msg     = "invalid value."
 ;

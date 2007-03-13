@@ -1,7 +1,7 @@
 <?php
 class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
 {
-    const PARAM_MAX = 50;
+    const PARAM_MAX_LEN = 50;
     const VIEW_REGISTRY_KEY = 's2base_view';
     public static $VIEW_CLASS = 'S2Base_ZfSmartyView';
 
@@ -44,10 +44,7 @@ class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
     }
 
     private function validate($param) {
-        if (preg_match('/^\w{1,' . self::PARAM_MAX .'}$/', $param)) {
-            return true;
-        }
-        return false;
+        return preg_match('/^\w{1,' . self::PARAM_MAX_LEN .'}$/', $param);
     }
 
     public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {
