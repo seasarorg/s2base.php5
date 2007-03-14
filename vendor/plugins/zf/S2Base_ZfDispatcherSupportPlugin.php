@@ -33,13 +33,13 @@ class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
 
     public function routeShutdown(Zend_Controller_Request_Abstract $request) {
         if (!$this->validate(self::getModuleName($request))){
-            throw new Exception("invalid module.");
+            throw new S2Base_ZfException("invalid module.");
         }
         if (!$this->validate($request->getControllerName())){
-            throw new Exception("invalid controller.");
+            throw new S2Base_ZfException("invalid controller.");
         }
         if (!$this->validate($request->getActionName())){
-            throw new Exception("invalid action.");
+            throw new S2Base_ZfException("invalid action.");
         }
     }
 

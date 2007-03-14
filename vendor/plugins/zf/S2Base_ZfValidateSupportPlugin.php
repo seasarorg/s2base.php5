@@ -16,6 +16,10 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
     const DIGITS_KEY = 'digits';
     const HEX_KEY    = 'hex';
 
+    public function __construct() {
+        $this->addValidateFactory(new S2Base_ZfRegexValidateFactory());
+    }
+
     private static $VALIDATE_CLASSES = array(self::ALNUM_KEY  => 'Zend_Validate_Alnum',
                                              self::ALPHA_KEY  => 'Zend_Validate_Alpha',
                                              self::DATE_KEY   => 'Zend_Validate_Date',
@@ -29,13 +33,16 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
     private $validators = array();
     private $validateFactories = array();
 
-    public function addValidateFactory(S2Base_ZfValidateFactory $validateFactory) {
-        $key = $validateFactory->getId();
+    public function addValidateFactory(S2Base_ZfValidateFactory $validateFactory, $key = null) {
+        if ($key === null) {
+            $key = $validateFactory->getId();
+        }
         if (isset(self::$VALIDATE_CLASSES[$key]) or
             isset($this->validateFactories[$key])) {
-            throw new Exception("can not add " . get_class($validateFactory) . ". key [$key] exists.");
+            throw new S2Base_ZfException("can not add " . get_class($validateFactory) . ". key [$key] exists.");
         }
         $this->validateFactories[$key] = $validateFactory;
+        return $this;
     }
 
     public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {
@@ -75,7 +82,7 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
                     $errors[$paramName] = array('value' => $paramValue, 'msg' => $msg);
 
                     if($paramConfig->exception != null) {
-                        throw new Exception($paramConfig->exception);
+                        throw new S2Base_ZfException($paramConfig->exception);
                     }
                     if($paramConfig->module != null) {
                         $request->setModuleName($paramConfig->module);
@@ -131,10 +138,10 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
                 if (isset($this->validateFactories[$valKey])) {
                     $validator =  $this->validateFactories[$valKey]->getInstance($paramName, $paramConfig);
                     if (! $validator instanceof Zend_Validate_Interface) {
-                        throw new Exception("$valKey validate not implements Zend_Validate_Interface");
+                        throw new S2Base_ZfException("$valKey validate not implements Zend_Validate_Interface");
                     }
                 } else {
-                    throw new Exception("unsupported validate [$valKey]");
+                    throw new S2Base_ZfException("unsupported validate [$valKey]");
                 }
                 break;
         }

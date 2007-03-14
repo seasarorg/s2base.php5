@@ -127,7 +127,7 @@ class S2Base_ZfSmartyView
      */
     public function render($name) {
         if (!$this->response instanceof Zend_Controller_Response_Abstract) {
-            throw new Exception('response not set.');
+            throw new S2Base_ZfException('response not set.');
         }
 
         if (self::isRendered()) {
@@ -173,7 +173,7 @@ class S2Base_ZfSmartyView
             }
             $viewFile = $ctlViewDir . DIRECTORY_SEPARATOR . $name;
             if (!file_exists($this->template_dir . DIRECTORY_SEPARATOR . $viewFile)) {
-                throw new Exception('template file not found. [' . 
+                throw new S2Base_ZfException('template file not found. [' . 
                      $this->template_dir . DIRECTORY_SEPARATOR . $viewFile . ']');
             }
         }
