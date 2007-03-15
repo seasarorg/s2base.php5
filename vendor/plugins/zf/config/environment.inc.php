@@ -38,7 +38,8 @@ require_once('Zend/Db.php');
 require_once('Zend/Db/Table.php');
 require_once('Zend/Config/Ini.php');
 require_once('Zend/View.php');
-S2ContainerClassLoader::import(S2BASE_PHP5_PLUGIN_ZF);
+require_once(S2BASE_PHP5_PLUGIN_ZF . '/s2base_zf.core.php');
+S2ContainerClassLoader::import(S2BASE_PHP5_PLUGIN_ZF . '/classes');
 
 /**
  * setup DefaultAdaptor of Zend_Db_Table

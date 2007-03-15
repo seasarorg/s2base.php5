@@ -15,7 +15,6 @@ class ModuleCommand implements S2Base_GenerateCommand {
     protected $ctlServiceInterfaceName;
 
     public function __construct(){
-        require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
         $this->dispatcher = new S2Base_ZfDispatcher();
     }
 
@@ -64,7 +63,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
                 return;
             }
             $this->validate($this->moduleName);
-            $this->moduleName = self::formatModuleName($this->moduleName);
+            //$this->moduleName = self::formatModuleName($this->moduleName);
             $this->controllerName = S2Base_StdinManager::getValue('controller name ? : ');
             $this->validate($this->controllerName);
             list($this->controllerName, $this->controllerClassName, $this->controllerClassFile) = 

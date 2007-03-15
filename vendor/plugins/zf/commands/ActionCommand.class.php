@@ -14,7 +14,6 @@ class ActionCommand implements S2Base_GenerateCommand {
     protected $testCtlDir;
 
     public function __construct(){
-        require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
         $this->dispatcher = new S2Base_ZfDispatcher();
     }
 
@@ -44,7 +43,6 @@ class ActionCommand implements S2Base_GenerateCommand {
                 ModuleCommand::getControllerNames($this->dispatcher, $this->moduleName, $this->controllerName);
 
             $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
-            $this->validate($this->actionName);
             $this->actionMethodName = $this->dispatcher->formatActionName($this->actionName);
             $this->validate($this->actionMethodName);
             if (!$this->finalConfirm()){

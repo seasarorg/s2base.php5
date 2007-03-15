@@ -32,7 +32,6 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
     protected $entityPropertyNames;
 
     public function __construct(){
-        require_once S2BASE_PHP5_PLUGIN_ZF . '/S2Base_ZfDispatcher.php';
         $this->dispatcher = new S2Base_ZfDispatcher();
     }
 

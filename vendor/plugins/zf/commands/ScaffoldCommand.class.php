@@ -601,8 +601,8 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     protected function prepareValidatorFile(){
         $validatorDir = $this->srcCtlDir . self::VALIDATE_DIR;
         S2Base_CommandUtil::createDirectory($validatorDir);
-        $this->prepareValidatorFileRegexp();
-        $this->prepareValidatorFileConfirm();
+        //$this->prepareValidatorFileRegexp();
+        //$this->prepareValidatorFileConfirm();
         $this->prepareValidatorIniFileByFunc('update');
         $this->prepareValidatorIniFileByFunc('delete');
         $this->prepareValidatorIniFileConfirm();
