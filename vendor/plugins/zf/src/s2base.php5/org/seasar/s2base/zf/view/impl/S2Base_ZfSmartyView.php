@@ -44,8 +44,6 @@ class S2Base_ZfSmartyView
     private $request    = null;
     private $response   = null;
     private $template   = null;
-    private $moduleName     = null;
-    private $controllerName = null;
 
     public function __construct(){
         parent::__construct();
@@ -59,7 +57,6 @@ class S2Base_ZfSmartyView
 
         $this->request = Zend_Controller_Front::getInstance()->getRequest();
         $this->response = Zend_Controller_Front::getInstance()->getResponse();
-        $this->moduleName = S2Base_ZfDispatcherSupportPlugin::getModuleName($this->request);
         $this->setScriptPath(S2BASE_PHP5_ROOT . '/app/modules/');
     }
 
@@ -69,6 +66,14 @@ class S2Base_ZfSmartyView
 
     public static function isRendered(){
         return self::$rendered;
+    }
+
+    public function setTpl($tpl) {
+        $this->template = $tpl;
+    }
+
+    public function getTpl() {
+        return $this->template;
     }
 
     public function setLayout($layout){
@@ -110,18 +115,6 @@ class S2Base_ZfSmartyView
         $this->scriptPath = $path;
     }
 
-    public function setTpl($tpl) {
-        $this->template = $tpl;
-    }
-
-    public function getTpl() {
-        return $this->template;
-    }
-
-    public function setControllerName($controllerName) {
-        $this->controllerName = $controllerName;
-    }
-
     /**
      * @see Zend_View_Interface::__set()
      */
@@ -157,28 +150,25 @@ class S2Base_ZfSmartyView
         self::setRendered();
 
         $this->putError('validate', S2Base_ZfValidateSupportPlugin::getErrors($this->request));
-
-        $controllerName = $this->controllerName != null ?
-                          $this->controllerName :
-                          $this->request->getControllerName();
+        $moduleName = S2Base_ZfDispatcherSupportPlugin::getModuleName($this->request);
         $this->template_dir = $this->scriptPath;
         $this->assign('request',$this->request);
         $this->assign('errors',self::$errors);
-        $this->assign('module', $this->moduleName);
-        $this->assign('controller', $controllerName);
+        $this->assign('module', $moduleName);
+        $this->assign('controller', $this->request->getControllerName());
         $this->assign('action', $this->request->getActionName());
         $this->assign('base_url', $this->request->getBaseUrl());
-        $mod_url = $this->moduleName === S2BASE_PHP5_ZF_DEFAULT_MODULE ?
+        $mod_url = $moduleName === S2BASE_PHP5_ZF_DEFAULT_MODULE ?
                    $this->request->getBaseUrl() :
-                   $this->request->getBaseUrl() . '/' . $this->moduleName;
-        $ctl_url = $mod_url . '/' . $controllerName;
+                   $this->request->getBaseUrl() . '/' . $moduleName;
+        $ctl_url = $mod_url . '/' . $this->request->getControllerName();
         $act_url = $ctl_url . '/' . $this->request->getActionName();
         $this->assign('mod_url', $mod_url);
         $this->assign('ctl_url', $ctl_url);
         $this->assign('act_url', $act_url);
-        $ctlViewDir = $this->moduleName
+        $ctlViewDir = $moduleName
                     . DIRECTORY_SEPARATOR
-                    . $controllerName
+                    . $this->request->getControllerName()
                     . DIRECTORY_SEPARATOR
                     . 'view';
         $this->assign('ctl_view_dir', $this->scriptPath . DIRECTORY_SEPARATOR . $ctlViewDir);

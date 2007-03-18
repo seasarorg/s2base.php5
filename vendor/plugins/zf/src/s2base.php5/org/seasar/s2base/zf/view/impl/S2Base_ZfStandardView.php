@@ -36,11 +36,11 @@ class S2Base_ZfStandardView
     extends Zend_View
     implements S2Base_ZfView {
 
-    private $template = null;
-    private $request = null;
-    private $response = null;
-    private $scriptPath = null;
-    private $layout     = null;
+    protected static $errors   = array();
+    protected $layout     = null;
+    protected $request    = null;
+    protected $response   = null;
+    protected $template   = null;
 
     public function __construct(){
         parent::__construct(array(
@@ -48,8 +48,12 @@ class S2Base_ZfStandardView
             'helperPath' => S2BASE_PHP5_ROOT . '/app/commons/view/helpers',
             'filterPath' => S2BASE_PHP5_ROOT . '/app/commons/view/filters'
         ));
+
         $this->request = Zend_Controller_Front::getInstance()->getRequest();
         $this->response = Zend_Controller_Front::getInstance()->getResponse();
+        if(defined('S2BASE_PHP5_LAYOUT')){
+            $this->layout = S2BASE_PHP5_LAYOUT;
+        }
     }
 
     public function setTpl($tpl) {
@@ -64,6 +68,21 @@ class S2Base_ZfStandardView
         $this->layout = $layout;
     }
 
+    public function putError($key,$val){
+        self::$errors[$key] = $val;
+    }
+
+    public function getError($key){
+        if(isset(self::$errors[$key])){
+            return self::$errors[$key];
+        }
+        return null;
+    }
+
+    public function getErrors(){
+        return self::$errors;
+    }
+
     public function render($script) {
         $ctlViewDir = S2BASE_PHP5_ROOT . '/app/modules/'
                     . S2Base_ZfDispatcherSupportPlugin::getModuleName($this->request)
@@ -71,6 +90,31 @@ class S2Base_ZfStandardView
         $this->addScriptPath($ctlViewDir);
         $this->addHelperPath($ctlViewDir . '/helpers');
         $this->addFilterPath($ctlViewDir . '/filters');
+
+        $this->putError('validate', S2Base_ZfValidateSupportPlugin::getErrors($this->request));
+        $moduleName = S2Base_ZfDispatcherSupportPlugin::getModuleName($this->request);
+        $this->assign('request', $this->request);
+        $this->assign('errors', self::$errors);
+        $this->assign('module', $moduleName);
+        $this->assign('controller', $this->request->getControllerName());
+        $this->assign('action', $this->request->getActionName());
+        $this->assign('base_url', $this->request->getBaseUrl());
+        $mod_url = $moduleName === S2BASE_PHP5_ZF_DEFAULT_MODULE ?
+                   $this->request->getBaseUrl() :
+                   $this->request->getBaseUrl() . '/' . $moduleName;
+        $ctl_url = $mod_url . '/' . $this->request->getControllerName();
+        $act_url = $ctl_url . '/' . $this->request->getActionName();
+        $this->assign('mod_url', $mod_url);
+        $this->assign('ctl_url', $ctl_url);
+        $this->assign('act_url', $act_url);
+        $ctlViewDir = $moduleName
+                    . DIRECTORY_SEPARATOR
+                    . $this->request->getControllerName()
+                    . DIRECTORY_SEPARATOR
+                    . 'view';
+        $this->assign('ctl_view_dir', $this->scriptPath . DIRECTORY_SEPARATOR . $ctlViewDir);
+        $this->assign('commons_view_dir', S2BASE_PHP5_ROOT . '/app/commons/view');
+
         if ($this->template === null) {
             $viewFile = $script;
         } else {
