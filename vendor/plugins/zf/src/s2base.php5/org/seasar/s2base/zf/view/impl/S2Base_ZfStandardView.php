@@ -32,7 +32,7 @@
  * @package    org.seasar.s2base.zf.view.impl
  * @author     klove
  */
-class S2Base_ZfDefaultView
+class S2Base_ZfStandardView
     extends Zend_View
     implements S2Base_ZfView {
 
