@@ -60,7 +60,7 @@
     <target name="zf" depends="prepare">
         <available file="${plugins.dir}/zf" type="dir" property="plugin.available" />
         <fail unless="plugin.available" message="Invalid : [ zf plugin ]" />
-        <phing phingfile="${plugins.dir}/zf/build.xml" inheritRefs="true" target="${st}"/>
+        <phing phingfile="${plugins.dir}/zf/zf.xml" inheritRefs="true" target="${st}"/>
     </target>
 
     <target name="gen-dao" depends="prepare">
