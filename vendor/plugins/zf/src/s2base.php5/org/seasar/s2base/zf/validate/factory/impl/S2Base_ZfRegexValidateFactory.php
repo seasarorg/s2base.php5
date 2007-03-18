@@ -47,7 +47,7 @@ class S2Base_ZfRegexValidateFactory implements S2Base_ZfValidateFactory {
             throw new S2Base_ZfException("pattern not found in Regex validation [param : $paramName]");
         }
         if ($this->instance === null) {
-            Zend::loadClass($this->validateClassName);
+            Zend_Loader::loadClass($this->validateClassName);
             $this->instance = new $this->validateClassName($config->$valKey->pattern);
         } else {
             $this->instance->setPattern($config->$valKey->pattern);

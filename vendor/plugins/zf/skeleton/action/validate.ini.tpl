@@ -26,9 +26,6 @@
 ;   - float   (Zend_Validate_Float)
 ;   - int     (Zend_Validate_Int)
 ;   - ip      (Zend_Validate_Ip)
-;   - ccnum   (Zend_Validate_Ccnum)
-;   - digits  (Zend_Validate_Digits)
-;   - hex     (Zend_Validate_Hex)
 ;   - regex   (Zend_Validate_Regex)
 ;
 ; [リクエストパラメータ名 : default]

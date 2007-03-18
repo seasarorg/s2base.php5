@@ -5,8 +5,8 @@ class @@CONTROLLER_CLASS_NAME@@ extends Zend_Controller_Action
     private $view = null;
 
     public function init() {
-        if (Zend::isRegistered(S2Base_ZfDispatcherSupportPlugin::VIEW_REGISTRY_KEY)) {
-            $this->view = Zend::registry(S2Base_ZfDispatcherSupportPlugin::VIEW_REGISTRY_KEY);
+        if (Zend_Registry::isRegistered(S2Base_ZfDispatcherSupportPlugin::VIEW_REGISTRY_KEY)) {
+            $this->view = Zend_Registry::set(S2Base_ZfDispatcherSupportPlugin::VIEW_REGISTRY_KEY);
         }
     }
 

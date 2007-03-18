@@ -214,7 +214,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         print "  format action name      : {$this->formatActionName}" . PHP_EOL;
         print "  action method name      : {$this->actionMethodName}" . PHP_EOL;
         print "  action dicon file name  : {$this->actionMethodName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
-        print "  action template file    : {$this->actionName}" . S2BASE_PHP5_ZF_TPL_SUFFIX . PHP_EOL;
+        print "  action template file    : {$this->actionName}" . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX . PHP_EOL;
         print "  service interface name  : {$this->serviceInterfaceName}" . PHP_EOL;
         print "  service class name      : {$this->serviceClassName}" . PHP_EOL;
         print "  service test class name : {$this->serviceClassName}Test" . PHP_EOL;
@@ -275,7 +275,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $patterns = array("/@@ACTION_NAME@@/",
                           "/@@TEMPLATE_NAME@@/");
         $replacements = array($this->actionMethodName,
-                              $this->actionName . S2BASE_PHP5_ZF_TPL_SUFFIX);
+                              $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX);
         $tempAction = preg_replace($patterns,$replacements,$tempAction);
 
         $tempContent = S2Base_CommandUtil::readFile($srcFile);
@@ -302,17 +302,17 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
-                 . S2BASE_PHP5_ZF_TPL_SUFFIX;
+                 . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX;
         $tempContent = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/goya/html_header.tpl");
+                          . "/skeleton/module/html_header.tpl");
         }
         $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                       . "/skeleton/goya/html.tpl");
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/goya/html_footer.tpl");
+                          . "/skeleton/module/html_footer.tpl");
         }
 
         $patterns = array("/@@MODULE_NAME@@/",
@@ -333,7 +333,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
-                 . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                 . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
         $htmlFile = 'html.tpl';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . "/skeleton/action/$htmlFile");

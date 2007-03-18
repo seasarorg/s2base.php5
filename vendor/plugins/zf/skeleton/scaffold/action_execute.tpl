@@ -1,5 +1,5 @@
 
-    public function @@ACTION_METHOD_NAME@@(){
+    public function @@ACTION_METHOD_NAME@@() {
         $func = $this->getRequest()->getParam('func');
         $sn = new Zend_Session_Namespace('action_@@ACTION_NAME@@');
         $dto = $sn->@@DTO_SESSION_KEY@@;
@@ -15,7 +15,7 @@
                 break;
         }
         unset($_SESSION['@@DTO_SESSION_KEY@@']);
-        $url = $this->getRequest()->getModuleName() === null ? '' :
+        $url = $this->getRequest()->getModuleName() === S2BASE_PHP5_ZF_DEFAULT_MODULE ? '' :
                '/' . $this->getRequest()->getModuleName();
         $url .= "/{$this->getRequest()->getControllerName()}/@@ACTION_NAME@@";
         $this->_redirect($url);

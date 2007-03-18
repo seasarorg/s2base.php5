@@ -40,13 +40,18 @@ class S2Base_ZfDefaultView
     private $request = null;
     private $response = null;
     private $scriptPath = null;
-    
+    private $layout     = null;
+
     public function __construct(){
-        parent::__construct();
+        parent::__construct(array(
+            'scriptPath' => S2BASE_PHP5_ROOT . '/app/commons/view',
+            'helperPath' => S2BASE_PHP5_ROOT . '/app/commons/view/helpers',
+            'filterPath' => S2BASE_PHP5_ROOT . '/app/commons/view/filters'
+        ));
         $this->request = Zend_Controller_Front::getInstance()->getRequest();
         $this->response = Zend_Controller_Front::getInstance()->getResponse();
     }
-    
+
     public function setTpl($tpl) {
         $this->template = $tpl;
     }
@@ -55,21 +60,28 @@ class S2Base_ZfDefaultView
         return $this->template;
     }
 
-    public function setScriptPath($tpl) {
-        $this->template = $tpl;
+    public function setLayout($layout){
+        $this->layout = $layout;
     }
 
-    public function renderWithTpl() {
-        $this->addScriptPath(S2BASE_PHP5_ROOT
-                           . '/app/modules/'
-                           . S2Base_ZfDispatcherSupportPlugin::getModuleName($this->request) . '/'
-                           . $this->request->getControllerName()
-                           . '/view');
-        if ($this->template == null) {
-            $this->response->setBody($this->render(
-                   $this->request->getActionName() . S2BASE_PHP5_ZF_TPL_SUFFIX));
+    public function render($script) {
+        $ctlViewDir = S2BASE_PHP5_ROOT . '/app/modules/'
+                    . S2Base_ZfDispatcherSupportPlugin::getModuleName($this->request)
+                    . '/' . $this->request->getControllerName() . '/view';
+        $this->addScriptPath($ctlViewDir);
+        $this->addHelperPath($ctlViewDir . '/helpers');
+        $this->addFilterPath($ctlViewDir . '/filters');
+        if ($this->template === null) {
+            $viewFile = $script;
         } else {
-            $this->response->setBody($this->render($this->template));
+            $viewFile = $this->template;
+        }
+
+        if($this->layout === null){
+            return parent::render($viewFile);
+        }else{
+            $this->assign('content_for_layout', $viewFile);
+            return parent::render($this->layout);
         }
     }
 }

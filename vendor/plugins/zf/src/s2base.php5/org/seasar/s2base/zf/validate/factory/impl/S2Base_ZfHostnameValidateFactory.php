@@ -49,7 +49,7 @@ class S2Base_ZfHostnameValidateFactory implements S2Base_ZfValidateFactory {
             $allowValue = $config->$valKey->allow;
         }
         if ($this->instance === null) {
-            Zend::loadClass($this->validateClassName);
+            Zend_Loader::loadClass($this->validateClassName);
             $this->instance = new $this->validateClassName($allowValue);
         } else {
             $this->instance->setAllow($allowValue);

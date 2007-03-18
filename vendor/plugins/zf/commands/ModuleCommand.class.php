@@ -148,7 +148,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $this->prepareActionControllerClassFile();
         $this->prepareModuleServiceInterfaceFile();
         $this->prepareModuleIncFile();
-        $this->prepareIndexFile();
+        $this->prepareHtmlFile();
     }
 
     public function prepareActionControllerClassFile(){
@@ -165,7 +165,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $reps = array($this->controllerClassName,
                       $this->ctlServiceInterfaceName,
                       $this->controllerName,
-                      'index' . S2BASE_PHP5_ZF_TPL_SUFFIX);
+                      'index' . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX);
         $tempContent = preg_replace($keys, $reps, $tempContent);   
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
@@ -192,21 +192,29 @@ class ModuleCommand implements S2Base_GenerateCommand {
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
-    public function prepareIndexFile(){
+    public function prepareHtmlFile(){
         $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . 'index'
-                 . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                 . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
 
-        $htmlFile = 'index.tpl';
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/module/$htmlFile");
+        $tempContent = '';
+        if (!defined('S2BASE_PHP5_LAYOUT')) {
+            $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                          . "/skeleton/module/html_header.tpl");
+        }
+        $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                      . "/skeleton/module/html.tpl");
+        if (!defined('S2BASE_PHP5_LAYOUT')) {
+            $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                          . "/skeleton/module/html_footer.tpl");
+        }
 
-        $keys = array("/@@MODULE_NAME@@/",
-                      "/@@CONTROLLER_NAME@@/");
-        $reps = array($this->moduleName,
-                      $this->controllerName);
-        $tempContent = preg_replace($keys, $reps, $tempContent);   
+        $patterns = array("/@@MODULE_NAME@@/",
+                          "/@@CONTROLLER_NAME@@/");
+        $replacements = array($this->moduleName,
+                              $this->controllerName);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 

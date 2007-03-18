@@ -110,7 +110,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         print "  format action name        : {$this->formatActionName}" . PHP_EOL;
         print "  action method name        : {$this->actionMethodName}" . PHP_EOL;
         print "  action dicon file name    : {$this->actionMethodName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
-        print "  action template file      : {$this->actionName}" . S2BASE_PHP5_ZF_TPL_SUFFIX . PHP_EOL;
+        print "  action template file      : {$this->actionName}" . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX . PHP_EOL;
         print "  service interface name    : {$this->serviceInterfaceName}" . PHP_EOL;
         print "  service class name        : {$this->serviceClassName}" . PHP_EOL;
         print "  service test class name   : {$this->serviceClassName}Test" . PHP_EOL;
@@ -281,7 +281,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
-                 . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                 . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
 
         $contents = $this->prepareHtmlFileHeader();
 
@@ -337,7 +337,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
                  . '-input'
-                 . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                 . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
 
         $contents = $this->prepareHtmlFileHeader();
 
@@ -357,7 +357,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
                  . '-confirm'
-                 . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                 . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
 
         $contents = $this->prepareHtmlFileHeader();
 
@@ -438,7 +438,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $contents = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/scaffold/html_header.tpl");
+                     . "/skeleton/module/html_header.tpl");
             $patterns = array("/@@MODULE_NAME@@/",
                               "/@@CONTROLLER_NAME@@/",
                               "/@@ACTION_NAME@@/");
@@ -454,7 +454,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $contents = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $contents = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                      . "/skeleton/scaffold/html_footer.tpl");
+                      . "/skeleton/module/html_footer.tpl");
         }
         return $contents;
     }
@@ -601,22 +601,39 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     protected function prepareValidatorFile(){
         $validatorDir = $this->srcCtlDir . self::VALIDATE_DIR;
         S2Base_CommandUtil::createDirectory($validatorDir);
-        //$this->prepareValidatorFileRegexp();
-        //$this->prepareValidatorFileConfirm();
+        $this->prepareValidateIniFile();
         $this->prepareValidatorIniFileByFunc('update');
         $this->prepareValidatorIniFileByFunc('delete');
         $this->prepareValidatorIniFileConfirm();
         $this->prepareValidatorIniFileExecute();
     }
 
+    protected function prepareValidateIniFile(){
+        $srcFile = $this->srcCtlDir
+                 . ModuleCommand::VALIDATE_DIR
+                 . S2BASE_PHP5_DS
+                 . $this->actionName
+                 . '.ini';
+
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                     . '/skeleton/action/validate.ini.tpl');
+        $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                      . '/skeleton/pager/validate.ini.tpl');
+        $patterns = array("/@@ACTION_NAME@@/");
+        $replacements = array($this->actionName);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
+    }
+
     protected function prepareValidatorIniFileConfirm() {
-        //$actionMethodName = $this->dispatcher->formatActionName($this->actionName . '-confirm');
         $srcFile = $this->srcCtlDir
                  . self::VALIDATE_DIR
                  . $this->actionName . '-confirm'
                  . '.ini';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/validate_confirm_ini.tpl');
+                     . '/skeleton/action/validate.ini.tpl');
+        $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                      . '/skeleton/scaffold/validate_confirm_ini.tpl');
         $patterns = array("/@@RETURN_ACTION@@/",
                           "/@@PARAMS@@/",
                           "/@@ACTION_NAME@@/");
@@ -643,14 +660,14 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareValidatorIniFileExecute() {
-        //$actionMethodName = $this->dispatcher->formatActionName($this->actionName . '-execute');
-
         $srcFile = $this->srcCtlDir
                  . self::VALIDATE_DIR
                  . $this->actionName . '-execute'
                  . '.ini';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/validate_execute_ini.tpl');
+                     . '/skeleton/action/validate.ini.tpl');
+        $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                      . '/skeleton/scaffold/validate_execute_ini.tpl');
         $patterns = array("/@@ACTION_NAME@@/");
         $replacements = array($this->actionName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
@@ -658,50 +675,18 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     }
 
     protected function prepareValidatorIniFileByFunc($func) {
-        //$actionMethodName = $this->dispatcher->formatActionName($this->actionName . '-' . $func);
-
         $srcFile = $this->srcCtlDir
                  . self::VALIDATE_DIR
                  . $this->actionName . '-' . $func
                  . '.ini';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/validate_ini.tpl');
+                     . '/skeleton/action/validate.ini.tpl');
+        $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                      . '/skeleton/scaffold/validate_ini.tpl');
         $patterns = array("/@@PARAM_KEY@@/",
                           "/@@RETURN_ACTION_NAME@@/");
         $replacements = array($this->primaryProp,
                               $this->actionName);
-        $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-    }
-
-    protected function prepareValidatorFileConfirm() {
-        $srcFile = $this->srcCtlDir
-                 . S2BASE_PHP5_INTERCEPTOR_DIR
-                 . ucfirst($this->formatActionName) . 'ConfirmValidator'
-                 . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/validate_confirm.tpl');
-        $patterns = array("/@@ACTION_NAME@@/",
-                          "/@@DTO_CLASS_NAME@@/",
-                          "/@@CONTROLLER_CLASS_NAME@@/",
-                          "/@@ENTITY_CLASS_NAME@@/");
-        $replacements = array(ucfirst($this->formatActionName),
-                              $this->dtoClassName,
-                              $this->controllerClassName,
-                              $this->entityClassName);
-        $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-    }
-
-    protected function prepareValidatorFileRegexp() {
-        $srcFile = $this->srcCtlDir
-                 . S2BASE_PHP5_INTERCEPTOR_DIR
-                 . 'RegexpValidator'
-                 . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/validate_regexp.tpl');
-        $patterns = array();
-        $replacements = array();
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }

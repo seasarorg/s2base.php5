@@ -5,9 +5,6 @@
     <taskdef name="gcore" classname="src.phing.task.GenerateCoreFileTask" />
 
     <target name="init">
-        <php expression="require_once('../../../config/environment.inc.php')"/>
-        <php expression="require_once('config/environment.inc.php')"/>
-
         <property name="project.name" value="${phing.project.name}" />
         <property name="project.classes.dir" value="${project.basedir}/classes" />
         <property name="project.src.dir" value="${project.basedir}/src" />
@@ -37,6 +34,9 @@
     </target>
 
     <target name="test" depends="prepare">
+        <php expression="require_once('../../../config/environment.inc.php')"/>
+        <php expression="require_once('config/environment.inc.php')"/>
+
         <echo>test directory : test/${td}</echo>
         <echo>test target : ${tt}</echo>
         <phpunit2 haltonfailure="false" haltonerror="false">

@@ -170,7 +170,7 @@ class MasterMaintCommand implements S2Base_GenerateCommand {
         $reps = array($controllerClassName,
                       $ctlServiceInterfaceName,
                       $controllerName,
-                      'index' . S2BASE_PHP5_ZF_TPL_SUFFIX,
+                      'index' . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX,
                       "'" . implode("','", $controllers) . "'");
         $tempContent = preg_replace($keys, $reps, $tempContent);   
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
@@ -184,7 +184,7 @@ class MasterMaintCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DS
                  . S2BASE_PHP5_VIEW_DIR
                  . 'index'
-                 . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                 . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
 
 
         $tempContent = '';

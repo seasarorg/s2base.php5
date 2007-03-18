@@ -35,15 +35,16 @@
 class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
 {
     const PARAM_MAX_LEN = 50;
-    const VIEW_REGISTRY_KEY = 's2base_view';
-    public static $VIEW_CLASS = 'S2Base_ZfSmartyView';
 
     public static function getModuleName(Zend_Controller_Request_Abstract $request) {
+        return $request->getModuleName();
+/*
         $moduleName = $request->getModuleName();
         if ($moduleName === null) {
             return S2BASE_PHP5_ZF_DEFAULT_MODULE;
         }
         return $moduleName;
+*/
     }
 
     public function routeStartup(Zend_Controller_Request_Abstract $request) {
@@ -85,24 +86,6 @@ class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
     private function validateAction($value) {
         if (!preg_match('/^[_a-zA-Z0-9\.\-]{1,' . self::PARAM_MAX_LEN .'}$/', $value)) {
             throw new S2Base_ZfException("invalid action. [$value]");
-        }
-    }
-
-    public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {
-        if (self::$VIEW_CLASS != null) {
-            Zend::register(self::VIEW_REGISTRY_KEY, new self::$VIEW_CLASS);
-        }
-    }
-
-    public function preDispatch(Zend_Controller_Request_Abstract $request) {
-    }
-
-    public function dispatchLoopShutdown() {
-        if (Zend::isRegistered(self::VIEW_REGISTRY_KEY)) {
-            $view = Zend::registry(self::VIEW_REGISTRY_KEY);
-            if ($view instanceof S2Base_ZfView) {
-                $view->renderWithTpl();
-            }
         }
     }
 }

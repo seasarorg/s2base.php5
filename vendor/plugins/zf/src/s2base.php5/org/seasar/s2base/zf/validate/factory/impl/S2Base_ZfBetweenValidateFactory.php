@@ -58,7 +58,7 @@ class S2Base_ZfBetweenValidateFactory implements S2Base_ZfValidateFactory {
             $inclusive = $config->$valKey->inclusive;
         }
         if ($this->instance === null) {
-            Zend::loadClass($this->validateClassName);
+            Zend_Loader::loadClass($this->validateClassName);
             $this->instance = new $this->validateClassName($config->$valKey->min,
                                                            $config->$valKey->max,
                                                            $inclusive);

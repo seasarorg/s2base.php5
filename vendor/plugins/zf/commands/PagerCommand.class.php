@@ -72,7 +72,7 @@ class PagerCommand extends AbstractGoyaCommand {
 
         print "  action method name        : {$this->actionMethodName}" . PHP_EOL;
         print "  action dicon file name    : {$this->actionMethodName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
-        print "  action template file      : {$this->actionName}" . S2BASE_PHP5_ZF_TPL_SUFFIX . PHP_EOL;
+        print "  action template file      : {$this->actionName}" . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX . PHP_EOL;
         print "  service interface name    : {$this->serviceInterfaceName}" . PHP_EOL;
         print "  service class name        : {$this->serviceClassName}" . PHP_EOL;
         print "  service test class name   : {$this->serviceClassName}Test" . PHP_EOL;
@@ -137,7 +137,7 @@ class PagerCommand extends AbstractGoyaCommand {
                           "/@@CONDITION_DTO_NAME@@/",
                           "/@@CONDITION_DTO_SESSION_KEY@@/");
         $replacements = array($this->actionMethodName,
-                              $this->actionName . S2BASE_PHP5_ZF_TPL_SUFFIX,
+                              $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX,
                               $this->dtoClassName,
                               $this->dtoSessionKey);
         $tempAction = preg_replace($patterns,$replacements,$tempAction);
@@ -165,17 +165,17 @@ class PagerCommand extends AbstractGoyaCommand {
         $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
-                 . S2BASE_PHP5_ZF_TPL_SUFFIX;
+                 . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX;
         $tempContent = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/pager/html_header.tpl");
+                          . "/skeleton/module/html_header.tpl");
         }
         $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                       . "/skeleton/pager/html.tpl");
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/pager/html_footer.tpl");
+                          . "/skeleton/module/html_footer.tpl");
         }
 
         $patterns = array("/@@MODULE_NAME@@/",
@@ -196,18 +196,18 @@ class PagerCommand extends AbstractGoyaCommand {
         $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
-                 . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                 . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
 
         $tempContent = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/pager/html_header.tpl");
+                          . "/skeleton/module/html_header.tpl");
         }
         $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                       . "/skeleton/pager/html_without_dao.tpl");
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/pager/html_footer.tpl");
+                          . "/skeleton/module/html_footer.tpl");
         }
 
         $patterns = array("/@@MODULE_NAME@@/","/@@ACTION_NAME@@/");
@@ -337,7 +337,9 @@ class PagerCommand extends AbstractGoyaCommand {
                  . $this->actionName
                  . '.ini';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/pager/validate.ini.tpl');
+                     . '/skeleton/action/validate.ini.tpl');
+        $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                      . '/skeleton/pager/validate.ini.tpl');
         $patterns = array("/@@ACTION_NAME@@/");
         $replacements = array($this->actionName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);

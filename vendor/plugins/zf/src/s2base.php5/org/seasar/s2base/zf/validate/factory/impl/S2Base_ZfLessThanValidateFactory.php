@@ -48,7 +48,7 @@ class S2Base_ZfLessThanValidateFactory implements S2Base_ZfValidateFactory {
             throw new S2Base_ZfException("$valKey validate needs max value. [param : $paramName]");
         }
         if ($this->instance === null) {
-            Zend::loadClass($this->validateClassName);
+            Zend_Loader::loadClass($this->validateClassName);
             $this->instance = new $this->validateClassName($config->$valKey->max);
         } else {
             $this->instance->setMax($config->$valKey->max);

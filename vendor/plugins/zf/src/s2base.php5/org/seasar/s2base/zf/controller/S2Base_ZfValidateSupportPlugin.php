@@ -56,6 +56,20 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
     private $validators = array();
     private $validateFactories = array();
 
+    public static function hasError(Zend_Controller_Request_Abstract $request) {
+        if ($request->has(self::ERR_KEY)) {
+            return $request->getParam(self::ERR_KEY);
+        }
+        return false;
+    }
+
+    public static function getErrors(Zend_Controller_Request_Abstract $request) {
+        if ($request->has(self::ERRORS_KEY)) {
+            return $request->getParam(self::ERRORS_KEY);
+        }
+        return array();
+    }
+
     public function addValidateFactory(S2Base_ZfValidateFactory $validateFactory, $key = null) {
         if ($key === null) {
             $key = $validateFactory->getId();
@@ -149,7 +163,7 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
                     $validator = $this->validators[$valKey];
                 } else {
                     $valClassName = self::$VALIDATE_CLASSES[$valKey];
-                    Zend::loadClass($valClassName);
+                    Zend_Loader::loadClass($valClassName);
                     $validator = new $valClassName();
                     $this->validators[$valKey] = $validator;
                 }

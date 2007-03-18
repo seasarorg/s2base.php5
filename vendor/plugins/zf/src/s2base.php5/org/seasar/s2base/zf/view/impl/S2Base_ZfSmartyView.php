@@ -36,17 +36,17 @@ class S2Base_ZfSmartyView
     extends Smarty
     implements Zend_View_Interface, S2Base_ZfView {
 
-    public static $config = array();
+    public  static $config   = array();
     private static $rendered = false;
-    private static $errors = array();
-    private $layout = '';
-    private $scriptPath = '';
-    private $request = null;
-    private $response = null;
-    private $template = null;
+    private static $errors   = array();
+    private $layout     = null;
+    private $scriptPath = null;
+    private $request    = null;
+    private $response   = null;
+    private $template   = null;
+    private $moduleName     = null;
     private $controllerName = null;
-    private $moduleName = null;
-    
+
     public function __construct(){
         parent::__construct();
         foreach(self::$config as $key=>$val){
@@ -122,14 +122,6 @@ class S2Base_ZfSmartyView
         $this->controllerName = $controllerName;
     }
 
-    public function renderWithTpl() {
-        if ($this->template == null) {
-            $this->render($this->request->getActionName());
-        } else {
-            $this->render($this->template);
-        }
-    }
-
     /**
      * @see Zend_View_Interface::__set()
      */
@@ -158,19 +150,13 @@ class S2Base_ZfSmartyView
     /**
      * @see Zend_View_Interface::render()
      */
-    public function render($name) {
-        if (!$this->response instanceof Zend_Controller_Response_Abstract) {
-            throw new S2Base_ZfException('response not set.');
-        }
-
+    public function render($script) {
         if (self::isRendered()) {
             return;
         }
         self::setRendered();
-        
-        if ($this->request->has(S2Base_ZfValidateSupportPlugin::ERRORS_KEY)) {
-            $this->putError('validate',$this->request->getParam(S2Base_ZfValidateSupportPlugin::ERRORS_KEY));
-        }
+
+        $this->putError('validate', S2Base_ZfValidateSupportPlugin::getErrors($this->request));
 
         $controllerName = $this->controllerName != null ?
                           $this->controllerName :
@@ -198,24 +184,32 @@ class S2Base_ZfSmartyView
         $this->assign('ctl_view_dir', $this->scriptPath . DIRECTORY_SEPARATOR . $ctlViewDir);
         $this->assign('commons_view_dir', S2BASE_PHP5_ROOT . '/app/commons/view');
 
-        if (preg_match('/^file:/',$name)){
-            $viewFile = $name;
-        } else {
-            if (!preg_match('/' . S2BASE_PHP5_ZF_TPL_SUFFIX . '$/', $name)) {
-                $name .= S2BASE_PHP5_ZF_TPL_SUFFIX;
-            }
-            $viewFile = $ctlViewDir . DIRECTORY_SEPARATOR . $name;
+        if ($this->template === null) {
+            $viewFile = $ctlViewDir . DIRECTORY_SEPARATOR . $script;
             if (!file_exists($this->template_dir . DIRECTORY_SEPARATOR . $viewFile)) {
                 throw new S2Base_ZfException('template file not found. [' . 
                      $this->template_dir . DIRECTORY_SEPARATOR . $viewFile . ']');
             }
+        } else {
+            if (preg_match('/^file:/',$this->template)){
+                $viewFile = $this->template;
+            } else {
+                if (!preg_match('/\.' . S2BASE_PHP5_ZF_TPL_SUFFIX . '$/', $this->template)) {
+                    $this->template .= '.' . S2BASE_PHP5_ZF_TPL_SUFFIX;
+                }
+                $viewFile = $ctlViewDir . DIRECTORY_SEPARATOR . $this->template;
+                if (!file_exists($this->template_dir . DIRECTORY_SEPARATOR . $viewFile)) {
+                    throw new S2Base_ZfException('template file not found. [' . 
+                         $this->template_dir . DIRECTORY_SEPARATOR . $viewFile . ']');
+                }
+            }
         }
 
-        if($this->layout == null){
-            $this->response->setBody($this->fetch($viewFile));
+        if($this->layout === null){
+            return $this->fetch($viewFile);
         }else{
-            $this->assign('content_for_layout',$viewFile);
-            $this->response->setBody($this->fetch($this->layout));
+            $this->assign('content_for_layout', $viewFile);
+            return $this->fetch($this->layout);
         }
     }
 }

@@ -88,9 +88,6 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher_Standard {
 
     protected function instantiateController($request, $moduleName, $controllerClassName) {
         $controller = $this->getControllerFromS2Container($request, $moduleName, $controllerClassName);
-        if ($controller == null) {
-            $controller = new $controllerClassName($request, $this->getResponse(), $this->getParams());
-        }
 
         if (!$this->isValidController($controller)) {
             throw new Zend_Controller_Dispatcher_Exception("Controller '$controllerClassName' is not an instance of Zend_Controller_Action");
@@ -115,7 +112,7 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher_Standard {
             require_once($actionIncFile);
         }
 
-        $controller = null;
+        $container = null;
         if (file_exists($actionDicon)) {
             $container = S2ContainerFactory::create($actionDicon);
             $cd = $container->getComponentDef($controllerClassName);
@@ -124,10 +121,17 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher_Standard {
                 $cd->addArgDef(new S2Container_ArgDefImpl($this->getResponse()));
                 $cd->addArgDef(new S2Container_ArgDefImpl($this->getParams()));
             }
-            $controller = $cd->getComponent($controllerClassName);
+        } else {
+            $container = new S2ContainerImpl();
+            $container->includeChild(S2ContainerFactory::create(S2BASE_PHP5_ZF_APP_DICON));
+            $cd = new S2Container_ComponentDefImpl($controllerClassName);
+            $cd->addArgDef(new S2Container_ArgDefImpl($request));
+            $cd->addArgDef(new S2Container_ArgDefImpl($this->getResponse()));
+            $cd->addArgDef(new S2Container_ArgDefImpl($this->getParams()));
+            $container->register($cd);
         }
 
-        return $controller;
+        return $container->getComponent($controllerClassName);
     }
 
     private function isValidController($controller){

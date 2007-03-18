@@ -48,7 +48,7 @@ class S2Base_ZfGreaterThanValidateFactory implements S2Base_ZfValidateFactory {
             throw new S2Base_ZfException("$valKey validate needs min value. [param : $paramName]");
         }
         if ($this->instance === null) {
-            Zend::loadClass($this->validateClassName);
+            Zend_Loader::loadClass($this->validateClassName);
             $this->instance = new $this->validateClassName($config->$valKey->min);
         } else {
             $this->instance->setMin($config->$valKey->min);
