@@ -76,7 +76,15 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher_Standard {
          * Dispatch the method call
          */
         $request->setDispatched(true);
+        $disableOb = $this->getParam('disableOutputBuffering');
+        if (empty($disableOb)) {
+            ob_start();
+        }
         $controller->dispatch($action);
+        if (empty($disableOb)) {
+            $content = ob_get_clean();
+            $response->appendBody($content);
+        }
 
         // Destroy the page controller instance and reflection objects
         $controller = null;

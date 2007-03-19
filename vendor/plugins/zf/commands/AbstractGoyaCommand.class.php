@@ -303,13 +303,14 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
                  . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX;
+        $viewSuffix = ModuleCommand::getViewSuffixName();
         $tempContent = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/module/html_header.tpl");
+                          . "/skeleton/module/html_header$viewSuffix.tpl");
         }
         $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                      . "/skeleton/goya/html.tpl");
+                      . "/skeleton/goya/html$viewSuffix.tpl");
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                           . "/skeleton/module/html_footer.tpl");
@@ -324,7 +325,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                               $this->controllerName,
                               $this->actionName,
                               $this->getPropertyRowsTitle(),
-                              $this->getPropertyRowsHtml());
+                              $this->getPropertyRowsHtml(ModuleCommand::isStandardView()));
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
@@ -334,9 +335,9 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_VIEW_DIR
                  . $this->actionName
                  . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
-        $htmlFile = 'html.tpl';
+        $viewSuffix = ModuleCommand::getViewSuffixName();
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/action/$htmlFile");
+                     . "/skeleton/action/html$viewSuffix.tpl");
         $patterns = array("/@@MODULE_NAME@@/",
                           "/@@CONTROLLER_NAME@@/",
                           "/@@ACTION_NAME@@/");
@@ -565,11 +566,15 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         return $src . '</tr>' . PHP_EOL;
     }
 
-    protected function getPropertyRowsHtml() {
+    protected function getPropertyRowsHtml($isStdView = false) {
         $src = '<tr>' . PHP_EOL;
         foreach ($this->entityPropertyNames as $prop) {
             $src .= '<td>';
-            $src .= '{$row->get' . ucfirst($prop) . '()|escape}';
+            if ($isStdView) {
+                $src .= '<?php echo $this->escape($row->get' . ucfirst($prop) . '()); ?>';
+            } else {
+                $src .= '{$row->get' . ucfirst($prop) . '()|escape}';
+            }
             $src .= '</td>' . PHP_EOL;
         }
         return $src . '</tr>' . PHP_EOL;

@@ -107,12 +107,7 @@ class S2Base_ZfStandardView
         $this->assign('mod_url', $mod_url);
         $this->assign('ctl_url', $ctl_url);
         $this->assign('act_url', $act_url);
-        $ctlViewDir = $moduleName
-                    . DIRECTORY_SEPARATOR
-                    . $this->request->getControllerName()
-                    . DIRECTORY_SEPARATOR
-                    . 'view';
-        $this->assign('ctl_view_dir', $this->scriptPath . DIRECTORY_SEPARATOR . $ctlViewDir);
+        $this->assign('ctl_view_dir', $ctlViewDir);
         $this->assign('commons_view_dir', S2BASE_PHP5_ROOT . '/app/commons/view');
 
         if ($this->template === null) {

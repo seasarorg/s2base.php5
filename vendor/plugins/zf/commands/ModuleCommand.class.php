@@ -18,6 +18,23 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $this->dispatcher = new S2Base_ZfDispatcher();
     }
 
+    public static function isStandardView() {
+        $container = S2ContainerFactory::create(S2BASE_PHP5_ZF_APP_DICON);
+        $cd = $container->getComponentDef('S2Base_ZfView');
+        $ref = $cd->getComponentClass();
+        if ($ref->getName() == 'S2Base_ZfStandardView') {
+            return true;
+        }
+        return false;
+    }
+
+    public static function getViewSuffixName() {
+        if (self::isStandardView()) {
+            return '_std';
+        }
+        return '';
+    }
+
     public static function getCtlServiceInterfaceName($moduleName) {
         $dispatcher = new S2Base_ZfDispatcher();
         return $dispatcher->formatName($moduleName, false) . 'Service';
@@ -198,13 +215,14 @@ class ModuleCommand implements S2Base_GenerateCommand {
                  . 'index'
                  . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
 
+        $viewSuffix = self::getViewSuffixName();
         $tempContent = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/module/html_header.tpl");
+                          . "/skeleton/module/html_header$viewSuffix.tpl");
         }
         $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                      . "/skeleton/module/html.tpl");
+                      . "/skeleton/module/html$viewSuffix.tpl");
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                           . "/skeleton/module/html_footer.tpl");
