@@ -7,10 +7,10 @@
 
     <target name="init-pkg">
         <property name="package.name"    value="S2Base_Zf" />
-        <property name="package.version" value="0.8.0" />
+        <property name="package.version" value="0.9.0" />
         <property name="package.url"     value="http://pear.s2php5.jp/s2base" />
         <property name="package.state"   value="beta" />
-        <property name="package.notes"   value="Release 0.8.0" />
+        <property name="package.notes"   value="Release 0.9.0" />
         <property name="package.summary" value="S2Base.PHP5 Zf Plugin" />
         <property name="package.description"       value="S2Base.PHP5 Zf Plugin" />
         <property name="package.maintainer.handle" value="klove" />
@@ -22,18 +22,38 @@
         <mkdir dir="${project.build.dir}/${project.name}/project" />
         <copy toDir="${project.build.dir}/${project.name}/project">
             <fileset dir="../..">
-                <include name="vendor/plugins/zf/**" />
-                <exclude name="vendor/plugins/zf/*Validator*" />
+                <include name="vendor/plugins/zf/*" />
+                <exclude name="vendor/plugins/zf/build.xml" />
+                
+                <include name="vendor/plugins/zf/classes/*" />
+                <include name="vendor/plugins/zf/classes/S2Base_ZfRegexValidateFactory*" />
+                <exclude name="vendor/plugins/zf/classes/S2Base_ZfB*ValidateFactory*" />
+                <exclude name="vendor/plugins/zf/classes/S2Base_ZfE*ValidateFactory*" />
+                <exclude name="vendor/plugins/zf/classes/S2Base_ZfG*ValidateFactory*" />
+                <exclude name="vendor/plugins/zf/classes/S2Base_ZfH*ValidateFactory*" />
+                <exclude name="vendor/plugins/zf/classes/S2Base_ZfL*ValidateFactory*" />
+                <exclude name="vendor/plugins/zf/classes/S2Base_ZfS*ValidateFactory*" />
+
+                <include name="vendor/plugins/zf/commands/*" />
                 <exclude name="vendor/plugins/zf/commands/Dicon*" />
                 <exclude name="vendor/plugins/zf/commands/Pager*" />
                 <exclude name="vendor/plugins/zf/commands/Scaffold*" />
                 <exclude name="vendor/plugins/zf/commands/Master*" />
+
+                <include name="vendor/plugins/zf/config/*" />
+
+                <include name="vendor/plugins/zf/skeleton/**" />
+                <exclude name="vendor/plugins/zf/skeleton/dicon/**" />
                 <exclude name="vendor/plugins/zf/skeleton/pager/**" />
                 <exclude name="vendor/plugins/zf/skeleton/scaffold/**" />
                 <exclude name="vendor/plugins/zf/skeleton/master-maint/**" />
+
                 <include name="zf.xml" />
                 <include name="public/z.php" />
                 <include name="public/htaccess.sample" />
+                <include name="public/images/**" />
+                <include name="public/css/**" />
+                <include name="app/commons/dicon/zf.dicon" />
             </fileset>
         </copy>
     </target>

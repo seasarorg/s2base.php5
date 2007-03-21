@@ -7,10 +7,10 @@
 
     <target name="init-pkg">
         <property name="package.name"    value="S2Base_Zf_Scaffold" />
-        <property name="package.version" value="0.8.0" />
+        <property name="package.version" value="0.9.0" />
         <property name="package.url"     value="http://pear.s2php5.jp/s2base" />
         <property name="package.state"   value="beta" />
-        <property name="package.notes"   value="Release 0.8.0" />
+        <property name="package.notes"   value="Release 0.9.0" />
         <property name="package.summary" value="S2Base.PHP5 Zf Plugin" />
         <property name="package.description"       value="S2Base.PHP5 Zf Plugin" />
         <property name="package.maintainer.handle" value="klove" />
@@ -87,7 +87,7 @@
         <!-- URI Based dependency -->
         <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pkgName="S2Base_Zf_Pager"
-                  uri="${package.url}/S2Base_Zf_Pager-0.8.0"/>
+                  uri="${package.url}/S2Base_Zf_Pager-0.9.0"/>
 
         <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pkgName="${package.name}"
