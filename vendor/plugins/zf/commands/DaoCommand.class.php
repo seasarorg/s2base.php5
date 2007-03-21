@@ -262,8 +262,8 @@ class DaoCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DAO_DIR
                  . $this->daoInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                     . 'dao/dao.tpl');
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                     . '/skeleton/dao/dao.tpl');
 
         $patterns = array("/@@CLASS_NAME@@/","/@@ENTITY_NAME@@/");
         $replacements = array($this->daoInterfaceName,$this->entityClassName);
@@ -297,8 +297,8 @@ class DaoCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DICON_DIR
                  . $this->daoInterfaceName
                  . S2BASE_PHP5_DICON_SUFFIX;
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                     . 'dao/dicon.tpl');
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                     . '/skeleton/dao/dicon.tpl');
         $tempContent = preg_replace("/@@DAO_CLASS@@/",
                                     $this->daoInterfaceName,
                                     $tempContent);   
@@ -313,13 +313,13 @@ class DaoCommand implements S2Base_GenerateCommand {
         $accessorSrc = EntityCommand::getAccessorSrc($this->cols);
         $toStringSrc = EntityCommand::getToStringSrc($this->cols);
         if ($this->entityExtends) {
-            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                         . 'entity/entity_extends.tpl');
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                     . '/skeleton/entity/entity_extends.tpl');
             $patterns = array("/@@CLASS_NAME@@/","/@@ACCESSOR@@/","/@@EXTENDS_CLASS@@/","/@@TO_STRING@@/");
             $replacements = array($this->entityClassName,$accessorSrc,$this->extendsEntityClassName,$toStringSrc);
         }else{
-            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                         . 'entity/entity.tpl');
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                     . '/skeleton/entity/entity.tpl');
             $patterns = array("/@@CLASS_NAME@@/","/@@TABLE_NAME@@/","/@@ACCESSOR@@/","/@@TO_STRING@@/");
             $replacements = array($this->entityClassName,$this->tableName,$accessorSrc,$toStringSrc);
         }

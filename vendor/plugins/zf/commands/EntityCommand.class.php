@@ -307,8 +307,8 @@ class EntityCommand implements S2Base_GenerateCommand {
         $accessorSrc = self::getAccessorSrc($this->cols);
         $toStringSrc = self::getToStringSrc($this->cols);
         if ($this->entityExtends) {
-            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                         . 'entity/entity_extends.tpl');
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                     . '/skeleton/entity/entity_extends.tpl');
             $patterns = array("/@@CLASS_NAME@@/",
                               "/@@ACCESSOR@@/",
                               "/@@EXTENDS_CLASS@@/",
@@ -318,8 +318,8 @@ class EntityCommand implements S2Base_GenerateCommand {
                                   $this->extendsEntityClassName,
                                   $toStringSrc);
         }else{
-            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
-                         . 'entity/entity.tpl');
+            $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                     . '/skeleton/entity/entity.tpl');
             $patterns = array("/@@CLASS_NAME@@/",
                               "/@@TABLE_NAME@@/",
                               "/@@ACCESSOR@@/",
