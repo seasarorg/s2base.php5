@@ -80,12 +80,10 @@ class ModuleCommand implements S2Base_GenerateCommand {
                 return;
             }
             $this->validate($this->moduleName);
-            //$this->moduleName = self::formatModuleName($this->moduleName);
             $this->controllerName = S2Base_StdinManager::getValue('controller name ? : ');
             $this->validate($this->controllerName);
             list($this->controllerName, $this->controllerClassName, $this->controllerClassFile) = 
                 self::getControllerNames($this->dispatcher, $this->moduleName, $this->controllerName);
-            //$this->validate($this->controllerClassName);
             $this->ctlServiceInterfaceName = self::getCtlServiceInterfaceName($this->controllerName);
             if (!$this->finalConfirm()){
                 return;
@@ -176,14 +174,10 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . "/skeleton/module/controller.tpl");
         $keys = array("/@@CONTROLLER_CLASS_NAME@@/",
-                      "/@@SERVICE_CLASS_NAME@@/",
-                      "/@@CONTROLLER_NAME@@/",
-                      "/@@TEMPLATE_NAME@@/");
+                      "/@@SERVICE_CLASS_NAME@@/");
         $reps = array($this->controllerClassName,
-                      $this->ctlServiceInterfaceName,
-                      $this->controllerName,
-                      'index' . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX);
-        $tempContent = preg_replace($keys, $reps, $tempContent);   
+                      $this->ctlServiceInterfaceName);
+        $tempContent = preg_replace($keys, $reps, $tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 

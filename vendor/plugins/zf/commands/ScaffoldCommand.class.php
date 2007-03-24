@@ -1,7 +1,6 @@
 <?php
-class ScaffoldCommand extends AbstractGoyaCommand {
+class ScaffoldCommand extends PagerCommand {
     const DTO_SUFFIX = 'Dto';
-    const VALIDATE_DIR = '/validate/';
     protected $dtoClassName;
     protected $primaryKey;
     protected $primaryProp;
@@ -32,16 +31,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
     }
 
     public function execute(){
-        //$this->entityPropertyNames = array();
         parent::execute();
-    }
-
-    protected function isUseCommonsDao() {
-        return false;
-    }
-
-    protected function isUseDB() {
-        return true;
     }
 
     protected function isEntityExtends() {
@@ -88,15 +78,6 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         return true;
     }
 
-/*
-    protected function mergeEntityPropertyNamesFromCols() {
-        foreach ($this->cols as $col) {
-            array_push($this->entityPropertyNames,
-                       EntityCommand::getPropertyNameFromCol($col));
-        }
-        $this->entityPropertyNames = array_unique($this->entityPropertyNames);
-    }
-*/
     public function setupPropertyWithDao($actionName){
         parent::setupPropertyWithDao($actionName);
         $this->dtoClassName = ucfirst($this->formatActionName) . self::DTO_SUFFIX;
@@ -142,7 +123,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $this->prepareActionDiconFile();
         $this->prepareServiceInterfaceFile();
         $this->prepareServiceTestFile();
-        $this->prepareDtoFile();
+        $this->prepareConditionDtoFile();
         $this->prepareValidatorFile();
         if ($this->useDao) {
             $this->prepareServiceDiconFile();
@@ -150,6 +131,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
             $this->prepareDaoTestFile();
             if (!$this->useCommonsDao) {
                 $this->prepareDaoFile();
+                $this->prepareDaoSqlFile();
                 $this->prepareEntityFile();
             }
         }
@@ -159,31 +141,12 @@ class ScaffoldCommand extends AbstractGoyaCommand {
      * Action file setting
      */
     protected function prepareActionFile(){
-        $this->prepareActionFileList();
+        parent::prepareActionFile();
         $this->prepareActionFileConfirm();
         $this->prepareActionFileByFunc('create');
         $this->prepareActionFileByFunc('update');
         $this->prepareActionFileByFunc('delete');
         $this->prepareActionFileByFunc('execute');
-    }
-
-    protected function insertActionMethod($srcFile, $tempAction) {
-        $tempContent = S2Base_CommandUtil::readFile($srcFile);
-        $reg = '/\s\s\s\s\/\*\*\sS2BASE_PHP5\sACTION\sMETHOD\s\*\*\//';
-        if (!preg_match($reg, $tempContent)) {
-            print PHP_EOL;
-            print "[INFO ] please copy & paste to $srcFile" . PHP_EOL;
-            print $tempAction . PHP_EOL;
-            print PHP_EOL;
-            return;
-        }
-
-        $tempContent = preg_replace($reg, $tempAction, $tempContent, 1);
-        if(!file_put_contents($srcFile, $tempContent, LOCK_EX)){
-            S2Base_CommandUtil::showException(new Exception("Cannot write to file [ $srcFile ]"));
-        } else {
-            print "[INFO ] modify : $srcFile" . PHP_EOL;
-        }
     }
 
     protected function prepareActionFileByFunc($func){
@@ -209,7 +172,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                               $this->entityClassName,
                               'pre' . ucfirst($actionMethodName));
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        $this->insertActionMethod($srcFile,$tempContent);
+        ActionCommand::insertActionMethod($srcFile,$tempContent);
     }
 
     protected function prepareActionFileConfirm(){
@@ -237,7 +200,7 @@ class ScaffoldCommand extends AbstractGoyaCommand {
                               'pre' . ucfirst($actionMethodName),
                               ucfirst($this->formatActionName) . 'ConfirmValidator');
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        $this->insertActionMethod($srcFile,$tempContent);
+        ActionCommand::insertActionMethod($srcFile,$tempContent);
     }
 
     protected function getCreateDtoMethodSrc() {
@@ -246,26 +209,6 @@ class ScaffoldCommand extends AbstractGoyaCommand {
             $src .= '        $dto->set' . ucfirst($prop) . '($request->getParam(\'' . $prop . "'));" . PHP_EOL;
         }
         return $src;
-    }
-
-    protected function prepareActionFileList(){
-        $srcFile = $this->srcModuleDir
-                 . $this->controllerClassFile
-                 . S2BASE_PHP5_CLASS_SUFFIX;
-
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/action_list.tpl');
-        $serviceProp = strtolower(substr($this->serviceInterfaceName,0,1)) . substr($this->serviceInterfaceName,1);
-        $patterns = array("/@@ACTION_METHOD_NAME@@/",
-                          "/@@ACTION_NAME@@/",
-                          "/@@CONDITION_DTO_NAME@@/",
-                          "/@@CONDITION_DTO_SESSION_KEY@@/");
-        $replacements = array($this->actionMethodName,
-                              $this->actionName,
-                              $this->dtoClassName,
-                              strtolower($this->dtoClassName . '_condition'));
-        $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        $this->insertActionMethod($srcFile,$tempContent);
     }
 
     /**
@@ -565,41 +508,11 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
-    protected function prepareServiceDiconFile(){
-        $srcFile = $this->srcCtlDir
-                 . S2BASE_PHP5_DICON_DIR
-                 . $this->serviceClassName
-                 . S2BASE_PHP5_DICON_SUFFIX;
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/pager/service_dicon.tpl');
-
-        $patterns = array("/@@SERVICE_CLASS@@/","/@@DAO_CLASS@@/");
-        $replacements = array($this->serviceClassName,$this->daoInterfaceName);
-        $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-    }
-
-    /**
-     * Dto file setting
-     */
-    protected function prepareDtoFile(){
-        $srcFile = $this->srcCtlDir
-                 . S2BASE_PHP5_ENTITY_DIR
-                 . $this->dtoClassName
-                 . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/scaffold/dto.tpl');
-        $patterns = array("/@@CONDITION_DTO_NAME@@/");
-        $replacements = array($this->dtoClassName);
-        $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-    }
-
     /**
      * Validator file setting
      */
     protected function prepareValidatorFile(){
-        $validatorDir = $this->srcCtlDir . self::VALIDATE_DIR;
+        $validatorDir = $this->srcCtlDir . ModuleCommand::VALIDATE_DIR;
         S2Base_CommandUtil::createDirectory($validatorDir);
         $this->prepareValidateIniFile();
         $this->prepareValidatorIniFileByFunc('update');
@@ -608,26 +521,10 @@ class ScaffoldCommand extends AbstractGoyaCommand {
         $this->prepareValidatorIniFileExecute();
     }
 
-    protected function prepareValidateIniFile(){
+    protected function prepareValidatorIniFileConfirm() {
         $srcFile = $this->srcCtlDir
                  . ModuleCommand::VALIDATE_DIR
                  . S2BASE_PHP5_DS
-                 . $this->actionName
-                 . '.ini';
-
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . '/skeleton/action/validate.ini.tpl');
-        $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                      . '/skeleton/pager/validate.ini.tpl');
-        $patterns = array("/@@ACTION_NAME@@/");
-        $replacements = array($this->actionName);
-        $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
-    }
-
-    protected function prepareValidatorIniFileConfirm() {
-        $srcFile = $this->srcCtlDir
-                 . self::VALIDATE_DIR
                  . $this->actionName . '-confirm'
                  . '.ini';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
@@ -661,7 +558,8 @@ class ScaffoldCommand extends AbstractGoyaCommand {
 
     protected function prepareValidatorIniFileExecute() {
         $srcFile = $this->srcCtlDir
-                 . self::VALIDATE_DIR
+                 . ModuleCommand::VALIDATE_DIR
+                 . S2BASE_PHP5_DS
                  . $this->actionName . '-execute'
                  . '.ini';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
@@ -676,7 +574,8 @@ class ScaffoldCommand extends AbstractGoyaCommand {
 
     protected function prepareValidatorIniFileByFunc($func) {
         $srcFile = $this->srcCtlDir
-                 . self::VALIDATE_DIR
+                 . ModuleCommand::VALIDATE_DIR
+                 . S2BASE_PHP5_DS
                  . $this->actionName . '-' . $func
                  . '.ini';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF

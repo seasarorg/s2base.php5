@@ -1,6 +1,6 @@
 <?php
 class PagerCommand extends AbstractGoyaCommand {
-    const DTO_SUFFIX = 'ConditionDto';
+    const DTO_SUFFIX = 'Dto';
     private $dtoClassName;
     private $dtoSessionKey;
 
@@ -28,11 +28,11 @@ class PagerCommand extends AbstractGoyaCommand {
     }
 
     protected function isUseCommonsDao() {
-        return DaoCommand::isCommonsDaoAvailable();
+        return false;
     }
 
     protected function isUseDB() {
-        return S2Base_StdinManager::isYes('use database ?');
+        return true;
     }
 
     protected function isEntityExtends() {
@@ -113,6 +113,7 @@ class PagerCommand extends AbstractGoyaCommand {
             $this->prepareHtmlFile();
             if (!$this->useCommonsDao) {
                 $this->prepareDaoFile();
+                $this->prepareDaoSqlFile();
                 $this->prepareEntityFile();
             }
         } else {
@@ -125,23 +126,41 @@ class PagerCommand extends AbstractGoyaCommand {
         }
     }
 
+    protected function insertActionMethod($srcFile, $tempAction) {
+        $tempContent = S2Base_CommandUtil::readFile($srcFile);
+        $reg = '/\s\s\s\s\/\*\*\sS2BASE_PHP5\sACTION\sMETHOD\s\*\*\//';
+        if (!preg_match($reg, $tempContent)) {
+            print PHP_EOL;
+            print "[INFO ] please copy & paste to $srcFile" . PHP_EOL;
+            print $tempAction . PHP_EOL;
+            print PHP_EOL;
+            return;
+        }
+
+        $tempContent = preg_replace($reg, $tempAction, $tempContent, 1);
+        if(!file_put_contents($srcFile, $tempContent, LOCK_EX)){
+            S2Base_CommandUtil::showException(new Exception("Cannot write to file [ $srcFile ]"));
+        } else {
+            print "[INFO ] modify : $srcFile" . PHP_EOL;
+        }
+    }
+
     protected function prepareActionFile(){
         $srcFile = $this->srcModuleDir
                  . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                     . '/skeleton/pager/action.tpl');
 
-        $patterns = array("/@@ACTION_NAME@@/",
-                          "/@@TEMPLATE_NAME@@/",
+        $patterns = array("/@@ACTION_METHOD_NAME@@/",
                           "/@@CONDITION_DTO_NAME@@/",
                           "/@@CONDITION_DTO_SESSION_KEY@@/");
         $replacements = array($this->actionMethodName,
-                              $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX,
                               $this->dtoClassName,
                               $this->dtoSessionKey);
-        $tempAction = preg_replace($patterns,$replacements,$tempAction);
-
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        ActionCommand::insertActionMethod($srcFile,$tempContent);
+/*
         $tempContent = S2Base_CommandUtil::readFile($srcFile);
 
         $reg = '/\s\s\s\s\/\*\*\sS2BASE_PHP5\sACTION\sMETHOD\s\*\*\//';
@@ -159,6 +178,7 @@ class PagerCommand extends AbstractGoyaCommand {
         } else {
             print "[INFO ] modify : $srcFile" . PHP_EOL;
         }
+*/
     }
 
     protected function prepareHtmlFile(){
@@ -292,6 +312,29 @@ class PagerCommand extends AbstractGoyaCommand {
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
+    protected function prepareDaoSqlFile(){
+        $srcFile = $this->srcCtlDir
+                 . S2BASE_PHP5_DAO_DIR
+                 . $this->daoInterfaceName
+                 . '_findByConditionDtoList.sql';
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                     . '/skeleton/pager/dao_sql.tpl');
+
+        $patterns = array("/@@TABLE_NAME@@/",
+                          "/@@WHERE_CONDITION@@/");
+        $replacements = array($this->tableName,
+                              $this->getWhereCondition($this->cols));
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        S2Base_CommandUtil::writeFile($srcFile,$tempContent);
+    }
+
+    protected function getWhereCondition($cols) {
+        foreach($cols as $col) {
+            $conds[] = "      $col like /*dto.keywordLike*/'%%'";
+        }
+        return implode(' or' . PHP_EOL, $conds);
+    }
+
     protected function prepareServiceDiconFile(){
         $srcFile = $this->srcCtlDir
                  . S2BASE_PHP5_DICON_DIR
@@ -319,6 +362,7 @@ class PagerCommand extends AbstractGoyaCommand {
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
+/*
     private function showMethodDefinitionMessage(){
         $ref = new ReflectionClass($this->daoInterfaceName);
         if (!$ref->hasMethod('findByConditionDtoList')) {
@@ -329,7 +373,7 @@ class PagerCommand extends AbstractGoyaCommand {
             print PHP_EOL;
         }
     }
-
+*/
     protected function prepareValidateIniFile(){
         $srcFile = $this->srcCtlDir
                  . ModuleCommand::VALIDATE_DIR

@@ -161,18 +161,18 @@ class MasterMaintCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_CLASS_SUFFIX; 
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/master-maint/controller.tpl");
+                     . "/skeleton/module/controller.tpl");
         $keys = array("/@@CONTROLLER_CLASS_NAME@@/",
-                      "/@@SERVICE_CLASS_NAME@@/",
-                      "/@@CONTROLLER_NAME@@/",
-                      "/@@TEMPLATE_NAME@@/",
-                      "/@@CONTROLLERS@@/");
+                      "/@@SERVICE_CLASS_NAME@@/");
         $reps = array($controllerClassName,
-                      $ctlServiceInterfaceName,
-                      $controllerName,
-                      'index' . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX,
-                      "'" . implode("','", $controllers) . "'");
-        $tempContent = preg_replace($keys, $reps, $tempContent);   
+                      $ctlServiceInterfaceName);
+        $tempContent = preg_replace($keys, $reps, $tempContent);
+        $key = '/indexAction\(\)\s\{\}/';
+        $rep = 'indexAction() {
+        $ctls = array(\'' . implode("','", $controllers) . '\');
+        $this->view->assign(\'ctls\', $ctls);
+    }';
+        $tempContent = preg_replace($key, $rep, $tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
 
@@ -190,13 +190,13 @@ class MasterMaintCommand implements S2Base_GenerateCommand {
         $tempContent = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/pager/html_header.tpl");
+                          . "/skeleton/module/html_header.tpl");
         }
         $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                       . "/skeleton/master-maint/html.tpl");
         if (!defined('S2BASE_PHP5_LAYOUT')) {
             $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                          . "/skeleton/pager/html_footer.tpl");
+                          . "/skeleton/module/html_footer.tpl");
         }
 
         $keys = array("/@@MODULE_NAME@@/",

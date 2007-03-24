@@ -44,6 +44,23 @@ next[{$helper->getLimit()}]
 {/foreach}
 </tbody>
 </table>
+<br>
+
+<form action="{$act_url}" method="post">
+<table class="list">
+<tbody>
+<tr>
+<td>current keyword</td>
+<td>{$keyword|escape}</td>
+</tr>
+<tr>
+<td><input type="text" name="s2base_keyword" value=""/></td>
+<td><input type="submit" name="" value="set keyword"/></td>
+</tr>
+</tbody>
+</table>
+</form>
+
 </center>
 
 <h3>

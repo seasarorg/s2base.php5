@@ -81,19 +81,40 @@ class ActionCommand implements S2Base_GenerateCommand {
         $this->prepareDiconFile();
         $this->prepareValidateIniFile();
     }
-    
+
+    public static function insertActionMethod($srcFile, $tempAction) {
+        $tempContent = S2Base_CommandUtil::readFile($srcFile);
+        $reg = '/\s\s\s\s\/\*\*\sS2BASE_PHP5\sACTION\sMETHOD\s\*\*\//';
+        if (!preg_match($reg, $tempContent)) {
+            print PHP_EOL;
+            print "[INFO ] please copy & paste to $srcFile" . PHP_EOL;
+            print $tempAction . PHP_EOL;
+            print PHP_EOL;
+            return;
+        }
+
+        $tempContent = preg_replace($reg, $tempAction, $tempContent, 1);
+        if(!file_put_contents($srcFile, $tempContent, LOCK_EX)){
+            S2Base_CommandUtil::showException(new Exception("Cannot write to file [ $srcFile ]"));
+        } else {
+            print "[INFO ] modify : $srcFile" . PHP_EOL;
+        }
+    }
+
     protected function prepareActionFile(){
         $srcFile = $this->srcModuleDir
                  . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX;
-        $tempAction = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                     . '/skeleton/action/action.tpl');
         $patterns = array("/@@ACTION_NAME@@/",
                           "/@@TEMPLATE_NAME@@/");
         $replacements = array($this->actionMethodName,
                               $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX);
-        $tempAction = preg_replace($patterns,$replacements,$tempAction);
+        $tempContent = preg_replace($patterns,$replacements,$tempContent);
+        self::insertActionMethod($srcFile, $tempContent);
 
+/*
         $tempContent = S2Base_CommandUtil::readFile($srcFile);
 
         $reg = '/\s\s\s\s\/\*\*\sS2BASE_PHP5\sACTION\sMETHOD\s\*\*\//';
@@ -111,6 +132,7 @@ class ActionCommand implements S2Base_GenerateCommand {
         } else {
             print "[INFO ] modify : $srcFile" . PHP_EOL;
         }
+*/
     }
 
     protected function prepareHtmlFile(){
