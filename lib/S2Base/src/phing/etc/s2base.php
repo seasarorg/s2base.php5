@@ -43,7 +43,7 @@ if (isset($args[1])) {
 if (is_null($projectDir) or
     strtolower($projectDir) == '--help' or 
     strtolower($projectDir) == '-h') {
-    print "[INFO ] Usage: % s2base <project directory> [smarty]" . PHP_EOL;
+    print "[INFO ] Usage: % s2base <project directory> [smarty|zf]" . PHP_EOL;
     exit;
 }
 if (isset($args[2])) {
@@ -78,6 +78,9 @@ print "[INFO ] project type      : $projectType" . PHP_EOL;
 switch($projectType) {
     case 'smarty':
         smartyProjectHandler($s2baseDir, $projectDir, $projectType);
+        break;
+    case 'zf':
+        zfProjectHandler($s2baseDir, $projectDir, $projectType);
         break;
     default:
         defaultProjectHandler($s2baseDir, $projectDir, $projectType);
@@ -171,6 +174,56 @@ function modifyBuildXmlFile($projectDir, $projectType) {
         print "[ERROR] could not write file [$buildFile] " . PHP_EOL;
         exit;
     }
+    print "[INFO ] modify : $buildFile" . PHP_EOL;
+}
+
+function modifyZfEnvFile($projectDir, $projectType) {
+    $envFile = $projectDir 
+             . DIRECTORY_SEPARATOR 
+             . 'config'
+             . DIRECTORY_SEPARATOR 
+             . 'environment.inc.php';
+    if (!file_exists($envFile)) {
+        print "[ERROR] file not found [$envFile] " . PHP_EOL;
+        exit;
+    }
+    $iniContents = file_get_contents($envFile);
+    if ($iniContents === false) {
+        print "[ERROR] could not read file [$envFile] " . PHP_EOL;
+        exit;
+    }
+    $pattern = "/'\.class\.php'/";
+    $replacement = "'.php'";
+    $iniContents = preg_replace($pattern, $replacement, $iniContents, 1);
+    $result = file_put_contents($envFile, $iniContents, LOCK_EX);
+    if ($result === false) {
+        print "[ERROR] could not write file [$envFile] " . PHP_EOL;
+        exit;
+    }
+    print "[INFO ] modify : $envFile" . PHP_EOL;
+}
+
+function renameZfHtaccess($projectDir) {
+    $htFile = $projectDir 
+            . DIRECTORY_SEPARATOR 
+            . 'public'
+            . DIRECTORY_SEPARATOR 
+            . 'htaccess.sample';
+    $newFile = $projectDir 
+             . DIRECTORY_SEPARATOR 
+             . 'public'
+             . DIRECTORY_SEPARATOR 
+             . '.htaccess';
+    if (!file_exists($htFile)) {
+        print "[ERROR] file not found [$htFile] " . PHP_EOL;
+        exit;
+    }
+    $result = rename($htFile, $newFile);
+    if ($result === false) {
+        print "[ERROR] could not rename file [$htFile to $newFile] " . PHP_EOL;
+        exit;
+    }
+    print "[INFO ] modify : $newFile" . PHP_EOL;
 }
 
 /**
@@ -181,6 +234,10 @@ function smartyProjectHandler($s2baseDir, $projectDir, $projectType) {
     $excludes[] = '/plugins.maple$/';
     $excludes[] = '/plugins.agavi$/';
     $excludes[] = '/plugins.symfony$/';
+    $excludes[] = '/plugins.zf$/';
+    $excludes[] = '/public.z\.php$/';
+    $excludes[] = '/public.htaccess\.sample$/';
+    $excludes[] = '/app.commons.dicon.zf\.dicon$/';
     $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
     dircopy($srcDir,$projectDir,$excludes);
     modifyBuildXmlFile($projectDir, $projectType);
@@ -189,13 +246,39 @@ function smartyProjectHandler($s2baseDir, $projectDir, $projectType) {
 /**
  *
  */
+function zfProjectHandler($s2baseDir, $projectDir, $projectType) {
+    $excludes = array('/dummy$/');
+    $excludes[] = '/plugins.maple$/';
+    $excludes[] = '/plugins.agavi$/';
+    $excludes[] = '/plugins.symfony$/';
+    $excludes[] = '/plugins.smarty$/';
+    $excludes[] = '/public.d\.php$/';
+    $excludes[] = '/app.commands.+/';
+    $excludes[] = '/app.skeleton.+/';
+    $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
+    dircopy($srcDir,$projectDir,$excludes);
+    modifyBuildXmlFile($projectDir, $projectType);
+    modifyZfEnvFile($projectDir, $projectType);
+    renameZfHtaccess($projectDir);
+}
+
+/**
+ *
+ */
 function defaultProjectHandler($s2baseDir, $projectDir, $projectType) {
     $excludes = array('/dummy$/');
+
+    // exclude smarty plugin
     $excludes[] = '/var.smarty$/';
     $excludes[] = '/var.session$/';
     $excludes[] = '/plugins.smarty$/';
     $excludes[] = '/public$/';
     $excludes[] = '/commons.view$/';
+
+    // exclude zf plugini
+    $excludes[] = '/plugins.zf$/';
+    $excludes[] = '/app.commons.dicon.zf\.dicon$/';
+
     $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
     dircopy($srcDir,$projectDir,$excludes);
 }
