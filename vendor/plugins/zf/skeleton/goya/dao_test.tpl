@@ -1,5 +1,5 @@
 <?php
-class @@CLASS_NAME@@ extends PHPUnit2_Framework_TestCase {
+class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
     private $module = "@@MODULE_NAME@@";
     private $controller = "@@CONTROLLER_NAME@@";
     private $container;

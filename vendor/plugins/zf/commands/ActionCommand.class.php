@@ -72,10 +72,10 @@ class ActionCommand implements S2Base_GenerateCommand {
     }
 
     protected function prepareFiles(){
-        $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
-        $this->srcCtlDir     = $this->srcModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
-        $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
-        $this->testCtlDir    = $this->testModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
+        $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName;
+        $this->srcCtlDir     = $this->srcModuleDir . S2BASE_PHP5_DS . $this->controllerName;
+        $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName;
+        $this->testCtlDir    = $this->testModuleDir . S2BASE_PHP5_DS . $this->controllerName;
         $this->prepareActionFile();
         $this->prepareHtmlFile();
         $this->prepareDiconFile();
@@ -103,6 +103,7 @@ class ActionCommand implements S2Base_GenerateCommand {
 
     protected function prepareActionFile(){
         $srcFile = $this->srcModuleDir
+                 . S2BASE_PHP5_DS
                  . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
@@ -181,6 +182,7 @@ class ActionCommand implements S2Base_GenerateCommand {
 
     protected function prepareValidateIniFile(){
         $srcFile = $this->srcCtlDir
+                 . S2BASE_PHP5_DS
                  . ModuleCommand::VALIDATE_DIR
                  . S2BASE_PHP5_DS
                  . $this->actionName

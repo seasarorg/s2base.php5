@@ -122,17 +122,15 @@ class ModuleCommand implements S2Base_GenerateCommand {
 
     public function createDirectory(){
         $this->srcModuleDir = S2BASE_PHP5_MODULES_DIR
-                            . $this->moduleName
-                            . S2BASE_PHP5_DS; 
+                            . $this->moduleName;
         $this->srcCtlDir = $this->srcModuleDir
-                         . $this->controllerName
-                         . S2BASE_PHP5_DS; 
+                         . S2BASE_PHP5_DS
+                         . $this->controllerName;
         $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR
-                             . $this->moduleName
-                             . S2BASE_PHP5_DS; 
+                             . $this->moduleName;
         $this->testCtlDir = $this->testModuleDir
-                          . $this->controllerName
-                          . S2BASE_PHP5_DS; 
+                          . S2BASE_PHP5_DS
+                          . $this->controllerName;
         $dirs = array(
             S2BASE_PHP5_DAO_DIR,
             S2BASE_PHP5_DICON_DIR,
@@ -168,6 +166,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
 
     public function prepareActionControllerClassFile(){
         $srcFile = $this->srcModuleDir
+                 . S2BASE_PHP5_DS
                  . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX; 
 
@@ -183,7 +182,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
 
     public function prepareModuleServiceInterfaceFile(){
         $srcFile = $this->srcCtlDir
-                 . 'service/'
+                 . S2BASE_PHP5_SERVICE_DIR
                  . $this->ctlServiceInterfaceName
                  . S2BASE_PHP5_CLASS_SUFFIX; 
 
@@ -197,6 +196,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
 
     public function prepareModuleIncFile(){
         $srcFile = $this->srcCtlDir
+                 . S2BASE_PHP5_DS
                  . "{$this->controllerName}.inc.php";
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . '/skeleton/module/include.tpl');

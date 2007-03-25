@@ -128,10 +128,10 @@ class ModelCommand implements S2Base_GenerateCommand {
     }
 
     protected function prepareFiles(){
-        $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
-        $this->srcCtlDir     = $this->srcModuleDir . $this->controllerName . S2BASE_PHP5_DS;
-        $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
-        $this->testCtlDir    = $this->testModuleDir . $this->controllerName . S2BASE_PHP5_DS;
+        $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName;
+        $this->srcCtlDir     = $this->srcModuleDir  . S2BASE_PHP5_DS . $this->controllerName;
+        $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName;
+        $this->testCtlDir    = $this->testModuleDir . S2BASE_PHP5_DS . $this->controllerName;
         $this->prepareModelImplFile();
         $this->prepareModelInterfaceFile();
         $this->prepareModelTestFile();
@@ -140,6 +140,7 @@ class ModelCommand implements S2Base_GenerateCommand {
 
     protected function prepareModelImplFile(){
         $srcFile = $this->srcCtlDir
+                 . S2BASE_PHP5_DS
                  . ModuleCommand::MODEL_DIR
                  . S2BASE_PHP5_DS
                  . $this->modelClassName
@@ -161,6 +162,7 @@ class ModelCommand implements S2Base_GenerateCommand {
 
     protected function prepareModelInterfaceFile(){
         $srcFile = $this->srcCtlDir
+                 . S2BASE_PHP5_DS
                  . ModuleCommand::MODEL_DIR
                  . S2BASE_PHP5_DS
                  . $this->modelInterfaceName
@@ -176,6 +178,7 @@ class ModelCommand implements S2Base_GenerateCommand {
     protected function prepareModelTestFile(){
         $testName = $this->modelClassName . "Test";
         $srcFile = $this->testCtlDir
+                 . S2BASE_PHP5_DS
                  . ModuleCommand::MODEL_DIR
                  . S2BASE_PHP5_DS
                  . $testName
