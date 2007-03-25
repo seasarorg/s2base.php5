@@ -1,4 +1,5 @@
 <?php
+require_once('AbstractGoyaCommand.php');
 class GoyaCommand extends AbstractGoyaCommand {
 
     public function getName(){
