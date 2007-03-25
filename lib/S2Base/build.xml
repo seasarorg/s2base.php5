@@ -12,12 +12,12 @@
     <target name="init">
         <property name="project.name" value="${phing.project.name}" />
         <property name="package.name" value="S2Base" />
-        <property name="project.version" value="1.0.1" />
+        <property name="project.version" value="1.0.2" />
         <property name="project.state" value="stable" />
         <property name="project.build.dir" value="${project.basedir}/build" />
         <property name="project.src.dir" value="${project.basedir}/src" />
         <property name="license.file" value="Apache_Software_License_2.0.txt" />
-        <property name="release.notes" value="Release 1.0.1" />
+        <property name="release.notes" value="Release 1.0.2" />
         <property name="td" value="" />
         <property name="tt" value="**/*Test.class.php" />
         <property name="dd" value="" />
@@ -131,19 +131,19 @@
                 <element>
                     <element key="handle" value="klove"/>
                     <element key="name" value="klove"/>
-                    <element key="email" value="seasar-s2dicon-php5@lists.sourceforge.jp"/>
+                    <element key="email" value="s2container-php5@ml.seasar.org"/>
                     <element key="role" value="lead"/>
                 </element>
                 <element>
                     <element key="handle" value="KIYO-SHIT"/>
                     <element key="name" value="KIYO-SHIT"/>
-                    <element key="email" value="seasar-s2dicon-php5@lists.sourceforge.jp"/>
+                    <element key="email" value="s2container-php5@ml.seasar.org"/>
                     <element key="role" value="developer"/>
                 </element>
                 <element>
                     <element key="handle" value="ueyama"/>
                     <element key="name" value="ueyama"/>
-                    <element key="email" value="seasar-s2dicon-php5@lists.sourceforge.jp"/>
+                    <element key="email" value="s2container-php5@ml.seasar.org"/>
                     <element key="role" value="developer"/>
                 </element>
             </mapping>
