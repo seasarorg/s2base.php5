@@ -97,6 +97,7 @@
 
 <ul>
     <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
+    <li><a href="http://s2ana.php5.sandbox.seasar.org/">S2AnA.PHP5</a></li>
     <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
 </ul>
 
@@ -137,20 +138,15 @@ s2base.php5/vendor/plugins/smarty/config/environment.inc.php にて、Smarty-ver
 </p>
 
 <h3>build.xml の編集</h3>
-<p>
-　build.xml でデフォルトタスクに [ smarty ] を設定します。
-</p>
 
+　s2base を PEARパッケージでインストールした場合は、s2base コマンドに 第2引数 smarty を付加してプロジェクトディレクトリを作成します。
 <pre>
-&lt;?xml version="1.0"?&gt;
-&lt;project name="project" default="smarty" basedir="."&gt;
-    ・・・                             ↑
-&lt;/project&gt;                     smarty に設定
+% s2base /path/to/project/dir smarty
 </pre>
 
 s2base.php5 ディレクトリにて phing コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
 <pre>
-% phing
+% phing smarty
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
 
 project > prepare:
