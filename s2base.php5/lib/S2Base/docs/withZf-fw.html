@@ -30,7 +30,7 @@
 </div>
 
 <div id="navi">
-<p><font size="-1"><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; with PRADO &raquo; セットアップ</font></p>
+<p><font size="-1"><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; with Zf &raquo; Zend Framework との連携</font></p>
 </div>
 
 </div><!-- header -->
@@ -51,12 +51,13 @@
 <li><a href="withAgavi-setup.html">with Agavi</a> <i>(ver 0.10.2)</i></li>
 <li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 0.6.3)</i></li>
 <li><a href="withSmarty-setup.html">with Smarty</a></li>
-<li>with PRADO
+<li><a href="withPRADO-setup.html">with PRADO</a></li>
+<li>with Zf
     <font size="-2">
     <ul>
-        <li>セットアップ</li>
-        <li><a href="withPRADO-cmdRef.html">コマンドリファレンス</a></li>
-        <li><a href="withPRADO-dir.html">ディレクトリ構成</a></li>
+        <li><a href="withZf-setup.html">セットアップ</a></li>
+        <li><a href="withZf-cmdRef.html">コマンドリファレンス</a></li>
+        <li>Zend Framework との連携</li>
     </ul>
     </font>
 </li>
@@ -110,92 +111,40 @@
 <div id="article">
 
 <div class="section">
-<h2 id="h02">with PRADO - セットアップ</h2>
-
-<h3>S2Base.PHP5 のインストール</h3>
+<h2 id="h02"><a name="info">プロジェクトディレクトリ構成</a></h2>
 <p>
-　<a href="setup.html">セットアップ</a>に従って S2Base.PHP5 をインストールして下さい。
 </p>
-<h3>PRADO のインストール</h3>
-<ol>
-<li>
-<a href="http://www.pradosoft.com/download/">PRADO</a>をダウンロードし解凍してください。
-</li>
-<li>
-解凍の結果作成されたディレクトリの名称をpradoと変更し、Web公開ディレクトリ直下に移動して下さい。
-</li>
-</ol>
-<h3>build.xmlの編集</h3>
-s2base.php5/vendor/plugins/prado/build.xmlにおいて下記編集作業を行ってください。
-<ol>
-<li>
-WEB公開ディレクトリ名を設定する。
-</li>
-<li>
-WEB公開ディレクトリからS2Base.PHP5インストールディレクトリの相対パスを設定する。
-</li>
-</ol>
-<pre>
-&lt;?xml version="1.0"?&gt;
-&lt;project name="project" default="command" basedir="."&gt;
-    &lt;target name="command"&gt;
-        &lt;php expression="define('DOCUMENT_ROOT_DIR','/var/www/public_html/')"/&gt;
-		                                                  ↑
-		                                 WEB公開ディレクトリの絶対パスを記述       
-        &lt;php expression="define('DOCUMENT_ROOT_S2BASE_RELATION','../s2base.php5')"/&gt;
-		                                                  ↑
-		              WEB公開ディレクトリからS2Base.php5インストールディレクトリへの相対パスを記述
-		               （/var/www/s2base.php5の場合）       
-    ・・・
-    &lt;/target&gt; 
-&lt;/project&gt;
-</pre>
-上記設定の対象となっているディレクトリ構造については、<a href="">PRADOプラグイン使用時のディレクトリ構造</a>を参照してください。
-
-<h3>動作確認</h3>
-<h4>PRADOの動作確認</h4>
-PRADOの動作確認チェッカーやサンプルプログラムは下記URL経由で実行できます。(導入サーバーをlocalhostとして記載)<br>
-　<a href="http://localhost/prado/">http://localhost/prado/</a><br>
-詳細に関しては<a href="http://pradosoft.com/">PRADO公式サイト</a>を参照してください。
-
-<h4>S2Baseの動作確認</h4>
-s2base.php5 ディレクトリにおいて phingコマンド(phing -f prado.xml)を実行します。コマンドリストが表示されるとインストールが完了です。
-<pre>
-%phing -f prado.xml
-Buildfile: /private/var/www/s2base.php5/prado.xml
-      [php] Evaluating PHP expression: ini_set('include_path','lib'.PATH_SEPARATOR.
-	                                                             ini_get('include_path'))
-      [php] Evaluating PHP expression: require_once('S2Base/S2Base.phing.php')
-
-project > prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('S2Base/S2Base.cmd.php')
-
-project > prado:
-    [phing] Calling Buildfile '/private/var/www/s2base.php5/vendor/plugins/prado/build.xml' 
-	                                                                    with target 'command'
-
-project > command:
-      [php] Evaluating PHP expression: define('DOCUMENT_ROOT_DIR','/var/www/public_html/')
-      [php] Evaluating PHP expression: define('DOCUMENT_ROOT_S2BASE_RELATION','../s2base.php5')
-      [php] Evaluating PHP expression: require_once('vendor/plugins/prado/config/environment.inc.php')
-
-[ Command list ]
-0 : (exit)
-1 : command
-2 : dao
-3 : dicon
-4 : entity
-5 : goya
-6 : interceptor
-7 : module
-8 : page
-9 : service
-choice ? : 
-
-</pre>
-
 </div>
+<br>
+
+<div class="section">
+<h2 id="h02"><a name="info">S2Base_Zf の留意点</a></h2>
+<p>
+</p>
+</div>
+<br>
+
+<div class="section">
+<h2 id="h02"><a name="contorller">Zend_Controller との連携</a></h2>
+<p>
+</p>
+</div>
+<br>
+
+<div class="section">
+<h2 id="h02"><a name="view">ビュークラスの選択</a></h2>
+<p>
+</p>
+</div>
+<br>
+
+<div class="section">
+<h2 id="h02"><a name="validate">リクエストの検証</a></h2>
+<p>
+</p>
+</div>
+<br>
+
 </div><!-- article -->
 
 </div><!-- contents_center -->
