@@ -1,5 +1,5 @@
 <?php
-require_once('AbstractGoyaCommand.php');
+require_once('AbstractGoyaCommand.class.php');
 class GoyaCommand extends AbstractGoyaCommand {
 
     public function getName(){
