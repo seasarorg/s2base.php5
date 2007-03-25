@@ -1,18 +1,5 @@
 <?php
-/**
- * Daoを生成します。
- * 
- * 生成ファイル
- * <ul>
- *   <li>app/modules/module名/コントローラ名/dao/dao名.class.php</li>
- *   <li>app/modules/module名/コントローラ名/dicon/dao名.dicon</li>
- *   <li>app/modules/module名/コントローラ名/entity/entity名.dicon</li>
- *   <li>test/modules/module名/コントローラ名/dao/dao名Test.class.php</li>
- * </ul>
- * 
- */
 class DaoCommand implements S2Base_GenerateCommand {
-
     protected $moduleName;
     protected $controllerName;
     protected $daoInterfaceName;
@@ -244,10 +231,10 @@ class DaoCommand implements S2Base_GenerateCommand {
     }
 
     protected function prepareFiles(){
-        $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
-        $this->srcCtlDir     = $this->srcModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
-        $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
-        $this->testCtlDir    = $this->testModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
+        $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName;
+        $this->srcCtlDir     = $this->srcModuleDir . S2BASE_PHP5_DS . $this->controllerName;
+        $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName;
+        $this->testCtlDir    = $this->testModuleDir . S2BASE_PHP5_DS . $this->controllerName;
 
         if (!$this->useCommonsDao) {
             $this->prepareDaoFile();

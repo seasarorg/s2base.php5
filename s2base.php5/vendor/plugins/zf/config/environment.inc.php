@@ -26,6 +26,7 @@ session_save_path(S2BASE_PHP5_VAR_DIR . '/session');
 /**
  * Library setting
  */
+require_once('PHPUnit2/Framework/TestCase.php');
 require_once('Smarty/libs/Smarty.class.php');
 
 require_once('Zend/Loader.php');

@@ -235,10 +235,10 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
     }
 
     protected function prepareFiles(){
-        $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
-        $this->srcCtlDir     = $this->srcModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
-        $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName . S2BASE_PHP5_DS;
-        $this->testCtlDir    = $this->testModuleDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS;
+        $this->srcModuleDir  = S2BASE_PHP5_MODULES_DIR . $this->moduleName;
+        $this->srcCtlDir     = $this->srcModuleDir . S2BASE_PHP5_DS . $this->controllerName;
+        $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR . $this->moduleName;
+        $this->testCtlDir    = $this->testModuleDir . S2BASE_PHP5_DS . $this->controllerName;
 
         $this->prepareActionFile();
         $this->prepareActionDiconFile();
@@ -263,6 +263,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
 
     protected function prepareActionFile(){
         $srcFile = $this->srcModuleDir
+                 . S2BASE_PHP5_DS
                  . $this->controllerClassFile
                  . S2BASE_PHP5_CLASS_SUFFIX;
         if ($this->useDao) {
@@ -277,7 +278,8 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $replacements = array($this->actionMethodName,
                               $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX);
         $tempAction = preg_replace($patterns,$replacements,$tempAction);
-
+        ActionCommand::insertActionMethod($srcFile, $tempAction);
+/*
         $tempContent = S2Base_CommandUtil::readFile($srcFile);
 
         $reg = '/\s\s\s\s\/\*\*\sS2BASE_PHP5\sACTION\sMETHOD\s\*\*\//';
@@ -295,6 +297,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         } else {
             print "[INFO ] modify : $srcFile" . PHP_EOL;
         }
+*/
     }
 
 
@@ -519,6 +522,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
 
     protected function prepareValidateIniFile(){
         $srcFile = $this->srcCtlDir
+                 . S2BASE_PHP5_DS
                  . ModuleCommand::VALIDATE_DIR
                  . S2BASE_PHP5_DS
                  . $this->actionName
