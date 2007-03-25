@@ -30,6 +30,11 @@ if (!defined('PDO_DICON')) {
 define('S2CONTAINER_PHP5_DOM_VALIDATE',false);
 
 /**
+ * ENV setting
+ */
+//define('S2CONTAINER_PHP5_ENV', 'test');
+
+/**
  * include path setting
  */
 $packages = array(S2BASE_PHP5_ROOT . '/lib');
