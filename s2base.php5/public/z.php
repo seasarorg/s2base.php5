@@ -14,12 +14,12 @@ try{
     $request->setBaseUrl();
     $fc = Zend_Controller_Front::getInstance();
     $fc->throwExceptions(true);
+    $fc->setRequest($request);
+    $fc->setDispatcher(new S2Base_ZfDispatcher());
     $fc->registerPlugin(new S2Base_ZfDispatcherSupportPlugin());
     $validatePlugin = new S2Base_ZfValidateSupportPlugin();
     $validatePlugin->addValidateFactory(new S2Base_ZfRegexValidateFactory());
     $fc->registerPlugin($validatePlugin);
-    $fc->setDispatcher(new S2Base_ZfDispatcher());
-    $fc->setRequest($request);
     $response = $fc->dispatch();
 }catch(Exception $e){
     print '<pre><font color="red">' . $e->__toString() . '</font></pre>' . PHP_EOL;
@@ -27,5 +27,5 @@ try{
 
 $time_end = microtime_float();
 $time = $time_end - $time_start;
-echo "<br> [ dispatch time : $time seconds ] <br>" . PHP_EOL;
+print "<br> [ dispatch time : $time seconds ] <br>" . PHP_EOL;
 ?>
