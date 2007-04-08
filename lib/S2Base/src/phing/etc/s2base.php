@@ -96,6 +96,68 @@ exit;
 /**
  * Functions 
  */
+ 
+/**
+ * @param string $s2baseDir S2Base PEAR directory
+ * @param string $projectDir
+ * @param string $projectType default|smarty|zf
+ */
+function smartyProjectHandler($s2baseDir, $projectDir, $projectType) {
+    $excludes = array('/dummy$/');
+    $excludes[] = '/plugins.maple$/';
+    $excludes[] = '/plugins.agavi$/';
+    $excludes[] = '/plugins.symfony$/';
+    $excludes[] = '/plugins.zf$/';
+    $excludes[] = '/public.z\.php$/';
+    $excludes[] = '/public.htaccess\.sample$/';
+    $excludes[] = '/app.commons.dicon.zf\.dicon$/';
+    $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
+    dircopy($srcDir,$projectDir,$excludes);
+    modifyBuildXmlFile($projectDir, $projectType);
+}
+
+/**
+ * @param string $s2baseDir S2Base PEAR directory
+ * @param string $projectDir
+ * @param string $projectType default|smarty|zf
+ */
+function zfProjectHandler($s2baseDir, $projectDir, $projectType) {
+    $excludes = array('/dummy$/');
+    $excludes[] = '/plugins.maple$/';
+    $excludes[] = '/plugins.agavi$/';
+    $excludes[] = '/plugins.symfony$/';
+    $excludes[] = '/plugins.smarty$/';
+    $excludes[] = '/public.d\.php$/';
+    $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
+    dircopy($srcDir,$projectDir,$excludes);
+    modifyBuildXmlFile($projectDir, $projectType);
+    modifyZfEnvFile($projectDir, $projectType);
+    renameZfHtaccess($projectDir);
+}
+
+/**
+ * @param string $s2baseDir S2Base PEAR directory
+ * @param string $projectDir
+ * @param string $projectType default|smarty|zf
+ */
+function defaultProjectHandler($s2baseDir, $projectDir, $projectType) {
+    $excludes = array('/dummy$/');
+
+    // exclude smarty plugin
+    $excludes[] = '/var.smarty$/';
+    $excludes[] = '/var.session$/';
+    $excludes[] = '/plugins.smarty$/';
+    $excludes[] = '/public$/';
+    $excludes[] = '/commons.view$/';
+
+    // exclude zf plugini
+    $excludes[] = '/plugins.zf$/';
+    $excludes[] = '/app.commons.dicon.zf\.dicon$/';
+
+    $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
+    dircopy($srcDir,$projectDir,$excludes);
+}
+
 /**
  * @param string $src
  * @param string $dest
@@ -155,6 +217,10 @@ function dircopy($src,$dest,$excludes) {
     }
 }
 
+/**
+ * @param string $projectDir
+ * @param string $projectType default|smarty|zf
+ */
 function modifyBuildXmlFile($projectDir, $projectType) {
     $buildFile = $projectDir . DIRECTORY_SEPARATOR . 'build.xml';
     if (!file_exists($buildFile)) {
@@ -177,6 +243,10 @@ function modifyBuildXmlFile($projectDir, $projectType) {
     print "[INFO ] modify : $buildFile" . PHP_EOL;
 }
 
+/**
+ * @param string $projectDir
+ * @param string $projectType default|smarty|zf
+ */
 function modifyZfEnvFile($projectDir, $projectType) {
     $envFile = $projectDir 
              . DIRECTORY_SEPARATOR 
@@ -203,6 +273,9 @@ function modifyZfEnvFile($projectDir, $projectType) {
     print "[INFO ] modify : $envFile" . PHP_EOL;
 }
 
+/**
+ * @param string $projectDir
+ */
 function renameZfHtaccess($projectDir) {
     $htFile = $projectDir 
             . DIRECTORY_SEPARATOR 
@@ -226,62 +299,6 @@ function renameZfHtaccess($projectDir) {
     print "[INFO ] modify : $newFile" . PHP_EOL;
 }
 
-/**
- *
- */
-function smartyProjectHandler($s2baseDir, $projectDir, $projectType) {
-    $excludes = array('/dummy$/');
-    $excludes[] = '/plugins.maple$/';
-    $excludes[] = '/plugins.agavi$/';
-    $excludes[] = '/plugins.symfony$/';
-    $excludes[] = '/plugins.zf$/';
-    $excludes[] = '/public.z\.php$/';
-    $excludes[] = '/public.htaccess\.sample$/';
-    $excludes[] = '/app.commons.dicon.zf\.dicon$/';
-    $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
-    dircopy($srcDir,$projectDir,$excludes);
-    modifyBuildXmlFile($projectDir, $projectType);
-}
-
-/**
- *
- */
-function zfProjectHandler($s2baseDir, $projectDir, $projectType) {
-    $excludes = array('/dummy$/');
-    $excludes[] = '/plugins.maple$/';
-    $excludes[] = '/plugins.agavi$/';
-    $excludes[] = '/plugins.symfony$/';
-    $excludes[] = '/plugins.smarty$/';
-    $excludes[] = '/public.d\.php$/';
-    $excludes[] = '/app.commands.+/';
-    $excludes[] = '/app.skeleton.+/';
-    $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
-    dircopy($srcDir,$projectDir,$excludes);
-    modifyBuildXmlFile($projectDir, $projectType);
-    modifyZfEnvFile($projectDir, $projectType);
-    renameZfHtaccess($projectDir);
-}
-
-/**
- *
- */
-function defaultProjectHandler($s2baseDir, $projectDir, $projectType) {
-    $excludes = array('/dummy$/');
-
-    // exclude smarty plugin
-    $excludes[] = '/var.smarty$/';
-    $excludes[] = '/var.session$/';
-    $excludes[] = '/plugins.smarty$/';
-    $excludes[] = '/public$/';
-    $excludes[] = '/commons.view$/';
-
-    // exclude zf plugini
-    $excludes[] = '/plugins.zf$/';
-    $excludes[] = '/app.commons.dicon.zf\.dicon$/';
-
-    $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
-    dircopy($srcDir,$projectDir,$excludes);
-}
 
 /**
  * End of Functions
