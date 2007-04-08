@@ -111,29 +111,185 @@
 <div id="article">
 
 <div class="section">
-<h2 id="h02"><a name="info">プロジェクトディレクトリ構成</a></h2>
+<h2 id="h02"><a name="info">プロジェクトのディレクトリ構成</a></h2>
 <p>
 </p>
+　s2base コマンドに第二引数 zf を付けて実行すると、次のようなプロジェクトディレクトリが生成されます。
+ディレクトリ構成としては <a href="dir.html">s2base の基本構成</a> と同じです。
+<pre>
+s2base.php5 プロジェクトディレクトリ
+|-- app/
+|    +- commons/       ・・・ 共通モジュールディレクトリ
+|    +- modules/       ・・・ 本体モジュールディレクトリ
+|-- config/
+|    +- environment.inc.php   ・・・ S2Base 設定ファイル
+|-- lib/
+|-- public/             ・・・ WEB公開ディレクトリ
+|    +- .htaccess       ・・・ Apache 用 .htaccess 設定ファイル
+|    +- z.php           ・・・ S2Base_Zf スタートスクリプト
+|-- test/               ・・・ テスト用ディレクトリ
+|-- var/                ・・・ ログ・キャッシュディレクトリ
+`-- vendor/
+     +- plugins/
+         +- zf/
+             +- config/
+                 +- environment.inc.php   ・・・ S2Base_Zf 設定ファイル
+</pre>
+
+modules ディレクトリには、次のように、複数のモジュールディレクトリが <a href="withZf-cmdRef.html#module">module & controller</a> コマンドによって生成されます。
+モジュールディレクトリには、複数のコントローラとそのディレクトリ (以降、コントローラディレクトリ) が生成されます。
+<pre>
+s2base.php5 プロジェクトディレクトリ
+|-- app/
+|    +- commons/
+|    +- modules/
+|        +- default/                   ・・・ default モジュールディレクトリ
+|        |   +- IndexController.php    ・・・ コントローラクラス
+|        |   +- index/                 ・・・ コントローラディレクトリ
+|        |       +- index.inc.php      ・・・ コントローラ共通設定ファイル
+|        |       +- action/
+|        |       +- dao/
+|        |       +- entity/
+|        |       +- interceptor/
+|        |       +- model/
+|        |       +- service/
+|        |       +- validate/
+|        |       +- view/
+|        +- sample/                    ・・・ sample モジュールディレクトリ
+|        |   +- IndexController.php    ・・・ コントローラクラス
+|        |   +- index/                 ・・・ コントローラディレクトリ
+|        |       +- ・・・
+</pre>
 </div>
 <br>
 
 <div class="section">
 <h2 id="h02"><a name="info">S2Base_Zf の留意点</a></h2>
-<p>
-</p>
+<ul>
+<li>モジュール名には、[_a-zA-Z0-9] が使用できます。</li>
+<li>コントローラ名には、[a-zA-Z0-9] が使用できます。</li>
+<li>アクション名には、[_a-zA-Z0-9.-] が使用できます。</li>
+<li>コントローラクラスの継承について</li>
+</ul>
 </div>
 <br>
 
 <div class="section">
 <h2 id="h02"><a name="contorller">Zend_Controller との連携</a></h2>
+
+<h3>処理の流れ</h3>
+<a href="images/s2base_zf_system.png"><img src="images/s2base_zf_system.png" width="600"/></a>
+<h3>拡張ポイント</h3>
+<p>
+　S2Base_Zf では上図にあるように、ディスパッチャとビューをカスタマイズしています。
+また、Zend_Controller のプラグインの機能を用いて、ディスパッチャとリクエストバリデーションのサポートプラグインを組み込んでいます。
+</p>
+<ul>
+<li>S2Base_ZfDispatcher</li>
+<li>S2Base_ZfDispatcherSupportPlugin</li>
+<li>S2Base_ZfValidateSupportPlugin</li>
+<li>S2Base_ZfView
+  <ul>
+  <li>S2Base_ZfSmartyView</li>
+  <li>S2Base_ZfStandardView</li>
+  </ul>
+</li>
+</ul>
+
+
+<h3>スタートスクリプト z.php</h3>
+<p>
+　WEBサーバのURI書き換え機能により最初にスタートスクリプト z.php が実行されます。
+z.php では、Zend_Controller を起動するための初期設定を行います。
+ここで、S2Base_Zf用のディスパッチャやプラグインを登録しています。
+</p>
+
+<p>　　s2base.php/public/z.php</p>
+<pre>
+    ・・・
+    try {
+        Zend_Session::regenerateId();
+        $request = new Zend_Controller_Request_Http();
+        $request->setBaseUrl();
+        $fc = Zend_Controller_Front::getInstance();
+        $fc->throwExceptions(true);
+        $fc->setRequest($request);
+
+        // S2Base_Zf用のディスパッチャを登録
+        $fc->setDispatcher(new S2Base_ZfDispatcher());
+
+        // S2Base_Zf用のディスパッチャをサポートするプラグインを登録
+        $fc->registerPlugin(new S2Base_ZfDispatcherSupportPlugin());
+
+        // リクエストバリデーションをサポートするプラグインを登録
+        // Zend_Validate_Regex を使用するカスタムバリデーションを追加しています。
+        $validatePlugin = new S2Base_ZfValidateSupportPlugin();
+        $validatePlugin->addValidateFactory(new S2Base_ZfRegexValidateFactory());
+        $fc->registerPlugin($validatePlugin);
+
+        $response = $fc->dispatch();
+    } catch(Exception $e) {
+    ・・・
+</pre>
+
+<h3>ビューの使用</h3>
+<p>
+　S2Base_Zf では、ビューのインスタンスはアクションコントローラの view プロパティに設定されています。デフォルトでは、ビューに Smarty を使用します。
+ビューに使用するクラスの切り替えについては、「<a href="#view">ビュークラスの選択</a>」を参照下さい。
+
+<h4>postDispatch での render</h4>
+
+<h4>テンプレートファイルの設定</h4>
+
+<h4>レイアウトの設定</h4>
+
+<h4>setRendered メソッド</h4>
+
+<h3>Zend_Db のセットアップ</h3>
 <p>
 </p>
+
+<h3>設定ファイル</h3>
+<p>　リクエストごとに次の4つのファイルが設定ファイルとして使用されます。4番目のアクション固有の設定ファイル以外は必ず読み込まれます。(必須)</p>
+<ol>
+<li>config/environment.inc.php<br>
+S2Base 共通の設定ファイル。読み込まれるタイミングは、フロントコントローラが生成される前です。一番最初に読み込まれます。
+</li>
+<li>vendor/plugins/zf/config/environment.inc.php<br>
+S2Base_Zf 固有設定ファイル。読み込まれるタイミングは、上記 config/environment.inc.php のすぐあとで、フロントコントローラが生成される前です。
+</li>
+<li>コントローラディレクトリ/コントローラ名.inc.php<br>
+コントローラ共通設定ファイル。読み込まれるタイミングは、アクションコントローラが生成される直前です。
+</li>
+<li>コントローラディレクトリ/アクションメソッド名.inc.php<br>
+アクション固有設定ファイル。読み込まれるタイミングは、上記コントローラ共通設定ファイルが読み込まれた直後で、アクションコントローラが生成される前です。
+この設定ファイルは存在すれば読み込まれます。(任意)
+</li>
+</ol>
+
 </div>
 <br>
 
 <div class="section">
 <h2 id="h02"><a name="view">ビュークラスの選択</a></h2>
 <p>
+　S2Base_Zf は、デフォルトでは <a href="http://smarty.php.net/">Smarty</a> を継承し Zend_View_Interface を実装した S2Base_ZfSmartyView 
+を使用します。Zend_View にいくつかの機能を追加した S2Base_ZfStandardView を使用する場合は、s2base.php5/app/commons/dicon/zf.dicon で S2Base_ZfStandardView 
+をビューコンポーネントとして設定します。<br>
+
+<p>　　s2base.php5/app/commons/dicon/zf.dicon</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;components&gt;
+    &lt;!--
+    &lt;component name="view" class="S2Base_ZfStandardView"/&gt;
+    --&gt;
+    &lt;component name="view" class="S2Base_ZfSmartyView"/&gt;  &lt;--- デフォルト設定
+&lt;/components&gt;
+</pre>
+
 </p>
 </div>
 <br>
@@ -142,6 +298,9 @@
 <h2 id="h02"><a name="validate">リクエストの検証</a></h2>
 <p>
 </p>
+<h3>設定ファイル</h3>
+<h3>エラーの検知</h3>
+<h3>カスタムバリデーションを使用する</h3>
 </div>
 <br>
 
