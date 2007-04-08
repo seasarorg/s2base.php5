@@ -150,7 +150,7 @@ class S2Base_ZfSmartyView
         self::setRendered();
 
         $this->putError('validate', S2Base_ZfValidateSupportPlugin::getErrors($this->request));
-        $moduleName = S2Base_ZfDispatcherSupportPlugin::getModuleName($this->request);
+        $moduleName = $this->request->getModuleName();
         $this->template_dir = $this->scriptPath;
         $this->assign('request',$this->request);
         $this->assign('errors',self::$errors);

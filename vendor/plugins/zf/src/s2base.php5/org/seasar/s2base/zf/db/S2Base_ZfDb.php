@@ -50,10 +50,14 @@ class S2Base_ZfDb {
         list($pdoType, $pdoParams)= preg_split('/:/', $dsn, 0);
         $pdoType = 'PDO_' . $pdoType;
         $params = array('username' => $username, 'password' => $password);
-        $items = preg_split('/;/', $pdoParams, -1, PREG_SPLIT_NO_EMPTY);
-        foreach ($items as $item) {
-            list($key, $val)= preg_split('/=/', $item, 0);
-            $params[trim($key)] = trim($val);
+        if (preg_match('/;/', $pdoParams)) {
+            $items = preg_split('/;/', $pdoParams, -1, PREG_SPLIT_NO_EMPTY);
+            foreach ($items as $item) {
+                list($key, $val)= preg_split('/=/', $item, 0);
+                $params[trim($key)] = trim($val);
+            }
+        } else {
+            $params['dbname'] = $pdoParams;
         }
         return Zend_Db::factory($pdoType, $params);
     }

@@ -36,16 +36,16 @@ class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
 {
     const PARAM_MAX_LEN = 50;
 
+/*
     public static function getModuleName(Zend_Controller_Request_Abstract $request) {
         return $request->getModuleName();
-/*
         $moduleName = $request->getModuleName();
         if ($moduleName === null) {
             return S2BASE_PHP5_ZF_DEFAULT_MODULE;
         }
         return $moduleName;
-*/
     }
+*/
 
     public function routeStartup(Zend_Controller_Request_Abstract $request) {
         $moduleDir = S2BASE_PHP5_ROOT . '/app/modules/';
@@ -66,7 +66,7 @@ class S2Base_ZfDispatcherSupportPlugin extends Zend_Controller_Plugin_Abstract
     }
 
     public function routeShutdown(Zend_Controller_Request_Abstract $request) {
-        $this->validateModule(self::getModuleName($request));
+        $this->validateModule($request->getModuleName());
         $this->validateController($request->getControllerName());
         $this->validateAction($request->getActionName());
     }

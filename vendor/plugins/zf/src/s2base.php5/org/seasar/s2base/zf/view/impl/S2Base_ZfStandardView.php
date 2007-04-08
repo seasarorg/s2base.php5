@@ -36,6 +36,7 @@ class S2Base_ZfStandardView
     extends Zend_View
     implements S2Base_ZfView {
 
+    protected static $rendered = false;
     protected static $errors   = array();
     protected $layout     = null;
     protected $request    = null;
@@ -54,6 +55,14 @@ class S2Base_ZfStandardView
         if(defined('S2BASE_PHP5_LAYOUT')){
             $this->layout = S2BASE_PHP5_LAYOUT;
         }
+    }
+
+    public static function setRendered($value = true){
+        self::$rendered = $value;
+    }
+
+    public static function isRendered(){
+        return self::$rendered;
     }
 
     public function setTpl($tpl) {
@@ -84,15 +93,21 @@ class S2Base_ZfStandardView
     }
 
     public function render($script) {
+        if (self::isRendered()) {
+            return;
+        }
+        self::setRendered();
+
+        $moduleName = $this->request->getModuleName();
+
         $ctlViewDir = S2BASE_PHP5_ROOT . '/app/modules/'
-                    . S2Base_ZfDispatcherSupportPlugin::getModuleName($this->request)
+                    . $moduleName
                     . '/' . $this->request->getControllerName() . '/view';
         $this->addScriptPath($ctlViewDir);
         $this->addHelperPath($ctlViewDir . '/helpers');
         $this->addFilterPath($ctlViewDir . '/filters');
 
         $this->putError('validate', S2Base_ZfValidateSupportPlugin::getErrors($this->request));
-        $moduleName = S2Base_ZfDispatcherSupportPlugin::getModuleName($this->request);
         $this->assign('request', $this->request);
         $this->assign('errors', self::$errors);
         $this->assign('module', $moduleName);

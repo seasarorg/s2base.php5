@@ -10,7 +10,7 @@
         <property name="project.src.dir" value="${project.basedir}/src" />
         <property name="project.config.dir" value="${project.basedir}/config" />
         <property name="td" value="" />
-        <property name="tt" value="**/*Test.class.php" />
+        <property name="tt" value="**/*Test*php" />
     </target>
 
     <target name="clean" depends="init">
@@ -33,19 +33,19 @@
                listFile="${project.config.dir}/s2base_zf.core.txt"/>
     </target>
 
-    <target name="test" depends="prepare">
+    <target name="test" depends="build">
         <php expression="require_once('../../../config/environment.inc.php')"/>
         <php expression="require_once('config/environment.inc.php')"/>
 
         <echo>test directory : test/${td}</echo>
         <echo>test target : ${tt}</echo>
-        <phpunit2 haltonfailure="false" haltonerror="false">
+        <phpunit3 haltonfailure="false" haltonerror="false">
             <formatter type="plain" usefile="false"/>
             <batchtest>
                 <fileset dir="test/${td}">
                     <include name="${tt}"/>
                 </fileset>
             </batchtest>
-        </phpunit2>
+        </phpunit3>
     </target>
 </project>

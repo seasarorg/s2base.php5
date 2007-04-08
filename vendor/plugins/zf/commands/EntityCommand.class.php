@@ -226,7 +226,7 @@ class EntityCommand implements S2Base_GenerateCommand {
         }
         $this->cols = self::getColumnsFromTables($dbms, $this->tableNames);
 
-        $this->entityClassName = ucfirst(strtolower($this->tableName)) . S2DaoSkelConst::BeanName;
+        $this->entityClassName = ucfirst(EntityCommand::getPropertyNameFromCol($this->tableName)) . S2DaoSkelConst::BeanName;
         $this->extendsEntityClassName = "none";
 
         $entityClassNameTmp = S2Base_StdinManager::getValue("entity class name ? [{$this->entityClassName}] : ");

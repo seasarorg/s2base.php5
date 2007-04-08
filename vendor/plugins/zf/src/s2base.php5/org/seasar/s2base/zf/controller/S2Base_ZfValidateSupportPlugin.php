@@ -56,16 +56,28 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
     private $validators = array();
     private $validateFactories = array();
 
-    public static function hasError(Zend_Controller_Request_Abstract $request) {
+    public static function hasError(Zend_Controller_Request_Abstract $request, $paramName = null) {
         if ($request->has(self::ERR_KEY)) {
-            return $request->getParam(self::ERR_KEY);
+            if ($paramName === null) {
+                return $request->getParam(self::ERR_KEY);
+            } else {
+                $errors = $request->getParam(self::ERRORS_KEY);
+                return isset($errors[$paramName]);
+            }
         }
         return false;
     }
 
-    public static function getErrors(Zend_Controller_Request_Abstract $request) {
+    public static function getErrors(Zend_Controller_Request_Abstract $request, $paramName = null) {
         if ($request->has(self::ERRORS_KEY)) {
-            return $request->getParam(self::ERRORS_KEY);
+            if ($paramName === null) {
+                return $request->getParam(self::ERRORS_KEY);
+            } else {
+                $errors = $request->getParam(self::ERRORS_KEY);
+                if (isset($errors[$paramName])) {
+                    return $errors[$paramName];
+                }
+            }
         }
         return array();
     }
@@ -83,7 +95,7 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
     }
 
     public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {
-        $moduleName = S2Base_ZfDispatcherSupportPlugin::getModuleName($request);
+        $moduleName = $request->getModuleName();
         $controllerName = $request->getControllerName();
         $actionName = $request->getActionName();
 
@@ -111,16 +123,21 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
                 $validator = $this->getValidatorInstance($valKey, $paramConfig, $paramName);
                 $paramValue = $request->getParam($paramName);
                 if (!$validator->isValid($paramValue)){
+                    if($paramConfig->exception != null) {
+                        throw new S2Base_ZfException($paramConfig->exception);
+                    }
+
                     if ($paramConfig->$valKey !== null and $paramConfig->$valKey->msg !== null) {
                         $msg = $paramConfig->$valKey->msg;
                     } else { 
                         $msg = implode('. ', $validator->getMessages());
                     }
-                    $errors[$paramName] = array('value' => $paramValue, 'msg' => $msg);
+                    $errors[$paramName] = array('value'   => $paramValue,
+                                                'msg'     => $msg,
+                                                'pre_mod' => $moduleName,
+                                                'pre_ctl' => $controllerName,
+                                                'pre_act' => $actionName);
 
-                    if($paramConfig->exception != null) {
-                        throw new S2Base_ZfException($paramConfig->exception);
-                    }
                     if($paramConfig->module != null) {
                         $request->setModuleName($paramConfig->module);
                     }
