@@ -127,6 +127,8 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         }
         $this->cols = EntityCommand::getColumnsFromTables($dbms, $this->tableNames);
 
+        $this->daoInterfaceName = ucfirst(EntityCommand::getPropertyNameFromCol($this->tableName)) . S2DaoSkelConst::DaoName;
+        $this->entityClassName  = ucfirst(EntityCommand::getPropertyNameFromCol($this->tableName)) . S2DaoSkelConst::BeanName;
         $this->extendsEntityClassName = "none";
 
         $daoInterfaceNameTmp = S2Base_StdinManager::getValue("dao interface name [{$this->daoInterfaceName}]? : ");

@@ -69,7 +69,7 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher_Standard {
 
         $action = $this->getActionMethod($request);
         $controller = $this->instantiateController($request,
-                                                   S2Base_ZfDispatcherSupportPlugin::getModuleName($request),
+                                                   $request->getModuleName(),
                                                    $className);
 
         /**
@@ -107,36 +107,34 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher_Standard {
     protected function getControllerFromS2Container($request, $moduleName, $controllerClassName){
         $controllerName = $request->getControllerName();
         $actionName = $request->getActionName();
-        $formatedActionName = $this->getActionMethod($request);
-        $actionDicon = S2BASE_PHP5_ROOT 
-                     . "/app/modules/$moduleName/$controllerName/dicon/$formatedActionName.dicon";
+        $formatedActionName = $this->formatName($actionName);
+        $actionMethodName = $this->getActionMethod($request);
+        $controllerDir = "/app/modules/$moduleName/$controllerName";
+        $actionDicon   = S2BASE_PHP5_ROOT . $controllerDir . "/dicon/$actionMethodName.dicon";
+        $moduleIncFile = S2BASE_PHP5_ROOT . $controllerDir . "/$controllerName.inc.php";
+        $actionIncFile = S2BASE_PHP5_ROOT . $controllerDir . "/$actionMethodName.inc.php";
 
-        $moduleIncFile = S2BASE_PHP5_ROOT 
-                     . "/app/modules/$moduleName/$controllerName/$controllerName.inc.php"; 
-        $actionIncFile = S2BASE_PHP5_ROOT 
-                     . "/app/modules/$moduleName/$controllerName/$actionName.inc.php"; 
         require_once($moduleIncFile);
-        if (file_exists($actionIncFile)) {
+        if (is_file($actionIncFile)) {
             require_once($actionIncFile);
         }
 
         $container = null;
-        if (file_exists($actionDicon)) {
+        $cd = null;
+        if (is_file($actionDicon)) {
             $container = S2ContainerFactory::create($actionDicon);
             $cd = $container->getComponentDef($controllerClassName);
-            if ($cd->getArgDefSize() == 0) {
-                $cd->addArgDef(new S2Container_ArgDefImpl($request));
-                $cd->addArgDef(new S2Container_ArgDefImpl($this->getResponse()));
-                $cd->addArgDef(new S2Container_ArgDefImpl($this->getParams()));
-            }
         } else {
             $container = new S2ContainerImpl();
             $container->includeChild(S2ContainerFactory::create(S2BASE_PHP5_ZF_APP_DICON));
             $cd = new S2Container_ComponentDefImpl($controllerClassName);
+            $container->register($cd);
+        }
+
+        if ($cd->getArgDefSize() == 0) {
             $cd->addArgDef(new S2Container_ArgDefImpl($request));
             $cd->addArgDef(new S2Container_ArgDefImpl($this->getResponse()));
             $cd->addArgDef(new S2Container_ArgDefImpl($this->getParams()));
-            $container->register($cd);
         }
 
         return $container->getComponent($controllerClassName);
