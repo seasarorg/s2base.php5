@@ -56,8 +56,17 @@
     <font size="-2">
     <ul>
         <li><a href="withZf-setup.html">セットアップ</a></li>
+        <li>Zend Framework との連携
+          <ul>
+              <li><a href="#dir">プロジェクトのディレクトリ構成</a></li>
+              <li><a href="#info">S2Base_Zf の留意点</a></li>
+              <li><a href="#controller">Zend_Controller との連携</a></li>
+              <li><a href="#view">ビュークラスの選択</a></li>
+              <li><a href="#validate">リクエストの検証</a></li>
+          </ul>
+        </li>
+        <li><a href="withZf-quickstart.html">クイックスタート</a></li>
         <li><a href="withZf-cmdRef.html">コマンドリファレンス</a></li>
-        <li>Zend Framework との連携</li>
     </ul>
     </font>
 </li>
@@ -111,7 +120,7 @@
 <div id="article">
 
 <div class="section">
-<h2 id="h02"><a name="info">プロジェクトのディレクトリ構成</a></h2>
+<h2 id="h02"><a name="dir">プロジェクトのディレクトリ構成</a></h2>
 <p>
 </p>
 　s2base コマンドに第二引数 zf を付けて実行すると、次のようなプロジェクトディレクトリが生成されます。
@@ -169,13 +178,16 @@ s2base.php5 プロジェクトディレクトリ
 <li>モジュール名には、[_a-zA-Z0-9] が使用できます。</li>
 <li>コントローラ名には、[a-zA-Z0-9] が使用できます。</li>
 <li>アクション名には、[_a-zA-Z0-9.-] が使用できます。</li>
-<li>コントローラクラスの継承について</li>
+<li>
+コントローラクラスの継承について<br>
+実行されるアクションメソッドが実装されているコントローラクラスに関わらす、コントローラディレクトリは、リクエストされたコントローラ名になります。
+</li>
 </ul>
 </div>
 <br>
 
 <div class="section">
-<h2 id="h02"><a name="contorller">Zend_Controller との連携</a></h2>
+<h2 id="h02"><a name="controller">Zend_Controller との連携</a></h2>
 
 <h3>処理の流れ</h3>
 <a href="images/s2base_zf_system.png"><img src="images/s2base_zf_system.png" width="600"/></a>
@@ -185,13 +197,27 @@ s2base.php5 プロジェクトディレクトリ
 また、Zend_Controller のプラグインの機能を用いて、ディスパッチャとリクエストバリデーションのサポートプラグインを組み込んでいます。
 </p>
 <ul>
-<li>S2Base_ZfDispatcher</li>
-<li>S2Base_ZfDispatcherSupportPlugin</li>
-<li>S2Base_ZfValidateSupportPlugin</li>
+<li>
+S2Base_ZfDispatcher<br>
+Zend_Controller_Dispatcher_Standard を継承したディスパッチャクラスです。dispatchメソッドをオーバーライドしており、アクションコントローラの生成に S2Container を使用します。
+</li>
+<li>
+S2Base_ZfDispatcherSupportPlugin<br>
+S2Base_ZfDispatcher クラスとあわせて、S2Base_Zf 用のディスパッチ処理を行います。<br>
+　・routeStartup メソッドで、アクションコントローラディレクトリを設定します。<br>
+　・routeShutdown メソッドで、モジュール名、コントローラ名、アクション名の検証を行います。
+</li>
+<li>S2Base_ZfValidateSupportPlugin <br>
+dispatchLoopStartup メソッドで、リクエスト検証を行います。
+</li>
 <li>S2Base_ZfView
   <ul>
-  <li>S2Base_ZfSmartyView</li>
-  <li>S2Base_ZfStandardView</li>
+  <li>S2Base_ZfSmartyView<br>
+      <a href="http://smarty.php.net/">Smarty</a> を継承し、Zend_View_Interface を実装するクラスです。デフォルトで使用されます。
+  </li>
+  <li>S2Base_ZfStandardView<br>
+      Zend_View を継承して、いくつかの機能を追加したビュークラスです。<a href="#view">ビュークラスの選択</a>を参照下さい。
+  </li>
   </ul>
 </li>
 </ul>
@@ -237,16 +263,67 @@ z.php では、Zend_Controller を起動するための初期設定を行いま�
 　S2Base_Zf では、ビューのインスタンスはアクションコントローラの view プロパティに設定されています。デフォルトでは、ビューに Smarty を使用します。
 ビューに使用するクラスの切り替えについては、「<a href="#view">ビュークラスの選択</a>」を参照下さい。
 
-<h4>postDispatch での render</h4>
+<h4>アクションコントローラ::postDispatch メソッドでの render</h4>
+<p>
+　<a href="withZf-cmdRef.html#module">module &amp controller</a> コマンドで生成されるアクションコントローラクラスでは、postDispatch メソッドで render メソッドを実行しています。引数にアクション名を渡しており、デフォルトでは、アクション名のテンプレートファイルが使用されます。
+</p>
+<pre>
+class IndexController extends Zend_Controller_Action {
+    ・・・
+    public function indexAction (){
+        $this->view->assign('message', 'Hello World');   &lt;-- テンプレートファイルは index.html
+    }
+    ・・・
+}
+</pre>
 
 <h4>テンプレートファイルの設定</h4>
+<p>
+　上記のように、デフォルトではアクション名のテンプレートファイルが使用されます。任意のテンプレートファイルを使用する場合は、ビュークラスの setTpl メソッドで設定します。
+</p>
+<pre>
+class IndexController extends Zend_Controller_Action {
+    ・・・
+    public function indexAction (){
+        $this->view->assign('message', 'Hello World');
+        $this->view->setTpl('top.html');   &lt;-- テンプレートファイルは top.html
+    }
+    ・・・
+}
+</pre>
 
 <h4>レイアウトの設定</h4>
+<p>
+　レイアウトファイルの設定は、S2BASE_PHP5_LAYOUT 定数を定義するか、ビュークラスの setLayout メソッドを用いて直接設定します。レイアウトが設定されている場合は、$content_for_layout 変数に元のアクション用テンプレートファイルが設定されます。
+</p>
+<pre>
+define('S2BASE_PHP5_LAYOUT', 'file:' . S2BASE_PHP5_ROOT . '/app/commons/view/right_menu_layout.html');
+class IndexController extends Zend_Controller_Action {
+    ・・・
+    public function rightMenuAction (){
+        $this->view->assign('message', 'Hello World');   &lt;-- 右メニューレイアウトで表示
+    }
+
+    public function leftMenuAction (){
+        $this->view->assign('message', 'Hello World');   &lt;-- 左メニューレイアウトで表示
+        $this->view->setLayout('file:' . S2BASE_PHP5_ROOT . '/app/commons/view/left_menu_layout.html');
+    }
+    ・・・
+}
+</pre>
 
 <h4>setRendered メソッド</h4>
+<p>
+　S2Base_Zf のビュークラスでは、rendered プロパティでレンダリング処理済みかどうかを管理しています。ビュークラスの render メソッドはレンダリング処理済みの場合 ( rendered プロパティが true ) はレンダリングを行いません。rendered プロパティの設定は、ビュークラスの setRendered メソッドで行います。
+</p>
+<pre>
+    public static function setRendered($value = true);
+</pre>
+
 
 <h3>Zend_Db のセットアップ</h3>
 <p>
+　S2Base_Zf では、<a href="withZf-cmdRef.html#model">model コマンド</a>で、Zend_Db_Table_Abstract を継承したモデルクラスを生成します。<a href="http://framework.zend.com/manual/ja/zend.db.table.html#zend.db.table.constructing">データベースアダプタの設定</a>は、S2Base_ZfDb::setDefaultPdoAdapter メソッドで、デフォルトのデータベースアダプタを設定します。S2Base_ZfDb::setDefaultPdoAdapter メソッド は、vendor/plugins/zf/config/environment.inc.php ファイルで実行されます。また、DSN 値は、pdo.dicon の dataSrouce コンポーネントに設定されている値が使用されます。
 </p>
 
 <h3>設定ファイル</h3>
@@ -299,8 +376,115 @@ S2Base_Zf 固有設定ファイル。読み込まれるタイミングは、上�
 <p>
 </p>
 <h3>設定ファイル</h3>
+<p>
+　リクエストのバリデーションを行う設定ファイルは、action コマンドや goya コマンドを実施した際に、コントローラディレクトリの validate ディレクトリに 「 アクション名.ini 」として生成されています。設定ファイルは、<a href="http://framework.zend.com/manual/ja/zend.config.adapters.ini.html">Zend_Config_Ini クラス</a>を用いて読み込まれます。
+</p>
+
+<h4>設定ファイルの例</h4>
+<pre>
+[default]                      &lt;--- 共通設定用セクション
+action = "error"
+
+[id : default]                 &lt;--- 各リクエストパラメータ用セクション
+validate = "int,regex"         &lt;--- 検証タイプをカンマ区切りで指定
+regex.pattern = "/^\d{1,8}$/"  &lt;--- 検証タイプ名をprefixとして各検証タイプに必要な項目を設定
+
+[name : default]
+validate = "alnum"
+alnum.msg = "invalid name"
+</pre>
+
+default セクションは共通設定用のセクションです。default セクション以外のセクションは、各リクエストパラメータ用のセクションになり、セクション名にリクエストパラメータ名を使用します。また、defaul セクションを継承します。
+
+<h4>検証タイプ</h4>
+<p>
+　デフォルトで用意されている検証タイプは次になります。それぞれ、Zend_Validate_*** クラスが使用されます。
+</p>
+
+<table class="list">
+<tbody>
+<tr><th>検証タイプ</th><th>検証クラス</th><th colspan="2">設定項目</th><tr>
+<tr><td>alnum</td><td>Zend_Validate_Alnum</td><td>alnum.msg</td><td>検証が失敗した場合のメッセージ</td></tr>
+<tr><td>alpha</td><td>Zend_Validate_Alpha</td><td>alpha.msg</td><td>検証が失敗した場合のメッセージ</td></tr>
+<tr><td>date</td><td>Zend_Validate_Date</td><td>date.msg</td><td>検証が失敗した場合のメッセージ</td></tr>
+<tr><td>float</td><td>Zend_Validate_Float</td><td>float.msg</td><td>検証が失敗した場合のメッセージ</td></tr>
+<tr><td>int</td><td>Zend_Validate_Int</td><td>int.msg</td><td>検証が失敗した場合のメッセージ</td></tr>
+<tr><td>ip</td><td>Zend_Validate_Ip</td><td>ip.msg</td><td>検証が失敗した場合のメッセージ</td></tr>
+<tr><td valign="top">regex</td><td valign="top">Zend_Validate_Regex</td><td valign="top">regex.msg <br>regex.pattern </td><td>検証が失敗した場合のメッセージ<br>検証に使用するパターン</td></tr>
+</tbody>
+</table>
+
 <h3>エラーの検知</h3>
+<p>　リクエストの検証を追加した後に、アクションメソッド内でリクエスト検証で問題が発生したかどうかを確認する場合は、S2Base_ZfValidateSupportPluginクラスの hasError メソッド、getErrors メソッドが使用できます。</p>
+<pre>
+public static function hasError(Zend_Controller_Request_Abstract $request, $paramName = null);
+</pre>
+<p>　リクエストのインスタンスを引数にとります。$paramName が指定されている場合は、そのリクエストパラメータで問題が発生したかどうかをしらべます。
+</p>
+
+<pre>
+public static function getErrors(Zend_Controller_Request_Abstract $request, $paramName = null);
+</pre>
+
+<p>　リクエストのインスタンスを引数にとります。$paramName が指定されている場合は、そのリクエストパラメータで発生した検証エラー情報を返します。検証エラーの情報は次のような配列で取得します。( getErrors メソッドの戻り値 )
+</p>
+<pre>
+    配列[パラメータ名] = 配列('value'   => リクエスト値,
+                              'msg'     => エラーメッセージ,
+                              'pre_mod' => 元のモジュール名,
+                              'pre_ctl' => 元のコントローラ名,
+                              'pre_act' => 元のアクション名);
+</pre>
+
+<h3>ビューでの表示</h3>
+<p>　S2Base_ZfSmartyView と S2Base_ZfStandardView では、$errors['validate'] 変数に検証エラーが保存されています。次のようにテンプレート内で使用できます。</p>
+
+<pre>
+&lt;font color="red"&gt;
+  {foreach from=$errors.validate item=val key=key}
+    {$key|escape} : {$val.msg|escape}
+  {/foreach}
+&lt;/font&gt;
+</pre>
+
 <h3>カスタムバリデーションを使用する</h3>
+<p>　独自の検証タイプを用意する場合は次の2つのクラスを作成し、スタートスクリプト( z.php )で S2Base_ZfValidateSupportPlugin に登録します。</p>
+　・ <a href="http://framework.zend.com/fisheye/browse/Zend_Framework/trunk/library/Zend/Validate/Interface.php">Zend_Validate_Interface</a> を実装するクラス<br>
+　・ <a href="https://www.seasar.org/svn/sandbox/s2base.php5/trunk/s2base.php5/vendor/plugins/zf/src/s2base.php5/org/seasar/s2base/zf/validate/factory/S2Base_ZfValidateFactory.php">S2Base_ZfValidateFactory</a> を実装するクラス<br>
+
+<p>S2Base_ZfValidateFactory を実装するクラスは、getId メソッドと getInstance メソッドを実装します。
+getInstance メソッドは、検証設定ファイルの情報 ( Zend_Config ) を引数にとり、その情報を用いて検証クラスを生成します。
+</p>
+
+<h4>検証タイプ regex の場合</h4>
+　デフォルトで用意されている検証タイプ regex は、カスタムバリデーションとして実装されています。
+<ul>
+<li>Zend_Validate_Interface を実装するクラス : <a href="http://framework.zend.com/fisheye/browse/Zend_Framework/trunk/library/Zend/Validate/Regex.php">Zend_Validate_Regex</a></li>
+<li>S2Base_ZfValidateFactory を実装するクラス : <a href="https://www.seasar.org/svn/sandbox/s2base.php5/trunk/s2base.php5/vendor/plugins/zf/src/s2base.php5/org/seasar/s2base/zf/validate/factory/impl/S2Base_ZfRegexValidateFactory.php">S2Base_ZfRegexValidateFactory</a>
+</li>
+<li>検証設定ファイルのフォーマット<br>
+<pre>
+・・・
+[id : default]
+validate = "regex"
+regex.msg = "regex validate error."
+regex.pattern = "/\w+/s"
+・・・
+</pre>
+</li>
+<li>スタートスクリプト z.php で登録<br>
+<pre>
+・・・
+// リクエストバリデーションをサポートするプラグインを登録
+// Zend_Validate_Regex を使用するカスタムバリデーションを追加しています。
+$validatePlugin = new S2Base_ZfValidateSupportPlugin();
+$validatePlugin-&gt;addValidateFactory(<b>new S2Base_ZfRegexValidateFactory()</b>);
+$fc-&gt;registerPlugin($validatePlugin);
+・・・
+</pre>
+</li>
+</ul>
+
 </div>
 <br>
 
