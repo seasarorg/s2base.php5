@@ -47,7 +47,7 @@ class S2Base_ZfDb {
             $password = $cd->getPropertyDef('password')->getValue();
         }
         $dsn = $cd->getPropertyDef('dsn')->getValue();
-        list($pdoType, $pdoParams)= preg_split('/:/', $dsn, 0);
+        list($pdoType, $pdoParams)= preg_split('/:/', $dsn, 2);
         $pdoType = 'PDO_' . $pdoType;
         $params = array('username' => $username, 'password' => $password);
         if (preg_match('/;/', $pdoParams)) {

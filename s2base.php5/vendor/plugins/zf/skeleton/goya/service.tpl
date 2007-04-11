@@ -7,7 +7,7 @@ class @@CLASS_NAME@@
 
     public function getWithLimit($limit) {
         $arrayobject = $this->@@DAO_PROPERTY@@->findAllList();
-        if ($limit > $arrayobject->count()) {
+        if ($limit < 0 or $limit > $arrayobject->count()) {
             return $arrayobject;
         }
         $dtos = new ArrayObject();
