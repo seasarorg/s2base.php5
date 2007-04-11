@@ -103,16 +103,23 @@ exit;
  * @param string $projectType default|smarty|zf
  */
 function smartyProjectHandler($s2baseDir, $projectDir, $projectType) {
-    $excludes = array('/dummy$/');
-    $excludes[] = '/plugins.maple$/';
-    $excludes[] = '/plugins.agavi$/';
-    $excludes[] = '/plugins.symfony$/';
-    $excludes[] = '/plugins.zf$/';
-    $excludes[] = '/public.z\.php$/';
-    $excludes[] = '/public.htaccess\.sample$/';
-    $excludes[] = '/app.commons.dicon.zf\.dicon$/';
+    $includePattern = array('/project.build\.xml$/');
+    $includePattern[] = '/project.app/';
+    $includePattern[] = '/project.config/';
+    $includePattern[] = '/project.lib/';
+    $includePattern[] = '/project.public$/';
+    $includePattern[] = '/project.public.images/';
+    $includePattern[] = '/project.public.css/';
+    $includePattern[] = '/project.public.d\.php$/';
+    $includePattern[] = '/project.test/';
+    $includePattern[] = '/project.var/';
+    $includePattern[] = '/project.vendor$/';
+    $includePattern[] = '/project.vendor.plugins$/';
+    $includePattern[] = '/project.vendor.plugins.smarty/';
+
+    $excludePattern = array('/dummy$/');
     $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
-    dircopy($srcDir,$projectDir,$excludes);
+    dircopy($srcDir, $projectDir, $includePattern, $excludePattern);
     modifyBuildXmlFile($projectDir, $projectType);
 }
 
@@ -122,14 +129,48 @@ function smartyProjectHandler($s2baseDir, $projectDir, $projectType) {
  * @param string $projectType default|smarty|zf
  */
 function zfProjectHandler($s2baseDir, $projectDir, $projectType) {
-    $excludes = array('/dummy$/');
-    $excludes[] = '/plugins.maple$/';
-    $excludes[] = '/plugins.agavi$/';
-    $excludes[] = '/plugins.symfony$/';
-    $excludes[] = '/plugins.smarty$/';
-    $excludes[] = '/public.d\.php$/';
+    $includePattern = array('/project.build\.xml$/');
+    $includePattern[] = '/project.app$/';
+    $includePattern[] = '/project.app.commands/';
+    $includePattern[] = '/project.app.commons/';
+    $includePattern[] = '/project.app.modules/';
+    $includePattern[] = '/project.app.skeleton/';
+    $includePattern[] = '/project.config/';
+    $includePattern[] = '/project.lib/';
+    $includePattern[] = '/project.public$/';
+    $includePattern[] = '/project.public.images/';
+    $includePattern[] = '/project.public.css/';
+    $includePattern[] = '/project.public.htaccess\.sample$/';
+    $includePattern[] = '/project.public.z\.php$/';
+    $includePattern[] = '/project.test/';
+    $includePattern[] = '/project.var/';
+    $includePattern[] = '/project.vendor$/';
+    $includePattern[] = '/project.vendor.plugins$/';
+    $includePattern[] = '/project.vendor.plugins.zf/';
+
+    $excludePattern = array('/dummy$/');
+    $excludePattern[] = '/project.app.commands.CmdCommand\./';
+    $excludePattern[] = '/project.app.commands.DaoCommand\./';
+    $excludePattern[] = '/project.app.commands.DiconCommand\./';
+    $excludePattern[] = '/project.app.commands.EntityCommand\./';
+    $excludePattern[] = '/project.app.commands.GoyaCommand\./';
+    $excludePattern[] = '/project.app.commands.InterceptorCommand\./';
+    $excludePattern[] = '/project.app.commands.ModuleCommand\./';
+    $excludePattern[] = '/project.app.commands.ServiceCommand\./';
+    $excludePattern[] = '/project.app.skeleton.command$/';
+    $excludePattern[] = '/project.app.skeleton.dao$/';
+    $excludePattern[] = '/project.app.skeleton.dicon$/';
+    $excludePattern[] = '/project.app.skeleton.entity$/';
+    $excludePattern[] = '/project.app.skeleton.goya$/';
+    $excludePattern[] = '/project.app.skeleton.interceptor$/';
+    $excludePattern[] = '/project.app.skeleton.module$/';
+    $excludePattern[] = '/project.app.skeleton.service$/';
+    $excludePattern[] = '/project.vendor.plugins.zf.src/';
+    $excludePattern[] = '/project.vendor.plugins.zf.test/';
+    $excludePattern[] = '/project.vendor.plugins.zf.build\.xml$/';
+
     $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
-    dircopy($srcDir,$projectDir,$excludes);
+    dircopy($srcDir, $projectDir, $includePattern, $excludePattern);
     modifyBuildXmlFile($projectDir, $projectType);
     modifyZfEnvFile($projectDir, $projectType);
     renameZfHtaccess($projectDir);
@@ -141,29 +182,33 @@ function zfProjectHandler($s2baseDir, $projectDir, $projectType) {
  * @param string $projectType default|smarty|zf
  */
 function defaultProjectHandler($s2baseDir, $projectDir, $projectType) {
-    $excludes = array('/dummy$/');
+    $includePattern = array('/project.build\.xml$/');
+    $includePattern[] = '/project.app/';
+    $includePattern[] = '/project.config/';
+    $includePattern[] = '/project.lib/';
+    $includePattern[] = '/project.test/';
+    $includePattern[] = '/project.var$/';
+    $includePattern[] = '/project.var.logs/';
+    $includePattern[] = '/project.vendor$/';
+    $includePattern[] = '/project.vendor.plugins$/';
+    $includePattern[] = '/project.vendor.plugins.agavi/';
+    $includePattern[] = '/project.vendor.plugins.maple/';
+    $includePattern[] = '/project.vendor.plugins.symfony/';
 
-    // exclude smarty plugin
-    $excludes[] = '/var.smarty$/';
-    $excludes[] = '/var.session$/';
-    $excludes[] = '/plugins.smarty$/';
-    $excludes[] = '/public$/';
-    $excludes[] = '/commons.view$/';
-
-    // exclude zf plugini
-    $excludes[] = '/plugins.zf$/';
-    $excludes[] = '/app.commons.dicon.zf\.dicon$/';
+    $excludePattern = array('/dummy$/');
+    $excludePattern[] = '/project.app.commons.view/';
 
     $srcDir = $s2baseDir . DIRECTORY_SEPARATOR . 'project';
-    dircopy($srcDir,$projectDir,$excludes);
+    dircopy($srcDir, $projectDir, $includePattern, $excludePattern);
 }
 
 /**
  * @param string $src
  * @param string $dest
- * @param array  $excludes
+ * @param array  $includePattern
+ * @param array  $excludePattern
  */
-function dircopy($src,$dest,$excludes) {
+function dircopy($src,$dest,$includePattern = array(),$excludePattern = array()) {
     $items = scandir($src);
     if ($items === false) {
         print "[ERROR] scan directory [$src] failed." . PHP_EOL;
@@ -178,13 +223,7 @@ function dircopy($src,$dest,$excludes) {
         $srcItem  = $src  . DIRECTORY_SEPARATOR . $item;
         $destItem = $dest . DIRECTORY_SEPARATOR . $item;
 
-        $isExclude = false;
-        foreach ($excludes as $key) {
-            if (preg_match($key, $srcItem)){ 
-                $isExclude = true;
-            }
-        }
-        if ($isExclude) {
+        if (!isIncludeFile($srcItem, $includePattern, $excludePattern)) {
             continue;
         }
 
@@ -199,7 +238,7 @@ function dircopy($src,$dest,$excludes) {
             else {
                 print "[INFO ] create : $destItem" . PHP_EOL;
             }
-            dircopy($srcItem,$destItem,$excludes);
+            dircopy($srcItem,$destItem,$includePattern, $excludePattern);
         }
         else if (is_file($srcItem)) {
             if (is_file($destItem)) {
@@ -215,6 +254,33 @@ function dircopy($src,$dest,$excludes) {
             exit;
         }
     }
+}
+
+/**
+ * @param string $item
+ * @param array  $includePattern
+ * @param array  $excludePattern
+ */
+function isIncludeFile($item, $includePattern, $excludePattern) {
+
+    $hit = false;
+    foreach ($includePattern as $pattern) {
+        if (preg_match($pattern, $item)){ 
+            $hit = true;
+        }
+    }
+
+    if (count($includePattern) > 0 and !$hit) {
+        return false;
+    }
+
+    foreach ($excludePattern as $pattern) {
+        if (preg_match($pattern, $item)){ 
+            return false;
+        }
+    }
+
+    return true;
 }
 
 /**
@@ -291,6 +357,12 @@ function renameZfHtaccess($projectDir) {
         print "[ERROR] file not found [$htFile] " . PHP_EOL;
         exit;
     }
+
+    if (file_exists($newFile)) {
+        print "[INFO ] file exist. ignore. [$newFile] " . PHP_EOL;
+        return;
+    }
+
     $result = rename($htFile, $newFile);
     if ($result === false) {
         print "[ERROR] could not rename file [$htFile to $newFile] " . PHP_EOL;
