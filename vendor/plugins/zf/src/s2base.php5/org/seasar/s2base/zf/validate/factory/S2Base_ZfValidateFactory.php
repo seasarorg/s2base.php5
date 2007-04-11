@@ -33,7 +33,17 @@
  * @author     klove
  */
 interface S2Base_ZfValidateFactory {
-    public function getInstance($paramName, Zend_Config $config);
+
+    /**
+     * @return string 検証タイプ
+     */
     public function getId();
+
+    /**
+     * @param $paramName string リクエストパラメータ名
+     * @param $config Zend_Config リクエストパラメータセクションのコンフィグ情報
+     * @return Zend_Validate_Interface 検証クラスのインスタンス
+     */
+    public function getInstance($paramName, Zend_Config $config);
 }
 ?>

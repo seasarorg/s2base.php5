@@ -37,10 +37,16 @@ class S2Base_ZfRegexValidateFactory implements S2Base_ZfValidateFactory {
     private $instance = null;
     private $validateClassName = 'Zend_Validate_Regex';
 
+    /**
+     * @see S2Base_ZfValidateFactory::getId()
+     */
     public function getId() {
         return self::ID;
     }
 
+    /**
+     * @see S2Base_ZfValidateFactory::getInstance()
+     */
     public function getInstance($paramName, Zend_Config $config) {
         $valKey = self::ID;
         if ($config->$valKey === null or $config->$valKey->pattern === null) {
