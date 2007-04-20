@@ -3,7 +3,7 @@
 "http://www.seasar.org/dtd/components.dtd">
 <components namespace="pdo">
     <component name="dataSource" class="S2Container_PDODataSource">
-        <property name="dsn">"sqlite:/path/to/s2con.db"</property>
+        <property name="dsn">"sqlite:c:/path/to/s2con.db"</property>
         <property name="option">
             array(PDO::ATTR_ORACLE_NULLS => PDO::NULL_EMPTY_STRING,
                   PDO::ATTR_AUTOCOMMIT => false);

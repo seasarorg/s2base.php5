@@ -15,6 +15,7 @@
 
     <target name="clean" depends="init">
         <delete dir="${project.classes.dir}"/>
+        <delete file="${project.basedir}/s2base_zf.core.php"/>
     </target>
 
     <target name="prepare" depends="init">
