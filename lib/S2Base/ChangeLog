@@ -1,7 +1,13 @@
 ﻿
-2006-12-07 S2Base.PHP5-1.0.2
+2007-04-20 S2Base.PHP5-1.0.2
 
-================ S2Base.PHP5-1.0.1 更新履歴 ===================
+	* add: ZendFramework との連携を追加しました。(withZf) 
+	* modify: package org.seasar.s2base.web.impl
+	S2Base_RequestImplクラスに hasParam メソッドを追加しました。
+
+================ S2Base.PHP5-1.0.2 更新履歴 ===================
+
+2006-12-07 S2Base.PHP5-1.0.2
 
 	* modify: config/environment.inc.php
 	定数定義でdefined確認を行うようにしました。
