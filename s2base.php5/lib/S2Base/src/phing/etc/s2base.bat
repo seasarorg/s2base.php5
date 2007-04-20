@@ -1,6 +1,6 @@
 @ECHO OFF
 REM +----------------------------------------------------------------------+
-REM | Copyright 2005-2006 the Seasar Foundation and the Others.            |
+REM | Copyright 2005-2007 the Seasar Foundation and the Others.            |
 REM +----------------------------------------------------------------------+
 REM | Licensed under the Apache License, Version 2.0 (the "License");      |
 REM | you may not use this file except in compliance with the License.     |
