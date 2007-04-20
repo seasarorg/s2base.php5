@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------+
 // | PHP version 5                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright 2005-2006 the Seasar Foundation and the Others.            |
+// | Copyright 2005-2007 the Seasar Foundation and the Others.            |
 // +----------------------------------------------------------------------+
 // | Licensed under the Apache License, Version 2.0 (the "License");      |
 // | you may not use this file except in compliance with the License.     |
@@ -24,7 +24,7 @@
 /**
  * S2Base.PHP5 with Zf
  * 
- * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @copyright  2005-2007 the Seasar Foundation and the Others.
  * @license    http://www.apache.org/licenses/LICENSE-2.0
  * @package    org.seasar.s2base.zf.validate.vactory.impl
  * @author     klove
