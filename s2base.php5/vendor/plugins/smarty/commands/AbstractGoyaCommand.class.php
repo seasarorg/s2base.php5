@@ -1,5 +1,4 @@
 <?php
-require_once('AbstractGoyaCommand.class.php');
 abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
 
     protected $moduleName;
