@@ -29,7 +29,7 @@
  * @package    org.seasar.s2base.zf.db
  * @author     klove
  */
-class S2Base_ZfDbTest extends PHPUnit_Framework_TestCase {
+class S2Base_ZfDbTest extends PHPUnit2_Framework_TestCase {
     public function __construct($name) {
         parent::__construct($name);
     }

@@ -29,7 +29,7 @@
  * @package    org.seasar.s2base.zf.controller
  * @author     klove
  */
-class S2Base_ZfDispatcherSupportPluginTest extends PHPUnit_Framework_TestCase {
+class S2Base_ZfDispatcherSupportPluginTest extends PHPUnit2_Framework_TestCase {
     private $request = null;
     private $plugin  = null;
 

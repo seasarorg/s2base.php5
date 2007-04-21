@@ -40,13 +40,13 @@
 
         <echo>test directory : test/${td}</echo>
         <echo>test target : ${tt}</echo>
-        <phpunit3 haltonfailure="false" haltonerror="false">
+        <phpunit2 haltonfailure="false" haltonerror="false">
             <formatter type="plain" usefile="false"/>
             <batchtest>
                 <fileset dir="test/${td}">
                     <include name="${tt}"/>
                 </fileset>
             </batchtest>
-        </phpunit3>
+        </phpunit2>
     </target>
 </project>

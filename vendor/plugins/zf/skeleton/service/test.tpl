@@ -1,19 +1,19 @@
 <?php
-class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
+class @@CLASS_NAME@@ extends PHPUnit2_Framework_TestCase {
     private $module = "@@MODULE_NAME@@";
     private $controller = "@@CONTROLLER_NAME@@";
     private $container;
     private $service;
 
-    function __construct($name) {
+    public function __construct($name) {
         parent::__construct($name);
     }
 
-    function testA(){
+    public function testA(){
     }
 
-    function setUp(){
-        print __CLASS__ . "::{$this->getName()}\n";
+    public function setUp(){
+        print __CLASS__ . "::{$this->getName()}" . PHP_EOL;
         $controllerDir = S2BASE_PHP5_ROOT . "/app/modules/{$this->module}/{$this->controller}";
         $dicon = $controllerDir . "/dicon/@@SERVICE_CLASS@@" . S2BASE_PHP5_DICON_SUFFIX;
         include_once($controllerDir . "/{$this->controller}.inc.php");
@@ -22,7 +22,7 @@ class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
     }
 
     function tearDown() {
-        print "\n";
+        print PHP_EOL;
         $this->container = null;
         $this->service = null;
     }
