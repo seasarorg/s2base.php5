@@ -117,8 +117,6 @@
 <h3>S2Base.PHP5 のインストール</h3>
 <p>
 　<a href="setup.html">セットアップ</a>に従って S2Base.PHP5 をインストールして下さい。<br>
-　　・<a href="http://phing.info/trac/">phing</a> は バージョン 2.3.* をインストールして下さい。<br>
-　　・<a href="http://www.phpunit.de/">PHPUnit</a> は バージョン 3.0.* をインストールして下さい。<br>
 </p>
 
 <h3>Zend Framework のインストール</h3>
@@ -150,9 +148,17 @@ S2Base_Zf では、デフォルトで Apache が使用する <a href="http://fra
 </p>
 
 <h3>動作確認</h3>
-　s2base を PEARパッケージでインストールした場合は、s2base コマンドに 第2引数 zf を付加してプロジェクトディレクトリを作成します。
+<p>
+　s2base を PEARパッケージでインストールした場合は、s2base コマンドに 第2引数 zf を付加してプロジェクトディレクトリを作成します。</p>
 <pre>
 % s2base /path/to/project/dir zf
+</pre>
+
+<p>
+　s2base を フルパッケージでインストールした場合は、config/environment.inc.php で S2BASE_PHP5_CLASS_SUFFIX 定数に「.php」を指定します。</p>
+
+<pre>
+define('S2BASE_PHP5_CLASS_SUFFIX','.php');
 </pre>
 
 s2base.php5 ディレクトリにて phing コマンドを実行します。コマンドリストが表示されるとインストールが完了です。

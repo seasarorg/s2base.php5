@@ -163,7 +163,7 @@
 <h3>.htaccess の編集</h3>
 <p>
 　上記で作成したプロジェクトディレクトリの <u>/seasar.php/sample/start/public</u> ディレクトリを WEB サーバで
-公開します。今回は、WEB サーバに Apache を使用します。Base URLを「 /keijiban 」としたので、publicディレクトリにある .htaccess で RewriteBase を設定します。
+公開します。Base URLを「 /keijiban 」としたので、publicディレクトリにある .htaccess で RewriteBase を設定します。
 </p>
 
 <p>　　<u>/seasar.php/sample/start/public/.htaccess</u></p>
@@ -236,8 +236,8 @@ choice ? : 0
 <div class="section">
 <h2 id="h02"><a name="database">データベースのセットアップ</a></h2>
 <p>
-　データベースには Sqlite を使用します。次のような keijiban テーブルを作成します。作成ファイルは、
-プロジェクトディレクトリの var ディレクトリに保存します。
+　データベースには Sqlite を使用します。次のような keijiban テーブルを作成します。
+作成するデータベースファイルは、プロジェクトディレクトリの var ディレクトリに保存します。
 </p>
 
 <pre>
@@ -645,6 +645,7 @@ choice ? : 0
 　Goya コマンドにより <b>KeijibanDao</b>クラスファイルが コントローラディレクトリの dao ディレクトリに生成されています。
 KeijibanDaoクラスに <b>insert</b> メソッドを追加します。
 </p>
+<p>　　<u>app/modules/default/index/dao/KeijibanDao.php</u></p>
 <pre>
 interface <b>KeijibanDao</b> {
     const BEAN = "KeijibanEntity";
@@ -658,6 +659,9 @@ interface <b>KeijibanDao</b> {
 　Goya コマンドにより <b>InsertService</b>、<b>InsertServiceImpl</b>クラスファイルが コントローラディレクトリの service ディレクトリに生成されています。
 <b>insert</b> メソッドの定義と実装を追加します。また、デフォルトで getWithLimit メソッドが用意されていますが削除します。
 </p>
+<p>　　<u>app/modules/default/index/service/InsertService.php</u><br>
+　　<u>app/modules/default/index/service/InsertServiceImpl.php</u></p>
+
 <pre>
 interface <b>InsertService</b> {
     public function <b>insert</b>(KeijibanEntity $dto);
@@ -677,6 +681,7 @@ class <b>InsertServiceImpl</b>
 　Goya コマンドにより、<b>IndexController</b> クラスに <b>insertAction</b> メソッドが追加されています。insertAction メソッドでは、上記の <b>InsertServiceImpl</b> クラスを用いて
 データをデータベースに保存します。その後、トップページにリダイレクトします。
 </p>
+<p>　　<u>app/modules/default/IndexController.php</u></p>
 <pre>
 class <b>IndexController</b> extends Zend_Controller_Action {
     ・・・
@@ -716,8 +721,95 @@ class <b>IndexController</b> extends Zend_Controller_Action {
 <br>
 <div class="section">
 <h2 id="h02"><a name="point">ワンポイント</a></h2>
+
+<h3>keijiban テーブルの timestamp カラム</h3>
+<p>　keijiban テーブルの timestamp カラムは、S2Dao.PHP5 の<a href="http://s2dao.php5.seasar.org/reference.html#Timestamp">「Timestampによる排他制御」</a>
+の機能を利用してタイムスタンプを自動的に保存しています。
+</p>
+
 <h3>UnitTest の実行</h3>
+<p>　top アクションと insert アクションを Goya コマンドで生成した際に、それぞれの Dao と Service 用の UnitTest がテストディレクトリに作成されています。UnitTest の実行は次のように 
+phing コマンドにサブタスクオプション( -Dst=test )を指定して実行します。
+</p>
+<pre>
+% phing zf -Dst=test
+・・・
+project &gt; test:
+
+     [echo] test directory : test/
+     [echo] test target : **/*Test*.php
+KeijibanDaoTest::testA
+
+ [phpunit2] Testsuite: KeijibanDaoTest
+ [phpunit2] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.19843 sec
+InsertServiceImplTest::testA
+
+ [phpunit2] Testsuite: InsertServiceImplTest
+ [phpunit2] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.05006 sec
+TopServiceImplTest::testA
+
+ [phpunit2] Testsuite: TopServiceImplTest
+ [phpunit2] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.02700 sec
+
+・・・
+%
+</pre>
+
+<p>　KeijibanDaoTestクラスに次のようなメソッドを追加して、KeijibanDao の動作を確認できます。</p>
+
+<p>　　<u>test/modules/default/index/dao/KeijibanDaoTest.php</u></p>
+<pre>
+class KeijibanDaoTest extends PHPUnit2_Framework_TestCase {
+・・・
+    function testFindAllList() {
+        $dtos = $this-&gt;dao-&gt;findAllList();
+        foreach ($dtos as $dto) {
+            print $dto;
+        }
+    }
+・・・
+}
+</pre>
+<p>　テストターゲットオプション( -Dtt )を指定してテストを実行します。</p>
+
+<pre>
+% phing zf -Dst=test -Dtt=**/*Dao*
+・・・
+project &gt; test:
+
+     [echo] test directory : test/
+     [echo] test target : **/*Dao*
+KeijibanDaoTest::testFindAllList
+{id =&gt; 1, name =&gt; s2base_zf, comment =&gt; quick start document, timestamp =&gt; 2000-
+01-01 00:00:00}{id =&gt; 2, name =&gt; s2php5, comment =&gt; s2container.php5
+s2dao.php5, timestamp =&gt; 2007-01-01 00:00:00}
+ [phpunit2] Testsuite: KeijibanDaoTest
+ [phpunit2] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.17970 sec
+
+・・・
+%
+</pre>
+
 <h3>一覧表示のソート</h3>
+<p>　S2Dao.PHP5の<a href="http://s2dao.php5.seasar.org/reference.html#SQLfile">「SQLファイル」</a>を用いて、トップページの一覧を最新の項目順で表示してみます。次のような sql ファイルを作成します。
+</p>
+<p>　　<u>app/modules/default/index/dao/KeijibanDao_findAllList.sql</u></p>
+<pre>
+select * from keijiban order by timestamp desc
+</pre>
+
+<p>　再度、トップページを閲覧すると次のようにタイムスタンプの新しい順で一覧が表示されます。</p>
+<img src="images/s2base_zf_start_sort.png"/>
+<br>
+
+<p>　また、SQLファイルに LIMIT 句を追記して、一覧表示する件数を指定できます。</p>
+<pre>
+select * from keijiban order by timestamp desc limit 1
+</pre>
+<p>　再度、トップページを閲覧すると次のように 1 件だけ表示されます。
+</p>
+<img src="images/s2base_zf_start_limit.png"/>
+
 </div>
 
 
