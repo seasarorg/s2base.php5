@@ -137,7 +137,7 @@
 <h2 id="h02"><a name="download">ダウンロード</a></h2>
 
 <ul>
-<li><a href="">s2base_zf_quickstart.tar.gz</a></li>
+<li><a href="download/s2base_zf_quickstart.tar.gz">s2base_zf_quickstart.tar.gz</a></li>
 </ul>
 </div>
 
@@ -537,7 +537,6 @@ regex.pattern = "/^\w{1,10}$/"
 validate = "regex"
 regex.pattern = "/^.{1,100}$/s"
 </pre>
-handle パラメータは 1～10文字 までとし、comment パラメータは 1～100文字までとしています。
 検証に失敗した場合はトップページに遷移します。
 
 <h3>検証エラーの表示</h3>
@@ -553,7 +552,7 @@ handle パラメータは 1～10文字 までとし、comment パラメータは
 &lt;/font&gt;
 </pre>
 <p>
-　handle パラメータに「 Seasar.PHP 」と入力した場合は、ドットが含まれるため検証エラーとなり、次のような検証エラーメッセージが表示されます。
+　handle パラメータに「 Seasar.PHP 」と入力した場合は、次のような検証エラーメッセージが表示されます。
 </p>
 <img src="images/s2base_zf_start_validate.png"/>
 
@@ -649,7 +648,7 @@ KeijibanDaoクラスに <b>insert</b> メソッドを追加します。
 <pre>
 interface <b>KeijibanDao</b> {
     const BEAN = "KeijibanEntity";
-    public function findWithLimitList();
+    public function findAllList();
     public function <b>insert</b>(KeijibanEntity $entity);
 }
 </pre>
