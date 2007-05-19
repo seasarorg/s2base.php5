@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------+
 // | PHP version 5                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright 2005-2006 the Seasar Foundation and the Others.            |
+// | Copyright 2005-2007 the Seasar Foundation and the Others.            |
 // +----------------------------------------------------------------------+
 // | Licensed under the Apache License, Version 2.0 (the "License");      |
 // | you may not use this file except in compliance with the License.     |
@@ -27,7 +27,7 @@
 define('ROOT_DIR',dirname(dirname(dirname(dirname(dirname(__FILE__))))));
 require_once(ROOT_DIR . '/config/environment.inc.php');
 require_once(ROOT_DIR . '/vendor/plugins/smarty/config/environment.inc.php');
-
+require_once('PHPUnit2/Framework/TestCase.php');
 define('S2BASE_PHP5_REQUEST_MODULE_KEY','mod');
 define('S2BASE_PHP5_REQUEST_ACTION_KEY','act');
 define('S2BASE_PHP5_DEFAULT_MODULE_NAME','Default');

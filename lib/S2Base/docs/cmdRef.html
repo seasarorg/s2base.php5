@@ -1,55 +1,133 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html><head><!-- don't edit start --><title>Seasar - DI Container with AOP -</title><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="ja">
 <meta http-equiv="Content-Style-Type" content="text/css">
-<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen"><link href="seasar_p.css" type="text/css" rel="stylesheet" media="print"><script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script></head>
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, ã‚ªãƒ¼ãƒ—ãƒ³ã‚½ãƒ¼ã‚¹ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢, Java, ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯">
+<meta name="description" content="ç§ãŸã¡Seasarãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã¯ã‚ªãƒ¼ãƒ—ãƒ³ã‚½ãƒ¼ã‚¹ã¨ã„ã†ä»•çµ„ã¿ã®å…ƒã€é–‹ç™ºè€…ã®ã‚†ã¨ã‚Šã‚’å®Ÿç¾ã§ãã‚‹ãƒ—ãƒ­ãƒ€ã‚¯ãƒˆã®é–‹ç™ºã¨æä¾›ã‚’é€šã˜ã¦ã€ãƒ¦ãƒ¼ã‚¶ã¨é–‹ç™ºè€…ã¨ãŒå…±ã«å–œã³ã‚’åˆ†ã‹ã¡åˆãˆã‚‹ç’°å¢ƒå®Ÿç¾ã‚’ãŠæ‰‹ä¼ã„ã™ã‚‹ã“ã¨ã‚’ç›®æŒ‡ã—æ´»å‹•ã—ã¦ã„ã¾ã™ã€‚ ">
+<title>The Seasar Project - S2Base.PHP5</title>
 
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection">
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print"></head><body>
 
-<body onload="preload('ja')"><table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
-<td align="left" valign="top" width="780"><table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr><td colspan="7"><img src="images/top01_b.gif" alt="" height="5" width="780"></td></tr>
-<tr><td width="235"><img src="images/top02_b.gif" alt="Seasar" height="117" width="235"></td>
-<td colspan="3"><img src="images/top03.gif" alt="DI Container with AOP" height="117" width="289"></td>
-<td colspan="3"><img src="images/spacer.gif" alt="" height="117" width="256"></td>
-</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
-<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)" border="0" height="30" width="78"></a></td>
-<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)" border="0" height="30" width="101"></a></td>
-<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)" border="0" height="30" width="110"></a></td>
-<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)" border="0" height="30" width="113"></a></td>
-<td><img src="images/menu05_b_ja.gif" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)" border="0" height="30" width="109"></td>
-<td width="34"><img src="images/menu06.gif" alt="" height="30" width="34"></td></tr><tr>
-<td colspan="6"><img src="images/spacer.gif" alt="" height="19" width="545"></td></tr></tbody></table>
-<table class="white" border="0" cellpadding="0" cellspacing="0" width="780">
-<tbody><tr align="left" valign="top"><td width="18"><img src="images/spacer.gif" alt="" height="14" width="18"></td><td class="main" width="744">
-<!-- don't edit end -->
-<!-- document start -->
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo">
+<h1 id="h01" class="hide">The Seasar Project</h1>
+<a href="http://www.seasar.org/">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390">
+</a>
+</div>
+
+<div id="tool">
+</div>
+
+<div id="navi">
+<p><font size="-1"><a href="index.html">S2Base.PHP5 ãƒ›ãƒ¼ãƒ </a> &raquo; ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ &raquo; ã‚³ãƒãƒ³ãƒ‰ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹</font></p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>ãƒ¡ãƒ‹ãƒ¥ãƒ¼</h2>
+
+<h3>ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ</h3>
+<ul>
+<li><a href="setup.html">ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—</a></li>
+<li><a href="dir.html">ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªæ§‹æˆ</a></li>
+<li>ã‚³ãƒãƒ³ãƒ‰ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹
+    <font size="-2">
+    <ul>
+       <li><a href="#command">command ã‚³ãƒãƒ³ãƒ‰</a></li>
+       <li><a href="#dao">dao ã‚³ãƒãƒ³ãƒ‰</a></li>
+       <li><a href="#dicon">dicon ã‚³ãƒãƒ³ãƒ‰</a></li>
+       <li><a href="#entity">entity ã‚³ãƒãƒ³ãƒ‰</a></li>
+       <li><a href="#goya">goya ã‚³ãƒãƒ³ãƒ‰</a></li>
+       <li><a href="#interceptor">interceptor ã‚³ãƒãƒ³ãƒ‰</a></li>
+       <li><a href="#module">module ã‚³ãƒãƒ³ãƒ‰</a></li>
+       <li><a href="#service">service ã‚³ãƒãƒ³ãƒ‰</a></li>
+       <li><a href="#test">test ã‚¿ã‚¹ã‚¯</a></li>
+       <li><a href="#gen-dao">gen-dao ã‚¿ã‚¹ã‚¯</a></li>
+    </ul>
+    </font>
+</li>
+</ul>
 
 <ul>
-<li><a href="#cmdRef">ƒRƒ}ƒ“ƒhƒŠƒtƒ@ƒŒƒ“ƒX</a></li>
-  <ul>
-   <li><a href="#command">command ƒRƒ}ƒ“ƒh</a></li>
-   <li><a href="#dao">dao ƒRƒ}ƒ“ƒh</a></li>
-   <li><a href="#dicon">dicon ƒRƒ}ƒ“ƒh</a></li>
-   <li><a href="#entity">entity ƒRƒ}ƒ“ƒh</a></li>
-   <li><a href="#goya">goya ƒRƒ}ƒ“ƒh</a></li>
-   <li><a href="#interceptor">interceptor ƒRƒ}ƒ“ƒh</a></li>
-   <li><a href="#module">module ƒRƒ}ƒ“ƒh</a></li>
-   <li><a href="#service">service ƒRƒ}ƒ“ƒh</a></li>
-   <li><a href="#test">test ƒ^ƒXƒN</a></li>
-   <li><a href="#gen-dao">gen-dao ƒ^ƒXƒN</a></li>
-  </ul>
+<li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
+<li><a href="withAgavi-setup.html">with Agavi</a> <i>(ver 0.10.2)</i></li>
+<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 0.6.3)</i></li>
+<li><a href="withSmarty-setup.html">with Smarty</a></li>
+<li><a href="withPRADO-setup.html">with PRADO</a></li>
+<li><a href="withZf-setup.html">with Zf</a></li>
 </ul>
-<br>
 
-<h2><a name="cmdRef">ƒRƒ}ƒ“ƒhƒŠƒtƒ@ƒŒƒ“ƒX</a></h2>
+<h3>ã‚µãƒ–ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ</h3>
+<ul>
+<li><a href="javelin.html">S2Javelin.PHP5</a></li>
+</ul>
 
-<h3><a name="command">command ƒRƒ}ƒ“ƒh</a></h3>
 
-<h4>à–¾</h4>
+<h3>ãƒªãƒ³ã‚¯</h3>
+<ul>
+    <li><a href="http://www.seasar.org/">Seasar.org</a></li>
+    <li><a href="http://svn.seasar.org/browse/?root=sandbox.s2base.php5">SVN ãƒªãƒã‚¸ãƒˆãƒªãƒ–ãƒ©ã‚¦ã‚¶</a></li>
+    <li><a href="https://www.seasar.org/svn/sandbox/s2base.php5/">SVN ãƒªãƒã‚¸ãƒˆãƒª</a></li>
+    <li><a href="https://www.seasar.org/issues/browse/BASEPHP">Issue Tracker</a></li>
+    <li><a href="http://s2php5.jp/">s2php5.jp</a>
+        <ul>
+            <li><a href="http://labs.s2php5.jp/s2base">laboratory</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5">wiki</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5/plugins">plugins</a></li>
+            <li><a href="http://docs.s2php5.jp/s2base/api/">PHPDoc</a></li>
+        </ul>
+    </li>
+</ul>
+
+<h2>PHP ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ</h2>
+
+<h3>Seasar.PHP</h3>
+
+<ul>
+    <li><a href="http://s2container.php5.seasar.org/">S2Container.PHP5</a></li>
+    <li><a href="http://s2dao.php5.seasar.org/">S2Dao.PHP5</a></li>
+</ul>
+
+<h3>Sandbox.PHP</h3>
+
+<ul>
+    <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
+    <li><a href="http://s2ana.php5.sandbox.seasar.org/">S2AnA.PHP5</a></li>
+    <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
+</ul>
+
+
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+<h2 id="h02"><a name="command">command ã‚³ãƒãƒ³ãƒ‰</a></h2>
+
+<h3>èª¬æ˜</h3>
 <p>
-S2Base‚ÌV‚µ‚¢ƒRƒ}ƒ“ƒh‚ğì¬‚µ‚Ü‚·Bì¬‚µ‚½ƒRƒ}ƒ“ƒh‚ÍAƒRƒ}ƒ“ƒhƒŠƒXƒg‚É•\¦‚³‚ê‚Ü‚·B
+ã€€S2Baseã®æ–°ã—ã„ã‚³ãƒãƒ³ãƒ‰ã‚’ä½œæˆã—ã¾ã™ã€‚ä½œæˆã—ãŸã‚³ãƒãƒ³ãƒ‰ã¯ã€ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã«è¡¨ç¤ºã•ã‚Œã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
-<p>s2base.php5 ƒfƒBƒŒƒNƒgƒŠ‚Å phing ‚ğÀs‚µ‚Ü‚·B</p>
+<h3>å®Ÿè¡Œä¾‹</h3>
+<p>
+ã€€s2base.php5 ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ phing ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+</p>
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -70,21 +148,21 @@ project > com:
 6 : interceptor
 7 : module
 8 : service
-choice ? : 1            &lt;--- 1 : command ‚ğ‘I‘ğ
+choice ? : 1            &lt;--- 1 : command ã‚’é¸æŠ
 
 command name ? : sample
 
 [ generate information ]
   command name : sample
 
-confirm ? (y/n) : y     &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y     &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/commands/SampleCommand.class.php
-                                                                  ª
-[ Command list ]                                          ƒNƒ‰ƒXƒtƒ@ƒCƒ‹‚ªì¬‚³‚ê‚Ü‚·B
+                                                                  â†‘
+[ Command list ]                                          ã‚¯ãƒ©ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ãŒä½œæˆã•ã‚Œã¾ã™ã€‚
 0 : (exit)
 1 : command
-EEE
+ãƒ»ãƒ»ãƒ»
 
 BUILD FINISHED
 
@@ -92,7 +170,7 @@ Total time: 18.0426 seconds
 %
 </pre>
 
-SampleCommand ƒNƒ‰ƒX‚Ì execute ƒƒ\ƒbƒh‚ğ•ÒW‚µ‚Ü‚·B
+SampleCommand ã‚¯ãƒ©ã‚¹ã® execute ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ç·¨é›†ã—ã¾ã™ã€‚
 <pre>
 % cat app/commands/SampleCommand.class.php
 &lt;?php
@@ -100,11 +178,11 @@ class SampleCommand
     implements S2Base_GenerateCommand {
 
     public function getName(){
-        return "sample";    &lt;--- ƒRƒ}ƒ“ƒhƒŠƒXƒg‚É•\¦‚³‚ê‚éƒRƒ}ƒ“ƒh–¼
+        return "sample";    &lt;--- ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã«è¡¨ç¤ºã•ã‚Œã‚‹ã‚³ãƒãƒ³ãƒ‰å
     }
 
     public function execute(){
-        print __METHOD__ . " called.\n";    &lt;--- print •¶‚ğ’Ç‹L
+        print __METHOD__ . " called.\n";    &lt;--- print æ–‡ã‚’è¿½è¨˜
     }
 
 }
@@ -112,7 +190,7 @@ class SampleCommand
 %
 </pre>
 
-Ä“x phing ‚ğÀs‚·‚é‚Æ sample ƒRƒ}ƒ“ƒh‚ª‘I‘ğ‚Å‚«‚Ü‚·B
+å†åº¦ phing ã‚’å®Ÿè¡Œã™ã‚‹ã¨ sample ã‚³ãƒãƒ³ãƒ‰ãŒé¸æŠã§ãã¾ã™ã€‚
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -133,25 +211,29 @@ project > com:
 6 : interceptor
 7 : module
 8 : service
-9 : sample     &lt;--- V‹Kì¬‚µ‚½ƒRƒ}ƒ“ƒh‚ª•\¦‚³‚ê‚Ü‚·B
+9 : sample     &lt;--- æ–°è¦ä½œæˆã—ãŸã‚³ãƒãƒ³ãƒ‰ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚
 choice ? : 9
-SampleCommand::execute called.    &lt;--- ƒRƒ}ƒ“ƒhƒNƒ‰ƒX‚Ì execute ƒƒ\ƒbƒh‚ªÀs‚³‚ê‚Ü‚·B
+SampleCommand::execute called.    &lt;--- ã‚³ãƒãƒ³ãƒ‰ã‚¯ãƒ©ã‚¹ã® execute ãƒ¡ã‚½ãƒƒãƒ‰ãŒå®Ÿè¡Œã•ã‚Œã¾ã™ã€‚
 
 BUILD FINISHED
 
 Total time: 2.0847 seconds
 %
 </pre>
-
+</div>
 <br>
-<h3><a name="dao">dao ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<div class="section">
+<h2 id="h02"><a name="dao">dao ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-S2Dao ‚Å•K—v‚È dao ƒCƒ“ƒ^ƒtƒF[ƒXAentity ƒNƒ‰ƒXAdao ƒRƒ“ƒ|[ƒlƒ“ƒg’è‹`Ï‚İ‚Ì dicon ƒtƒ@ƒCƒ‹AƒeƒXƒgƒNƒ‰ƒX‚ğ¶¬‚µ‚Ü‚·B
+ã€€S2Dao ã§å¿…è¦ãª dao ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹ã€entity ã‚¯ãƒ©ã‚¹ã€dao ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆå®šç¾©æ¸ˆã¿ã® dicon ãƒ•ã‚¡ã‚¤ãƒ«ã€
+ãƒ†ã‚¹ãƒˆã‚¯ãƒ©ã‚¹ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
+
+<h3>å®Ÿè¡Œä¾‹</h3>
 <p>
-dao ƒRƒ}ƒ“ƒh‚Ìà–¾‚Å‚ÍA<a href="http://s2dao.php5.sandbox.seasar.org/example.html">S2Dao‚ÌExample</a>‚Åg—p‚³‚ê‚Ä‚¢‚éƒTƒ“ƒvƒ‹ƒf[ƒ^‚ğ—p‚¢‚Äà–¾‚µ‚Ü‚·B
+ã€€dao ã‚³ãƒãƒ³ãƒ‰ã®èª¬æ˜ã§ã¯ã€<a href="http://s2dao.php5.sandbox.seasar.org/example.html">S2Daoã®Example</a>ã§ä½¿ç”¨ã•ã‚Œã¦ã„ã‚‹ã‚µãƒ³ãƒ—ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’ç”¨ã„ã¦èª¬æ˜ã—ã¾ã™ã€‚
 </p>
 <pre>
 mysql> desc CD;
@@ -176,7 +258,7 @@ mysql>
 </pre>
 <br>
 
-<p>s2base.php5 ƒfƒBƒŒƒNƒgƒŠ‚Å phing ‚ğÀs‚µ‚Ü‚·B</p>
+<p>s2base.php5 ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ phing ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚</p>
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -197,20 +279,22 @@ project &gt; com:
 6 : interceptor
 7 : module
 8 : service
-choice ? : 2     &lt;--- 2 : dao ‚ğ‘I‘ğ
+choice ? : 2     &lt;--- 2 : dao ã‚’é¸æŠ
 
 [ Module list ]
 0 : (exit)
 1 : Default
-choice ? : 1     &lt;--- 1 : Default ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
+choice ? : 1     &lt;--- 1 : Default ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’é¸æŠ
 
-dao interface name ? : CdDao                        &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+use database ? (y/n) : n                       &lt;--- ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã«æ¥ç¶šã—ã¦ãƒ†ãƒ¼ãƒ–ãƒ«æƒ…å ±ã‚’å–å¾—
+                                                    ã™ã‚‹ã‹ã©ã†ã‹ã‚’é¸æŠã—ã¾ã™ã€‚
+dao interface name ? : CdDao                   &lt;--- è‹±æ•°å­— [_a-zA-Z0-9] ãŒä½¿ç”¨å¯èƒ½ã§ã™ã€‚
 
-entity class name ? : CdEntity                      &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+entity class name ? : CdEntity                 &lt;--- è‹±æ•°å­— [_a-zA-Z0-9] ãŒä½¿ç”¨å¯èƒ½ã§ã™ã€‚
 
-table name ? [CdEntity] : CD                        &lt;--- ƒf[ƒ^ƒx[ƒX‚Ìƒe[ƒuƒ‹–¼‚ğİ’èB
+table name ? [CdEntity] : CD                   &lt;--- ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®ãƒ†ãƒ¼ãƒ–ãƒ«åã‚’è¨­å®šã€‚
 
-columns ? [id,name,--, , ] : id,title,content       &lt;--- ƒJƒ“ƒ}‹æØ‚è‚ÅƒJƒ‰ƒ€–¼‚ğ“ü—Í
+columns ? [id,name,--, , ] : id,title,content  &lt;--- ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§ã‚«ãƒ©ãƒ åã‚’å…¥åŠ›
 
 [ generate information ]
   module name         : Default
@@ -221,7 +305,7 @@ columns ? [id,name,--, , ] : id,title,content       &lt;--- ƒJƒ“ƒ}‹æØ‚è‚ÅƒJƒ‰ƒ€
   columns             : id, title, content
   dao dicon file name : CdDao.dicon
 
-confirm ? (y/n) : y                                 &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y                                 &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dao/CdDao.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/dao/CdDaoTest.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon/CdDao.dicon
@@ -230,7 +314,7 @@ confirm ? (y/n) : y                                 &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
 [ Command list ]
 0 : (exit)
 1 : command
-EEE
+ãƒ»ãƒ»ãƒ»
 
 BUILD FINISHED
 
@@ -238,10 +322,10 @@ Total time: 30.5662 seconds
 %
 </pre>
 
-daoƒRƒ}ƒ“ƒh‚É‚æ‚èAPHPUnit2‚ğ—p‚¢‚½UnitTestƒNƒ‰ƒX‚ªì¬‚³‚ê‚Ü‚·Bphing ƒRƒ}ƒ“ƒh‚É test ˆø”‚ğ•t‚¯‚ÄÀs‚·‚é‚ÆAUnitTest‚ªÀs‚³‚ê‚Ü‚·B
+daoã‚³ãƒãƒ³ãƒ‰ã«ã‚ˆã‚Šã€PHPUnit2ã‚’ç”¨ã„ãŸUnitTestã‚¯ãƒ©ã‚¹ãŒä½œæˆã•ã‚Œã¾ã™ã€‚phing ã‚³ãƒãƒ³ãƒ‰ã« test å¼•æ•°ã‚’ä»˜ã‘ã¦å®Ÿè¡Œã™ã‚‹ã¨ã€UnitTestãŒå®Ÿè¡Œã•ã‚Œã¾ã™ã€‚
 <pre>
-% phing test -Dtd=modules/Default/dao     &lt;--- -D ƒIƒvƒVƒ‡ƒ“‚Å test ƒfƒBƒŒƒNƒgƒŠˆÈ‰º‚ÌƒfƒBƒŒƒNƒgƒŠ‚ğw’è‚Å‚«‚Ü‚·B
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
+% phing test -Dtd=modules/Default/dao     &lt;--- -Dtd ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã§ test ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä»¥ä¸‹ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’
+Buildfile: /seasar.php/workspace/s2base.php5/build.xml                                  æŒ‡å®šã§ãã¾ã™ã€‚
 
 project > prepare:
       [php] Evaluating PHP expression: require_once('config/environment.inc.php')
@@ -259,39 +343,40 @@ Total time: 0.6863 seconds
 %
 </pre>
 
-dao ƒRƒ}ƒ“ƒh‚É‚æ‚è¶¬‚³‚ê‚éDaoƒCƒ“ƒ^ƒtƒF[ƒX‚ÍAƒfƒtƒHƒ‹ƒg‚Å‚¢‚­‚Â‚©‚Ìƒƒ\ƒbƒh‚ª’è‹`Ï‚İ‚Å‚·B
+dao ã‚³ãƒãƒ³ãƒ‰ã«ã‚ˆã‚Šç”Ÿæˆã•ã‚Œã‚‹Daoã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹ã¯ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã„ãã¤ã‹ã®ãƒ¡ã‚½ãƒƒãƒ‰ãŒå®šç¾©æ¸ˆã¿ã§ã™ã€‚
 <pre>
 % more app/modules/Default/dao/CdDao.class.php
 &lt;?php
 interface CdDao {
     const BEAN = "CdEntity";
 
-    public function findAllArray();
-    public function update(CdEntity $entity);
-    public function insert(CdEntity $entity);
-    public function delete(CdEntity $entity);
+    public function findAllList();
+    //public function findAllArray();
+    //public function update(CdEntity $entity);
+    //public function insert(CdEntity $entity);
+    //public function delete(CdEntity $entity);
 }
 ?&gt;
 %
 </pre>
 
-—á‚Æ‚µ‚ÄAfindAllArrayƒƒ\ƒbƒh‚ğÀs‚µ‚Ä‚İ‚Ü‚·B‚Ü‚¸AƒeƒXƒgƒNƒ‰ƒX‚ÉƒeƒXƒgƒƒ\ƒbƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+ä¾‹ã¨ã—ã¦ã€findAllListãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè¡Œã—ã¦ã¿ã¾ã™ã€‚ã¾ãšã€ãƒ†ã‚¹ãƒˆã‚¯ãƒ©ã‚¹ã«ãƒ†ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 <pre>
 % more test/modules/Default/dao/CdDaoTest.class.php
 &lt;?php
 class CdDaoTest extends PHPUnit2_Framework_TestCase {
     private $module = "Default";
-    private $container;                      &lt;--- ŠeƒeƒXƒg‚Ì‘Oˆ—‚ÅS2ContainerƒIƒuƒWƒFƒNƒg‚ªİ’è‚³‚ê‚Ü‚·B
-    private $dao;                            &lt;--- ŠeƒeƒXƒg‚Ì‘Oˆ—‚ÅDaoƒIƒuƒWƒFƒNƒg‚ªİ’è‚³‚ê‚Ü‚·B
+    private $container;                      &lt;--- å„ãƒ†ã‚¹ãƒˆã®å‰å‡¦ç†ã§S2Containerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒè¨­å®šã•ã‚Œã¾ã™ã€‚
+    private $dao;                            &lt;--- å„ãƒ†ã‚¹ãƒˆã®å‰å‡¦ç†ã§Daoã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒè¨­å®šã•ã‚Œã¾ã™ã€‚
 
     function __construct($name) {
         parent::__construct($name);
     }
 
-    function testFindAllArray() {            &lt;--- ’Ç‰ÁƒeƒXƒgƒƒ\ƒbƒh
+    function testFindAllList() {            &lt;--- è¿½åŠ ãƒ†ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰
         print __METHOD__ . "\n";
-        $rows = $this-&gt;dao-&gt;findAllArray();
+        $rows = $this-&gt;dao-&gt;findAllList();
         $entity = $rows[0];
         $this-&gt;assertTrue($entity instanceof CdEntity);
         $this-&gt;assertEquals($entity-&gt;getId(),'1');
@@ -318,7 +403,7 @@ class CdDaoTest extends PHPUnit2_Framework_TestCase {
 %
 </pre>
 
-ƒeƒXƒg‚ğÀs‚·‚é‚ÆAƒf[ƒ^ƒx[ƒX‚©‚çæ“¾‚µ‚½ƒf[ƒ^‚ğŠi”[‚µ‚½EntitiyƒIƒuƒWƒFƒNƒg‚ª•\¦‚³‚ê‚Ü‚·B
+ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹ã¨ã€ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‹ã‚‰å–å¾—ã—ãŸãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã—ãŸEntitiyã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚
 <pre>
 % phing test -Dtd=modules/Default/dao
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -329,8 +414,8 @@ project &gt; prepare:
 
 project &gt; test:
 
-CdDaoTest::testFindAllArray
-CdEntity Object                          &lt;--- print_r($entity) ‚ÅƒfƒoƒbƒO‚Æ‚µ‚Ä•\¦‚µ‚Ä‚¢‚Ü‚·B
+CdDaoTest::testFindAllList
+CdEntity Object                          &lt;--- print_r($entity) ã§ãƒ‡ãƒãƒƒã‚°ã¨ã—ã¦è¡¨ç¤ºã—ã¦ã„ã¾ã™ã€‚
 (
     [id:private] =&gt; 1
     [title:private] =&gt; S2Dao!!!
@@ -344,15 +429,19 @@ BUILD FINISHED
 Total time: 1.0303 second
 %
 </pre>
-
+</div>
 <br>
-<h3><a name="dicon">dicon ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<div class="section">
+<h2 id="h02"><a name="dicon">dicon ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-XMLŒ`®‚Ìdiconƒtƒ@ƒCƒ‹‚ğ¶¬‚µ‚Ü‚·B
+ã€€XMLå½¢å¼ã®diconãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
-<p>s2base.php5 ƒfƒBƒŒƒNƒgƒŠ‚Å phing ‚ğÀs‚µ‚Ü‚·B</p>
+<h3>å®Ÿè¡Œä¾‹</h3>
+<p>
+ã€€s2base.php5 ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ phing ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+</p>
 
 <pre>
 % phing
@@ -374,33 +463,33 @@ project &gt; com:
 6 : interceptor
 7 : module
 8 : service
-choice ? : 3     &lt;--- 3 : dicon ‚ğ‘I‘ğ
+choice ? : 3     &lt;--- 3 : dicon ã‚’é¸æŠ
 
 [ Module list ]
 0 : (exit)
 1 : Default
-choice ? : 1     &lt;--- 1 : Default ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
+choice ? : 1     &lt;--- 1 : Default ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’é¸æŠ
 
-dicon name ? : sample    &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+dicon name ? : sample    &lt;--- è‹±æ•°å­— [_a-zA-Z0-9] ãŒä½¿ç”¨å¯èƒ½ã§ã™ã€‚
 
 [ generate information ]
   module name     : Default
   dicon file name : sample.dicon
 
-confirm ? (y/n) : y      &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y      &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon/sample.dicon
 
 [ Command list ]
 0 : (exit)
 1 : command
-EEE
+ãƒ»ãƒ»ãƒ»
 
 BUILD FINISHED
 
 Total time: 38.8949 seconds
 %
 </pre>
-sample.dicon ‚Í‹ó‚Ìƒ_ƒCƒRƒ“ƒtƒ@ƒCƒ‹‚Å‚·B
+sample.dicon ã¯ç©ºã®ãƒ€ã‚¤ã‚³ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ã§ã™ã€‚
 <pre>
 % more app/modules/Default/dicon/sample.dicon
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -412,14 +501,18 @@ sample.dicon ‚Í‹ó‚Ìƒ_ƒCƒRƒ“ƒtƒ@ƒCƒ‹‚Å‚·B
 %
 </pre>
 
+</div>
 <br>
-<h3><a name="entity">entity ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+<div class="section">
+<h2 id="h02"><a name="entity">entity ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-S2Dao ‚Å—p‚¢‚é Entity ƒNƒ‰ƒX‚ğì¬‚µ‚Ü‚·Bcolumns ‚ÅƒJƒ“ƒ}‹æØ‚è‚ÌƒJƒ‰ƒ€–¼‚ğ“ü—Í‚·‚é‚ÆA‘Î‰‚·‚éƒvƒƒpƒeƒB‚ÆƒAƒNƒZƒbƒTƒƒ\ƒbƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+ã€€S2Dao ã§ç”¨ã„ã‚‹ Entity ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã—ã¾ã™ã€‚columns ã§ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã®ã‚«ãƒ©ãƒ åã‚’å…¥åŠ›ã™ã‚‹ã¨ã€å¯¾å¿œã™ã‚‹ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã¨ã‚¢ã‚¯ã‚»ãƒƒã‚µãƒ¡ã‚½ãƒƒãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
-<p>s2base.php5 ƒfƒBƒŒƒNƒgƒŠ‚Å phing ‚ğÀs‚µ‚Ü‚·B</p>
+<h3>å®Ÿè¡Œä¾‹</h3>
+<p>
+ã€€s2base.php5 ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ phing ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+</p>
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -440,18 +533,20 @@ project &gt; com:
 6 : interceptor
 7 : module
 8 : service
-choice ? : 4     &lt;--- 4 : entity ‚ğ‘I‘ğ
+choice ? : 4     &lt;--- 4 : entity ã‚’é¸æŠ
 
 [ Module list ]
 0 : (exit)
 1 : Default
-choice ? : 1     &lt;--- 1 : Default ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
+choice ? : 1     &lt;--- 1 : Default ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’é¸æŠ
 
-entity class name ? : DvdEntity                   &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+use database ? (y/n) : n                       &lt;--- ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã«æ¥ç¶šã—ã¦ãƒ†ãƒ¼ãƒ–ãƒ«æƒ…å ±ã‚’å–å¾—
+                                                    ã™ã‚‹ã‹ã©ã†ã‹ã‚’é¸æŠã—ã¾ã™ã€‚
+entity class name ? : DvdEntity                &lt;--- è‹±æ•°å­— [_a-zA-Z0-9] ãŒä½¿ç”¨å¯èƒ½ã§ã™ã€‚
 
-table name ? [DvdEntity] : DVD                    &lt;--- ƒf[ƒ^ƒx[ƒX‚Ìƒe[ƒuƒ‹–¼‚ğİ’è
+table name ? [DvdEntity] : DVD                 &lt;--- ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®ãƒ†ãƒ¼ãƒ–ãƒ«åã‚’è¨­å®š
 
-columns ? [id,name,--, , ] : id,title,content     &lt;--- ƒJƒ“ƒ}‹æØ‚è‚ÅƒJƒ‰ƒ€–¼‚ğ“ü—Í
+columns ? [id,name,--, , ] : id,title,content  &lt;--- ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§ã‚«ãƒ©ãƒ åã‚’å…¥åŠ›
 
 [ generate information ]
   module name       : Default
@@ -459,20 +554,20 @@ columns ? [id,name,--, , ] : id,title,content     &lt;--- ƒJƒ“ƒ}‹æØ‚è‚ÅƒJƒ‰ƒ€–¼
   table name        : DVD
   columns           : id, title, content
 
-confirm ? (y/n) : y                               &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y                               &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity/DvdEntity.class.php
 
 [ Command list ]
 0 : (exit)
 1 : command
-EEE
+ãƒ»ãƒ»ãƒ»
 
 BUILD FINISHED
 
 Total time: 38.7971 seconds
 %
 </pre>
-columns ‚ÅAidAtitleAcontent ‚ğw’è‚µ‚½‚Ì‚ÅA3‚Â‚ÌƒvƒƒpƒeƒB‚Æ‚»‚ê‚¼‚ÌƒAƒNƒZƒbƒTƒƒ\ƒbƒh‚ªÀ‘•‚³‚ê‚Ü‚·B
+columns ã§ã€idã€titleã€content ã‚’æŒ‡å®šã—ãŸã®ã§ã€3ã¤ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã¨ãã‚Œãã®ã‚¢ã‚¯ã‚»ãƒƒã‚µãƒ¡ã‚½ãƒƒãƒ‰ãŒå®Ÿè£…ã•ã‚Œã¾ã™ã€‚
 <pre>
 % more app/modules/Default/entity/DvdEntity.class.php
 &lt;?php
@@ -496,18 +591,22 @@ class DvdEntity {
 ?&gt;
 %
 </pre>
-
+</div>
 <br>
-<h3><a name="goya">goya ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<div class="section">
+<h2 id="h02"><a name="goya">goya ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-goya ƒRƒ}ƒ“ƒh‚ÍƒT[ƒrƒX–¼‚ğŒˆ‚ß‚é‚ÆA–½–¼‹K‘¥‚É]‚Á‚ÄƒT[ƒrƒXAdaoAenitityAƒ_ƒCƒRƒ“ƒtƒ@ƒCƒ‹AƒeƒXƒgƒNƒ‰ƒX‚ğ¶¬‚µ‚Ü‚·B
-<a href="#service">service ƒRƒ}ƒ“ƒh</a>‚Æ<a href="#dao"> dao ƒRƒ}ƒ“ƒh</a>‚ğ“¯‚ÉÀs‚·‚é‚±‚Æ‚Æ‚Ù‚Ú“¯‚¶ˆ—‚É‚È‚è‚Ü‚·B
-<br>—á‚¦‚ÎAƒT[ƒrƒX–¼‚ğu emp v‚Æ‚·‚é‚ÆAƒT[ƒrƒX‚Í EmpServiceAdao ‚Í EmpDaoAentity ‚Í EmpEntitiy ‚Æ‚È‚è‚Ü‚·B
+ã€€goya ã‚³ãƒãƒ³ãƒ‰ã¯ã‚µãƒ¼ãƒ“ã‚¹åã‚’æ±ºã‚ã‚‹ã¨ã€å‘½åè¦å‰‡ã«å¾“ã£ã¦ã‚µãƒ¼ãƒ“ã‚¹ã€daoã€enitityã€ãƒ€ã‚¤ã‚³ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ã€ãƒ†ã‚¹ãƒˆã‚¯ãƒ©ã‚¹ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
+<a href="#service">service ã‚³ãƒãƒ³ãƒ‰</a>ã¨<a href="#dao"> dao ã‚³ãƒãƒ³ãƒ‰</a>ã‚’åŒæ™‚ã«å®Ÿè¡Œã™ã‚‹ã“ã¨ã¨ã»ã¼åŒã˜å‡¦ç†ã«ãªã‚Šã¾ã™ã€‚
+<br>ä¾‹ãˆã°ã€ã‚µãƒ¼ãƒ“ã‚¹åã‚’ã€Œ emp ã€ã¨ã™ã‚‹ã¨ã€ã‚µãƒ¼ãƒ“ã‚¹ã¯ EmpServiceã€dao ã¯ EmpDaoã€entity ã¯ EmpEntitiy ã¨ãªã‚Šã¾ã™ã€‚
 
 </p>
-<h4>Às—á</h4>
-<p>s2base.php5 ƒfƒBƒŒƒNƒgƒŠ‚Å phing ‚ğÀs‚µ‚Ü‚·B</p>
+<h3>å®Ÿè¡Œä¾‹</h3>
+<p>
+ã€€s2base.php5 ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ phing ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+</p>
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -528,24 +627,20 @@ project &gt; com:
 6 : interceptor
 7 : module
 8 : service
-choice ? : 5             &lt;--- 5 : goya ‚ğ‘I‘ğ
+choice ? : 5             &lt;--- 5 : goya ã‚’é¸æŠ
 
 [ Module list ]
 0 : (exit)
 1 : Default
-choice ? : 1             &lt;--- 1 : Default ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
+choice ? : 1             &lt;--- 1 : Default ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’é¸æŠ
 
-service name ? : emp     &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+service name ? : emp     &lt;--- è‹±æ•°å­— [_a-zA-Z0-9] ãŒä½¿ç”¨å¯èƒ½ã§ã™ã€‚
 
-[ use commons dao ? ]
-0 : (exit)
-1 : yes
-2 : no
-choice ? : 2
+use database ? (y/n) : n                      &lt;--- ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã«æ¥ç¶šã—ã¦ãƒ†ãƒ¼ãƒ–ãƒ«æƒ…å ±ã‚’å–å¾—
+                                                   ã™ã‚‹ã‹ã©ã†ã‹ã‚’é¸æŠã—ã¾ã™ã€‚
+table name ? [emp] : EMP                      &lt;--- ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®ãƒ†ãƒ¼ãƒ–ãƒ«åã‚’è¨­å®š
 
-table name ? [emp] : EMP                      &lt;--- ƒf[ƒ^ƒx[ƒX‚Ìƒe[ƒuƒ‹–¼‚ğİ’è
-
-columns ? [id,name,--, , ] : id,name,dept     &lt;--- ƒJƒ“ƒ}‹æØ‚è‚ÅƒJƒ‰ƒ€–¼‚ğ“ü—Í
+columns ? [id,name,--, , ] : id,name,dept     &lt;--- ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§ã‚«ãƒ©ãƒ åã‚’å…¥åŠ›
 
 [ generate information ]
   module name             : Default
@@ -560,7 +655,7 @@ columns ? [id,name,--, , ] : id,name,dept     &lt;--- ƒJƒ“ƒ}‹æØ‚è‚ÅƒJƒ‰ƒ€–¼‚ğ“ü
   columns                 : id, name, dept
   service dicon file name : EmpService.dicon
 
-confirm ? (y/n) : y                           &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y                           &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/EmpServiceImpl.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/EmpService.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service/EmpServiceImplTest.class.php
@@ -572,15 +667,14 @@ confirm ? (y/n) : y                           &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
 [ Command list ]
 0 : (exit)
 1 : command
-EEE
+ãƒ»ãƒ»ãƒ»
 
 BUILD FINISHED
 
 Total time: 1 minutes  13.67 seconds
 %
 </pre>
-[ commons dao ] ‚É‚Â‚¢‚Ä‚ÍA<a href="#gen-dao">gen-dao ƒ^ƒXƒN</a>‚ğQÆ‰º‚³‚¢B<br>
-goya ƒRƒ}ƒ“ƒh‚Å¶¬‚³‚ê‚éƒ_ƒCƒRƒ“ƒtƒ@ƒCƒ‹‚Å‚ÍAƒT[ƒrƒX‚Æ dao ƒRƒ“ƒ|[ƒlƒ“ƒg‚ª“o˜^Ï‚İ‚Å‚·B
+goya ã‚³ãƒãƒ³ãƒ‰ã§ç”Ÿæˆã•ã‚Œã‚‹ãƒ€ã‚¤ã‚³ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ã§ã¯ã€ã‚µãƒ¼ãƒ“ã‚¹ã¨ dao ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒç™»éŒ²æ¸ˆã¿ã§ã™ã€‚
 <pre>
 % more app/modules/Default/dicon/EmpService.dicon
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -596,7 +690,7 @@ goya ƒRƒ}ƒ“ƒh‚Å¶¬‚³‚ê‚éƒ_ƒCƒRƒ“ƒtƒ@ƒCƒ‹‚Å‚ÍAƒT[ƒrƒX‚Æ dao ƒRƒ“ƒ|[ƒlƒ“ƒg‚ª“o
 %
 </pre>
 
-‚Ü‚½AEmpServiceImplƒNƒ‰ƒX‚Å‚Í EmpDao ‚Ö‚ÌƒZƒbƒ^[ƒƒ\ƒbƒh‚ª’è‹`Ï‚İ‚È‚Ì‚ÅAƒT[ƒrƒX‚É dao ‚ª©“®ƒCƒ“ƒWƒFƒNƒVƒ‡ƒ“‚³‚ê‚Ü‚·B
+ã¾ãŸã€EmpServiceImplã‚¯ãƒ©ã‚¹ã§ã¯ EmpDao ã¸ã®ã‚»ãƒƒã‚¿ãƒ¼ãƒ¡ã‚½ãƒƒãƒ‰ãŒå®šç¾©æ¸ˆã¿ãªã®ã§ã€ã‚µãƒ¼ãƒ“ã‚¹ã« dao ãŒè‡ªå‹•ã‚¤ãƒ³ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã•ã‚Œã¾ã™ã€‚
 <pre>
 % more app/modules/Default/service/EmpServiceImpl.class.php
 &lt;?php
@@ -614,14 +708,19 @@ class EmpServiceImpl
 %
 </pre>
 
+</div>
 <br>
-<h3><a name="interceptor">interceptor ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<div class="section">
+<h2 id="h02"><a name="interceptor">interceptor ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-S2Aop ‚Ì MethodInterceptor ‚ğÀ‘•‚·‚éƒNƒ‰ƒX‚ğ¶¬‚µ‚Ü‚·B
+ã€€S2Aop ã® MethodInterceptor ã‚’å®Ÿè£…ã™ã‚‹ã‚¯ãƒ©ã‚¹ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
-<p>s2base.php5 ƒfƒBƒŒƒNƒgƒŠ‚Å phing ‚ğÀs‚µ‚Ü‚·B</p>
+<h3>å®Ÿè¡Œä¾‹</h3>
+<p>
+ã€€s2base.php5 ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ phing ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+</p>
 <pre>
  % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -642,20 +741,20 @@ project &gt; com:
 6 : interceptor
 7 : module
 8 : service
-choice ? : 6     &lt;--- 6 : interceptor ‚ğ‘I‘ğ
+choice ? : 6     &lt;--- 6 : interceptor ã‚’é¸æŠ
 
 [ Module list ]
 0 : (exit)
 1 : Default
-choice ? : 1     &lt;--- 1 : Default ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
+choice ? : 1     &lt;--- 1 : Default ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’é¸æŠ
 
-interceptor class name ? : HogeInterceptor     &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+interceptor class name ? : HogeInterceptor     &lt;--- è‹±æ•°å­— [_a-zA-Z0-9] ãŒä½¿ç”¨å¯èƒ½ã§ã™ã€‚
 
 [ generate information ]
   module name            : Default
   interceptor class name : HogeInterceptor
 
-confirm ? (y/n) : y                            &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y                            &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/interceptor/HogeInterceptor.class.php
 
 BUILD FINISHED
@@ -664,7 +763,7 @@ Total time: 17.2060 seconds
 %
 </pre>
 
-S2Container_AbstractInterceptor ‚ğŒp³‚µ‚½ interceptor ‚ğ¶¬‚µ‚Ü‚·BQÆF<a href="http://s2container.php5.sandbox.seasar.org/aop.html#OriginalInterceptor">“Æ©À‘•‚É‚æ‚éInterceptor</a>
+S2Container_AbstractInterceptor ã‚’ç¶™æ‰¿ã—ãŸ interceptor ã‚’ç”Ÿæˆã—ã¾ã™ã€‚å‚ç…§ï¼š<a href="http://s2container.php5.sandbox.seasar.org/aop.html#OriginalInterceptor">ç‹¬è‡ªå®Ÿè£…ã«ã‚ˆã‚‹Interceptor</a>
 
 <pre>
 % more app/modules/Default/interceptor/HogeInterceptor.class.php
@@ -685,16 +784,20 @@ class HogeInterceptor
 ?&gt;
 %
 </pre>
-
+</div>
 <br>
-<h3><a name="module">module ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<div class="section">
+<h2 id="h02"><a name="module">module ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-app/modules ƒfƒBƒŒƒNƒgƒŠ‚Æ test/modules ƒfƒBƒŒƒNƒgƒŠ‚É<a href="dir.html">ƒ‚ƒWƒ…[ƒ‹ƒfƒBƒŒƒNƒgƒŠ</a>‚ğì¬‚µ‚Ü‚·B
-app/modules/ƒ‚ƒWƒ…[ƒ‹ƒfƒBƒŒƒNƒgƒŠ‚É‚ÍAdaoAdiconAentityAinterceptorAserviceƒfƒBƒŒƒNƒgƒŠ‚ªì¬‚³‚ê‚Ü‚·B
+ã€€app/modules ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¨ test/modules ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«<a href="dir.html">ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</a>ã‚’ä½œæˆã—ã¾ã™ã€‚
+app/modules/ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ã¯ã€daoã€diconã€entityã€interceptorã€serviceãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒä½œæˆã•ã‚Œã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
-<p>s2base.php5 ƒfƒBƒŒƒNƒgƒŠ‚Å phing ‚ğÀs‚µ‚Ü‚·B</p>
+<h3>å®Ÿè¡Œä¾‹</h3>
+<p>
+ã€€s2base.php5 ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ phing ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+</p>
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -715,12 +818,12 @@ project > com:
 6 : interceptor
 7 : module
 8 : service
-choice ? : 7               &lt;--- 7 : module ‚ğ‘I‘ğ
+choice ? : 7               &lt;--- 7 : module ã‚’é¸æŠ
 
-module name ? : Default    &lt;--- ƒ‚ƒWƒ…[ƒ‹–¼‚ğ“ü—ÍB‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+module name ? : Default    &lt;--- ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åã‚’å…¥åŠ›ã€‚è‹±æ•°å­— [_a-zA-Z0-9] ãŒä½¿ç”¨å¯èƒ½ã§ã™ã€‚
 
 [ generate information ]
-  module name : Default    &lt;--- ƒ‚ƒWƒ…[ƒ‹î•ñ‚ğŠm”F
+  module name : Default    &lt;--- ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«æƒ…å ±ã‚’ç¢ºèª
 
 confirm ? (y/n) : y
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default
@@ -737,7 +840,7 @@ confirm ? (y/n) : y
 [ Command list ]
 0 : (exit)
 1 : command
-EEE
+ãƒ»ãƒ»ãƒ»
 
 BUILD FINISHED
 
@@ -745,7 +848,7 @@ Total time: 8.2091 seconds
 %
 </pre>
 
-app ƒfƒBƒŒƒNƒgƒŠ‚Æ test ƒfƒBƒŒƒNƒgƒŠˆÈ‰º‚ÉDefaultƒ‚ƒWƒ…[ƒ‹‚ªì¬‚³‚ê‚Ü‚·B
+app ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¨ test ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä»¥ä¸‹ã«Defaultãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ãŒä½œæˆã•ã‚Œã¾ã™ã€‚
 <pre>
 % ls app/modules/Default
 Default.inc.php  dao  dicon  entity  interceptor  service
@@ -753,15 +856,20 @@ Default.inc.php  dao  dicon  entity  interceptor  service
 dao  service
 %
 </pre>
-
+</div>
 <br>
-<h3><a name="service">service ƒRƒ}ƒ“ƒh</a></h3>
-<h4>à–¾</h4>
+
+<div class="section">
+<h2 id="h02"><a name="service">service ã‚³ãƒãƒ³ãƒ‰</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-ƒT[ƒrƒXƒCƒ“ƒ^ƒtƒF[ƒXAÀ‘•ƒNƒ‰ƒXAƒ_ƒCƒRƒ“ƒtƒ@ƒCƒ‹AƒeƒXƒgƒNƒ‰ƒX‚ğ¶¬‚µ‚Ü‚·B
+ã€€ã‚µãƒ¼ãƒ“ã‚¹ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹ã€å®Ÿè£…ã‚¯ãƒ©ã‚¹ã€ãƒ€ã‚¤ã‚³ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ã€ãƒ†ã‚¹ãƒˆã‚¯ãƒ©ã‚¹ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
-<p>s2base.php5 ƒfƒBƒŒƒNƒgƒŠ‚Å phing ‚ğÀs‚µ‚Ü‚·B</p>
+<h3>å®Ÿè¡Œä¾‹</h3>
+<p>
+ã€€s2base.php5 ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ phing ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+</p>
+
 <pre>
 % phing
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -782,14 +890,14 @@ project > com:
 6 : interceptor
 7 : module
 8 : service
-choice ? : 8     &lt;--- 8 : service ‚ğ‘I‘ğ
+choice ? : 8     &lt;--- 8 : service ã‚’é¸æŠ
 
 [ Module list ]
 0 : (exit)
 1 : Default
-choice ? : 1     &lt;--- 1 : Default ƒ‚ƒWƒ…[ƒ‹‚ğ‘I‘ğ
+choice ? : 1     &lt;--- 1 : Default ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’é¸æŠ
 
-service interface name ? : CulcService     &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”\‚Å‚·B
+service interface name ? : CulcService     &lt;--- è‹±æ•°å­— [_a-zA-Z0-9] ãŒä½¿ç”¨å¯èƒ½ã§ã™ã€‚
 
 [ generate information ]
   module name             : Default
@@ -798,7 +906,7 @@ service interface name ? : CulcService     &lt;--- ‰p”š [_a-zA-Z0-9] ‚ªg—p‰Â”
   service test class name : CulcServiceImplTest
   service dicon file name : CulcService.dicon
 
-confirm ? (y/n) : y                        &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
+confirm ? (y/n) : y                        &lt;--- è¡¨ç¤ºã•ã‚Œã‚‹æƒ…å ±ã‚’ç¢ºèª
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/CulcServiceImpl.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/CulcService.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service/CulcServiceImplTest.class.php
@@ -807,14 +915,14 @@ confirm ? (y/n) : y                        &lt;--- •\¦‚³‚ê‚éî•ñ‚ğŠm”F
 [ Command list ]
 0 : (exit)
 1 : command
-EEE
+ãƒ»ãƒ»ãƒ»
 
 BUILD FINISHED
 
 Total time: 12.7848 seconds
 %
 </pre>
-service ƒRƒ}ƒ“ƒh‚É‚æ‚è PHPUnit2 ‚ğ—p‚¢‚½ UnitTest ƒNƒ‰ƒX‚ªì¬‚³‚ê‚Ü‚·Bphing ƒRƒ}ƒ“ƒh‚É test ˆø”‚ğ•t‚¯‚ÄÀs‚·‚é‚Æ UnitTest ‚ğÀs‚Å‚«‚Ü‚·B
+service ã‚³ãƒãƒ³ãƒ‰ã«ã‚ˆã‚Š PHPUnit2 ã‚’ç”¨ã„ãŸ UnitTest ã‚¯ãƒ©ã‚¹ãŒä½œæˆã•ã‚Œã¾ã™ã€‚phing ã‚³ãƒãƒ³ãƒ‰ã« test å¼•æ•°ã‚’ä»˜ã‘ã¦å®Ÿè¡Œã™ã‚‹ã¨ UnitTest ã‚’å®Ÿè¡Œã§ãã¾ã™ã€‚
 <pre>
 % phing test -Dtd=modules/Default/service
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -834,7 +942,7 @@ BUILD FINISHED
 Total time: 0.5984 seconds
 %
 </pre>
-—á‚Æ‚µ‚ÄAƒT[ƒrƒXƒNƒ‰ƒX‚É add ƒƒ\ƒbƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+ä¾‹ã¨ã—ã¦ã€ã‚µãƒ¼ãƒ“ã‚¹ã‚¯ãƒ©ã‚¹ã« add ãƒ¡ã‚½ãƒƒãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 <pre>
 % more app/modules/Default/service/CulcServiceImpl.class.php
 &lt;?php
@@ -842,7 +950,7 @@ class CulcServiceImpl
     implements CulcService{
     public function __construct(){}
 
-    public function add($a,$b){         &lt;--- ‘«‚µZƒƒ\ƒbƒh‚ğ’Ç‰Á
+    public function add($a,$b){         &lt;--- è¶³ã—ç®—ãƒ¡ã‚½ãƒƒãƒ‰ã‚’è¿½åŠ 
         return $a + $b;
     }
 }
@@ -850,21 +958,21 @@ class CulcServiceImpl
 %
 </pre>
 
-ƒeƒXƒgƒNƒ‰ƒX‚É add ƒƒ\ƒbƒh‚ğƒeƒXƒg‚·‚éƒeƒXƒgƒƒ\ƒbƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+ãƒ†ã‚¹ãƒˆã‚¯ãƒ©ã‚¹ã« add ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ãƒ†ã‚¹ãƒˆã™ã‚‹ãƒ†ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 <pre>
 % more test/modules/Default/service/CulcServiceImplTest.class.php
 &lt;?php
 class CulcServiceImplTest extends PHPUnit2_Framework_TestCase {
     private $module = "Default";
     private $serviceName = "CulcService";
-    private $container;                       &lt;--- ŠeƒeƒXƒg‚Ì‘Oˆ—‚ÅS2ContainerƒIƒuƒWƒFƒNƒg‚ªİ’è‚³‚ê‚Ü‚·B
-    private $service;                         &lt;--- ŠeƒeƒXƒg‚Ì‘Oˆ—‚ÅƒT[ƒrƒXƒIƒuƒWƒFƒNƒg‚ªİ’è‚³‚ê‚Ü‚·B
+    private $container;                       &lt;--- å„ãƒ†ã‚¹ãƒˆã®å‰å‡¦ç†ã§S2Containerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒè¨­å®šã•ã‚Œã¾ã™ã€‚
+    private $service;                         &lt;--- å„ãƒ†ã‚¹ãƒˆã®å‰å‡¦ç†ã§ã‚µãƒ¼ãƒ“ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒè¨­å®šã•ã‚Œã¾ã™ã€‚
 
     function __construct($name) {
         parent::__construct($name);
     }
 
-    function testAdd() {                  &lt;--- ƒeƒXƒgƒƒ\ƒbƒh‚ğ’Ç‰Á
+    function testAdd() {                  &lt;--- ãƒ†ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰ã‚’è¿½åŠ 
         print __METHOD__ . "\n";
         $a = 2;
         $b = 3;
@@ -892,7 +1000,7 @@ class CulcServiceImplTest extends PHPUnit2_Framework_TestCase {
 %
 </pre>
 
-phing ƒRƒ}ƒ“ƒh‚É test ˆø”‚ğ•t‚¯‚ÄÀs‚·‚é‚Æ UnitTest ‚ğÀs‚Å‚«‚Ü‚·B
+phing ã‚³ãƒãƒ³ãƒ‰ã« test å¼•æ•°ã‚’ä»˜ã‘ã¦å®Ÿè¡Œã™ã‚‹ã¨ UnitTest ã‚’å®Ÿè¡Œã§ãã¾ã™ã€‚
 <pre>
 % phing test -Dtd=modules/Default/service
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -904,7 +1012,7 @@ project > prepare:
 project > test:
 
 CulcServiceImplTest::testAdd
-2 + 3 = 5                     &lt;--- ƒfƒoƒbƒO‚Æ‚µ‚ÄA‘«‚µZ®‚ğ•\¦‚µ‚Ü‚·B
+2 + 3 = 5                     &lt;--- ãƒ‡ãƒãƒƒã‚°ã¨ã—ã¦ã€è¶³ã—ç®—å¼ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚
  [phpunit2] Testsuite: CulcServiceImplTest
  [phpunit2] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.01385 sec
 
@@ -914,15 +1022,19 @@ Total time: 0.6278 seconds
 %
 </pre>
 
-
+</div>
 <br>
-<h3><a name="test">test ƒ^ƒXƒN</a></h3>
-<h4>à–¾</h4>
+
+<div class="section">
+<h2 id="h02"><a name="test">test ã‚¿ã‚¹ã‚¯</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-S2Base ƒRƒ}ƒ“ƒh‚Ì serviceAdaoAgoya ‚Å‚ÍAUnitTest‚ª¶¬‚³‚ê‚Ü‚·B‚±‚ê‚ç‚Ì UnitTest ‚ğÀs‚·‚éƒ^ƒXƒN‚Å‚·B
+ã€€S2Base ã‚³ãƒãƒ³ãƒ‰ã® serviceã€daoã€goya ã§ã¯ã€UnitTestãŒç”Ÿæˆã•ã‚Œã¾ã™ã€‚ã“ã‚Œã‚‰ã® UnitTest ã‚’å®Ÿè¡Œã™ã‚‹ã‚¿ã‚¹ã‚¯ã§ã™ã€‚
 </p>
-<h4>Às—á</h4>
-<p>s2base.php5 ƒfƒBƒŒƒNƒgƒŠ‚Å phing test ‚ğÀs‚µ‚Ü‚·Btest ƒfƒBƒŒƒNƒgƒŠ‚É‚ ‚é‘SƒeƒXƒg‚ğÀs‚µ‚Ü‚·B</p>
+<h3>å®Ÿè¡Œä¾‹</h3>
+<p>
+ã€€s2base.php5 ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ phing test ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚test ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ã‚ã‚‹å…¨ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+</p>
 <pre>
 % phing test
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -932,7 +1044,7 @@ project &gt; prepare:
       [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
 
 project &gt; test:
-     [echo] test directory : test/         &lt;--- test ƒfƒBƒŒƒNƒgƒŠˆÈ‰º‚Ì‘SƒeƒXƒg
+     [echo] test directory : test/         &lt;--- test ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä»¥ä¸‹ã®å…¨ãƒ†ã‚¹ãƒˆ
 
 CdDaoTest::testFindAllArray
 CdEntity Object
@@ -955,7 +1067,7 @@ Total time: 0.8004 seconds
 %
 </pre>
 
-phing ƒRƒ}ƒ“ƒh‚ÌƒIƒvƒVƒ‡ƒ“ -DƒvƒƒpƒeƒB–¼ ‚ğg—p‚µ‚ÄAtest ƒfƒBƒŒƒNƒgƒŠˆÈ‰º‚Ì”CˆÓ‚ÌƒfƒBƒŒƒNƒgƒŠ‚ğw’è‚Å‚«‚Ü‚·BƒvƒƒpƒeƒB–¼‚Íu td v‚Å‚·B
+phing ã‚³ãƒãƒ³ãƒ‰ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³ -Dãƒ—ãƒ­ãƒ‘ãƒ†ã‚£å ã‚’ä½¿ç”¨ã—ã¦ã€test ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä»¥ä¸‹ã®ä»»æ„ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’æŒ‡å®šã§ãã¾ã™ã€‚ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£åã¯ã€Œ td ã€ã§ã™ã€‚
 <pre>
 % phing test -Dtd=modules/Default/dao
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -965,7 +1077,7 @@ project &gt; prepare:
       [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
 
 project &gt; test:
-     [echo] test directory : test/modules/Default/dao     &lt;--- dao ƒTƒuƒfƒBƒŒƒNƒgƒŠˆÈ‰º‚Ì‘SƒeƒXƒg
+     [echo] test directory : test/modules/Default/dao     &lt;--- dao ã‚µãƒ–ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä»¥ä¸‹ã®å…¨ãƒ†ã‚¹ãƒˆ
 
 CdDaoTest::testFindAllArray
 CdEntity Object
@@ -983,14 +1095,25 @@ Total time: 0.7715 seconds
 %
 </pre>
 
+ã¾ãŸã€ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£åã«ã€Œttã€ã‚’ä½¿ç”¨ã™ã‚‹ã¨ã€æŒ‡å®šã—ãŸãƒ‘ã‚¹ã«ãƒãƒƒãƒã™ã‚‹ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚
+<pre>
+% phing test -Dtt=**/Default/dao/Cd*
+ãƒ»ãƒ»ãƒ»
+</pre>
+
+</div>
 <br>
-<h3><a name="gen-dao">gen-dao ƒ^ƒXƒN</a></h3>
-<h4>à–¾</h4>
+
+<div class="section">
+<h2 id="h02"><a name="gen-dao">gen-dao ã‚¿ã‚¹ã‚¯</a></h2>
+<h3>èª¬æ˜</h3>
 <p>
-S2Dao ‚É•t‘®‚Ì S2DaoSkeletonTask ‚ğ—p‚¢‚ÄAapp/commons/dao ƒfƒBƒŒƒNƒgƒŠ‚Éƒf[ƒ^ƒx[ƒX‚Ì‘Sƒe[ƒuƒ‹‚Ì dao ‚Æ entity ‚ğ¶¬‚µ‚Ü‚·B
+ã€€S2Dao ã«ä»˜å±ã® S2DaoSkeletonTask ã‚’ç”¨ã„ã¦ã€app/commons/dao ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®å…¨ãƒ†ãƒ¼ãƒ–ãƒ«ã® dao ã¨ entity ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
 </p>
-<h4>Às—á</h4>
-<p>ƒf[ƒ^ƒx[ƒX‚ÉŸ‚Ì‚æ‚¤‚ÈƒTƒ“ƒvƒ‹ƒe[ƒuƒ‹‚ğ•¡”—pˆÓ‚µ‚Ä‚¢‚Ü‚·B</p>
+<h3>å®Ÿè¡Œä¾‹</h3>
+<p>
+ã€€ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã«æ¬¡ã®ã‚ˆã†ãªã‚µãƒ³ãƒ—ãƒ«ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’è¤‡æ•°ç”¨æ„ã—ã¦ã„ã¾ã™ã€‚
+</p>
 <pre>
 mysql&gt; show tables;
 +-----------------------+
@@ -1006,22 +1129,8 @@ mysql&gt; show tables;
 mysql&gt;
 </pre>
 
-build.xml ‚Ì gen-dao ƒ^ƒXƒN‚ÅADSNİ’è‚ğs‚¢‚Ü‚·B
-<pre>
-&lt;?xml version="1.0"?&gt;
-&lt;project name="project" default="com" basedir="."&gt;
-    EEE
-    &lt;target name="gen-dao" depends="prepare"&gt;
-        &lt;property name="dsn" value="mysql:host=localhost; dbname=s2container" /&gt;
-        &lt;property name="user" value="root" /&gt;
-        &lt;property name="password" value="test" /&gt;
-        &lt;gdao toDir="app/commons/dao" /&gt;
-    &lt;/target&gt;
-    EEE
-&lt;/project&gt;
-</pre>
 
-s2base.php5 ƒfƒBƒŒƒNƒgƒŠ‚Å phing gen-dao ‚ğÀs‚µ‚Ü‚·B
+s2base.php5 ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ phing gen-dao ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
 <pre>
 % phing gen-dao
 Buildfile: /seasar.php/workspace/s2base.php5/build.xml
@@ -1059,20 +1168,17 @@ CDEntity.class.php  DEPTEntity.class.php  EMPEntity.class.php  SHELFEntity.class
 %
 </pre>
 
+</div>
+<br>
+</div><!-- article -->
 
-<!-- document end -->
-<!-- don't edit start -->
-</td>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="30" width="14"></td>
-<td width="766"><img src="images/spacer.gif" alt="" height="30" width="592"></td>
-</tr><tr>
-<td width="14"><img src="images/spacer.gif" alt="" height="14" width="14"></td>
-<td class="copyright" width="766">&#169; Copyright The Seasar Project and the others 2005-2006, all rights reserved.</td>
-</tr></tbody></table>
-</td><td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
-<td class="backunder" align="left" height="16" valign="top" width="780">&nbsp;</td>
-<td class="backcorner" align="left" height="16" valign="top">&nbsp;</td>
-</tr></tbody></table><!-- don't edit end -->
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&#169; Copyright The Seasar Foundation and the others 2005-2007, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
 </body></html>

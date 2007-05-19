@@ -2,8 +2,8 @@
 /**
  * php log setting
  */
-error_reporting(E_ERROR);
-error_reporting(E_WARNING);
+//error_reporting(E_ERROR);
+//error_reporting(E_WARNING);
 error_reporting(E_ALL);
 ini_set('display_errors','On');
 ini_set('log_errors','On');
@@ -28,7 +28,10 @@ define('S2BASE_PHP5_PLUGIN_SMARTY',S2BASE_PHP5_ROOT . '/vendor/plugins/smarty');
 /**
  * session path setting
  */
-session_save_path(S2BASE_PHP5_VAR_DIR . '/session');
+if (!defined('S2BASE_PHP5_SESSION_DIR')) {
+    define('S2BASE_PHP5_SESSION_DIR', S2BASE_PHP5_VAR_DIR . '/session');
+}
+session_save_path(S2BASE_PHP5_SESSION_DIR);
 
 /**
  * global lyaout setting

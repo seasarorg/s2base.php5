@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="project" default="smarty" basedir=".">
+<project name="project" default="command" basedir=".">
 
     <php expression="ini_set('include_path','lib'.PATH_SEPARATOR.ini_get('include_path'))" />
     <php expression="require_once('S2Base/S2Base.phing.php')" />
@@ -57,6 +57,12 @@
         <phing phingfile="${plugins.dir}/symfony/build.xml" inheritRefs="true" target="${st}"/>
     </target>
 
+    <target name="zf" depends="prepare">
+        <available file="${plugins.dir}/zf" type="dir" property="plugin.available" />
+        <fail unless="plugin.available" message="Invalid : [ zf plugin ]" />
+        <phing phingfile="${plugins.dir}/zf/zf.xml" inheritRefs="true" target="${st}"/>
+    </target>
+
     <target name="prado" depends="prepare">
         <available file="${plugins.dir}/prado" type="dir" property="plugin.available" />
         <fail unless="plugin.available" message="Invalid : [ PRADO plugin ]" />
@@ -64,11 +70,6 @@
     </target>
 
     <target name="gen-dao" depends="prepare">
-    	<!-- dsn setting move to app/commons/dicon/pdo.dicon
-        <property name="dsn" value="mysql:host=localhost; dbname=s2con" />
-        <property name="user" value="root" />
-        <property name="password" value="pass" />
-        -->
         <gdao toDir="app/commons/dao" />
     </target>
 

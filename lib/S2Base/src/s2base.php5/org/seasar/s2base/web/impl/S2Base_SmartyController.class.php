@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------+
 // | PHP version 5                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright 2005-2006 the Seasar Foundation and the Others.            |
+// | Copyright 2005-2007 the Seasar Foundation and the Others.            |
 // +----------------------------------------------------------------------+
 // | Licensed under the Apache License, Version 2.0 (the "License");      |
 // | you may not use this file except in compliance with the License.     |
@@ -24,7 +24,7 @@
 /**
  * withSmarty WEBフレームワークのSmartyクラスを継承するコントローラクラス。またビューを兼務します。
  * 
- * @copyright  2005-2006 the Seasar Foundation and the Others.
+ * @copyright  2005-2007 the Seasar Foundation and the Others.
  * @license    http://www.apache.org/licenses/LICENSE-2.0
  * @version    Release: 1.0.0
  * @link       http://s2base.php5.seasar.org/
@@ -112,7 +112,7 @@ class S2Base_SmartyController extends Smarty
      * 
      * @param boolean $value
      */
-    public final function setRendered($value){
+    public final function setRendered($value = true){
         self::$rendered = $value;
     }
 
@@ -149,13 +149,15 @@ class S2Base_SmartyController extends Smarty
     public function view(){
         $mod = $this->request->getModule();
         $act = $this->request->getAction();
-        $this->template_dir = S2BASE_PHP5_ROOT . "/app/modules";
+        $this->template_dir = S2BASE_PHP5_ROOT . '/app/modules';
         $this->assign('errors',self::$errors);
         $this->assign('mod_key',S2BASE_PHP5_REQUEST_MODULE_KEY);
         $this->assign('act_key',S2BASE_PHP5_REQUEST_ACTION_KEY);
         $this->assign('module',$mod);
         $this->assign('action',$act);
         $this->assign('request',$this->request);
+        $this->assign('module_view_dir',S2BASE_PHP5_ROOT . "/app/modules/$mod/view");
+        $this->assign('commons_view_dir',S2BASE_PHP5_ROOT . '/app/commons/view');
         
         if (preg_match("/^redirect:(.+)$/",$this->actionTpl,$matches)){
             $this->redirect($matches[1]);

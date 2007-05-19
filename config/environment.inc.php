@@ -3,23 +3,36 @@
  * Directory setting
  */
 define('S2BASE_PHP5_ROOT',dirname(dirname(__FILE__)));
-define('S2BASE_PHP5_VAR_DIR',S2BASE_PHP5_ROOT . '/var');
+if (!defined('S2BASE_PHP5_VAR_DIR')) {
+    define('S2BASE_PHP5_VAR_DIR',S2BASE_PHP5_ROOT . '/var');
+}
 
 /**
  * suffix setting
  */
-define('S2BASE_PHP5_DICON_SUFFIX','.dicon');
-define('S2BASE_PHP5_CLASS_SUFFIX','.class.php');
+if (!defined('S2BASE_PHP5_DICON_SUFFIX')) {
+    define('S2BASE_PHP5_DICON_SUFFIX','.dicon');
+}
+if (!defined('S2BASE_PHP5_CLASS_SUFFIX')){
+    define('S2BASE_PHP5_CLASS_SUFFIX','.class.php');
+}
 
 /**
  * S2Dao pdo.dicon setting
  */
-define('PDO_DICON',S2BASE_PHP5_ROOT . '/app/commons/dicon/pdo.dicon');
+if (!defined('PDO_DICON')) {
+    define('PDO_DICON',S2BASE_PHP5_ROOT . '/app/commons/dicon/pdo.dicon');
+}
 
 /**
  * DTD validation setting
  */
 define('S2CONTAINER_PHP5_DOM_VALIDATE',false);
+
+/**
+ * ENV setting
+ */
+//define('S2CONTAINER_PHP5_ENV', 'test');
 
 /**
  * include path setting
