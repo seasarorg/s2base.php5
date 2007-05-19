@@ -63,6 +63,12 @@
         <phing phingfile="${plugins.dir}/zf/zf.xml" inheritRefs="true" target="${st}"/>
     </target>
 
+    <target name="prado" depends="prepare">
+        <available file="${plugins.dir}/prado" type="dir" property="plugin.available" />
+        <fail unless="plugin.available" message="Invalid : [ PRADO plugin ]" />
+        <phing phingfile="${plugins.dir}/prado/build.xml" inheritRefs="true" target="${st}"/>
+    </target>
+
     <target name="gen-dao" depends="prepare">
         <gdao toDir="app/commons/dao" />
     </target>
