@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<project name="project" default="command" basedir=".">
+    <target name="command">
+        <php expression="define('DOCUMENT_ROOT_DIR','/var/www/public_html/')"/>
+        <php expression="define('DOCUMENT_ROOT_S2BASE_RELATION','../s2base.php5')"/>
+        <php expression="require_once('vendor/plugins/prado/config/environment.inc.php')"/>
+        <command>
+            <!-- in prado plugin -->
+            <fileset dir="${plugins.dir}/prado/commands">
+               <include name="*Command*.php"/>
+            </fileset>
+
+            <!-- in default command-->
+            <fileset dir="${cmd.dir}">
+                <exclude name="ModuleCommand*.php"/>
+            </fileset>
+        </command>
+    </target>
+</project>
