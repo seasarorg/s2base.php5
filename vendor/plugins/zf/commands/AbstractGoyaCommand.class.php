@@ -341,8 +341,19 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                  . $this->actionName
                  . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
         $viewSuffix = ModuleCommand::getViewSuffixName();
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/action/html$viewSuffix.tpl");
+        $tempContent = '';
+        if (!defined('S2BASE_PHP5_LAYOUT')) {
+            $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                          . "/skeleton/module/html_header$viewSuffix.tpl");
+        }
+
+        $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                      . "/skeleton/action/html$viewSuffix.tpl");
+        if (!defined('S2BASE_PHP5_LAYOUT')) {
+            $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                          . "/skeleton/module/html_footer.tpl");
+        }
+
         $patterns = array("/@@MODULE_NAME@@/",
                           "/@@CONTROLLER_NAME@@/",
                           "/@@ACTION_NAME@@/");
