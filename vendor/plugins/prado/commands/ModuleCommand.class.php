@@ -98,9 +98,6 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $indexFile = 'index.php';
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_PRADO
                      . "/skeleton/module/$indexFile");
-		$tempContent = preg_replace("/@@DOCUMENT_ROOT_S2BASE_RELATION@@/",
-                       				DOCUMENT_ROOT_S2BASE_RELATION,
-                         			$tempContent);   
 		$tempContent = preg_replace("/@@S2BASE_MODULE_ENVIRONMENT_INC_PATH@@/",
 		                            '/app/modules/' . 
 									$this->moduleName . S2BASE_PHP5_DS .
