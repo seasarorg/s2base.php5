@@ -10,17 +10,8 @@ require_once(dirname(dirname(__FILE__)).'/vendor/plugins/zf/config/environment.i
 
 try{
     Zend_Session::regenerateId();
-    $request = new Zend_Controller_Request_Http();
-    $request->setBaseUrl();
-    $fc = Zend_Controller_Front::getInstance();
-    $fc->throwExceptions(true);
-    $fc->setRequest($request);
-    $fc->setDispatcher(new S2Base_ZfDispatcher());
-    $fc->registerPlugin(new S2Base_ZfDispatcherSupportPlugin());
-    $validatePlugin = new S2Base_ZfValidateSupportPlugin();
-    $validatePlugin->addValidateFactory(new S2Base_ZfRegexValidateFactory());
-    $fc->registerPlugin($validatePlugin);
-    $response = $fc->dispatch();
+    S2Base_ZfInitialize::init();
+    Zend_Controller_Front::getInstance()->dispatch();
 }catch(Exception $e){
     print '<pre><font color="red">' . $e->__toString() . '</font></pre>' . PHP_EOL;
 }

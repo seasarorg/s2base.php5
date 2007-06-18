@@ -115,6 +115,8 @@ class S2Base_CommandUtil {
         $container = S2ContainerFactory::create(PDO_DICON);
         $cd = $container->getComponentDef('dataSource');
         $dsn = $cd->getPropertyDef('dsn')->getValue();
+        $user = '';
+        $pass = '';
         if ($cd->hasPropertyDef('user')) {
             $user = $cd->getPropertyDef('user')->getValue();
         }
