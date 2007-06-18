@@ -20,7 +20,7 @@
 // | Authors: klove                                                       |
 // +----------------------------------------------------------------------+
 //
-// $Id:$
+// $Id$
 /**
  * S2Base.PHP5 with Zf
  * 
@@ -33,6 +33,7 @@
  * @author     klove
  */
 class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher_Standard {
+    const PARAM_MAX_LEN = 50;
 
     /**
      * Dispatch to a controller/action
@@ -95,6 +96,9 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher_Standard {
     }
 
     protected function instantiateController($request, $moduleName, $controllerClassName) {
+        $this->validateModule($request->getModuleName());
+        $this->validateController($request->getControllerName());
+        $this->validateAction($request->getActionName());
         $controller = $this->getControllerFromS2Container($request, $moduleName, $controllerClassName);
 
         if (!$this->isValidController($controller)) {
@@ -126,7 +130,6 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher_Standard {
             $cd = $container->getComponentDef($controllerClassName);
         } else {
             $container = new S2ContainerImpl();
-            $container->includeChild(S2ContainerFactory::create(S2BASE_PHP5_ZF_APP_DICON));
             $cd = new S2Container_ComponentDefImpl($controllerClassName);
             $container->register($cd);
         }
@@ -155,6 +158,24 @@ class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher_Standard {
             return true;
         }
         return false;
+    }
+
+    private function validateModule($value) {
+        if (!preg_match('/^[_a-zA-Z0-9]{1,' . self::PARAM_MAX_LEN .'}$/', $value)) {
+            throw new S2Base_ZfException("invalid module. [$value]");
+        }
+    }
+
+    private function validateController($value) {
+        if (!preg_match('/^[a-zA-Z0-9]{1,' . self::PARAM_MAX_LEN .'}$/', $value)) {
+            throw new S2Base_ZfException("invalid controller. [$value]");
+        }
+    }
+
+    private function validateAction($value) {
+        if (!preg_match('/^[_a-zA-Z0-9\.\-]{1,' . self::PARAM_MAX_LEN .'}$/', $value)) {
+            throw new S2Base_ZfException("invalid action. [$value]");
+        }
     }
 }
 ?>

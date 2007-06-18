@@ -19,13 +19,10 @@ class ModuleCommand implements S2Base_GenerateCommand {
     }
 
     public static function isStandardView() {
-        $container = S2ContainerFactory::create(S2BASE_PHP5_ZF_APP_DICON);
-        $cd = $container->getComponentDef('S2Base_ZfView');
-        $ref = $cd->getComponentClass();
-        if ($ref->getName() == 'S2Base_ZfStandardView') {
-            return true;
+        if (defined('S2BASE_PHP5_USE_SMARTY') and S2BASE_PHP5_USE_SMARTY) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     public static function getViewSuffixName() {
@@ -121,11 +118,15 @@ class ModuleCommand implements S2Base_GenerateCommand {
     }
 
     public function createDirectory(){
+        $this->srcDefaultModuleDir = S2BASE_PHP5_MODULES_DIR
+                                   . S2BASE_PHP5_DS . S2BASE_PHP5_ZF_DEFAULT_MODULE;
         $this->srcModuleDir = S2BASE_PHP5_MODULES_DIR
                             . $this->moduleName;
         $this->srcCtlDir = $this->srcModuleDir
                          . S2BASE_PHP5_DS
                          . $this->controllerName;
+        $this->testDefaultModuleDir = S2BASE_PHP5_TEST_MODULES_DIR
+                                    . S2BASE_PHP5_DS . S2BASE_PHP5_ZF_DEFAULT_MODULE;
         $this->testModuleDir = S2BASE_PHP5_TEST_MODULES_DIR
                              . $this->moduleName;
         $this->testCtlDir = $this->testModuleDir
@@ -140,10 +141,26 @@ class ModuleCommand implements S2Base_GenerateCommand {
             S2BASE_PHP5_VIEW_DIR,
             S2BASE_PHP5_DS . self::MODEL_DIR,
             S2BASE_PHP5_DS . self::VALIDATE_DIR);
+        if (self::isStandardView()) {
+            $dirs[] = S2BASE_PHP5_VIEW_DIR . S2BASE_PHP5_DS . 'scripts';
+            $dirs[] = S2BASE_PHP5_VIEW_DIR . S2BASE_PHP5_DS . 'helpers';
+            $dirs[] = S2BASE_PHP5_VIEW_DIR . S2BASE_PHP5_DS . 'filters';
+        }
         S2Base_CommandUtil::createDirectory($this->srcModuleDir);
+        S2Base_CommandUtil::createDirectory($this->srcDefaultModuleDir);
         S2Base_CommandUtil::createDirectory($this->srcCtlDir);
         foreach($dirs as $dir){
             S2Base_CommandUtil::createDirectory($this->srcCtlDir. $dir);
+        }
+
+        if (self::isStandardView()) {
+            $commonsViewDir = S2BASE_PHP5_ROOT
+                            . S2BASE_PHP5_DS . 'app'
+                            . S2BASE_PHP5_DS . 'commons'
+                            . S2BASE_PHP5_DS . 'view';
+            S2Base_CommandUtil::createDirectory($commonsViewDir . S2BASE_PHP5_DS . 'scripts');
+            S2Base_CommandUtil::createDirectory($commonsViewDir . S2BASE_PHP5_DS . 'helpers');
+            S2Base_CommandUtil::createDirectory($commonsViewDir . S2BASE_PHP5_DS . 'filters');
         }
 
         $dirs = array(
@@ -151,6 +168,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
             S2BASE_PHP5_SERVICE_DIR,
             S2BASE_PHP5_DS . self::MODEL_DIR);
         S2Base_CommandUtil::createDirectory($this->testModuleDir);
+        S2Base_CommandUtil::createDirectory($this->testDefaultModuleDir);
         S2Base_CommandUtil::createDirectory($this->testCtlDir);
         foreach($dirs as $dir){
             S2Base_CommandUtil::createDirectory($this->testCtlDir. $dir);
@@ -204,10 +222,17 @@ class ModuleCommand implements S2Base_GenerateCommand {
     }
 
     public function prepareHtmlFile(){
-        $srcFile = $this->srcCtlDir
-                 . S2BASE_PHP5_VIEW_DIR
-                 . 'index'
-                 . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+        if (self::isStandardView()) {
+            $srcFile = $this->srcCtlDir
+                     . S2BASE_PHP5_VIEW_DIR
+                     . S2BASE_PHP5_DS . 'scripts'
+                     . S2BASE_PHP5_DS . 'index' . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+        } else {
+            $srcFile = $this->srcCtlDir
+                     . S2BASE_PHP5_VIEW_DIR
+                     . 'index'
+                     . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+        }
 
         $viewSuffix = self::getViewSuffixName();
         $tempContent = '';
