@@ -209,6 +209,7 @@ class sfDaoCommand implements S2Base_GenerateCommand
         $testName = $this->daoInterfaceName . "Test";
         $testFile = $this->pathName     . S2BASE_PHP5_DS .
                     "test"              . S2BASE_PHP5_DS .
+                    "unit"              . S2BASE_PHP5_DS .
                     $this->appName      . S2BASE_PHP5_DS .
                     $this->moduleName   .
                     S2BASE_PHP5_DAO_DIR .

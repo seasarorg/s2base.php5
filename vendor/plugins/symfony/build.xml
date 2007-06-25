@@ -24,7 +24,7 @@
       <phpunit2 haltonfailure="false" haltonerror="false">
         <formatter type="plain" usefile="false"/>
           <batchtest>
-            <fileset dir="${project.dir}/test/${app.dir}/${module.dir}/${test.dir}">
+            <fileset dir="${project.dir}/test/unit/${app.dir}/${module.dir}/${test.dir}">
                 <include name="**/*Test.class.php"/>
             </fileset>
           </batchtest>

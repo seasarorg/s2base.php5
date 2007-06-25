@@ -1,4 +1,3 @@
-<?php
 /**
  * Directory setting
  */
@@ -30,13 +29,10 @@ ini_set('include_path',
  * library setting
  */
 require_once('S2Container/S2Container.php');
+S2ContainerClassLoader::import(S2CONTAINER_PHP5);
 require_once('S2Dao/S2Dao.php');
-sfConfig::add(array(
-                's2container_php5' => S2CONTAINER_PHP5,
-                's2dao_php5'       => S2DAO_PHP5,
-                //'s2javelin_php5'   => S2JAVELIN_PHP5
-                   )
-              );
+S2ContainerClassLoader::import(S2DAO_PHP5);
+require_once('S2ContainerSplAutoLoad.php');
 
 
 /**

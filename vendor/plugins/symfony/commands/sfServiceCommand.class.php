@@ -126,6 +126,7 @@ class sfServiceCommand implements S2Base_GenerateCommand
         $testName = $this->serviceClassName . "Test";
         $testFile = $this->pathName     . S2BASE_PHP5_DS .
                     "test"              . S2BASE_PHP5_DS .
+                    "unit"              . S2BASE_PHP5_DS .
                     $this->appName      . S2BASE_PHP5_DS .
                     $this->moduleName   .
                     S2BASE_PHP5_SERVICE_DIR . 
