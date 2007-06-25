@@ -165,9 +165,10 @@ class sfCommandUtil
     {
         $testDir = self::$attributes['pathName']  . S2BASE_PHP5_DS .
                    "test"                         . S2BASE_PHP5_DS .
+                   "unit"                         . S2BASE_PHP5_DS .
                    self::$attributes['appName']   . S2BASE_PHP5_DS .
                    self::$attributes['moduleName'];
-        S2Base_CommandUtil::createDirectory($testDir);
+        S2Base_CommandUtil::createDirectory($testDir, 0755, true);
         $dirs = array(
             S2BASE_PHP5_DAO_DIR,
             S2BASE_PHP5_SERVICE_DIR);
@@ -180,6 +181,7 @@ class sfCommandUtil
     {
         $srcFile = self::$attributes['pathName']   . S2BASE_PHP5_DS .
                    "test"                          . S2BASE_PHP5_DS .
+                   "unit"                          . S2BASE_PHP5_DS .
                    self::$attributes['appName']    . S2BASE_PHP5_DS .
                    self::$attributes['moduleName'] . S2BASE_PHP5_DS .
                    "test.inc.php";

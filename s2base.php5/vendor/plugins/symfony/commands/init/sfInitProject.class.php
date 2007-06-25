@@ -47,7 +47,7 @@ class sfInitProject
     private function prepareFiles ()
     {
         $this->prepareConfigPhpFile();
-        $this->prepareAutoloadYmlFile();
+        // $this->prepareAutoloadYmlFile();
         $this->writeProjectPathFile();
         
         sfCommandUtil::$attributes['pathName']   = $this->pathName;
@@ -81,13 +81,14 @@ class sfInitProject
         $srcFile = $this->pathName . S2BASE_PHP5_DS .
                    "config". S2BASE_PHP5_DS .
                    "config.php";
-        @unlink($srcFile);
+        // @unlink($srcFile);
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SF_SKELETON_DIR .
                                                     'config.php');
         $tempContent = preg_replace("/@@S2BASE_PHP5_ROOT@@/",
                                     S2BASE_PHP5_ROOT,
                                     $tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+        file_put_contents($srcFile, $tempContent, FILE_APPEND);  
+        // CmdCommand::writeFile($srcFile,$tempContent);
     }
     
     private function writeProjectPathFile ()
