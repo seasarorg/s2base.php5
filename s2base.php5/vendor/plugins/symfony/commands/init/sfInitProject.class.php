@@ -59,7 +59,7 @@ class sfInitProject
         sfCommandUtil::createTestDirectories();
         sfCommandUtil::prepareTestIncFile();
         sfCommandUtil::prepareModuleAutoloadYmlFile();
-        sfCommandUtil::prepareModuleDiconFile();
+        sfCommandUtil::prepareModuleServiceIfaceFile();
     }
     
     private function prepareAutoloadYmlFile ()

@@ -49,7 +49,7 @@ class sfInitApp
         sfCommandUtil::copyFactoriesYml();
         sfCommandUtil::createLogicDirectories();
         sfCommandUtil::prepareModuleAutoloadYmlFile();
-        sfCommandUtil::prepareModuleDiconFile();
+        sfCommandUtil::prepareModuleServiceIfaceFile();
     }
 }
 ?>
