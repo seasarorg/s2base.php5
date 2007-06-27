@@ -77,6 +77,9 @@ class ModuleCommand implements S2Base_GenerateCommand {
                 return;
             }
             $this->validate($this->moduleName);
+            if (preg_match('/^[^a-z]/i', $this->moduleName)) {
+                throw new Exception('module name must start with [a-zA-Z]');
+            }
             $this->controllerName = S2Base_StdinManager::getValue('controller name ? : ');
             $this->validate($this->controllerName);
             list($this->controllerName, $this->controllerClassName, $this->controllerClassFile) = 
@@ -105,7 +108,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
     }
     
     protected function validate($name){
-        S2Base_CommandUtil::validate($name,"Invalid module name. [ $name ]");
+        S2Base_CommandUtil::validate($name,"Invalid name. [ $name ]");
     }
 
     protected function finalConfirm(){

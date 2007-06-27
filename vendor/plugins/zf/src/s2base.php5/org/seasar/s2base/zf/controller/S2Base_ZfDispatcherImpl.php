@@ -20,82 +20,32 @@
 // | Authors: klove                                                       |
 // +----------------------------------------------------------------------+
 //
-// $Id$
+// $Id:$
 /**
  * S2Base.PHP5 with Zf
  * 
  * @copyright  2005-2007 the Seasar Foundation and the Others.
  * @license    http://www.apache.org/licenses/LICENSE-2.0
- * @version    Release: 1.0.2
+ * @version    Release: 1.0.3
  * @link       http://s2base.php5.seasar.org/
- * @since      Class available since Release 1.0.2
+ * @since      Class available since Release 1.0.3
  * @package    org.seasar.s2base.zf.controller
  * @author     klove
  */
-class S2Base_ZfDispatcher extends Zend_Controller_Dispatcher_Standard {
+class S2Base_ZfDispatcherImpl extends S2Base_ZfAbstractDispatcher {
     const PARAM_MAX_LEN = 50;
 
     /**
-     * Dispatch to a controller/action
-     *
-     * @param Zend_Controller_Request_Abstract $request
-     * @param Zend_Controller_Response_Abstract $response
-     * @return boolean
+     * @see Zend_Controller_Dispatcher_Abstrac::_formatName()
      */
-    public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response)
-    {
-        $this->setResponse($response);
-
-        /**
-         * Get controller class
-         */
-        if (!$this->isDispatchable($request)) {
-            if (!$this->getParam('useDefaultControllerAlways')) {
-                require_once 'Zend/Controller/Dispatcher/Exception.php';
-                throw new Zend_Controller_Dispatcher_Exception('Invalid controller specified (' . $request->getControllerName() . ')');
-            }
-
-            $className = $this->getDefaultControllerClass($request);
-        } else {
-            $className = $this->getControllerClass($request);
-            if (!$className) {
-                $className = $this->getDefaultControllerClass($request);
-            }
-        }
-
-        /**
-         * Load the controller class file
-         */
-        $className = $this->loadClass($className);
-
-        $action = $this->getActionMethod($request);
-        $controller = $this->instantiateController($request,
-                                                   $request->getModuleName(),
-                                                   $className);
-
-        /**
-         * Dispatch the method call
-         */
-        $request->setDispatched(true);
-        $disableOb = $this->getParam('disableOutputBuffering');
-        if (empty($disableOb)) {
-            ob_start();
-        }
-        $controller->dispatch($action);
-        if (empty($disableOb)) {
-            $content = ob_get_clean();
-            $response->appendBody($content);
-        }
-
-        // Destroy the page controller instance and reflection objects
-        $controller = null;
-    }
-
     public function formatName($unformatted, $isAction = false) {
         return $this->_formatName($unformatted, $isAction);
     }
 
-    protected function instantiateController($request, $moduleName, $controllerClassName) {
+    /**
+     * @see S2Base_ZfAbstractDispatcher::instantiateController()
+     */
+    protected function instantiateController(Zend_Controller_Request_Abstract $request, $moduleName, $controllerClassName) {
         $this->validateModule($request->getModuleName());
         $this->validateController($request->getControllerName());
         $this->validateAction($request->getActionName());
