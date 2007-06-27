@@ -1,6 +1,6 @@
 S2Base_ZfException
-S2Base_ZfDispatcher
-S2Base_ZfDispatcherSupportPlugin
+S2Base_ZfAbstractDispatcher
+S2Base_ZfDispatcherImpl
 S2Base_ZfValidateFactory
 S2Base_ZfRegexValidateFactory
 S2Base_ZfValidateSupportPlugin
