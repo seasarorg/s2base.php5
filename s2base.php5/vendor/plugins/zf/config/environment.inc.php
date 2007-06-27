@@ -44,7 +44,7 @@ S2ContainerClassLoader::import(S2BASE_PHP5_PLUGIN_ZF . '/classes');
 /**
  * Smarty 設定
  */
-define('S2BASE_PHP5_USE_SMARTY', false);
+define('S2BASE_PHP5_USE_SMARTY', true);
 
 
 /** S2Base_Zf 設定 */
@@ -87,7 +87,7 @@ class S2Base_ZfInitialize {
     public static function initFrontController(Zend_Controller_Front $fc) {
         $fc->setModuleControllerDirectoryName('');
         $fc->addModuleDirectory(S2BASE_PHP5_ROOT . '/app/modules');
-        $fc->setDispatcher(new S2Base_ZfDispatcher());
+        $fc->setDispatcher(new S2Base_ZfDispatcherImpl());
         $fc->throwExceptions(true);
         $fc->setDefaultModule(S2BASE_PHP5_ZF_DEFAULT_MODULE);
         /** プラグイン設定 */
