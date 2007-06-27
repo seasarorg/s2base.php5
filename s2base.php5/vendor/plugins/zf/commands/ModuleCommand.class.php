@@ -15,7 +15,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
     protected $ctlServiceInterfaceName;
 
     public function __construct(){
-        $this->dispatcher = new S2Base_ZfDispatcher();
+        $this->dispatcher = new S2Base_ZfDispatcherImpl();
     }
 
     public static function isStandardView() {
@@ -33,7 +33,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
     }
 
     public static function getCtlServiceInterfaceName($moduleName) {
-        $dispatcher = new S2Base_ZfDispatcher();
+        $dispatcher = new S2Base_ZfDispatcherImpl();
         return $dispatcher->formatName($moduleName, false) . 'Service';
     }
 
