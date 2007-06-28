@@ -32,6 +32,7 @@ require_once('S2Container/S2Container.php');
 S2ContainerClassLoader::import(S2CONTAINER_PHP5);
 require_once('S2Dao/S2Dao.php');
 S2ContainerClassLoader::import(S2DAO_PHP5);
+//S2ContainerClassLoader::import(S2BASE_PHP5_ROOT . '/app/commons/dao');
 require_once('S2ContainerSplAutoLoad.php');
 
 
