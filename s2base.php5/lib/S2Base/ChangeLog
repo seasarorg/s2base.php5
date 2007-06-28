@@ -1,7 +1,12 @@
 ﻿
-2007-06-26 S2Base.PHP5-1.0.3
+2007-06-27 S2Base.PHP5-1.0.3
 
 ================ S2Base.PHP5-1.0.3 更新履歴 ===================
+
+  * info: Agaviへの対応ををdeprecatedにしました(with Agavi)
+  * info: Symfony1.0.5に対応しました(with Symfony)
+
+2007-06-26 S2Base.PHP5-1.0.3
 
 	* info: Zend Framework-1.0.0-RC3 で動作確認行いました。
 	* add: package org.seasar.s2base.zf.controller.action.helper.S2Base_ZfStandardViewRenderer
