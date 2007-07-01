@@ -3,8 +3,8 @@
 
 ================ S2Base.PHP5-1.0.3 更新履歴 ===================
 
-  * info: Agaviへの対応ををdeprecatedにしました(with Agavi)
-  * info: Symfony1.0.5に対応しました(with Symfony)
+	* info: Agaviへの対応ををdeprecatedにしました(with Agavi)
+	* info: Symfony1.0.5に対応しました(with Symfony)
 
 2007-06-26 S2Base.PHP5-1.0.3
 

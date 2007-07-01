@@ -4,6 +4,5 @@ S2Base_ZfDispatcherImpl
 S2Base_ZfValidateFactory
 S2Base_ZfRegexValidateFactory
 S2Base_ZfValidateSupportPlugin
-S2Base_ZfView
-S2Base_ZfSmartyView
+S2Base_ZfSmartyViewRenderer
 S2Base_ZfDb
