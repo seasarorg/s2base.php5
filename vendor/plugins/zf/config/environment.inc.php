@@ -46,12 +46,14 @@ S2ContainerClassLoader::import(S2BASE_PHP5_PLUGIN_ZF . '/classes');
  */
 define('S2BASE_PHP5_USE_SMARTY', true);
 
+/**
+ * Zend_DB DefaultAdaptor 設定
+ */
+S2Base_ZfDb::setDefaultPdoAdapter();
 
 /** S2Base_Zf 設定 */
 class S2Base_ZfInitialize {
     public static function init() {
-        /** Zend_DB DefaultAdaptor 設定 */
-            S2Base_ZfDb::setDefaultPdoAdapter();
         /** ViewRenderer 設定 */
             self::initViewRenderer();
         /** リクエスト設定 */
