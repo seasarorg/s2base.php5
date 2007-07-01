@@ -58,7 +58,7 @@ class S2Base_ZfDispatcherImplTest extends PHPUnit2_Framework_TestCase {
         }
 
         $moduleName = '';
-        for ($i=0; $i<=S2Base_ZfDispatcher::PARAM_MAX_LEN ;$i++) {
+        for ($i=0; $i<=S2Base_ZfDispatcherImpl::PARAM_MAX_LEN ;$i++) {
             $moduleName .= 'a';
         }
         $this->request->setModuleName($moduleName);
@@ -97,7 +97,7 @@ class S2Base_ZfDispatcherImplTest extends PHPUnit2_Framework_TestCase {
         }
 
         $controllerName = '';
-        for ($i=0; $i<=S2Base_ZfDispatcher::PARAM_MAX_LEN ;$i++) {
+        for ($i=0; $i<=S2Base_ZfDispatcherImpl::PARAM_MAX_LEN ;$i++) {
             $controllerName .= 'a';
         }
         $this->request->setControllerName($controllerName);
@@ -147,7 +147,7 @@ class S2Base_ZfDispatcherImplTest extends PHPUnit2_Framework_TestCase {
         }
 
         $actionName = '';
-        for ($i=0; $i<=S2Base_ZfDispatcher::PARAM_MAX_LEN ;$i++) {
+        for ($i=0; $i<=S2Base_ZfDispatcherImpl::PARAM_MAX_LEN ;$i++) {
             $actionName .= 'a';
         }
         $this->request->setActionName($actionName);
