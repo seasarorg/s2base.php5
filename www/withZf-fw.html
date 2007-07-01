@@ -48,8 +48,8 @@
 
 <ul>
 <li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
-<li><a href="withAgavi-setup.html">with Agavi</a> <i>(ver 0.10.2)</i></li>
-<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 0.6.3)</i></li>
+<li><a href="withAgavi-setup.html">with Agavi</a> <i>(deprecated)</i></li>
+<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 1.0.5)</i></li>
 <li><a href="withSmarty-setup.html">with Smarty</a></li>
 <li><a href="withPRADO-setup.html">with PRADO</a></li>
 <li>with Zf
@@ -60,7 +60,7 @@
           <ul>
               <li><a href="#dir">プロジェクトのディレクトリ構成</a></li>
               <li><a href="#controller">Zend_Controller との連携</a></li>
-              <li><a href="#view">ビュークラスの選択</a></li>
+              <li><a href="#view">ViewRendererの選択</a></li>
               <li><a href="#validate">リクエストの検証</a></li>
               <li><a href="#info">S2Base_Zf の留意点</a></li>
           </ul>
@@ -181,29 +181,23 @@ s2base.php5 プロジェクトディレクトリ
 <h3>拡張ポイント</h3>
 <p>
 　S2Base_Zf では上図にあるように、ディスパッチャとビューをカスタマイズしています。
-また、Zend_Controller のプラグインの機能を用いて、ディスパッチャとリクエストバリデーションのサポートプラグインを組み込んでいます。
+また、Zend_Controller のプラグインの機能を用いてリクエストバリデーションのサポートプラグインを組み込んでいます。
 </p>
 <ul>
 <li>
 S2Base_ZfDispatcher<br>
 Zend_Controller_Dispatcher_Standard を継承したディスパッチャクラスです。dispatchメソッドをオーバーライドしており、アクションコントローラの生成に S2Container を使用します。
 </li>
-<li>
-S2Base_ZfDispatcherSupportPlugin<br>
-S2Base_ZfDispatcher クラスとあわせて、S2Base_Zf 用のディスパッチ処理を行います。<br>
-　・routeStartup メソッドで、アクションコントローラディレクトリを設定します。<br>
-　・routeShutdown メソッドで、モジュール名、コントローラ名、アクション名の検証を行います。
-</li>
 <li>S2Base_ZfValidateSupportPlugin <br>
 dispatchLoopStartup メソッドで、リクエスト検証を行います。
 </li>
-<li>S2Base_ZfView
+<li>ViewRenderer
   <ul>
-  <li>S2Base_ZfSmartyView<br>
-      <a href="http://smarty.php.net/">Smarty</a> を継承し、Zend_View_Interface を実装するクラスです。デフォルトで使用されます。
+  <li>S2Base_ZfSmartyViewRenderer<br>
+      Zend_Controller_Action_Helper_Abstract を継承し、ビューに <a href="http://smarty.php.net/">Smarty</a> を用います。デフォルトで使用されます。
   </li>
-  <li>S2Base_ZfStandardView<br>
-      Zend_View を継承して、いくつかの機能を追加したビュークラスです。<a href="#view">ビュークラスの選択</a>を参照下さい。
+  <li>S2Base_ZfStandardViewRenderer<br>
+      Zend_Controller_Action_Helper_ViewRenderer を継承して、いくつかの機能を追加したビューレンダークラスです。<a href="#view">ViewRendererの選択</a>を参照下さい。
   </li>
   </ul>
 </li>
@@ -214,7 +208,6 @@ dispatchLoopStartup メソッドで、リクエスト検証を行います。
 <p>
 　WEBサーバのURI書き換え機能により最初にスタートスクリプト z.php が実行されます。
 z.php では、Zend_Controller を起動するための初期設定を行います。
-ここで、S2Base_Zf用のディスパッチャやプラグインを登録しています。
 </p>
 
 <p>　　s2base.php/public/z.php</p>
@@ -222,58 +215,30 @@ z.php では、Zend_Controller を起動するための初期設定を行いま�
     ・・・
     try {
         Zend_Session::regenerateId();
-        $request = new Zend_Controller_Request_Http();
-        $request->setBaseUrl();
-        $fc = Zend_Controller_Front::getInstance();
-        $fc->throwExceptions(true);
-        $fc->setRequest($request);
-
-        // S2Base_Zf用のディスパッチャを登録
-        $fc->setDispatcher(new S2Base_ZfDispatcher());
-
-        // S2Base_Zf用のディスパッチャをサポートするプラグインを登録
-        $fc->registerPlugin(new S2Base_ZfDispatcherSupportPlugin());
-
-        // リクエストバリデーションをサポートするプラグインを登録
-        // Zend_Validate_Regex を使用するカスタムバリデーションを追加しています。
-        $validatePlugin = new S2Base_ZfValidateSupportPlugin();
-        $validatePlugin->addValidateFactory(new S2Base_ZfRegexValidateFactory());
-        $fc->registerPlugin($validatePlugin);
-
-        $response = $fc->dispatch();
+        S2Base_ZfInitialize::init();
+        Zend_Controller_Front::getInstance()->dispatch();
     } catch(Exception $e) {
     ・・・
 </pre>
+<p>
+S2Base_ZfInitialize クラスは、s2base.php5/vendor/plugins/zf/config/environment.inc.php で定義しています。リクエストやプラグインの設定はこのクラスで行います。
+</p>
 
-<h3>ビューの使用</h3>
+<h3>Smarty ビューの使用</h3>
 <p>
 　S2Base_Zf では、ビューのインスタンスはアクションコントローラの view プロパティに設定されています。デフォルトでは、ビューに Smarty を使用します。
-ビューに使用するクラスの切り替えについては、「<a href="#view">ビュークラスの選択</a>」を参照下さい。
-
-<h4>アクションコントローラ::postDispatch メソッドでの render</h4>
-<p>
-　<a href="withZf-cmdRef.html#module">module &amp controller</a> コマンドで生成されるアクションコントローラクラスでは、postDispatch メソッドで render メソッドを実行しています。引数にアクション名を渡しており、デフォルトでは、アクション名のテンプレートファイルが使用されます。
-</p>
-<pre>
-class IndexController extends Zend_Controller_Action {
-    ・・・
-    public function indexAction (){
-        $this->view->assign('message', 'Hello World');   &lt;-- テンプレートファイルは index.html
-    }
-    ・・・
-}
-</pre>
+ビューに使用するクラスの切り替えについては、「<a href="#view">ViewRendererの選択</a>」を参照下さい。
 
 <h4>テンプレートファイルの設定</h4>
 <p>
-　上記のように、デフォルトではアクション名のテンプレートファイルが使用されます。任意のテンプレートファイルを使用する場合は、ビュークラスの setTpl メソッドで設定します。
+　上記のように、デフォルトではアクション名のテンプレートファイルが使用されます。任意のテンプレートファイルを使用する場合は、アクションヘルパー( S2Base_ZfSmartyViewRenderer )で設定します。
 </p>
 <pre>
 class IndexController extends Zend_Controller_Action {
     ・・・
     public function indexAction (){
         $this->view->assign('message', 'Hello World');
-        $this->view->setTpl('top.html');   &lt;-- テンプレートファイルは top.html
+        $this->_helper->viewRenderer('top');   &lt;-- テンプレートファイルは top.html
     }
     ・・・
 }
@@ -281,7 +246,7 @@ class IndexController extends Zend_Controller_Action {
 
 <h4>レイアウトの設定</h4>
 <p>
-　レイアウトファイルの設定は、S2BASE_PHP5_LAYOUT 定数を定義するか、ビュークラスの setLayout メソッドを用いて直接設定します。レイアウトが設定されている場合は、$content_for_layout 変数に元のアクション用テンプレートファイルが設定されます。
+　レイアウトファイルの設定は、S2BASE_PHP5_LAYOUT 定数を定義するか、アクションヘルパー( S2Base_ZfSmartyViewRenderer )の setLayout メソッドを用いて直接設定します。レイアウトが設定されている場合は、$content_for_layout 変数に元のアクション用テンプレートファイルが設定されます。
 </p>
 <pre>
 define('S2BASE_PHP5_LAYOUT', 'file:' . S2BASE_PHP5_ROOT . '/app/commons/view/right_menu_layout.html');
@@ -293,20 +258,11 @@ class IndexController extends Zend_Controller_Action {
 
     public function leftMenuAction (){
         $this->view->assign('message', 'Hello World');   &lt;-- 左メニューレイアウトで表示
-        $this->view->setLayout('file:' . S2BASE_PHP5_ROOT . '/app/commons/view/left_menu_layout.html');
+        $this->_helper->setLayout('file:' . S2BASE_PHP5_ROOT . '/app/commons/view/left_menu_layout.html');
     }
     ・・・
 }
 </pre>
-
-<h4>setRendered メソッド</h4>
-<p>
-　S2Base_Zf のビュークラスでは、rendered プロパティでレンダリング処理済みかどうかを管理しています。ビュークラスの render メソッドはレンダリング処理済みの場合 ( rendered プロパティが true ) はレンダリングを行いません。rendered プロパティの設定は、ビュークラスの setRendered メソッドで行います。
-</p>
-<pre>
-    public static function setRendered($value = true);
-</pre>
-
 
 <h3>Zend_Db のセットアップ</h3>
 <p>
@@ -335,23 +291,21 @@ S2Base_Zf 固有設定ファイル。読み込まれるタイミングは、上�
 <br>
 
 <div class="section">
-<h2 id="h02"><a name="view">ビュークラスの選択</a></h2>
+<h2 id="h02"><a name="view">ViewRendererの選択</a></h2>
 <p>
-　S2Base_Zf は、デフォルトでは <a href="http://smarty.php.net/">Smarty</a> を継承し Zend_View_Interface を実装した S2Base_ZfSmartyView 
-を使用します。Zend_View にいくつかの機能を追加した S2Base_ZfStandardView を使用する場合は、s2base.php5/app/commons/dicon/zf.dicon で S2Base_ZfStandardView 
-をビューコンポーネントとして設定します。<br>
+　S2Base_Zf は、デフォルトではビューに <a href="http://smarty.php.net/">Smarty</a> を用いる S2Base_ZfSmartyViewRenderer を使用します。Zend_View を使用する場合は次の environment.inc.php 
+で、S2BASE_PHP5_USE_SMARTY定数に false を設定します。
 
-<p>　　s2base.php5/app/commons/dicon/zf.dicon</p>
+<p>　　s2base.php5/vendor/plugins/zf/config/environment.inc.php</p>
 <pre>
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
-"http://www.seasar.org/dtd/components21.dtd"&gt;
-&lt;components&gt;
-    &lt;!--
-    &lt;component name="view" class="S2Base_ZfStandardView"/&gt;
-    --&gt;
-    &lt;component name="view" class="S2Base_ZfSmartyView"/&gt;  &lt;--- デフォルト設定
-&lt;/components&gt;
+&lt;?php
+・・・
+/**
+ * Smarty 設定
+ */
+define('S2BASE_PHP5_USE_SMARTY', true);
+・・・
+?&gt;
 </pre>
 
 </p>
@@ -479,7 +433,7 @@ $fc-&gt;registerPlugin($validatePlugin);
 <div class="section">
 <h2 id="h02"><a name="info">S2Base_Zf の留意点</a></h2>
 <ul>
-<li>モジュール名には、[_a-zA-Z0-9] が使用できます。</li>
+<li>モジュール名には、[_a-zA-Z0-9] が使用できます。モジュール名は [a-zA-Z] で始まる必要があります。</li>
 <li>コントローラ名には、[a-zA-Z0-9] が使用できます。</li>
 <li>アクション名には、[_a-zA-Z0-9.-] が使用できます。</li>
 <li>
