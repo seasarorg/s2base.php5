@@ -1,7 +1,11 @@
 ﻿
-2007-06-27 S2Base.PHP5-1.0.3
+2007-07-01 S2Base.PHP5-1.0.3
+
+	* info: Zend Framework-1.0.0 で動作確認行いました。
 
 ================ S2Base.PHP5-1.0.3 更新履歴 ===================
+
+2007-06-27 S2Base.PHP5-1.0.3
 
 	* info: Agaviへの対応ををdeprecatedにしました(with Agavi)
 	* info: Symfony1.0.5に対応しました(with Symfony)
