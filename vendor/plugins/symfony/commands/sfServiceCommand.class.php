@@ -4,6 +4,7 @@ class sfServiceCommand implements S2Base_GenerateCommand
     private $pathName   = S2BASE_PHP5_SF_DEFAULT_PATH;
     private $appName;
     private $moduleName;
+    private $moduleServiceInterfaceName;
     private $serviceInterfaceName;
     private $serviceClassName;
     
@@ -47,6 +48,9 @@ class sfServiceCommand implements S2Base_GenerateCommand
             return;
         }
         
+        $this->moduleServiceInterfaceName = ucfirst($this->moduleName . 'Service');
+        $this->isImplementsModuleService = S2Base_StdinManager::isYes("implements {$this->moduleServiceInterfaceName} ?");
+        
         $this->serviceClassName = $this->serviceInterfaceName . "Impl";
         $serviceClassNameTmp = S2Base_StdinManager::getValue("service class name ? [{$this->serviceClassName}] : ");
         if(trim($serviceClassNameTmp) != ''){
@@ -74,6 +78,9 @@ class sfServiceCommand implements S2Base_GenerateCommand
         print "  application name        : {$this->appName} \n";
         print "  module name             : {$this->moduleName} \n";
         print "  service interface name  : {$this->serviceInterfaceName} \n";
+        print $this->isImplementsModuleService ?
+              "  implements module service : Yes ({$this->moduleServiceInterfaceName})" . PHP_EOL :
+              "  implements module service : No" . PHP_EOL;
         print "  service class name      : {$this->serviceClassName} \n";
         print "  service test class name : {$this->serviceClassName}Test \n";
         print "  service dicon file name : {$this->serviceClassName}" . S2BASE_PHP5_DICON_SUFFIX ." \n";
@@ -98,9 +105,15 @@ class sfServiceCommand implements S2Base_GenerateCommand
                    S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
                      . 'service/service.php');
-
+        
+        $implementsInterface = $this->serviceInterfaceName;                     
+        if ($this->isImplementsModuleService) {
+            if ($this->serviceInterfaceName != $this->moduleServiceInterfaceName) {
+                $implementsInterface .= ', ' . $this->moduleServiceInterfaceName;
+            }
+        }
         $patterns = array("/@@CLASS_NAME@@/","/@@INTERFACE_NAME@@/");
-        $replacements = array($this->serviceClassName,$this->serviceInterfaceName);
+        $replacements = array($this->serviceClassName,$implementsInterface);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
         CmdCommand::writeFile($srcFile,$tempContent);
     }
@@ -126,6 +139,7 @@ class sfServiceCommand implements S2Base_GenerateCommand
         $testName = $this->serviceClassName . "Test";
         $testFile = $this->pathName     . S2BASE_PHP5_DS .
                     "test"              . S2BASE_PHP5_DS .
+                    "unit"              . S2BASE_PHP5_DS .
                     $this->appName      . S2BASE_PHP5_DS .
                     $this->moduleName   .
                     S2BASE_PHP5_SERVICE_DIR . 

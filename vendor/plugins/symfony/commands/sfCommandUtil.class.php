@@ -105,23 +105,43 @@ class sfCommandUtil
         CmdCommand::writeFile($srcFile,$tempContent);
     }
     
-    public static function prepareModuleDiconFile ()
+    // public static function prepareModuleDiconFile ()
+    // {
+    //     $srcFile = self::$attributes['pathName']   . S2BASE_PHP5_DS .
+    //                "apps"                          . S2BASE_PHP5_DS .
+    //                self::$attributes['appName']    . S2BASE_PHP5_DS .
+    //                "modules"                       . S2BASE_PHP5_DS .
+    //                self::$attributes['moduleName'] . S2BASE_PHP5_DS .
+    //                S2BASE_PHP5_DICON_DIR . 
+    //                self::$attributes['moduleName'] . S2BASE_PHP5_DICON_SUFFIX;
+    //     $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SF_SKELETON_DIR .
+    //                                                 'actions.dicon');
+    //     $patterns = array("/@@APP_NAME@@/","/@@MODULE_NAME@@/");
+    //     $replacements = array(self::$attributes['appName'],
+    //                           self::$attributes['moduleName']);
+    //     $tempContent = preg_replace($patterns,$replacements,$tempContent);
+    //     CmdCommand::writeFile($srcFile,$tempContent);
+    // }
+    
+    public static function prepareModuleServiceIfaceFile ()
     {
+        $serviceInterfaceName = ucfirst(self::$attributes['moduleName']) . 'Service';
         $srcFile = self::$attributes['pathName']   . S2BASE_PHP5_DS .
                    "apps"                          . S2BASE_PHP5_DS .
                    self::$attributes['appName']    . S2BASE_PHP5_DS .
                    "modules"                       . S2BASE_PHP5_DS .
                    self::$attributes['moduleName'] . S2BASE_PHP5_DS .
-                   S2BASE_PHP5_DICON_DIR . 
-                   self::$attributes['moduleName'] . S2BASE_PHP5_DICON_SUFFIX;
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SF_SKELETON_DIR .
-                                                    'actions.dicon');
-        $patterns = array("/@@APP_NAME@@/","/@@MODULE_NAME@@/");
-        $replacements = array(self::$attributes['appName'],
-                              self::$attributes['moduleName']);
-        $tempContent = preg_replace($patterns,$replacements,$tempContent);
-        CmdCommand::writeFile($srcFile,$tempContent);
+                   S2BASE_PHP5_SERVICE_DIR . 
+                   $serviceInterfaceName . 
+                   S2BASE_PHP5_CLASS_SUFFIX;
+        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETON_DIR
+                     . 'service/interface.php');
+        $tempContent = preg_replace("/@@CLASS_NAME@@/",
+                             $serviceInterfaceName,
+                             $tempContent);   
+        CmdCommand::writeFile($srcFile, $tempContent);
     }
+    
     
     public static function prepareModuleAutoloadYmlFile ()
     {
@@ -165,9 +185,10 @@ class sfCommandUtil
     {
         $testDir = self::$attributes['pathName']  . S2BASE_PHP5_DS .
                    "test"                         . S2BASE_PHP5_DS .
+                   "unit"                         . S2BASE_PHP5_DS .
                    self::$attributes['appName']   . S2BASE_PHP5_DS .
                    self::$attributes['moduleName'];
-        S2Base_CommandUtil::createDirectory($testDir);
+        S2Base_CommandUtil::createDirectory($testDir, 0755, true);
         $dirs = array(
             S2BASE_PHP5_DAO_DIR,
             S2BASE_PHP5_SERVICE_DIR);
@@ -180,6 +201,7 @@ class sfCommandUtil
     {
         $srcFile = self::$attributes['pathName']   . S2BASE_PHP5_DS .
                    "test"                          . S2BASE_PHP5_DS .
+                   "unit"                          . S2BASE_PHP5_DS .
                    self::$attributes['appName']    . S2BASE_PHP5_DS .
                    self::$attributes['moduleName'] . S2BASE_PHP5_DS .
                    "test.inc.php";

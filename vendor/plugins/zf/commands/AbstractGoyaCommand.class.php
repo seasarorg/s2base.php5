@@ -32,7 +32,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
     protected $entityPropertyNames;
 
     public function __construct(){
-        $this->dispatcher = new S2Base_ZfDispatcher();
+        $this->dispatcher = new S2Base_ZfDispatcherImpl();
     }
 
     abstract protected function isUseCommonsDao();
@@ -281,33 +281,21 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
                               $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX);
         $tempAction = preg_replace($patterns,$replacements,$tempAction);
         ActionCommand::insertActionMethod($srcFile, $tempAction);
-/*
-        $tempContent = S2Base_CommandUtil::readFile($srcFile);
-
-        $reg = '/\s\s\s\s\/\*\*\sS2BASE_PHP5\sACTION\sMETHOD\s\*\*\//';
-        if (!preg_match($reg, $tempContent)) {
-            print PHP_EOL;
-            print "[INFO ] please copy & paste to $srcFile" . PHP_EOL;
-            print $tempAction . PHP_EOL;
-            print PHP_EOL;
-            return;
-        }
-
-        $tempContent = preg_replace($reg, $tempAction, $tempContent, 1);
-        if(!file_put_contents($srcFile,$tempContent,LOCK_EX)){
-            S2Base_CommandUtil::showException(new Exception("Cannot write to file [ $srcFile ]"));
-        } else {
-            print "[INFO ] modify : $srcFile" . PHP_EOL;
-        }
-*/
     }
 
 
     protected function prepareHtmlFile(){
-        $srcFile = $this->srcCtlDir
-                 . S2BASE_PHP5_VIEW_DIR
-                 . $this->actionName
-                 . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX;
+        if (ModuleCommand::isStandardView()) {
+            $srcFile = $this->srcCtlDir
+                     . S2BASE_PHP5_VIEW_DIR
+                     . S2BASE_PHP5_DS . 'scripts'
+                     . S2BASE_PHP5_DS . $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+        } else {
+            $srcFile = $this->srcCtlDir
+                     . S2BASE_PHP5_VIEW_DIR
+                     . $this->actionName
+                     . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX;
+        }
         $viewSuffix = ModuleCommand::getViewSuffixName();
         $tempContent = '';
         if (!defined('S2BASE_PHP5_LAYOUT')) {
@@ -336,13 +324,31 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
     }
 
     protected function prepareHtmlFileWithoutDao(){
-        $srcFile = $this->srcCtlDir
-                 . S2BASE_PHP5_VIEW_DIR
-                 . $this->actionName
-                 . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+        if (ModuleCommand::isStandardView()) {
+            $srcFile = $this->srcCtlDir
+                     . S2BASE_PHP5_VIEW_DIR
+                     . S2BASE_PHP5_DS . 'scripts'
+                     . S2BASE_PHP5_DS . $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+        } else {
+            $srcFile = $this->srcCtlDir
+                     . S2BASE_PHP5_VIEW_DIR
+                     . $this->actionName
+                     . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX;
+        }
         $viewSuffix = ModuleCommand::getViewSuffixName();
-        $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
-                     . "/skeleton/action/html$viewSuffix.tpl");
+        $tempContent = '';
+        if (!defined('S2BASE_PHP5_LAYOUT')) {
+            $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                          . "/skeleton/module/html_header$viewSuffix.tpl");
+        }
+
+        $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                      . "/skeleton/action/html$viewSuffix.tpl");
+        if (!defined('S2BASE_PHP5_LAYOUT')) {
+            $tempContent .= S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
+                          . "/skeleton/module/html_footer.tpl");
+        }
+
         $patterns = array("/@@MODULE_NAME@@/",
                           "/@@CONTROLLER_NAME@@/",
                           "/@@ACTION_NAME@@/");

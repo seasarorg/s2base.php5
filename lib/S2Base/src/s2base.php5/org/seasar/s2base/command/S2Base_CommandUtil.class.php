@@ -115,6 +115,8 @@ class S2Base_CommandUtil {
         $container = S2ContainerFactory::create(PDO_DICON);
         $cd = $container->getComponentDef('dataSource');
         $dsn = $cd->getPropertyDef('dsn')->getValue();
+        $user = '';
+        $pass = '';
         if ($cd->hasPropertyDef('user')) {
             $user = $cd->getPropertyDef('user')->getValue();
         }
@@ -168,9 +170,9 @@ class S2Base_CommandUtil {
      * @param string $dirPath 作成するディレクトリパス
      * @throws Exception ディレクトリ作成に失敗した場合にスローされます。
      */
-    public static function createDirectory($dirPath){
+    public static function createDirectory($dirPath, $mode=0777, $recursive=false){
         try{
-            self::createDirectoryInternal($dirPath);
+            self::createDirectoryInternal($dirPath, $mode, $recursive);
             print "[INFO ] create : $dirPath" . PHP_EOL;
         }catch(Exception $e){
             if ($e instanceof S2Base_FileExistsException){
@@ -188,9 +190,9 @@ class S2Base_CommandUtil {
      * @throws S2Base_FileExistsException ディレクトリが既に存在していた場合にスローされます。
      * @throws Exception ディレクトリ作成に失敗した場合にスローされます。
      */
-    public static function createDirectoryInternal($directoryPath){
+    public static function createDirectoryInternal($directoryPath, $mode=0777, $recursive=false){
         if(!file_exists($directoryPath)){
-            if(!mkdir($directoryPath)){
+            if(!mkdir($directoryPath, $mode, $recursive)){
                throw new Exception("Cannot make dir [ $directoryPath ]");
             }
             return true;

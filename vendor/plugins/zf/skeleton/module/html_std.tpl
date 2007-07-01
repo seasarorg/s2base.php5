@@ -134,20 +134,6 @@ This is index template. <br>
 <td nowrap><font size="-1">url include module, contoller and action name</font></td>
 </tr>
 
-<tr>
-<td nowrap><font size="-1">$this->ctl_view_dir</font></td>
-<td nowrap><font size="-1">string</font></td>
-<td nowrap><font size="-1"><?php echo $this->ctl_view_dir;?></font></td>
-<td nowrap><font size="-1">path to controller view directory</font></td>
-</tr>
-
-<tr>
-<td nowrap><font size="-1">$this->commons_view_dir</font></td>
-<td nowrap><font size="-1">string</font></td>
-<td nowrap><font size="-1"><?php echo $this->commons_view_dir;?></font></td>
-<td nowrap><font size="-1">path to commons view directory</font></td>
-</tr>
-
 </tbody>
 </table>
 

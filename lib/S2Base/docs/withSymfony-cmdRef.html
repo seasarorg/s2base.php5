@@ -48,8 +48,8 @@
 
 <ul>
 <li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
-<li><a href="withAgavi-setup.html">with Agavi</a> <i>(ver 0.10.2)</i></li>
-<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 0.6.3)</i>
+<li><a href="withAgavi-setup.html">with Agavi</a> <i>(deprecated)</i></li>
+<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 1.0.5)</i></li>
     <font size="-2">
     <ul>
         <li><a href="withSymfony-setup.html">セットアップ</a></li>
@@ -62,6 +62,7 @@
                         <li><a href="#init-module">init-module コマンド</a></li>
                     </ul>
                 </li>
+                <li><a href="#dicon">dicon コマンド</a></li>
                 <li><a href="#cc">clear-cache コマンド</a></li>
                 <li><a href="#service">service コマンド</a></li>
                 <li><a href="#dao">dao コマンド</a></li>
@@ -131,8 +132,7 @@
 </p>
 <p>
 <ul>
-<li>/path/to/project/config/config.php - S2Containerと連携するための基本設定</li>
-<li>/path/to/project/config/autoload.yml - S2Container/S2Daoの読み込み設定</li>
+<li>/path/to/project/config/config.php - S2Container/S2Daoと連携するための基本設定</li>
 <li>/path/to/project/apps/APP/lib/myFrontWebController.class.php - アプリケーションがS2Containerを呼び出すためのクラス</li>
 <li>/path/to/project/apps/APP/config/autoload.yml - モジュールのdaoやserviceクラス読み込み設定</li>
 <li>/path/to/project/apps/APP/modules/MODULE以下にdao/, dicon/, entity/, service/ディレクトリを生成</li>
@@ -162,12 +162,12 @@ project > command:
       [php] Evaluating PHP expression: require_once('vendor/plugins/symfony/config/environment.inc.php')
 
 [ Command list ]
-0 : (exit)
 1 : clear-cache
 2 : dao
-3 : init-*
-4 : service
-choice ? : 3                &lt;--- 3 : init-* を選択
+3 : dicon
+4 : init-*
+5 : service
+choice ? : 4                &lt;--- 4 : init-* を選択
 
 [ symfony commands list ]
 0 : (exit)
@@ -219,9 +219,10 @@ project > command:
 0 : (exit)
 1 : clear-cache
 2 : dao
-3 : init-*
-4 : service
-choice ? : 3                &lt;--- 3 : init-* を選択
+3 : dicon
+4 : init-*
+5 : service
+choice ? : 4                &lt;--- 4 : init-* を選択
 
 [ symfony commands list ]
 0 : (exit)
@@ -272,9 +273,10 @@ project > command:
 0 : (exit)
 1 : clear-cache
 2 : dao
-3 : init-*
-4 : service
-choice ? : 3                &lt;--- 3 : init-* を選択
+3 : dicon
+4 : init-*
+5 : service
+choice ? : 4                &lt;--- 4 : init-* を選択
 
 [ symfony commands list ]
 0 : (exit)
@@ -305,6 +307,67 @@ confirm ? (y/n) : y         &lt;--- 表示される情報を確認
 <br>
 
 <div class="section">
+<h2 id="h02"><a name="dicon">dicon コマンド</a></h2>
+<h3>説明</h3>
+<p>
+action用のdiconファイルを生成します
+</p>
+
+<h4>実行例</h4>
+<pre>
+% phing
+
+Buildfile: /Users/seasar/s2base.php5/build.xml
+      [php] Evaluating PHP expression: require_once('lib/S2Dao/src/phing/task/S2DaoSkeletonTask.php')
+
+project > prepare:
+      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
+      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
+
+project > symfony:
+    [phing] Calling Buildfile '/Users/seasar/s2base.php5/vendor/plugins/symfony/build.xml' with target 'command'
+
+project > command:
+      [php] Evaluating PHP expression: require_once('vendor/plugins/symfony/config/environment.inc.php')
+
+[ Command list ]
+0 : (exit)
+1 : clear-cache
+2 : dao
+3 : dicon
+4 : init-*
+5 : service
+choice ? : 3                &lt;--- 3 : dicon を選択
+
+ProjectFullPath[/Users/seasar/s2base.php5/s2symfony] ? :        &lt;--- プロジェクトディレクトリをフルパスで入力
+
+[ sf application list ]
+0 : (exit)
+1 : demo
+2 : euro
+choice ? : 2                &lt;--- アプリケーション名を選択
+
+[ sf module list ]
+0 : (exit)
+1 : rock
+choice ? : 1                &lt;--- モジュール名を選択
+
+action name ? : index       &lt;--- アクション名を選択 
+
+[ generate information ] 
+  project path            : /Users/seasar/s2base.php5/s2symfony
+  application name        : euro
+  module name             : rock
+  action name             : index 
+  action dicon file name  : IndexAction.dicon 
+
+confirm ? (y/n) : y         &lt;--- 表示される情報を確認
+</pre>
+
+</div>
+<br>
+
+<div class="section">
 <h2 id="h02"><a name="cc">clear-cache コマンド</a></h2>
 <h3>説明</h3>
 <p>
@@ -326,7 +389,7 @@ confirm ? (y/n) : y         &lt;--- 表示される情報を確認
 <h3>説明</h3>
 <p>
 　<a href="cmdRef.html#dao">daoコマンド</a>を参照して下さい。生成先はモジュールディレクトリ内になります。<br>
-gen-dao タスクで生成したdao及びentityクラスを利用するには/path/to/project/config/autoload.yml内のコメントアウトされている項目を有効にすることで利用可能となります。
+gen-dao タスクで生成したdao及びentityクラスを利用するには/path/to/project/config/config.php内のコメントアウトされている項目を有効にすることで利用可能となります。
 </p>
 </div>
 <br>
