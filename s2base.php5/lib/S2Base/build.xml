@@ -37,10 +37,6 @@
 
     <target name="build" depends="prepare">
         <gcore searchDir="${project.src.dir}/${project.name}"
-               coreFile="${project.build.dir}/${project.name}/${package.name}.web.classes.php"
-               listFile="${project.src.dir}/phing/etc/${package.name}.web.files.txt"/>
-
-        <gcore searchDir="${project.src.dir}/${project.name}"
                coreFile="${project.build.dir}/${project.name}/${package.name}.cmd.classes.php"
                listFile="${project.src.dir}/phing/etc/${package.name}.cmd.files.txt"/>
 
@@ -50,10 +46,6 @@
 
         <copy file="${project.basedir}/src/phing/etc/${package.name}.cmd.php.tpl"
               tofile="${project.build.dir}/${project.name}/${package.name}.cmd.php"
-              overwrite="true"/>
-
-        <copy file="${project.basedir}/src/phing/etc/${package.name}.web.php.tpl"
-              tofile="${project.build.dir}/${project.name}/${package.name}.web.php"
               overwrite="true"/>
 
         <copy file="${project.basedir}/src/phing/etc/${package.name}.phing.php.tpl"
