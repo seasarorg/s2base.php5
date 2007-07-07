@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <project name="project" default="command" basedir=".">
 
-    <php expression="ini_set('include_path','lib'.PATH_SEPARATOR.ini_get('include_path'))" />
+    <php expression="ini_set('include_path', 'lib' . PATH_SEPARATOR . ini_get('include_path'))" />
     <php expression="require_once('S2Base/S2Base.phing.php')" />
     <taskdef name="command" classname="S2Base_CommandTask" />
     <taskdef name="gdao"    classname="S2Base_S2DaoSkeletonTask" />
 
     <target name="prepare">
         <property name="project.name" value="${phing.project.name}" />
-        <property name="cmd.dir" value="${project.basedir}/app/commands" />
+        <property name="cmd.dir" value="${project.basedir}/vendor/s2base/commands" />
         <property name="plugins.dir" value="${project.basedir}/vendor/plugins" />
 
         <!-- test directory -->
@@ -22,6 +22,7 @@
 
         <php expression="require_once('config/environment.inc.php')"/>
         <php expression="require_once('S2Base/S2Base.cmd.php')"/>
+        <php expression="require_once(S2BASE_PHP5_VENDOR_DIR . '/s2base/config/environment.inc.php')"/>
     </target>
 
     <target name="command" depends="prepare">
@@ -33,40 +34,10 @@
         </command>
     </target>
 
-    <target name="agavi" depends="prepare">
-        <available file="${plugins.dir}/agavi" type="dir" property="plugin.available" />
-        <fail unless="plugin.available" message="Invalid : [ Agavi plugin ]" />
-        <phing phingfile="${plugins.dir}/agavi/build.xml" inheritRefs="true" target="${st}"/>
-    </target>
-
-    <target name="smarty" depends="prepare">
-        <available file="${plugins.dir}/smarty" type="dir" property="plugin.available" />
-        <fail unless="plugin.available" message="Invalid : [ Smarty plugin ]" />
-        <phing phingfile="${plugins.dir}/smarty/build.xml" inheritRefs="true" target="${st}"/>
-    </target>
-
-    <target name="maple" depends="prepare">
-        <available file="${plugins.dir}/maple" type="dir" property="plugin.available" />
-        <fail unless="plugin.available" message="Invalid : [ Maple plugin ]" />
-        <phing phingfile="${plugins.dir}/maple/build.xml" inheritRefs="true" target="${st}"/>
-    </target>
-
-    <target name="symfony" depends="prepare">
-        <available file="${plugins.dir}/symfony" type="dir" property="plugin.available" />
-        <fail unless="plugin.available" message="Invalid : [ Symfony plugin ]" />
-        <phing phingfile="${plugins.dir}/symfony/build.xml" inheritRefs="true" target="${st}"/>
-    </target>
-
     <target name="zf" depends="prepare">
         <available file="${plugins.dir}/zf" type="dir" property="plugin.available" />
         <fail unless="plugin.available" message="Invalid : [ zf plugin ]" />
         <phing phingfile="${plugins.dir}/zf/zf.xml" inheritRefs="true" target="${st}"/>
-    </target>
-
-    <target name="prado" depends="prepare">
-        <available file="${plugins.dir}/prado" type="dir" property="plugin.available" />
-        <fail unless="plugin.available" message="Invalid : [ PRADO plugin ]" />
-        <phing phingfile="${plugins.dir}/prado/build.xml" inheritRefs="true" target="${st}"/>
     </target>
 
     <target name="gen-dao" depends="prepare">
@@ -76,14 +47,14 @@
     <target name="test" depends="prepare">
         <echo>test directory : test/${td}</echo>
         <echo>test target : ${tt}</echo>
-        <phpunit2 haltonfailure="false" haltonerror="false">
+        <phpunit haltonfailure="false" haltonerror="false">
             <formatter type="plain" usefile="false"/>
             <batchtest>
                 <fileset dir="test/${td}">
                     <include name="${tt}"/>
                 </fileset>
             </batchtest>
-        </phpunit2>
+        </phpunit>
     </target>
 
 </project>

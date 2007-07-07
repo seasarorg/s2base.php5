@@ -30,8 +30,6 @@ require_once('Zend/Auth/Adapter/Interface.php');
 
 require_once(S2BASE_PHP5_PLUGIN_ZF . '/s2base_zf.core.php');
 S2ContainerClassLoader::import(S2BASE_PHP5_PLUGIN_ZF . '/classes');
-require_once 'S2AnA/S2AnA.php';
-S2ContainerClassLoader::import(S2ANA_PHP5);
 
 /** Zned_Log 設定 */
 define('S2CONTAINER_PHP5_LOG_LEVEL', Zend_Log::INFO);
