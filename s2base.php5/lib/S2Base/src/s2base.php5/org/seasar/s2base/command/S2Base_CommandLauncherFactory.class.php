@@ -58,7 +58,10 @@ class S2Base_CommandLauncherFactory {
                 if (!$ref->isAbstract() and 
                     !$ref->isInterface() and
                     $ref->isSubclassOf('S2Base_GenerateCommand')) {
-                    $launcher->addCommand(new $cmdClassName());
+                    $cmd = new $cmdClassName();
+                    if ($cmd->isAvailable()) {
+                        $launcher->addCommand($cmd);
+                    }
                 }
             }
         }

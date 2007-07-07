@@ -67,7 +67,7 @@ class S2Base_CommandUtil {
      * @return array app/modulesのmodule名の配列
      */
     public static function getAllModules(){
-        $modulesDir = S2BASE_PHP5_APP_DIR . "modules";
+        $modulesDir = S2BASE_PHP5_MODULES_DIR;
         $entries = scandir($modulesDir);
         if(!$entries){
             throw new Exception("invalid dir : [ $modulesDir ]");
@@ -75,7 +75,7 @@ class S2Base_CommandUtil {
 
         $modules = array();
         foreach($entries as $entry) {
-            $path = S2BASE_PHP5_MODULES_DIR . $entry;
+            $path = S2BASE_PHP5_MODULES_DIR . S2BASE_PHP5_DS . $entry;
             if(!preg_match("/^\./",$entry) and is_dir($path)){
                 array_push($modules,$entry);
             }

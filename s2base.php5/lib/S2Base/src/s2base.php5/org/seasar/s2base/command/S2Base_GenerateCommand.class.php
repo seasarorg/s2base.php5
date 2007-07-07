@@ -44,5 +44,11 @@ interface S2Base_GenerateCommand {
      * コマンドを実行します。
      */
     public function execute();
+
+    /**
+     * コマンドが使用可能かどうかを決定します。
+     *
+     * @return boolean
+     */
+    public function isAvailable();
 }
-?>
