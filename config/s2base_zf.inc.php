@@ -2,7 +2,6 @@
 /** 定数定義 */
 define('S2BASE_PHP5_ZF_TPL_SUFFIX', 'phtml');
 define('S2BASE_PHP5_ZF_DEFAULT_MODULE', 'default');
-define('S2BASE_PHP5_ZF_APP_DICON', S2BASE_PHP5_ROOT . '/app/commons/dicon/zf.dicon');
 define('S2BASE_PHP5_PLUGIN_ZF',S2BASE_PHP5_ROOT . '/vendor/plugins/zf');
 //define('S2BASE_PHP5_LAYOUT', S2BASE_PHP5_ROOT . '/app/commons/view/layout.tpl');
 
