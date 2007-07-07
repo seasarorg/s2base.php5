@@ -25,25 +25,24 @@
  * @author klove
  */
 if(!defined('STDIN')){
-    define('STDIN',fopen("php://stdin","r"));
+    define('STDIN',fopen('php://stdin','r'));
 }
 
 define('S2BASE_PHP5_DS', DIRECTORY_SEPARATOR);
-define('S2BASE_PHP5_APP_DIR',  S2BASE_PHP5_ROOT . S2BASE_PHP5_DS . "app"  . S2BASE_PHP5_DS);
-define('S2BASE_PHP5_TEST_DIR', S2BASE_PHP5_ROOT . S2BASE_PHP5_DS . "test" . S2BASE_PHP5_DS);
+define('S2BASE_PHP5_APP_DIR',    S2BASE_PHP5_ROOT . S2BASE_PHP5_DS . 'app');
+define('S2BASE_PHP5_TEST_DIR',   S2BASE_PHP5_ROOT . S2BASE_PHP5_DS . 'test');
+define('S2BASE_PHP5_VENDOR_DIR', S2BASE_PHP5_ROOT . S2BASE_PHP5_DS . 'vendor');
 
-define('S2BASE_PHP5_MODULES_DIR',      S2BASE_PHP5_APP_DIR  . "modules"  . S2BASE_PHP5_DS);
-define('S2BASE_PHP5_SKELETON_DIR',     S2BASE_PHP5_APP_DIR  . "skeleton" . S2BASE_PHP5_DS);
-define('S2BASE_PHP5_COMMANDS_DIR',     S2BASE_PHP5_APP_DIR  . "commands" . S2BASE_PHP5_DS);
-define('S2BASE_PHP5_TEST_MODULES_DIR', S2BASE_PHP5_TEST_DIR . "modules"  . S2BASE_PHP5_DS);
+define('S2BASE_PHP5_MODULES_DIR',      S2BASE_PHP5_APP_DIR  . S2BASE_PHP5_DS . 'modules');
+define('S2BASE_PHP5_TEST_MODULES_DIR', S2BASE_PHP5_TEST_DIR . S2BASE_PHP5_DS . 'modules');
 
-define('S2BASE_PHP5_ACTION_DIR',      S2BASE_PHP5_DS . "action" .      S2BASE_PHP5_DS);
-define('S2BASE_PHP5_DAO_DIR',         S2BASE_PHP5_DS . "dao" .         S2BASE_PHP5_DS);
-define('S2BASE_PHP5_DICON_DIR',       S2BASE_PHP5_DS . "dicon" .       S2BASE_PHP5_DS);
-define('S2BASE_PHP5_ENTITY_DIR',      S2BASE_PHP5_DS . "entity" .      S2BASE_PHP5_DS);
-define('S2BASE_PHP5_INTERCEPTOR_DIR', S2BASE_PHP5_DS . "interceptor" . S2BASE_PHP5_DS);
-define('S2BASE_PHP5_SERVICE_DIR',     S2BASE_PHP5_DS . "service" .     S2BASE_PHP5_DS);
-define('S2BASE_PHP5_VIEW_DIR',        S2BASE_PHP5_DS . "view" .        S2BASE_PHP5_DS);
+define('S2BASE_PHP5_ACTION_DIR',      S2BASE_PHP5_DS . 'action');
+define('S2BASE_PHP5_DAO_DIR',         S2BASE_PHP5_DS . 'dao');
+define('S2BASE_PHP5_DICON_DIR',       S2BASE_PHP5_DS . 'dicon');
+define('S2BASE_PHP5_ENTITY_DIR',      S2BASE_PHP5_DS . 'entity');
+define('S2BASE_PHP5_INTERCEPTOR_DIR', S2BASE_PHP5_DS . 'interceptor');
+define('S2BASE_PHP5_SERVICE_DIR',     S2BASE_PHP5_DS . 'service');
+define('S2BASE_PHP5_VIEW_DIR',        S2BASE_PHP5_DS . 'view');
 
 require_once('S2Base.cmd.classes.php');
-?>
+

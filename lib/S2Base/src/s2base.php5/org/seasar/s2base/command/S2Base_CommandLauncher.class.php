@@ -56,7 +56,12 @@ class S2Base_CommandLauncher {
             if($cmd == S2Base_StdinManager::EXIT_LABEL){
                 break;
             }else{
-                $this->commands[$cmd]->execute();
+                try {
+                    $this->commands[$cmd]->execute();
+                } catch(Exception $e) {
+                    print PHP_EOL . '!!! EXCEPTION !!!' . PHP_EOL;
+                    print $e->getMessage() . PHP_EOL;
+                }
             }
         }
     }

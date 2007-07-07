@@ -12,12 +12,12 @@
     <target name="init">
         <property name="project.name" value="${phing.project.name}" />
         <property name="package.name" value="S2Base" />
-        <property name="project.version" value="1.0.3" />
-        <property name="project.state" value="stable" />
+        <property name="project.version" value="2.0.0" />
+        <property name="project.state" value="beta" />
         <property name="project.build.dir" value="${project.basedir}/build" />
         <property name="project.src.dir" value="${project.basedir}/src" />
         <property name="license.file" value="Apache_Software_License_2.0.txt" />
-        <property name="release.notes" value="Release 1.0.3" />
+        <property name="release.notes" value="Release 2.0.0" />
         <property name="td" value="" />
         <property name="tt" value="**/*Test.class.php" />
         <property name="dd" value="" />
@@ -31,7 +31,8 @@
     <target name="prepare" depends="init">
         <mkdir dir="${project.build.dir}" />
         <mkdir dir="${project.build.dir}/${project.name}" />
-        <!-- mkdir dir="${project.build.dir}/${project.name}/${package.name}" /-->
+        <mkdir dir="${project.build.dir}/${project.name}/bin" />
+        <mkdir dir="${project.build.dir}/${project.name}/project" />
     </target>
 
     <target name="build" depends="prepare">
@@ -62,25 +63,28 @@
         <copy file="${project.basedir}/${license.file}"
               tofile="${project.build.dir}/${project.name}/${license.file}"
               overwrite="true"/>
+
+        <copy toDir="${project.build.dir}/${project.name}/bin">
+            <fileset dir="${project.basedir}/src/s2base.php5/org/seasar/s2base/cli">
+                <exclude name="s2base" />
+                <exclude name="s2base.bat" />
+            </fileset>
+        </copy>
     </target>
 
     <target name="project-tree" depends="build">
-        <mkdir dir="${project.build.dir}/${project.name}/bin" />
-        <mkdir dir="${project.build.dir}/${project.name}/project" />
-
         <copy toDir="${project.build.dir}/${project.name}/project">
             <fileset dir="../..">
-                <exclude name="lib/S2*/**" />
+                <exclude name="lib/S*/**" />
+                <exclude name="lib/Z*/**" />
                 <exclude name="**/.*/**" />
+                <exclude name="s2base.php" />
             </fileset>
         </copy>
     </target>
 
     <target name="pear-pkg-xml" depends="project-tree">
 
-        <copy file="${project.basedir}/src/phing/etc/s2base.php"
-              tofile="${project.build.dir}/${project.name}/bin/s2base.php"
-              overwrite="true"/>
 
         <pearpkg name="${package.name}" 
                  dir="${project.build.dir}/${project.name}" 
@@ -112,19 +116,24 @@
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
                     <element key="name" value="S2Dao"/>
-                    <element key="optional" value="true"/>
                 </element>
                 <element>
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
                     <element key="name" value="S2Container"/>
-                    <element key="optional" value="true"/>
                 </element>
 -->
                 <element>
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
+                    <element key="name" value="PHPUnit"/>
+                    <element key="optional" value="true"/>
+                </element>
+                <element>
+                    <element key="type" value="pkg"/>
+                    <element key="rel" value="has"/>
                     <element key="name" value="phing"/>
+                    <element key="optional" value="true"/>
                 </element>
             </mapping>
             <mapping name="maintainers">
@@ -161,7 +170,7 @@
         <pkg2-bs pkgFile="${project.build.dir}/${project.name}/package.xml"/>
 
         <copy toDir="${project.build.dir}/${project.name}/bin">
-            <fileset dir="${project.basedir}/src/phing/etc">
+            <fileset dir="${project.basedir}/src/s2base.php5/org/seasar/s2base/cli">
                 <include name="s2base" />
                 <include name="s2base.bat" />
             </fileset>
@@ -175,6 +184,9 @@
         <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pkgName="S2Javelin"
                   uri="http://s2base.php5.sandbox.seasar.org/download/S2Javelin-1.0.0"/>
+        <pkg2-cbs pkgFile="${project.build.dir}/${project.name}/package2.xml"
+                  pkgName="PHPUnit"
+                  channel="pear.phpunit.de"/>
         <pkg2-cbs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pkgName="phing"
                   channel="pear.phing.info"/>
@@ -208,8 +220,7 @@
             </batchtest>
         </phpunit2>
     </target>
-
-    <!--
+<!--
     <target name="doc" depends="prepare">
         <echo>src directory : ${project.src.dir}/${project.name}/${dd}</echo>
         <phpdoc title="${project.name} Documentation"
@@ -219,8 +230,7 @@
             parseprivate="true"
             linksource="false"/>
     </target>
-    -->
-
+-->
     <target name="info">
         <echo message="" />
         <echo message="S2Base.PHP5 build script" />
