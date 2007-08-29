@@ -28,6 +28,8 @@ if(!defined('STDIN')){
     define('STDIN',fopen('php://stdin','r'));
 }
 
+ini_set('include_path', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'classes'
+                      . PATH_SEPARATOR . ini_get('include_path'));
 S2ContainerClassLoader::import(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'classes');
 require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR . 'S2DaoSkeletonTask.php');
 
