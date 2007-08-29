@@ -2,7 +2,7 @@
 S2Base_ZfStopWatch::start();
 
 require_once(dirname(dirname(__FILE__)).'/config/environment.inc.php');
-require_once(dirname(dirname(__FILE__)).'/config/zf.inc.php');
+require_once(dirname(dirname(__FILE__)).'/config/s2base_zf.inc.php');
 
 try{
     Zend_Session::regenerateId();

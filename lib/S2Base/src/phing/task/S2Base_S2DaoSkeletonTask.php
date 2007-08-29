@@ -5,12 +5,12 @@ class S2Base_S2DaoSkeletonTask extends S2DaoSkeletonTask {
         $cd = $container->getComponentDef('dataSource');
         $this->dsn = $cd->getPropertyDef('dsn')->getValue();
         if ($cd->hasPropertyDef('user')) {
-            $this->user = $cd->getPropertyDef('user')->getValue();       	
+            $this->user = $cd->getPropertyDef('user')->getValue();
         }
         if ($cd->hasPropertyDef('password')) {
             $this->pass = $cd->getPropertyDef('password')->getValue();
         }
-        $this->skeldir = S2BASE_PHP5_ROOT . '/app/skeleton/gendao';
+        $this->skeldir = S2BASE_PHP5_ROOT . '/vendor/s2base/skeletons/gendao';
     }
 }
 ?>

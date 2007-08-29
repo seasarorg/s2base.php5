@@ -109,16 +109,23 @@ if ($projectType == 'command') {
     $project->$handlerMethod();
 } else {
     $className = 'S2Base_Cli_' . ucfirst($projectType) . 'CommandHandler';
-    $classFile = $s2baseDir
-               . DIRECTORY_SEPARATOR . 'project'
+    $classFile = $projectDir
                . DIRECTORY_SEPARATOR . 'vendor'
                . DIRECTORY_SEPARATOR . 'plugins'
                . DIRECTORY_SEPARATOR . $projectType
                . DIRECTORY_SEPARATOR . $className . '.class.php';
     if (!is_file($classFile)) {
-        print "[ERROR] project manage class [$className] not found." . PHP_EOL;
-        print "[ERROR] project type [$projectType] not supported." . PHP_EOL;
-        exit;
+        $classFile = $s2baseDir
+                   . DIRECTORY_SEPARATOR . 'project'
+                   . DIRECTORY_SEPARATOR . 'vendor'
+                   . DIRECTORY_SEPARATOR . 'plugins'
+                   . DIRECTORY_SEPARATOR . $projectType
+                   . DIRECTORY_SEPARATOR . $className . '.class.php';
+        if (!is_file($classFile)) {
+            print "[ERROR] project manage class [$className] not found." . PHP_EOL;
+            print "[ERROR] project type [$projectType] not supported." . PHP_EOL;
+            exit;
+        }
     }
     require_once($classFile);
     $project = new $className;

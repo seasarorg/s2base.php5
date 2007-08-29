@@ -81,8 +81,10 @@ class S2Base_ZfInitialize {
     }
 
     public static function initCache() {
-        define('S2CONTAINER_PHP5_CACHE_SUPPORT_CLASS', 'S2Container_ZendCacheSupport');
-        define('S2CONTAINER_PHP5_ZEND_CACHE_INI', S2BASE_PHP5_ROOT . '/config/cache.ini');
+        if (!defined('S2CONTAINER_PHP5_CACHE_SUPPORT_CLASS')) {
+            define('S2CONTAINER_PHP5_CACHE_SUPPORT_CLASS', 'S2Container_ZendCacheSupport');
+            define('S2CONTAINER_PHP5_ZEND_CACHE_INI', S2BASE_PHP5_ROOT . '/config/cache.ini');
+        }
     }
 
     public static function initViewRenderer() {

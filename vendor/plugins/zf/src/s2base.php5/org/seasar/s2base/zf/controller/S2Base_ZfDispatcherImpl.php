@@ -34,10 +34,10 @@
  */
 class S2Base_ZfDispatcherImpl extends S2Base_ZfAbstractDispatcher {
     const PARAM_MAX_LEN = 50;
-    protected $disableS2Container = false;
+    protected $enableS2Container = true;
 
-    public function setDisableS2Container($val = true) {
-        $this->disableS2Container = $val;
+    public function setEnableS2Container($val = true) {
+        $this->enableS2Container = $val;
     }
 
     /**
@@ -51,7 +51,7 @@ class S2Base_ZfDispatcherImpl extends S2Base_ZfAbstractDispatcher {
      * @see S2Base_ZfAbstractDispatcher::instantiateController()
      */
     public function instantiateController(Zend_Controller_Request_Abstract $request, $moduleName, $controllerClassName) {
-        if ($this->disableS2Container) {
+        if (!$this->enableS2Container) {
             return new $controllerClassName($request, $this->getResponse(), $this->getParams()); 
         }
 
@@ -68,8 +68,13 @@ class S2Base_ZfDispatcherImpl extends S2Base_ZfAbstractDispatcher {
         $actionDicon   = S2BASE_PHP5_ROOT . $controllerDir . "/dicon/$actionMethodName.dicon";
         $moduleIncFile = S2BASE_PHP5_ROOT . $controllerDir . "/$controllerName.inc.php";
         $actionIncFile = S2BASE_PHP5_ROOT . $controllerDir . "/$actionMethodName.inc.php";
+        $dispatcher    = $this;
 
-        require_once($moduleIncFile);
+        if (is_file($moduleIncFile)) {
+            require_once($moduleIncFile);
+        } else {
+            return new $controllerClassName($request, $this->getResponse(), $this->getParams()); 
+        }
         if (is_file($actionIncFile)) {
             require_once($actionIncFile);
         }

@@ -4,14 +4,14 @@ class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
     private $container;
     private $service;
 
-    function __construct($name) {
+    public function __construct($name) {
         parent::__construct($name);
     }
 
-    function testA(){
+    public function testA(){
     }
 
-    function setUp(){
+    public function setUp(){
         print __CLASS__ . "::{$this->getName()}\n";
         $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this->module}";
         include_once($moduleDir . "/{$this->module}.inc.php");
@@ -19,7 +19,7 @@ class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
         $this->service = $this->container->getComponent("@@SERVICE_CLASS@@");
     }
 
-    function tearDown() {
+    public function tearDown() {
         print "\n";
         $this->container = null;
         $this->service = null;
