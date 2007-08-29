@@ -2,7 +2,8 @@
 <project name="project" default="command" basedir=".">
 
     <php expression="ini_set('include_path', 'lib' . PATH_SEPARATOR . ini_get('include_path'))" />
-    <php expression="require_once('S2Base/S2Base.phing.php')" />
+    <php expression="require_once('config/environment.inc.php')"/>
+    <php expression="require_once('S2Base/S2Base.php')"/>
     <taskdef name="command" classname="S2Base_CommandTask" />
     <taskdef name="gdao"    classname="S2Base_S2DaoSkeletonTask" />
 
@@ -20,8 +21,6 @@
         <!-- sub task -->
         <property name="st" value="command" /> 
 
-        <php expression="require_once('config/environment.inc.php')"/>
-        <php expression="require_once('S2Base/S2Base.cmd.php')"/>
         <php expression="require_once(S2BASE_PHP5_VENDOR_DIR . '/s2base/config/environment.inc.php')"/>
     </target>
 

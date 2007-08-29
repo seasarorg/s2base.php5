@@ -99,8 +99,6 @@
     </target>
 
     <target name="pear-pkg-xml" depends="project-tree">
-
-
         <pearpkg name="${package.name}" 
                  dir="${project.build.dir}/${project.name}" 
                  destFile="${project.build.dir}/${project.name}/package-dist.xml">
@@ -142,7 +140,6 @@
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
                     <element key="name" value="PHPUnit"/>
-                    <element key="optional" value="true"/>
                 </element>
                 <element>
                     <element key="type" value="pkg"/>
@@ -235,7 +232,8 @@
             </batchtest>
         </phpunit2>
     </target>
-<!--
+
+    <!--
     <target name="doc" depends="prepare">
         <echo>src directory : ${project.src.dir}/${project.name}/${dd}</echo>
         <phpdoc title="${project.name} Documentation"
@@ -245,7 +243,8 @@
             parseprivate="true"
             linksource="false"/>
     </target>
--->
+    -->
+
     <target name="info">
         <echo message="" />
         <echo message="S2Base.PHP5 build script" />
