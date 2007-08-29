@@ -236,9 +236,11 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . '/skeletons/module/include.tpl');
         $keys = array("/@@CONTROLLER_CLASS_NAME@@/",
-                      "/@@CONTROLLER_FILE_NAME@@/");
+                      "/@@CONTROLLER_FILE_NAME@@/",
+                      "/@@MODULE_NAME@@/");
         $reps = array($this->controllerClassName,
-                      $this->controllerClassFile);
+                      $this->controllerClassFile,
+                      $this->moduleName);
         $tempContent = preg_replace($keys, $reps, $tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }

@@ -12,7 +12,7 @@
     <target name="init">
         <property name="project.name" value="${phing.project.name}" />
         <property name="package.name" value="S2Base" />
-        <property name="project.version" value="2.0.0" />
+        <property name="project.version" value="2.0.0RC1" />
         <property name="project.state" value="beta" />
         <property name="project.build.dir" value="${project.basedir}/build" />
         <property name="project.src.dir" value="${project.basedir}/src" />
@@ -33,9 +33,11 @@
         <mkdir dir="${project.build.dir}/${project.name}" />
         <mkdir dir="${project.build.dir}/${project.name}/bin" />
         <mkdir dir="${project.build.dir}/${project.name}/project" />
+        <mkdir dir="${project.build.dir}/${project.name}/classes" />
     </target>
 
     <target name="build" depends="prepare">
+        <!--
         <gcore searchDir="${project.src.dir}/${project.name}"
                coreFile="${project.build.dir}/${project.name}/${package.name}.cmd.classes.php"
                listFile="${project.src.dir}/phing/etc/${package.name}.cmd.files.txt"/>
@@ -43,7 +45,27 @@
         <gcore searchDir="${project.basedir}/../S2Dao/src/phing,${project.src.dir}/phing"
                coreFile="${project.build.dir}/${project.name}/${package.name}.phing.classes.php"
                listFile="${project.src.dir}/phing/etc/${package.name}.phing.files.txt"/>
+        -->
 
+        <copy2 toDir="${project.build.dir}/${project.name}/classes">
+            <fileset dir="${project.src.dir}">
+                <include name="${project.name}/**/*.php"/>
+                <exclude name="**/s2base.php"/>
+            </fileset>
+            <fileset dir="${project.src.dir}">
+                <include name="phing/**/S2Base_*.php"/>
+            </fileset>
+        </copy2>
+
+        <copy file="${project.basedir}/../S2Dao/src/phing/task/S2DaoSkeletonTask.php"
+              toDir="${project.build.dir}/${project.name}/classes"
+              overwrite="true"/>
+
+        <copy file="${project.basedir}/src/phing/etc/${package.name}.php.tpl"
+              tofile="${project.build.dir}/${project.name}/${package.name}.php"
+              overwrite="true"/>
+
+        <!--
         <copy file="${project.basedir}/src/phing/etc/${package.name}.cmd.php.tpl"
               tofile="${project.build.dir}/${project.name}/${package.name}.cmd.php"
               overwrite="true"/>
@@ -51,6 +73,7 @@
         <copy file="${project.basedir}/src/phing/etc/${package.name}.phing.php.tpl"
               tofile="${project.build.dir}/${project.name}/${package.name}.phing.php"
               overwrite="true"/>
+        -->
 
         <copy file="${project.basedir}/${license.file}"
               tofile="${project.build.dir}/${project.name}/${license.file}"
