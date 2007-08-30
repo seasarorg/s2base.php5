@@ -2,24 +2,24 @@
 ; Zend Config INI format
 ; http://framework.zend.com/manual/ja/zend.config.adapters.ini.html
 ;
-; ��default�ץ��������ϥѥ�᡼�����ڹ��ܤ����������ޤ���
-; ���������ѤΥ��������Ȥ��ƻ��Ѥ��ޤ�����exception�׹��ܤ����ꤵ��Ƥ���
-; ���ϡ��㳰������ͥ�褵��ޤ��������������Ǥ�դǤ���(��ά��)
+; 「default」セクションはパラメータ検証項目から除外されます。
+; 共通設定用のセクションとして使用します。「exception」項目が設定されている
+; 場合は、例外処理が優先されます。全項目設定は任意です。(省略可)
 ;
 ; [default]
-; module     = "���ڤ˼��Ԥ�������������⥸�塼��̾����ꤷ�ޤ���"
-;               default : ���ߤΥ⥸�塼��̾
-; controller = "���ڤ˼��Ԥ������������襳��ȥ�����̾����ꤷ�ޤ���"
-;               default : ���ߤΥ���ȥ�����̾
-; action     = "���ڤ˼��Ԥ������������襢�������̾����ꤷ�ޤ���"
-;               default : ���ߤΥ��������̾
-; break      = "1�Ĥθ��ڤ����Ԥ��������Ǹ��ڽ�����λ���뤫�ɤ�����boole�ͤ����ꤷ�ޤ���(true | false)"
+; module     = "検証に失敗した場合の遷移先モジュール名を指定します。"
+;               default : 現在のモジュール名
+; controller = "検証に失敗した場合の遷移先コントローラ名を指定します。"
+;               default : 現在のコントローラ名
+; action     = "検証に失敗した場合の遷移先アクション名を指定します。"
+;               default : 現在のアクション名
+; break      = "1つの検証が失敗した時点で検証処理を終了するかどうかをboole値で設定します。(true | false)"
 ;               default : false
-; exception  = "���ڤ˼��Ԥ��������㳰�򥹥������ޤ����㳰��å������򵭽Ҥ��ޤ���"
+; exception  = "検証に失敗した場合に例外をスローします。例外メッセージを記述します。"
 ;
 ;
-;�֥ꥯ�����ȥѥ�᡼��̾�ץ��������ϡ�default����������Ѿ����嵭������ܤ�����Ѥ��ޤ���
-; validate���ܤ�����Ǥ��븡�ڥ����פϼ��ˤʤ�ޤ������줾�졢Zend_Validate_*** ���饹�����Ѥ���ޤ���
+;「リクエストパラメータ名」セクションは、defaultセクションを継承し上記設定項目を引き継ぎます。
+; validate項目に設定できる検証タイプは次になります。それぞれ、Zend_Validate_*** クラスが使用されます。
 ;   - alnum   (Zend_Validate_Alnum)
 ;   - alpha   (Zend_Validate_Alpha)
 ;   - date    (Zend_Validate_Date)
@@ -28,12 +28,12 @@
 ;   - ip      (Zend_Validate_Ip)
 ;   - regex   (Zend_Validate_Regex)
 ;
-; [�ꥯ�����ȥѥ�᡼��̾ : default]
-; validate      = "����޶��ڤ�Ǹ��ڥ����פ����ꤷ�ޤ���( regex, , )"
-; regex.pattern = "���ڥ�����̾��prefix�Ȥ��ƳƸ��ڥ����פ�ɬ�פʹ��ܤ����ꤷ�ޤ���"
-; regex.msg     = "���ڥ�����̾��prefix�Ȥ��ƳƸ��ڥ����פθ��ڼ��ԥ�å����������ꤷ�ޤ���"
+; [リクエストパラメータ名 : default]
+; validate      = "カンマ区切りで検証タイプを設定します。( regex, , )"
+; regex.pattern = "検証タイプ名をprefixとして各検証タイプに必要な項目を設定します。"
+; regex.msg     = "検証タイプ名をprefixとして各検証タイプの検証失敗メッセージを設定します。"
 ;
-; ��)
+; 例)
 ; [default]
 ; action = "bar"
 ;
