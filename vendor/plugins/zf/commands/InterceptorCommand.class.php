@@ -4,7 +4,7 @@
  * 
  * 生成ファイル
  * <ul>
- *   <li>app/modules/module名/controller名/interceptor/interceptor名.class.php</li>
+ *   <li>app/modules/module名/models/controller名/interceptor/interceptor名.class.php</li>
  * </ul>
  * 
  */

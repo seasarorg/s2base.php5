@@ -4,7 +4,7 @@
  * 
  * 生成ファイル
  * <ul>
- *   <li>app/modules/module名/controller名/entity/entity名.class.php</li>
+ *   <li>app/modules/module名/models/controller名/entity/entity名.class.php</li>
  * </ul>
  * 
  */
@@ -62,10 +62,12 @@ class EntityCommand implements S2Base_GenerateCommand {
             $prop = preg_replace("/_/"," ",$prop);
             $prop = ucwords($prop);
             $matches = array();
+            $preSpace = '';
             if (preg_match("/^(\s+)/", $prop, $matches)) {
-                $preSpace  = $matches[1];
+                $preSpace = $matches[1];
             }
             $matches = array();
+            $postSpace = '';
             if (preg_match("/(\s+)$/", $prop, $matches)) {
                 $postSpace = $matches[1];
             }

@@ -100,7 +100,7 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
         $actionName = $request->getActionName();
 
         $validateIni = S2BASE_PHP5_ROOT
-                     . "/app/modules/$moduleName/$controllerName/"
+                     . "/app/modules/$moduleName/models/$controllerName/"
                      . self::VALIDATE_DIR
                      . "/$actionName.ini";
         if (!is_file($validateIni)) {

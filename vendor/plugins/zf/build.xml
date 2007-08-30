@@ -36,7 +36,8 @@
 
     <target name="test" depends="build">
         <php expression="require_once('../../../config/environment.inc.php')"/>
-        <php expression="require_once('config/environment.inc.php')"/>
+        <php expression="require_once('../../../config/s2base_zf.inc.php')"/>
+        <!-- php expression="require_once('config/environment.inc.php')"/ -->
 
         <echo>test directory : test/${td}</echo>
         <echo>test target : ${tt}</echo>
