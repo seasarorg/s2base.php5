@@ -54,7 +54,7 @@ class S2Base_Cli_DefaultCommandHandler extends S2Base_Cli_AbstractCommandHandler
      */
     public function commandHandler(){
         ini_set('include_path',$this->projectDir . '/lib' . PATH_SEPARATOR . ini_get('include_path'));
-        require_once('config/environment.inc.php');
+        require_once($this->projectDir . '/config/environment.inc.php');
         require_once('S2Base/S2Base.php');
         require_once(S2BASE_PHP5_VENDOR_DIR . '/s2base/config/environment.inc.php');
         $pattern = $this->projectDir
@@ -77,7 +77,7 @@ class S2Base_Cli_DefaultCommandHandler extends S2Base_Cli_AbstractCommandHandler
         print "[INFO ] test target       : $testTargetPattern"  . PHP_EOL . PHP_EOL;
 
         ini_set('include_path',$this->projectDir . '/lib' . PATH_SEPARATOR . ini_get('include_path'));
-        require_once('config/environment.inc.php');
+        require_once($this->projectDir . '/config/environment.inc.php');
         require_once('S2Base/S2Base.php');
         require_once(S2BASE_PHP5_VENDOR_DIR . '/s2base/config/environment.inc.php');
         $this->runUnitTest($this->projectDir . DIRECTORY_SEPARATOR . 'test', $testTargetPattern);
