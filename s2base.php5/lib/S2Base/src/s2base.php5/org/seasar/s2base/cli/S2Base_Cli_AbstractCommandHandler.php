@@ -42,9 +42,6 @@ abstract class S2Base_Cli_AbstractCommandHandler {
     abstract public function commandHandler();
     abstract public function testHandler();
 
-    /**
-     * @see S2Base_Cli_AbstractCommandHandler::externalHandler()
-     */
     public function externalHandler(){
         print "[INFO ] command [{$this->cmdLineArgs[1]}] not implemented." . PHP_EOL;
     }
