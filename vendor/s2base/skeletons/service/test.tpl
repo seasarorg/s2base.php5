@@ -1,6 +1,6 @@
 <?php
 class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
-    private $module = "@@MODULE_NAME@@";
+    private $module = '@@MODULE_NAME@@';
     private $container;
     private $service;
 
