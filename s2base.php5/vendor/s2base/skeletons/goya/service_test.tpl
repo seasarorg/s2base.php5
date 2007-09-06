@@ -12,18 +12,15 @@ class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
     }
 
     public function setUp(){
-        print __CLASS__ . "::{$this->getName()}\n";
+        print __CLASS__ . '::' . $this->getName() . PHP_EOL;
         $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this->module}";
         include_once($moduleDir . "/{$this->module}.inc.php");
-        S2ContainerApplicationContext::setIncludePattern('/dao.dicon$/');
-        S2ContainerApplicationContext::addIncludePattern('/@@DAO_INTERFACE@@\./');
-        S2ContainerApplicationContext::addIncludePattern('/@@SERVICE_CLASS@@\./');
         $this->container = S2ContainerApplicationContext::create();
-        $this->service = $this->container->getComponent("@@SERVICE_CLASS@@");
+        $this->service = $this->container->getComponent('@@SERVICE_CLASS@@');
     }
 
     public function tearDown() {
-        print "\n";
+        print PHP_EOL;
         $this->container = null;
         $this->service = null;
     }

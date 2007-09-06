@@ -5,9 +5,8 @@
  * 生成ファイル
  * <ul>
  *   <li>app/modules/module名/dao/dao名.class.php</li>
- *   <li>app/modules/module名/dicon/dao名.dicon</li>
  *   <li>test/modules/module名/dao/dao名Test.class.php</li>
- *   <li>app/modules/module名/entity/entity名.dicon</li>
+ *   <li>app/modules/module名/entity/entity名.class.php</li>
  * </ul>
  * 
  */
@@ -230,7 +229,6 @@ class DaoCommand implements S2Base_GenerateCommand {
             print "  table name           : {$this->tableName} " . PHP_EOL;
             print '  columns              : ' . implode(', ',$this->cols) . PHP_EOL;
         }
-        print "  dao dicon file name  : {$this->daoInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
@@ -266,7 +264,7 @@ class DaoCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETONS_DIR
                      . '/dao/test.tpl');
-        $patterns = array("/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@DAO_CLASS@@/");
+        $patterns = array("/@@CLASS_NAME@@/","/@@MODULE_NAME@@/","/@@DAO_INTERFACE@@/");
         $replacements = array($testName,$this->moduleName,$this->daoInterfaceName);
         $tempContent = preg_replace($patterns,$replacements,$tempContent);
 
