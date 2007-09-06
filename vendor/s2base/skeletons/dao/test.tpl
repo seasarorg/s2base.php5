@@ -12,15 +12,15 @@ class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
     }
 
     public function setUp(){
-        print __CLASS__ . "::{$this->getName()}\n";
+        print __CLASS__ . '::' . $this->getName() . PHP_EOL;
         $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this->module}";
         require_once($moduleDir . "/{$this->module}.inc.php");
         $this->container = S2ContainerApplicationContext::create();
-        $this->dao = $this->container->getComponent("@@DAO_CLASS@@");
+        $this->dao = $this->container->getComponent('@@DAO_INTERFACE@@');
     }
 
     public function tearDown() {
-        print "\n";
+        print PHP_EOL;
         $this->container = null;
         $this->dao = null;
     }
