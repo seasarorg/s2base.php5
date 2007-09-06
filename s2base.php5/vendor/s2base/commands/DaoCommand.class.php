@@ -4,9 +4,9 @@
  * 
  * 生成ファイル
  * <ul>
- *   <li>app/modules/module名/dao/dao名.class.php</li>
- *   <li>test/modules/module名/dao/dao名Test.class.php</li>
- *   <li>app/modules/module名/entity/entity名.class.php</li>
+ *   <li>app/modules/module名/dao/dao名.php</li>
+ *   <li>test/modules/module名/dao/dao名Test.php</li>
+ *   <li>app/modules/module名/entity/entity名.php</li>
  * </ul>
  * 
  */

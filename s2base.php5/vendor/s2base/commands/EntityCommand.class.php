@@ -4,7 +4,7 @@
  * 
  * 生成ファイル
  * <ul>
- *   <li>app/modules/module名/entity/entity名.class.php</li>
+ *   <li>app/modules/module名/entity/entity名.php</li>
  * </ul>
  * 
  */
