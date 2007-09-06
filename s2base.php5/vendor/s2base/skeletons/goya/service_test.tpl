@@ -14,7 +14,7 @@ class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
     public function setUp(){
         print __CLASS__ . '::' . $this->getName() . PHP_EOL;
         $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this->module}";
-        include_once($moduleDir . "/{$this->module}.inc.php");
+        require_once($moduleDir . "/{$this->module}.inc.php");
         $this->container = S2ContainerApplicationContext::create();
         $this->service = $this->container->getComponent('@@SERVICE_CLASS@@');
     }

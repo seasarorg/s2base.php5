@@ -227,7 +227,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
                  . S2BASE_PHP5_DS . $testName
                  . S2BASE_PHP5_CLASS_SUFFIX;
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_SKELETONS_DIR
-                     . '/goya/service_test.tpl');
+                     . '/service/test.tpl');
 
         $patterns = array("/@@CLASS_NAME@@/",
                           "/@@MODULE_NAME@@/",

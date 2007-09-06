@@ -4,10 +4,8 @@
  * 
  * 生成ファイル
  * <ul>
- *   <li>app/modules/module名/service/service名.class.php</li>
- *   <li>app/modules/module名/service/service名Impl.class.php</li>
- *   <li>app/modules/module名/dicon/service名Impl.dicon</li>
- *   <li>test/modules/module名/service/service名ImplTest.class.php</li>
+ *   <li>app/modules/module名/service/service名.php</li>
+ *   <li>test/modules/module名/service/service名Test.php</li>
  * </ul>
  * 
  */
