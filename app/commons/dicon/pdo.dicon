@@ -16,7 +16,7 @@
     -->
 
     <component name="dataSource" class="S2Container_PDODataSource">
-        <property name="dsn">return 'sqlite:' . S2BASE_PHP5_VAR_DIR . '/db/s2con.db'</property>
+        <property name="dsn">return 'sqlite:' . S2BASE_PHP5_VAR_DIR . '/db/s2base.db'</property>
     </component>
 
     <!--
