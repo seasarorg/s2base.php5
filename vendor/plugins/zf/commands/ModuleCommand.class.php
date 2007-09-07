@@ -86,7 +86,6 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $this->validate($this->controllerName);
         list($this->controllerName, $this->controllerClassName, $this->controllerClassFile) = 
             self::getControllerNames($this->dispatcher, $this->moduleName, $this->controllerName);
-        $this->ctlServiceInterfaceName = self::getCtlServiceInterfaceName($this->controllerName);
         if (!$this->finalConfirm()){
             return;
         }
@@ -153,7 +152,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
         S2Base_CommandUtil::createDirectory($this->appModelDir . S2BASE_PHP5_DS . $this->controllerName);
         S2Base_CommandUtil::createDirectory($this->appViewDir);
         foreach($dirs as $dir){
-            S2Base_CommandUtil::createDirectory($this->appModelDir . S2BASE_PHP5_DS . $this->controllerName. S2BASE_PHP5_DS . $dir);
+            S2Base_CommandUtil::createDirectory($this->appModelDir . S2BASE_PHP5_DS . $this->controllerName . $dir);
         }
 
         if (self::isStandardView()) {
@@ -182,7 +181,7 @@ class ModuleCommand implements S2Base_GenerateCommand {
         S2Base_CommandUtil::createDirectory($this->testModelDir);
         S2Base_CommandUtil::createDirectory($this->testModelDir . S2BASE_PHP5_DS . $this->controllerName);
         foreach($dirs as $dir){
-            S2Base_CommandUtil::createDirectory($this->testModelDir . S2BASE_PHP5_DS . $this->controllerName . S2BASE_PHP5_DS . $dir);
+            S2Base_CommandUtil::createDirectory($this->testModelDir . S2BASE_PHP5_DS . $this->controllerName . $dir);
         }
     }
 
@@ -201,10 +200,8 @@ class ModuleCommand implements S2Base_GenerateCommand {
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . "/skeletons/module/controller.tpl");
-        $keys = array("/@@CONTROLLER_CLASS_NAME@@/",
-                      "/@@SERVICE_CLASS_NAME@@/");
-        $reps = array($this->controllerClassName,
-                      $this->ctlServiceInterfaceName);
+        $keys = array("/@@CONTROLLER_CLASS_NAME@@/");
+        $reps = array($this->controllerClassName);
         $tempContent = preg_replace($keys, $reps, $tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
@@ -371,9 +368,4 @@ class ModuleCommand implements S2Base_GenerateCommand {
     public function setDispatcher($dispatcher) {
         $this->dispatcher = $dispatcher;
     }
-
-    public function setCtlServiceInterfaceName($ctlServiceInterfaceName) {
-        $this->ctlServiceInterfaceName = $ctlServiceInterfaceName;
-    }
-
 }
