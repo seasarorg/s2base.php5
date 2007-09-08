@@ -30,10 +30,10 @@ require_once(S2BASE_PHP5_PLUGIN_ZF . '/s2base_zf.core.php');
 S2ContainerClassLoader::import(S2BASE_PHP5_PLUGIN_ZF . '/classes');
 
 /** Zned_Log 設定 */
-define('S2CONTAINER_PHP5_LOG_LEVEL', Zend_Log::INFO);
-define('S2BASE_PHP5_ZF_LOG_STREAM', S2BASE_PHP5_VAR_DIR . '/logs/zf.log');
-define('S2BASE_PHP5_ZF_LOG_PRIORITY', S2CONTAINER_PHP5_LOG_LEVEL);
-//define('S2CONTAINER_PHP5_DEBUG_EVAL', true);
+define('S2BASE_PHP5_ZF_LOG_PRIORITY', Zend_Log::WARN);
+define('S2BASE_PHP5_ZF_LOG_STREAM',   S2BASE_PHP5_VAR_DIR . '/logs/zf.log');
+define('S2CONTAINER_PHP5_LOG_LEVEL',  S2BASE_PHP5_ZF_LOG_PRIORITY);
+define('S2CONTAINER_PHP5_DEBUG_EVAL', false);
 
 /** session save path 設定 */
 session_save_path(S2BASE_PHP5_VAR_DIR . '/session');
@@ -50,7 +50,7 @@ class S2Base_ZfInitialize {
         /** Zend_Log 設定 */
             self::initLogger();
         /** Zend_Cache 設定 */
-            self::initCache();
+            //self::initCache();
         /** Zend_DB DefaultAdaptor 設定 */
             S2Base_ZfDb::setDefaultPdoAdapter();
         /** ViewRenderer 設定 */
