@@ -6,7 +6,6 @@ define('S2BASE_PHP5_PLUGIN_ZF',S2BASE_PHP5_ROOT . '/vendor/plugins/zf');
 //define('S2BASE_PHP5_LAYOUT', S2BASE_PHP5_ROOT . '/app/commons/view/layout.tpl');
 
 /** ライブラリ設定 */
-require_once('Smarty/libs/Smarty.class.php');
 require_once('Zend/Loader.php');
 require_once('Zend/Registry.php');
 require_once('Zend/Controller/Front.php');
@@ -42,6 +41,7 @@ session_save_path(S2BASE_PHP5_VAR_DIR . '/session');
 /**
  * Smarty 設定
  */
+//require_once('Smarty/libs/Smarty.class.php');
 define('S2BASE_PHP5_USE_SMARTY', false);
 
 /** S2Base_Zf 設定 */
