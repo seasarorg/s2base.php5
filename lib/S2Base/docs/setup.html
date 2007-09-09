@@ -60,58 +60,7 @@
     </ul>
     </font>
 </li>
-<li><a href="dir.html">ディレクトリ構成</a></li>
-<li><a href="cmdRef.html">コマンドリファレンス</a></li>
 </ul>
-
-<ul>
-<li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
-<li><a href="withAgavi-setup.html">with Agavi</a> <i>(deprecated)</i></li>
-<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 1.0.5)</i></li>
-<li><a href="withSmarty-setup.html">with Smarty</a></li>
-<li><a href="withPRADO-setup.html">with PRADO</a></li>
-<li><a href="withZf-setup.html">with Zf</a></li>
-</ul>
-
-<h3>サブプロジェクト</h3>
-<ul>
-<li><a href="javelin.html">S2Javelin.PHP5</a></li>
-</ul>
-
-
-<h3>リンク</h3>
-<ul>
-    <li><a href="http://www.seasar.org/">Seasar.org</a></li>
-    <li><a href="http://svn.seasar.org/browse/?root=sandbox.s2base.php5">SVN リポジトリブラウザ</a></li>
-    <li><a href="https://www.seasar.org/svn/sandbox/s2base.php5/">SVN リポジトリ</a></li>
-    <li><a href="https://www.seasar.org/issues/browse/BASEPHP">Issue Tracker</a></li>
-    <li><a href="http://s2php5.jp/">s2php5.jp</a>
-        <ul>
-            <li><a href="http://labs.s2php5.jp/s2base">laboratory</a></li>
-            <li><a href="http://wiki.s2php5.jp/s2base.php5">wiki</a></li>
-            <li><a href="http://wiki.s2php5.jp/s2base.php5/plugins">plugins</a></li>
-            <li><a href="http://docs.s2php5.jp/s2base/api/">PHPDoc</a></li>
-        </ul>
-    </li>
-</ul>
-
-<h2>PHP プロジェクト</h2>
-
-<h3>Seasar.PHP</h3>
-
-<ul>
-    <li><a href="http://s2container.php5.seasar.org/">S2Container.PHP5</a></li>
-    <li><a href="http://s2dao.php5.seasar.org/">S2Dao.PHP5</a></li>
-</ul>
-
-<h3>Sandbox.PHP</h3>
-
-<ul>
-    <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
-    <li><a href="http://s2ana.php5.sandbox.seasar.org/">S2AnA.PHP5</a></li>
-    <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
-</ul>
-
 
 
 </div><!-- contents_left -->
@@ -123,17 +72,14 @@
 <div class="section">
 <h2 id="h02"><a name="start">はじめに</a></h2>
 <p>
-　S2Base.PHP5では、<a href="http://phing.info/trac/">Phing</a> と <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a> が<font color="red">必要</font>です。
+　S2Base.PHP5では、<a href="http://www.phpunit.de/">PHPUnit3</a> が<font color="red">必要</font>です。
 各ツールのドキュメントに従いインストールして下さい。
 </p>
 
 <ul>
 <li><a href="http://pear.php.net/manual/ja/installation.cli.php">PEARマニュアル インストール</a></li>
-<li>
-<a href="http://phing.info/trac/wiki/Users/Download">Phing ダウンロードページ</a> 
-<a href="http://phing.tigris.org/servlets/ProjectDocumentList"><i>( Release Archive ) </i></a>
-</li>
-<li><a href="http://pear.php.net/package/PHPUnit2/download">PHPUnit2 ダウンロードページ</a><br><font color="red">注</font> : PHPUnit3は動作未確認です。PHPUnit2は<a href="http://pear.phpunit.de/get/">こちらからダウンロード</a>できます。</li>
+<li><a href="http://www.phpunit.de/pocket_guide/3.2/en/installation.html">PHPUnit3 install</a></li>
+<li><a href="http://phing.info/trac/">phing</a> (optional)</li>
 </ul>
 </div>
 <br>
@@ -146,22 +92,15 @@
 　S2Base-version.tgz を取得し、「pear install」コマンドでインストールして下さい。
 </p>
 <pre>
-% pear list | grep 'PEAR '
-PEAR                    1.4.11      stable
-%
-% pear config-get download_dir
-/tmp/pear/cache
-%
 % pear install S2Base-version.tgz
 % pear list -c __uri
 Installed packages, channel __uri:
 ==================================
 Package Version State
-S2Base  1.0.0   beta
+S2Base  1.2.0RC1    beta
 %
 </pre>
 　　* PEARバージョン 1.4.11 以上が必要です。<br>
-　　* download_dir が存在することを確認して下さい。<br>
 　　* S2Container.PHP5、S2Dao.PHP5 のインストールが別途必要です。
 
 <h3><a name="uninstall-pear">PEARパッケージのアンインストール</a></h3>
@@ -171,7 +110,7 @@ S2Base  1.0.0   beta
 
 <pre>
 % pear uninstall channel://__uri/S2Base
-uninstall ok: channel://__uri/S2Base-1.0.0
+uninstall ok: channel://__uri/S2Base-version
 % pear list -c __uri
 (no packages installed from channel __uri)
 %
@@ -185,22 +124,52 @@ uninstall ok: channel://__uri/S2Base-1.0.0
 </p>
 
 <pre>
-% s2base --help
-[INFO ] Usage: % s2base &lt;project directory&gt; [smarty]
+% s2base help
+[INFO ] usage: % s2base [project|command|test|help] [option]
+[INFO ]     project: create s2base project directory.
+[INFO ]         usage: % s2base project [project dir] [none|cmd|zf]
+[INFO ]
+[INFO ]     command: start command launcher.
+[INFO ]         usage: % s2base command [none|cmd|zf]
+[INFO ]
+[INFO ]     test: execute unit test.
+[INFO ]         usage: % s2base test [target pattern] [none|cmd|zf]
+[INFO ]
+[INFO ]     help: show this help.
+[INFO ]         usage: % s2base help
 %
-% s2base ./ProjectA
+% s2base project ./ProjectA
 % ls ProjectA
 app  build.xml  config  lib  test  var  vendor
 %
-% s2base ./ProjectB smarty
-% ls ProjectB
-app  build.xml  config  lib  public  test  var  vendor
+</pre>
+
+<br>
+プロジェクトディレクトリにて s2base コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
+
+<pre>
+% cd ProjectA
+% s2base
+
+[INFO ] s2base  directory : /path/to/php/pear/directory/S2Base
+[INFO ] project directory : /path/to/ProjectA
+[INFO ] project type      : command
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 0
+
 %
 </pre>
 
-s2base コマンドの第1引数にプロジェクトディレクトリへのパスを指定します。
-withSmarty を使用する場合は、第2引数に 「smarty」と設定します。withSmartyで必要になる public ディレクトリ等が追加されます。
-</p>
 </div>
 <br>
 
@@ -220,40 +189,34 @@ s2base.php5 ディレクトリが作成されます。
 % jar xvf s2base.php5-version.zip
 % cd s2base.php5
 % ls
-app  build.xml  config  lib  public  test  var
+app  build.xml  config  lib  public  s2base.php  test  var  vendor
 %
 </pre>
 <br>
-s2base.php5 ディレクトリにて phing コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
+s2base.php5 ディレクトリにて s2base.php コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
 
 <pre>
 % pwd
 /seasar.php/workspace/s2base.php5
 %
-% phing
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
+% php s2base.php
 
-project > prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project > com:
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
 
 [ Command list ]
-0 : [ EXIT ]
-1 : command
-2 : dao
-3 : dicon
-4 : entity
-5 : goya
-6 : interceptor
-7 : module
-8 : service
+0 : (exit)
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
 choice ? : 0
 
-BUILD FINISHED
-
-Total time: 3.3343 seconds
 %
 </pre>
 
@@ -278,8 +241,11 @@ PEAR パッケージまたはフルパッケージを取得し、s2base.php5/lib
 
 <p>
 　データベースへの接続設定は、<a href="http://s2dao.php5.sandbox.seasar.org/setup.html#pdo_dicon">S2Dao の pdo.dicon </a>で行います。pdo.dicon は、app/commons/daoディレクトリにあります。ご使用のデータベースへの接続設定を行って下さい。
+デフォルトでは sqlite を使用する設定となっています。データベースファイルは s2base.php5/var/db/s2base.db です。
 </p>
 </div>
+<br>
+
 <br>
 </div><!-- article -->
 

@@ -41,17 +41,6 @@
 
 <h3>ドキュメント</h3>
 <ul>
-<li><a href="setup.html">セットアップ</a></li>
-<li><a href="dir.html">ディレクトリ構成</a></li>
-<li><a href="cmdRef.html">コマンドリファレンス</a></li>
-</ul>
-
-<ul>
-<li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
-<li><a href="withAgavi-setup.html">with Agavi</a> <i>(deprecated)</i></li>
-<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 1.0.5)</i></li>
-<li><a href="withSmarty-setup.html">with Smarty</a></li>
-<li><a href="withPRADO-setup.html">with PRADO</a></li>
 <li>with Zf
     <font size="-2">
     <ul>
@@ -62,56 +51,15 @@
               <li><a href="#controller">Zend_Controller との連携</a></li>
               <li><a href="#view">ViewRendererの選択</a></li>
               <li><a href="#validate">リクエストの検証</a></li>
+              <li><a href="#log">ログ設定</a></li>
               <li><a href="#info">S2Base_Zf の留意点</a></li>
           </ul>
         </li>
-        <li><a href="withZf-quickstart.html">クイックスタート</a></li>
         <li><a href="withZf-cmdRef.html">コマンドリファレンス</a></li>
     </ul>
     </font>
 </li>
 </ul>
-
-<h3>サブプロジェクト</h3>
-<ul>
-<li><a href="javelin.html">S2Javelin.PHP5</a></li>
-</ul>
-
-
-<h3>リンク</h3>
-<ul>
-    <li><a href="http://www.seasar.org/">Seasar.org</a></li>
-    <li><a href="http://svn.seasar.org/browse/?root=sandbox.s2base.php5">SVN リポジトリブラウザ</a></li>
-    <li><a href="https://www.seasar.org/svn/sandbox/s2base.php5/">SVN リポジトリ</a></li>
-    <li><a href="https://www.seasar.org/issues/browse/BASEPHP">Issue Tracker</a></li>
-    <li><a href="http://s2php5.jp/">s2php5.jp</a>
-        <ul>
-            <li><a href="http://labs.s2php5.jp/s2base">laboratory</a></li>
-            <li><a href="http://wiki.s2php5.jp/s2base.php5">wiki</a></li>
-            <li><a href="http://wiki.s2php5.jp/s2base.php5/plugins">plugins</a></li>
-            <li><a href="http://docs.s2php5.jp/s2base/api/">PHPDoc</a></li>
-        </ul>
-    </li>
-</ul>
-
-<h2>PHP プロジェクト</h2>
-
-<h3>Seasar.PHP</h3>
-
-<ul>
-    <li><a href="http://s2container.php5.seasar.org/">S2Container.PHP5</a></li>
-    <li><a href="http://s2dao.php5.seasar.org/">S2Dao.PHP5</a></li>
-</ul>
-
-<h3>Sandbox.PHP</h3>
-
-<ul>
-    <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
-    <li><a href="http://s2ana.php5.sandbox.seasar.org/">S2AnA.PHP5</a></li>
-    <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
-</ul>
-
-
 
 </div><!-- contents_left -->
 
@@ -127,11 +75,13 @@
 ディレクトリ構成としては <a href="dir.html">s2base の基本構成</a> と同じです。
 <pre>
 s2base.php5 プロジェクトディレクトリ
-|-- app/
+|-- <font color="blue">app/</font>
 |    +- commons/       ・・・ 共通モジュールディレクトリ
-|    +- modules/       ・・・ 本体モジュールディレクトリ
+|    <font color="blue">+- modules/</font>       ・・・ 本体モジュールディレクトリ
 |-- config/
-|    +- environment.inc.php   ・・・ S2Base 設定ファイル
+|    +- environment.inc.php   ・・・ ユーザ設定ファイル
+|    +- s2base.inc.php        ・・・ S2Base 設定ファイル
+|    +- s2base_zf.inc.php     ・・・ S2Base_Zf 設定ファイル
 |-- lib/
 |-- public/             ・・・ WEB公開ディレクトリ
 |    +- .htaccess       ・・・ Apache 用 .htaccess 設定ファイル
@@ -139,36 +89,53 @@ s2base.php5 プロジェクトディレクトリ
 |-- test/               ・・・ テスト用ディレクトリ
 |-- var/                ・・・ ログ・キャッシュディレクトリ
 `-- vendor/
-     +- plugins/
-         +- zf/
-             +- config/
-                 +- environment.inc.php   ・・・ S2Base_Zf 設定ファイル
 </pre>
 
-modules ディレクトリには、次のように、複数のモジュールディレクトリが <a href="withZf-cmdRef.html#module">module & controller</a> コマンドによって生成されます。
-モジュールディレクトリには、複数のコントローラとそのディレクトリ (以降、コントローラディレクトリ) が生成されます。
+<p>
+　<font color="blue">app/modules</font> ディレクトリ以下は、<a href="http://framework.zend.com/manual/ja/zend.controller.modular.html">Zend Controller のモジュラーディレクトリ構造</a>
+に従った構造となります。モジュール名が default、コントローラ名が index の場合は次のようなディレクトリ構造になります。
+</p>
+
+<pre>
+s2base.php5 プロジェクトディレクトリ
+|-- <font color="blue">app/</font>
+|    +- commons/
+|    <font color="blue">+- modules/</font>
+|        +- <font color="blue">default/</font>                    ・・・ default モジュールディレクトリ
+|        |   +- controllers             ・・・ コントローラディレクトリ
+|        |   |   +- IndexController.php ・・・ コントローラクラス
+|        |   <font color="blue">+- models/</font>                 ・・・ モデルディレクトリ
+|        |   |   <font color="blue">+- index/</font>              ・・・ コントローラごとのモデルディレクトリ
+|        |   +- views/                  ・・・ ビューディレクトリ
+|        |       +- scripts
+|        |       |   +- index           ・・・ コントローラごとのスクリプトディレクトリ
+|        |       +- helpers
+|        |       +- filterss
+|        |
+|
+</pre>
+
+<p>
+　上記の <font color="blue">app/modules/default/models/index</font> ディレクト以下は次のようなディレクトリ構成となります。
+</p>
+
 <pre>
 s2base.php5 プロジェクトディレクトリ
 |-- app/
-|    +- commons/
 |    +- modules/
-|        +- default/                   ・・・ default モジュールディレクトリ
-|        |   +- IndexController.php    ・・・ コントローラクラス
-|        |   +- index/                 ・・・ コントローラディレクトリ
-|        |       +- index.inc.php      ・・・ コントローラ共通設定ファイル
-|        |       +- action/
-|        |       +- dao/
-|        |       +- entity/
-|        |       +- interceptor/
-|        |       +- model/
-|        |       +- service/
-|        |       +- validate/
-|        |       +- view/
-|        +- sample/                    ・・・ sample モジュールディレクトリ
-|        |   +- IndexController.php    ・・・ コントローラクラス
-|        |   +- index/                 ・・・ コントローラディレクトリ
-|        |       +- ・・・
+|        +- default/
+|            +- models/
+|                +- index/              ・・・ コントローラごとのモデルディレクトリ
+|                    +- index.inc.php   ・・・ コントローラ共通設定ファイル
+|                    +- dao/
+|                    +- entity/
+|                    +- interceptor/
+|                    +- model/
+|                    +- service/
+|                    +- validate/
+|
 </pre>
+
 </div>
 <br>
 
@@ -185,7 +152,7 @@ s2base.php5 プロジェクトディレクトリ
 </p>
 <ul>
 <li>
-S2Base_ZfDispatcher<br>
+S2Base_ZfAbstractDispatcher、S2Base_ZfDispatcherImpl<br>
 Zend_Controller_Dispatcher_Standard を継承したディスパッチャクラスです。dispatchメソッドをオーバーライドしており、アクションコントローラの生成に S2Container を使用します。
 </li>
 <li>S2Base_ZfValidateSupportPlugin <br>
@@ -193,11 +160,11 @@ dispatchLoopStartup メソッドで、リクエスト検証を行います。
 </li>
 <li>ViewRenderer
   <ul>
-  <li>S2Base_ZfSmartyViewRenderer<br>
-      Zend_Controller_Action_Helper_Abstract を継承し、ビューに <a href="http://smarty.php.net/">Smarty</a> を用います。デフォルトで使用されます。
-  </li>
   <li>S2Base_ZfStandardViewRenderer<br>
       Zend_Controller_Action_Helper_ViewRenderer を継承して、いくつかの機能を追加したビューレンダークラスです。<a href="#view">ViewRendererの選択</a>を参照下さい。
+  </li>
+  <li>S2Base_ZfSmartyViewRenderer<br>
+      Zend_Controller_Action_Helper_Abstract を継承し、ビューに <a href="http://smarty.php.net/">Smarty</a> を用います。デフォルトで使用されます。
   </li>
   </ul>
 </li>
@@ -221,13 +188,55 @@ z.php では、Zend_Controller を起動するための初期設定を行いま�
     ・・・
 </pre>
 <p>
-S2Base_ZfInitialize クラスは、s2base.php5/vendor/plugins/zf/config/environment.inc.php で定義しています。リクエストやプラグインの設定はこのクラスで行います。
+S2Base_ZfInitialize クラスは、s2base.php5/config/s2base_zf.inc.php で定義しています。リクエストやプラグインの設定はこのクラスで行います。
 </p>
 
+<h3>Zend_Db のセットアップ</h3>
+<p>
+　S2Base_Zf では、<a href="withZf-cmdRef.html#model">model コマンド</a>で、Zend_Db_Table_Abstract を継承したモデルクラスを生成します。<a href="http://framework.zend.com/manual/ja/zend.db.table.html#zend.db.table.constructing">データベースアダプタの設定</a>は、S2Base_ZfDb::setDefaultPdoAdapter メソッドで、デフォルトのデータベースアダプタを設定します。S2Base_ZfDb::setDefaultPdoAdapter メソッド は、config/s2base_zf.inc.php ファイルで実行されます。また、DSN 値は、pdo.dicon の dataSrouce コンポーネントに設定されている値が使用されます。
+</p>
+
+<h3>設定ファイル</h3>
+<p>　リクエストごとに次の4つのファイルが設定ファイルとして使用されます。4番目のアクション固有の設定ファイル以外は必ず読み込まれます。(必須)</p>
+<ol>
+<li>config/environment.inc.php<br>
+S2Base 共通の設定ファイル。読み込まれるタイミングは、フロントコントローラが生成される前です。一番最初に読み込まれます。
+</li>
+<li>config/s2base_zf.inc.php<br>
+S2Base_Zf 固有設定ファイル。読み込まれるタイミングは、上記 config/environment.inc.php のすぐあとで、フロントコントローラが生成される前です。
+</li>
+<li>コントローラごとのモデルディレクトリ/コントローラ名.inc.php<br>
+コントローラ共通設定ファイル。読み込まれるタイミングは、アクションコントローラが生成される直前です。このファイルが存在しない場合は、アクションコントローラの生成に S2Container は使用されません。
+</li>
+<li>コントローラごとのモデルディレクトリ/アクションメソッド名.inc.php<br>
+アクション固有設定ファイル。読み込まれるタイミングは、上記コントローラ共通設定ファイルが読み込まれた直後で、アクションコントローラが生成される前です。
+この設定ファイルは存在すれば読み込まれます。(任意)
+</li>
+</ol>
+
+</div>
+<br>
+
+<div class="section">
+<h2 id="h02"><a name="view">ViewRendererの選択</a></h2>
+<p>
+　S2Base_Zf は、デフォルトでは Zend_View を継承する S2Base_ZfStandardViewRenderer 使用します。<a href="http://smarty.php.net/">Smarty</a> をビューに使用する場合は次の config/s2base_zf.inc.php 
+で、S2BASE_PHP5_USE_SMARTY定数に true を設定します。</p>
+
+<p>　　s2base.php5/config/s2base_zf.inc.php</p>
+<pre>
+&lt;?php
+・・・
+/**
+ * Smarty 設定
+ */
+require_once('/path/to/Smarty/libs/Smarty.class.php');
+define('S2BASE_PHP5_USE_SMARTY', true);
+・・・
+?&gt;
+</pre>
 <h3>Smarty ビューの使用</h3>
 <p>
-　S2Base_Zf では、ビューのインスタンスはアクションコントローラの view プロパティに設定されています。デフォルトでは、ビューに Smarty を使用します。
-ビューに使用するクラスの切り替えについては、「<a href="#view">ViewRendererの選択</a>」を参照下さい。
 
 <h4>テンプレートファイルの設定</h4>
 <p>
@@ -264,51 +273,7 @@ class IndexController extends Zend_Controller_Action {
 }
 </pre>
 
-<h3>Zend_Db のセットアップ</h3>
-<p>
-　S2Base_Zf では、<a href="withZf-cmdRef.html#model">model コマンド</a>で、Zend_Db_Table_Abstract を継承したモデルクラスを生成します。<a href="http://framework.zend.com/manual/ja/zend.db.table.html#zend.db.table.constructing">データベースアダプタの設定</a>は、S2Base_ZfDb::setDefaultPdoAdapter メソッドで、デフォルトのデータベースアダプタを設定します。S2Base_ZfDb::setDefaultPdoAdapter メソッド は、vendor/plugins/zf/config/environment.inc.php ファイルで実行されます。また、DSN 値は、pdo.dicon の dataSrouce コンポーネントに設定されている値が使用されます。
-</p>
 
-<h3>設定ファイル</h3>
-<p>　リクエストごとに次の4つのファイルが設定ファイルとして使用されます。4番目のアクション固有の設定ファイル以外は必ず読み込まれます。(必須)</p>
-<ol>
-<li>config/environment.inc.php<br>
-S2Base 共通の設定ファイル。読み込まれるタイミングは、フロントコントローラが生成される前です。一番最初に読み込まれます。
-</li>
-<li>vendor/plugins/zf/config/environment.inc.php<br>
-S2Base_Zf 固有設定ファイル。読み込まれるタイミングは、上記 config/environment.inc.php のすぐあとで、フロントコントローラが生成される前です。
-</li>
-<li>コントローラディレクトリ/コントローラ名.inc.php<br>
-コントローラ共通設定ファイル。読み込まれるタイミングは、アクションコントローラが生成される直前です。
-</li>
-<li>コントローラディレクトリ/アクションメソッド名.inc.php<br>
-アクション固有設定ファイル。読み込まれるタイミングは、上記コントローラ共通設定ファイルが読み込まれた直後で、アクションコントローラが生成される前です。
-この設定ファイルは存在すれば読み込まれます。(任意)
-</li>
-</ol>
-
-</div>
-<br>
-
-<div class="section">
-<h2 id="h02"><a name="view">ViewRendererの選択</a></h2>
-<p>
-　S2Base_Zf は、デフォルトではビューに <a href="http://smarty.php.net/">Smarty</a> を用いる S2Base_ZfSmartyViewRenderer を使用します。Zend_View を使用する場合は次の environment.inc.php 
-で、S2BASE_PHP5_USE_SMARTY定数に false を設定します。
-
-<p>　　s2base.php5/vendor/plugins/zf/config/environment.inc.php</p>
-<pre>
-&lt;?php
-・・・
-/**
- * Smarty 設定
- */
-define('S2BASE_PHP5_USE_SMARTY', true);
-・・・
-?&gt;
-</pre>
-
-</p>
 </div>
 <br>
 
@@ -318,7 +283,7 @@ define('S2BASE_PHP5_USE_SMARTY', true);
 </p>
 <h3>設定ファイル</h3>
 <p>
-　リクエストのバリデーションを行う設定ファイルは、action コマンドや goya コマンドを実施した際に、コントローラディレクトリの validate ディレクトリに 「 アクション名.ini 」として生成されています。設定ファイルは、<a href="http://framework.zend.com/manual/ja/zend.config.adapters.ini.html">Zend_Config_Ini クラス</a>を用いて読み込まれます。
+　リクエストのバリデーションを行う設定ファイルは、action コマンドや goya コマンドを実施した際に、コントローラごとのモデルディレクトリの validate ディレクトリに 「 アクション名.ini 」として生成されています。設定ファイルは、<a href="http://framework.zend.com/manual/ja/zend.config.adapters.ini.html">Zend_Config_Ini クラス</a>を用いて読み込まれます。
 </p>
 
 <h4>設定ファイルの例</h4>
@@ -378,7 +343,24 @@ public static function getErrors(Zend_Controller_Request_Abstract $request, $par
 </pre>
 
 <h3>ビューでの表示</h3>
-<p>　S2Base_ZfSmartyView と S2Base_ZfStandardView では、$errors['validate'] 変数に検証エラーが保存されています。次のようにテンプレート内で使用できます。</p>
+<p>
+　S2Base_ZfStandardViewRenderer と S2Base_ZfSmartyViewRenderer では、$errors['validate'] 変数に検証エラーが保存されています。
+S2Base_ZfStandardViewRenderer の場合は次のようにテンプレート内で使用できます。
+</p>
+
+<pre>
+&lt;font color="pink"&gt;
+&lt;?php
+foreach ($this-&gt;errors['validate'] as $key =&gt; $val):
+  echo "{$this-&gt;escape($key)} : {$this-&gt;escape($val['msg'])}&lt;br&gt;";
+endforeach;
+?&gt;
+&lt;/font&gt;
+</pre>
+
+<p>
+　S2Base_ZfSmartyViewRenderer の場合は次のようにテンプレート内で使用できます。
+</p>
 
 <pre>
 &lt;font color="red"&gt;
@@ -429,6 +411,36 @@ $fc-&gt;registerPlugin($validatePlugin);
 </div>
 <br>
 
+<div class="section">
+<h2 id="h02"><a name="log">ログ設定</a></h2>
+<p>
+　S2Base_Zfでは、<a href="http://framework.zend.com/manual/ja/zend.log.html">Zend_Log</a> を用いてログを出力できます。
+ログ設定は、s2base.php5/config/s2base_zf.inc.php で次のように設定します。
+デフォルトでは、s2base.php5/var/logs/zf.log にログが出力されます。
+</p>
+
+<pre>
+・・・
+/** Zned_Log 設定 */
+define('S2BASE_PHP5_ZF_LOG_PRIORITY', Zend_Log::INFO);
+define('S2BASE_PHP5_ZF_LOG_STREAM',   S2BASE_PHP5_VAR_DIR . '/logs/zf.log');
+・・・
+</pre>
+
+<p>
+　Logger インスタンスは <a href="http://framework.zend.com/manual/ja/zend.registry.html">Zend_Registry</a> に logger キーで登録されています。
+必要に応じて Zend_Registry より logger インスタンスを取得してロギングを行います。
+</p>
+
+<pre>
+・・・
+$logger = Zend_Registry::get('logger');
+$logger-&gt;info('information.');
+・・・
+</pre>
+
+</div>
+<br>
 
 <div class="section">
 <h2 id="h02"><a name="info">S2Base_Zf の留意点</a></h2>
@@ -438,7 +450,7 @@ $fc-&gt;registerPlugin($validatePlugin);
 <li>アクション名には、[_a-zA-Z0-9.-] が使用できます。</li>
 <li>
 コントローラクラスの継承について<br>
-実行されるアクションメソッドが実装されているコントローラクラスに関わらす、コントローラディレクトリは、リクエストされたコントローラ名になります。
+実行されるアクションメソッドが実装されているコントローラクラスに関わらす、コントローラごとのモデルディレクトリは、リクエストされたコントローラ名になります。
 </li>
 </ul>
 </div>

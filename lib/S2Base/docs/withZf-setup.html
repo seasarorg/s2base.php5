@@ -41,68 +41,16 @@
 
 <h3>ドキュメント</h3>
 <ul>
-<li><a href="setup.html">セットアップ</a></li>
-<li><a href="dir.html">ディレクトリ構成</a></li>
-<li><a href="cmdRef.html">コマンドリファレンス</a></li>
-</ul>
-
-<ul>
-<li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
-<li><a href="withAgavi-setup.html">with Agavi</a> <i>(deprecated)</i></li>
-<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 1.0.5)</i></li>
-<li><a href="withSmarty-setup.html">with Smarty</a></li>
-<li><a href="withPRADO-setup.html">with PRADO</a></li>
 <li>with Zf
     <font size="-2">
     <ul>
         <li>セットアップ</li>
         <li><a href="withZf-fw.html">Zend Framework との連携</a></li>
-        <li><a href="withZf-quickstart.html">クイックスタート</a></li>
         <li><a href="withZf-cmdRef.html">コマンドリファレンス</a></li>
     </ul>
     </font>
 </li>
 </ul>
-
-<h3>サブプロジェクト</h3>
-<ul>
-<li><a href="javelin.html">S2Javelin.PHP5</a></li>
-</ul>
-
-
-<h3>リンク</h3>
-<ul>
-    <li><a href="http://www.seasar.org/">Seasar.org</a></li>
-    <li><a href="http://svn.seasar.org/browse/?root=sandbox.s2base.php5">SVN リポジトリブラウザ</a></li>
-    <li><a href="https://www.seasar.org/svn/sandbox/s2base.php5/">SVN リポジトリ</a></li>
-    <li><a href="https://www.seasar.org/issues/browse/BASEPHP">Issue Tracker</a></li>
-    <li><a href="http://s2php5.jp/">s2php5.jp</a>
-        <ul>
-            <li><a href="http://labs.s2php5.jp/s2base">laboratory</a></li>
-            <li><a href="http://wiki.s2php5.jp/s2base.php5">wiki</a></li>
-            <li><a href="http://wiki.s2php5.jp/s2base.php5/plugins">plugins</a></li>
-            <li><a href="http://docs.s2php5.jp/s2base/api/">PHPDoc</a></li>
-        </ul>
-    </li>
-</ul>
-
-<h2>PHP プロジェクト</h2>
-
-<h3>Seasar.PHP</h3>
-
-<ul>
-    <li><a href="http://s2container.php5.seasar.org/">S2Container.PHP5</a></li>
-    <li><a href="http://s2dao.php5.seasar.org/">S2Dao.PHP5</a></li>
-</ul>
-
-<h3>Sandbox.PHP</h3>
-
-<ul>
-    <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
-    <li><a href="http://s2ana.php5.sandbox.seasar.org/">S2AnA.PHP5</a></li>
-    <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
-</ul>
-
 
 
 </div><!-- contents_left -->
@@ -119,27 +67,32 @@
 　<a href="setup.html">セットアップ</a>に従って S2Base.PHP5 をインストールして下さい。<br>
 </p>
 
+<h3>プロジェクトの準備</h3>
+<p>
+　s2base を PEARパッケージでインストールした場合は、s2base コマンドを用いて次のようにプロジェクトディレクトリを作成します。</p>
+<pre>
+% s2base project /path/to/project/dir zf
+</pre>
+
+　s2base をフルパッケージでインストールした場合は、解凍したプロジェクトディレクトリにある build.xml の先頭を次のように
+編集します。
+
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;project name="project" default="zf" basedir="."&gt;
+・・・
+</pre>
+
 <h3>Zend Framework のインストール</h3>
 <p>
-　<a href="http://framework.zend.com/">Zend Framework</a>をダウンロードし、任意のディレクトリに解凍して下さい。アーカイブに含まれる library ディレクトリを include_path に追加して下さい。動作確認は<b>バージョン 1.0.0</b> で行っています。
+　<a href="http://framework.zend.com/">Zend Framework</a>をダウンロードし、任意のディレクトリに解凍して下さい。アーカイブに含まれる library ディレクトリを include_path に追加して下さい。動作確認は<b>バージョン 1.0.1</b> で行っています。
 </p>
 
-<h3>Smarty のインストール</h3>
-<p>
-<ol>
-<li>
-<a href="http://smarty.php.net/">Smarty</a>をダウンロードし、任意のディレクトリに解凍して下さい。
-</li>
-<li>
-s2base.php5/vendor/plugins/zf/config/environment.inc.php にて、Smarty-version/libs/Smarty.class.php を require して下さい。
-</li>
-</ol>
-</p>
 
 <h3>public ディレクトリの公開</h3>
 <p>
-　s2base.php5/public ディレクトリを WEB 公開ディレクトリとして設定して下さい。また、<a href="http://framework.zend.com/manual/ja/zend.controller.getting-started.html#zend.controller.getting-started.server-configuration">ウェブサーバが URI の書き換えをサポートしている</a>ことをご確認下さい。
-S2Base_Zf では、デフォルトで Apache が使用する <a href="http://framework.zend.com/manual/ja/zend.controller.providedsubclasses.html#zend.controller.providedsubclasses.rewriterouter">.htaccess</a> ファイルを用意します。
+　s2base.php5/public ディレクトリを WEB 公開ディレクトリとして設定して下さい。また、ウェブサーバが URI の書き換えをサポートしていることをご確認下さい。
+S2Base_Zf では、デフォルトで Apache が使用する <a href="http://framework.zend.com/manual/ja/zend.controller.router.html#zend.controller.router.introduction">.htaccess</a> ファイルを用意します。
 </p>
 
 <h3>var ディレクトリのアクセス権限設定</h3>
@@ -149,51 +102,56 @@ S2Base_Zf では、デフォルトで Apache が使用する <a href="http://fra
 
 <h3>動作確認</h3>
 <p>
-　s2base を PEARパッケージでインストールした場合は、s2base コマンドに 第2引数 zf を付加してプロジェクトディレクトリを作成します。</p>
+　s2base を PEARパッケージでインストールした場合は、プロジェクトディレクトリにて s2base コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
+</p>
 <pre>
-% s2base /path/to/project/dir zf
-</pre>
-
-<p>
-　s2base を フルパッケージでインストールした場合は、config/environment.inc.php で S2BASE_PHP5_CLASS_SUFFIX 定数に「.php」を指定します。</p>
-
-<pre>
-define('S2BASE_PHP5_CLASS_SUFFIX','.php');
-</pre>
-
-s2base.php5 ディレクトリにて phing コマンドを実行します。コマンドリストが表示されるとインストールが完了です。
-<pre>
-% phing zf
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
-
-project > prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project > zf:
-    [phing] Calling Buildfile '/seasar.php/workspace/s2base.php5/vendor/plugins/zf/zf.xml' with target 'command'
-
-project > command:
-      [php] Evaluating PHP expression: require_once('vendor/plugins/zf/config/environment.inc.php')
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : zf
+[INFO ] command type      : command
 
 [ Command list ]
-0 : [ EXIT ]
+0 : (exit)
 1 : action
 2 : dao
 3 : entity
 4 : goya
 5 : interceptor
 6 : model
-7 : module &amp; controller
+7 : module & controller
 8 : service
 choice ? : 0
-
-BUILD FINISHED
-
-Total time: 2.3441 seconds
 %
 </pre>
 
+<p>　s2base をフルパッケージでインストールした場合は、解凍したプロジェクトディレクトリにある s2base.php を実行して下さい。</p>
+<pre>
+% php s2base.php
+・・・
+</pre>
+
+<h3>Smarty のインストール</h3>
+<p>
+　View に <a href="http://smarty.php.net/">Smarty</a> を使用する場合は、次を実施ください。
+<ol>
+<li>
+<a href="http://smarty.php.net/">Smarty</a>をダウンロードし、任意のディレクトリに解凍して下さい。
+</li>
+<li>
+s2base.php5/config/s2base_zf.inc.php の Smarty設定を次のように編集して下さい。
+<pre>
+・・・
+/**
+ * Smarty 設定
+ */
+require_once('/path/to/Smarty/libs/Smarty.class.php');
+define('S2BASE_PHP5_USE_SMARTY', true);
+・・・
+</pre>
+</li>
+</ol>
+</p>
 
 </div>
 </div><!-- article -->

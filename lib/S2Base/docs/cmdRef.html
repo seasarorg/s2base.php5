@@ -41,12 +41,9 @@
 
 <h3>ドキュメント</h3>
 <ul>
-<li><a href="setup.html">セットアップ</a></li>
-<li><a href="dir.html">ディレクトリ構成</a></li>
 <li>コマンドリファレンス
     <font size="-2">
     <ul>
-       <li><a href="#command">command コマンド</a></li>
        <li><a href="#dao">dao コマンド</a></li>
        <li><a href="#dicon">dicon コマンド</a></li>
        <li><a href="#entity">entity コマンド</a></li>
@@ -54,61 +51,10 @@
        <li><a href="#interceptor">interceptor コマンド</a></li>
        <li><a href="#module">module コマンド</a></li>
        <li><a href="#service">service コマンド</a></li>
-       <li><a href="#test">test タスク</a></li>
-       <li><a href="#gen-dao">gen-dao タスク</a></li>
     </ul>
     </font>
 </li>
 </ul>
-
-<ul>
-<li><a href="withMaple-setup.html">with Maple</a> <i>(ver 3.1)</i></li>
-<li><a href="withAgavi-setup.html">with Agavi</a> <i>(deprecated)</i></li>
-<li><a href="withSymfony-setup.html">with Symfony</a> <i>(ver 1.0.5)</i></li>
-<li><a href="withSmarty-setup.html">with Smarty</a></li>
-<li><a href="withPRADO-setup.html">with PRADO</a></li>
-<li><a href="withZf-setup.html">with Zf</a></li>
-</ul>
-
-<h3>サブプロジェクト</h3>
-<ul>
-<li><a href="javelin.html">S2Javelin.PHP5</a></li>
-</ul>
-
-
-<h3>リンク</h3>
-<ul>
-    <li><a href="http://www.seasar.org/">Seasar.org</a></li>
-    <li><a href="http://svn.seasar.org/browse/?root=sandbox.s2base.php5">SVN リポジトリブラウザ</a></li>
-    <li><a href="https://www.seasar.org/svn/sandbox/s2base.php5/">SVN リポジトリ</a></li>
-    <li><a href="https://www.seasar.org/issues/browse/BASEPHP">Issue Tracker</a></li>
-    <li><a href="http://s2php5.jp/">s2php5.jp</a>
-        <ul>
-            <li><a href="http://labs.s2php5.jp/s2base">laboratory</a></li>
-            <li><a href="http://wiki.s2php5.jp/s2base.php5">wiki</a></li>
-            <li><a href="http://wiki.s2php5.jp/s2base.php5/plugins">plugins</a></li>
-            <li><a href="http://docs.s2php5.jp/s2base/api/">PHPDoc</a></li>
-        </ul>
-    </li>
-</ul>
-
-<h2>PHP プロジェクト</h2>
-
-<h3>Seasar.PHP</h3>
-
-<ul>
-    <li><a href="http://s2container.php5.seasar.org/">S2Container.PHP5</a></li>
-    <li><a href="http://s2dao.php5.seasar.org/">S2Dao.PHP5</a></li>
-</ul>
-
-<h3>Sandbox.PHP</h3>
-
-<ul>
-    <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
-    <li><a href="http://s2ana.php5.sandbox.seasar.org/">S2AnA.PHP5</a></li>
-    <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
-</ul>
-
 
 
 </div><!-- contents_left -->
@@ -118,117 +64,10 @@
 <div id="article">
 
 <div class="section">
-<h2 id="h02"><a name="command">command コマンド</a></h2>
-
-<h3>説明</h3>
-<p>
-　S2Baseの新しいコマンドを作成します。作成したコマンドは、コマンドリストに表示されます。
-</p>
-<h3>実行例</h3>
-<p>
-　s2base.php5 ディレクトリで phing を実行します。
-</p>
-<pre>
-% phing
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
-
-project > prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project > com:
-
-[ Command list ]
-0 : (exit)
-1 : command
-2 : dao
-3 : dicon
-4 : entity
-5 : goya
-6 : interceptor
-7 : module
-8 : service
-choice ? : 1            &lt;--- 1 : command を選択
-
-command name ? : sample
-
-[ generate information ]
-  command name : sample
-
-confirm ? (y/n) : y     &lt;--- 表示される情報を確認
-
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/commands/SampleCommand.class.php
-                                                                  ↑
-[ Command list ]                                          クラスファイルが作成されます。
-0 : (exit)
-1 : command
-・・・
-
-BUILD FINISHED
-
-Total time: 18.0426 seconds
-%
-</pre>
-
-SampleCommand クラスの execute メソッドを編集します。
-<pre>
-% cat app/commands/SampleCommand.class.php
-&lt;?php
-class SampleCommand
-    implements S2Base_GenerateCommand {
-
-    public function getName(){
-        return "sample";    &lt;--- コマンドリストに表示されるコマンド名
-    }
-
-    public function execute(){
-        print __METHOD__ . " called.\n";    &lt;--- print 文を追記
-    }
-
-}
-?&gt;
-%
-</pre>
-
-再度 phing を実行すると sample コマンドが選択できます。
-<pre>
-% phing
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
-
-project > prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project > com:
-
-[ Command list ]
-0 : (exit)
-1 : command
-2 : dao
-3 : dicon
-4 : entity
-5 : goya
-6 : interceptor
-7 : module
-8 : service
-9 : sample     &lt;--- 新規作成したコマンドが表示されます。
-choice ? : 9
-SampleCommand::execute called.    &lt;--- コマンドクラスの execute メソッドが実行されます。
-
-BUILD FINISHED
-
-Total time: 2.0847 seconds
-%
-</pre>
-</div>
-<br>
-
-<div class="section">
 <h2 id="h02"><a name="dao">dao コマンド</a></h2>
 <h3>説明</h3>
 <p>
-　S2Dao で必要な dao インタフェース、entity クラス、dao コンポーネント定義済みの dicon ファイル、
-テストクラスを生成します。
+　S2Dao で必要な dao インタフェース、entity クラス、テストクラスを生成します。
 </p>
 
 <h3>実行例</h3>
@@ -258,28 +97,24 @@ mysql>
 </pre>
 <br>
 
-<p>s2base.php5 ディレクトリで phing を実行します。</p>
+<p>s2base.php5 ディレクトリで s2base コマンドを実行します。</p>
 <pre>
-% phing
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
-
-project &gt; prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project &gt; com:
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
 
 [ Command list ]
 0 : (exit)
-1 : command
-2 : dao
-3 : dicon
-4 : entity
-5 : goya
-6 : interceptor
-7 : module
-8 : service
-choice ? : 2     &lt;--- 2 : dao を選択
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 1     &lt;--- 1 : dao を選択
 
 [ Module list ]
 0 : (exit)
@@ -303,12 +138,10 @@ columns ? [id,name,--, , ] : id,title,content  &lt;--- カンマ区切りでカ�
   entity class name   : CdEntity
   table name          : CD
   columns             : id, title, content
-  dao dicon file name : CdDao.dicon
 
 confirm ? (y/n) : y                                 &lt;--- 表示される情報を確認
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dao/CdDao.class.php
 [INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/dao/CdDaoTest.class.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon/CdDao.dicon
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity/CdEntity.class.php
 
 [ Command list ]
@@ -316,36 +149,34 @@ confirm ? (y/n) : y                                 &lt;--- 表示される情�
 1 : command
 ・・・
 
-BUILD FINISHED
-
-Total time: 30.5662 seconds
 %
 </pre>
 
-daoコマンドにより、PHPUnit2を用いたUnitTestクラスが作成されます。phing コマンドに test 引数を付けて実行すると、UnitTestが実行されます。
+daoコマンドにより、PHPUnitを用いたUnitTestクラスが作成されます。s2base コマンドに test 引数を付けて実行すると、UnitTestが実行されます。
 <pre>
-% phing test -Dtd=modules/Default/dao     &lt;--- -Dtd オプションで test ディレクトリ以下のディレクトリを
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml                                  指定できます。
+% s2base test .+Test     &lt;--- 第3引数に正規表現で実行したいテストを指定できます。
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : test
+[INFO ] test target       : .+Test
 
-project > prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project > test:
+PHPUnit 3.1.7 by Sebastian Bergmann.
 
 CdDaoTest::testA
- [phpunit2] Testsuite: CdDaoTest
- [phpunit2] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.07924 sec
 
-BUILD FINISHED
+.
 
-Total time: 0.6863 seconds
+Time: 0 seconds
+
+
+OK (1 test)
 %
 </pre>
 
 dao コマンドにより生成されるDaoインタフェースは、デフォルトでいくつかのメソッドが定義済みです。
 <pre>
-% more app/modules/Default/dao/CdDao.class.php
+% more app/modules/Default/dao/CdDao.php
 &lt;?php
 interface CdDao {
     const BEAN = "CdEntity";
@@ -356,26 +187,25 @@ interface CdDao {
     //public function insert(CdEntity $entity);
     //public function delete(CdEntity $entity);
 }
-?&gt;
 %
 </pre>
 
 例として、findAllListメソッドを実行してみます。まず、テストクラスにテストメソッドを追加します。
 
 <pre>
-% more test/modules/Default/dao/CdDaoTest.class.php
+% more test/modules/Default/dao/CdDaoTest.php
 &lt;?php
-class CdDaoTest extends PHPUnit2_Framework_TestCase {
+class CdDaoTest extends PHPUnit_Framework_TestCase {
     private $module = "Default";
     private $container;                      &lt;--- 各テストの前処理でS2Containerオブジェクトが設定されます。
     private $dao;                            &lt;--- 各テストの前処理でDaoオブジェクトが設定されます。
 
-    function __construct($name) {
+    public function __construct($name) {
         parent::__construct($name);
+        S2ContainerApplicationContext::init();
     }
 
-    function testFindAllList() {            &lt;--- 追加テストメソッド
-        print __METHOD__ . "\n";
+    public function testFindAllList() {            &lt;--- 追加テストメソッド
         $rows = $this-&gt;dao-&gt;findAllList();
         $entity = $rows[0];
         $this-&gt;assertTrue($entity instanceof CdEntity);
@@ -385,48 +215,49 @@ class CdDaoTest extends PHPUnit2_Framework_TestCase {
         print_r($entity);
     }
 
-    function setUp(){
-        print "\n";
-        $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this-&gt;module}";
-        $dicon = $moduleDir . "/dicon/CdDao" . S2BASE_PHP5_DICON_SUFFIX;
-        include_once($moduleDir . "/{$this-&gt;module}.inc.php");
-        $this-&gt;container = S2ContainerFactory::create($dicon);
-        $this-&gt;dao = $this-&gt;container-&gt;getComponent("CdDao");
+    public function setUp(){
+        print __CLASS__ . '::' . $this->getName() . PHP_EOL;
+        $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this->module}";
+        require_once($moduleDir . "/{$this->module}.inc.php");
+        $this->container = S2ContainerApplicationContext::create();
+        $this->dao = $this->container->getComponent("CdDao");
     }
 
-    function tearDown() {
+    public function tearDown() {
+        print PHP_EOL;
         $this-&gt;container = null;
         $this-&gt;dao = null;
     }
 }
-?&gt
 %
 </pre>
 
 テストを実行すると、データベースから取得したデータを格納したEntitiyオブジェクトが表示されます。
 <pre>
-% phing test -Dtd=modules/Default/dao
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
+% s2base test .+Test
 
-project &gt; prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : test
+[INFO ] test target       : .+Test
 
-project &gt; test:
+PHPUnit 3.1.7 by Sebastian Bergmann.
 
 CdDaoTest::testFindAllList
 CdEntity Object                          &lt;--- print_r($entity) でデバッグとして表示しています。
 (
-    [id:private] =&gt; 1
-    [title:private] =&gt; S2Dao!!!
-    [content:private] =&gt; hello!!
+    [id:protected] => 1
+    [title:protected] => S2Dao!!!
+    [content:protected] => hello!!
 )
- [phpunit2] Testsuite: CdDaoTest
- [phpunit2] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.43753 sec
 
-BUILD FINISHED
+.
 
-Total time: 1.0303 second
+Time: 0 seconds
+
+
+OK (1 test)
 %
 </pre>
 </div>
@@ -440,30 +271,26 @@ Total time: 1.0303 second
 </p>
 <h3>実行例</h3>
 <p>
-　s2base.php5 ディレクトリで phing を実行します。
+　s2base.php5 ディレクトリで s2baseコマンド を実行します。
 </p>
 
 <pre>
-% phing
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
-
-project &gt; prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project &gt; com:
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
 
 [ Command list ]
 0 : (exit)
-1 : command
-2 : dao
-3 : dicon
-4 : entity
-5 : goya
-6 : interceptor
-7 : module
-8 : service
-choice ? : 3     &lt;--- 3 : dicon を選択
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 2     &lt;--- 2 : dicon を選択
 
 [ Module list ]
 0 : (exit)
@@ -484,9 +311,6 @@ confirm ? (y/n) : y      &lt;--- 表示される情報を確認
 1 : command
 ・・・
 
-BUILD FINISHED
-
-Total time: 38.8949 seconds
 %
 </pre>
 sample.dicon は空のダイコンファイルです。
@@ -511,29 +335,25 @@ sample.dicon は空のダイコンファイルです。
 </p>
 <h3>実行例</h3>
 <p>
-　s2base.php5 ディレクトリで phing を実行します。
+　s2base.php5 ディレクトリで s2baseコマンド を実行します。
 </p>
 <pre>
-% phing
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
-
-project &gt; prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project &gt; com:
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
 
 [ Command list ]
 0 : (exit)
-1 : command
-2 : dao
-3 : dicon
-4 : entity
-5 : goya
-6 : interceptor
-7 : module
-8 : service
-choice ? : 4     &lt;--- 4 : entity を選択
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 3     &lt;--- 3 : entity を選択
 
 [ Module list ]
 0 : (exit)
@@ -555,40 +375,46 @@ columns ? [id,name,--, , ] : id,title,content  &lt;--- カンマ区切りでカ�
   columns           : id, title, content
 
 confirm ? (y/n) : y                               &lt;--- 表示される情報を確認
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity/DvdEntity.class.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity/DvdEntity.php
 
 [ Command list ]
 0 : (exit)
 1 : command
 ・・・
 
-BUILD FINISHED
-
-Total time: 38.7971 seconds
 %
 </pre>
 columns で、id、title、content を指定したので、3つのプロパティとそれぞのアクセッサメソッドが実装されます。
 <pre>
-% more app/modules/Default/entity/DvdEntity.class.php
+% more app/modules/Default/entity/DvdEntity.php
 &lt;?php
 class DvdEntity {
     const TABLE = "DVD";
     public function __construct(){}
 
-    private $id;
+    protected $id;
+    const id_COLUMN = "id";
     public function setId($val){$this->id = $val;}
     public function getId(){return $this->id;}
 
-    private $title;
+    protected $title;
+    const title_COLUMN = "title";
     public function setTitle($val){$this->title = $val;}
     public function getTitle(){return $this->title;}
 
-    private $content;
+    protected $content;
+    const content_COLUMN = "content";
     public function setContent($val){$this->content = $val;}
     public function getContent(){return $this->content;}
 
+    public function __toString() {
+        $buf = array();
+        $buf[] = 'id => ' . $this->getId();
+        $buf[] = 'title => ' . $this->getTitle();
+        $buf[] = 'content => ' . $this->getContent();
+        return '{' . implode(', ',$buf) . '}';
+    }
 }
-?&gt;
 %
 </pre>
 </div>
@@ -605,29 +431,25 @@ class DvdEntity {
 </p>
 <h3>実行例</h3>
 <p>
-　s2base.php5 ディレクトリで phing を実行します。
+　s2base.php5 ディレクトリで s2baseコマンド を実行します。
 </p>
 <pre>
-% phing
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
-
-project &gt; prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project &gt; com:
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
 
 [ Command list ]
 0 : (exit)
-1 : command
-2 : dao
-3 : dicon
-4 : entity
-5 : goya
-6 : interceptor
-7 : module
-8 : service
-choice ? : 5             &lt;--- 5 : goya を選択
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 4             &lt;--- 4 : goya を選択
 
 [ Module list ]
 0 : (exit)
@@ -645,66 +467,42 @@ columns ? [id,name,--, , ] : id,name,dept     &lt;--- カンマ区切りでカ�
 [ generate information ]
   module name             : Default
   service name            : emp
-  service interface name  : EmpService
-  service class name      : EmpServiceImpl
-  service test class name : EmpServiceImplTest
+  service class name      : EmpService
+  service test class name : EmpServiceTest
   dao interface name      : EmpDao
   dao test class name     : EmpDaoTest
   entity class name       : EmpEntity
+  entity class extends    : none
   table name              : EMP
   columns                 : id, name, dept
-  service dicon file name : EmpService.dicon
 
 confirm ? (y/n) : y                           &lt;--- 表示される情報を確認
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/EmpServiceImpl.class.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/EmpService.class.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service/EmpServiceImplTest.class.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dao/EmpDao.class.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/dao/EmpDaoTest.class.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity/EmpEntity.class.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon/EmpService.dicon
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/EmpService.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service/EmpServiceTest.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/dao/EmpDaoTest.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dao/EmpDao.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity/EmpEntity.php
 
 [ Command list ]
 0 : (exit)
 1 : command
 ・・・
-
-BUILD FINISHED
-
-Total time: 1 minutes  13.67 seconds
-%
-</pre>
-goya コマンドで生成されるダイコンファイルでは、サービスと dao コンポーネントが登録済みです。
-<pre>
-% more app/modules/Default/dicon/EmpService.dicon
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
-"http://www.seasar.org/dtd/components21.dtd"&gt;
-&lt;components&gt;
-    &lt;include path="%S2BASE_PHP5_ROOT%/app/commons/dicon/dao.dicon"/&gt;
-    &lt;component class="EmpServiceImpl"/&gt;
-    &lt;component class="EmpDao"&gt;
-        &lt;aspect&gt;dao.interceptor&lt;/aspect&gt;
-    &lt;/component&gt;
-&lt;/components&gt;
 %
 </pre>
 
-また、EmpServiceImplクラスでは EmpDao へのセッターメソッドが定義済みなので、サービスに dao が自動インジェクションされます。
+EmpServiceクラスでは EmpDao へのセッターメソッドが定義済みなので、サービスに dao が自動インジェクションされます。
 <pre>
-% more app/modules/Default/service/EmpServiceImpl.class.php
+% more app/modules/Default/service/EmpService.php
 &lt;?php
-class EmpServiceImpl
-    implements EmpService {
-    private $dao;
+class EmpService {
+    private $empDao;
 
     public function __construct(){}
 
-    public function setDao(EmpDao $dao){
-        $this->dao = $dao;
+    public function setEmpDao(EmpDao $dao){
+        $this->empDao = $dao;
     }
 }
-?&gt;
 %
 </pre>
 
@@ -719,29 +517,25 @@ class EmpServiceImpl
 </p>
 <h3>実行例</h3>
 <p>
-　s2base.php5 ディレクトリで phing を実行します。
+　s2base.php5 ディレクトリで s2base コマンドを実行します。
 </p>
 <pre>
- % phing
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
-
-project &gt; prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project &gt; com:
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
 
 [ Command list ]
 0 : (exit)
-1 : command
-2 : dao
-3 : dicon
-4 : entity
-5 : goya
-6 : interceptor
-7 : module
-8 : service
-choice ? : 6     &lt;--- 6 : interceptor を選択
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 5     &lt;--- 5 : interceptor を選択
 
 [ Module list ]
 0 : (exit)
@@ -755,18 +549,20 @@ interceptor class name ? : HogeInterceptor     &lt;--- 英数字 [_a-zA-Z0-9] �
   interceptor class name : HogeInterceptor
 
 confirm ? (y/n) : y                            &lt;--- 表示される情報を確認
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/interceptor/HogeInterceptor.class.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/interceptor/HogeInterceptor.php
 
-BUILD FINISHED
+[ Command list ]
+0 : (exit)
+1 : dao
+・・・
 
-Total time: 17.2060 seconds
 %
 </pre>
 
 S2Container_AbstractInterceptor を継承した interceptor を生成します。参照：<a href="http://s2container.php5.sandbox.seasar.org/aop.html#OriginalInterceptor">独自実装によるInterceptor</a>
 
 <pre>
-% more app/modules/Default/interceptor/HogeInterceptor.class.php
+% more app/modules/Default/interceptor/HogeInterceptor.php
 &lt;?php
 class HogeInterceptor
     extends S2Container_AbstractInterceptor {
@@ -781,7 +577,6 @@ class HogeInterceptor
         return $invocation->proceed();
     }
 }
-?&gt;
 %
 </pre>
 </div>
@@ -796,29 +591,26 @@ app/modules/モジュールディレクトリには、dao、dicon、entity、int
 </p>
 <h3>実行例</h3>
 <p>
-　s2base.php5 ディレクトリで phing を実行します。
+　s2base.php5 ディレクトリで s2baseコマンド を実行します。
 </p>
 <pre>
-% phing
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
+% s2base
 
-project > prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project > com:
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
 
 [ Command list ]
 0 : (exit)
-1 : command
-2 : dao
-3 : dicon
-4 : entity
-5 : goya
-6 : interceptor
-7 : module
-8 : service
-choice ? : 7               &lt;--- 7 : module を選択
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 6               &lt;--- 6 : module を選択
 
 module name ? : Default    &lt;--- モジュール名を入力。英数字 [_a-zA-Z0-9] が使用可能です。
 
@@ -827,14 +619,14 @@ module name ? : Default    &lt;--- モジュール名を入力。英数字 [_a-z
 
 confirm ? (y/n) : y
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dao/
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon/
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity/
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/interceptor/
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dao
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/interceptor
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service
 [INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default
-[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/dao/
-[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service/
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/dao
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service
 [INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/Default.inc.php
 
 [ Command list ]
@@ -842,9 +634,6 @@ confirm ? (y/n) : y
 1 : command
 ・・・
 
-BUILD FINISHED
-
-Total time: 8.2091 seconds
 %
 </pre>
 
@@ -863,34 +652,30 @@ dao  service
 <h2 id="h02"><a name="service">service コマンド</a></h2>
 <h3>説明</h3>
 <p>
-　サービスインタフェース、実装クラス、ダイコンファイル、テストクラスを生成します。
+　サービスクラス、テストクラスを生成します。
 </p>
 <h3>実行例</h3>
 <p>
-　s2base.php5 ディレクトリで phing を実行します。
+　s2base.php5 ディレクトリで s2base コマンドを実行します。
 </p>
 
 <pre>
-% phing
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
-
-project > prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project > com:
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
 
 [ Command list ]
 0 : (exit)
-1 : command
-2 : dao
-3 : dicon
-4 : entity
-5 : goya
-6 : interceptor
-7 : module
-8 : service
-choice ? : 8     &lt;--- 8 : service を選択
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 7     &lt;--- 7 : service を選択
 
 [ Module list ]
 0 : (exit)
@@ -901,270 +686,111 @@ service interface name ? : CulcService     &lt;--- 英数字 [_a-zA-Z0-9] が使
 
 [ generate information ]
   module name             : Default
-  service interface name  : CulcService
-  service class name      : CulcServiceImpl
-  service test class name : CulcServiceImplTest
-  service dicon file name : CulcService.dicon
+  service class name      : CulcService
+  service test class name : CulcServiceTest
 
 confirm ? (y/n) : y                        &lt;--- 表示される情報を確認
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/CulcServiceImpl.class.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/CulcService.class.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service/CulcServiceImplTest.class.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon/CulcService.dicon
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/CulcService.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service/CulcServiceTest.php
 
 [ Command list ]
 0 : (exit)
 1 : command
 ・・・
 
-BUILD FINISHED
-
-Total time: 12.7848 seconds
 %
 </pre>
-service コマンドにより PHPUnit2 を用いた UnitTest クラスが作成されます。phing コマンドに test 引数を付けて実行すると UnitTest を実行できます。
+service コマンドにより PHPUnit を用いた UnitTest クラスが作成されます。
+s2base コマンドに test 引数を付けて実行すると UnitTest を実行できます。
 <pre>
-% phing test -Dtd=modules/Default/service
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
+% s2base test CulcService
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : test
+[INFO ] test target       : CulcService
 
-project > prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
+PHPUnit 3.1.7 by Sebastian Bergmann.
 
-project > test:
+CulcServiceTest::testA
 
-CulcServiceImplTest::testA
- [phpunit2] Testsuite: CulcServiceImplTest
- [phpunit2] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.01326 sec
+.
 
-BUILD FINISHED
+Time: 0 seconds
 
-Total time: 0.5984 seconds
+
+OK (1 test)
 %
 </pre>
 例として、サービスクラスに add メソッドを追加します。
 <pre>
-% more app/modules/Default/service/CulcServiceImpl.class.php
+% more app/modules/Default/service/CulcService.php
 &lt;?php
-class CulcServiceImpl
-    implements CulcService{
+class CulcService {
     public function __construct(){}
 
-    public function add($a,$b){         &lt;--- 足し算メソッドを追加
+    public function add($a, $b) {         &lt;--- 足し算メソッドを追加
         return $a + $b;
     }
 }
-?&gt;
-%
 </pre>
 
 テストクラスに add メソッドをテストするテストメソッドを追加します。
 <pre>
-% more test/modules/Default/service/CulcServiceImplTest.class.php
+% more test/modules/Default/service/CulcServiceTest.php
 &lt;?php
-class CulcServiceImplTest extends PHPUnit2_Framework_TestCase {
+class CulcServiceImplTest extends PHPUnit_Framework_TestCase {
     private $module = "Default";
-    private $serviceName = "CulcService";
     private $container;                       &lt;--- 各テストの前処理でS2Containerオブジェクトが設定されます。
     private $service;                         &lt;--- 各テストの前処理でサービスオブジェクトが設定されます。
 
-    function __construct($name) {
+    public function __construct($name) {
         parent::__construct($name);
     }
 
-    function testAdd() {                  &lt;--- テストメソッドを追加
-        print __METHOD__ . "\n";
+    public function testAdd() {               &lt;--- テストメソッドを追加
         $a = 2;
         $b = 3;
         $c = $this-&gt;service-&gt;add($a,$b);
         $this-&gt;assertEquals($c,5);
-        print "$a + $b = $c \n";
+        print "$a + $b = $c" . PHP_EOL;
     }
 
-    function setUp(){
-        print "\n";
+    public function setUp(){
+        print __CLASS__ . '::' . $this-&gt;getName() . PHP_EOL;
         $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this-&gt;module}";
-        $dicon = $moduleDir . "/dicon/CulcService" . S2BASE_PHP5_DICON_SUFFIX;
         include_once($moduleDir . "/{$this-&gt;module}.inc.php");
-        $this-&gt;container = S2ContainerFactory::create($dicon);
-        $this-&gt;service = $this-&gt;container-&gt;getComponent("CulcService");
+        $this-&gt;container = S2ContainerApplicationContext::create();
+        $this-&gt;service = $this-&gt;container-&gt;getComponent('CulcService');
     }
 
-    function tearDown() {
+    public function tearDown() {
         $this-&gt;container = null;
         $this-&gt;service = null;
     }
-
 }
-?&gt;
 %
 </pre>
 
-phing コマンドに test 引数を付けて実行すると UnitTest を実行できます。
+s2base コマンドに test 引数を付けて実行すると UnitTest を実行できます。
 <pre>
-% phing test -Dtd=modules/Default/service
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
+% s2base test CulcService
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : test
+[INFO ] test target       : CulcService
 
-project > prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
+PHPUnit 3.1.7 by Sebastian Bergmann.
 
-project > test:
-
-CulcServiceImplTest::testAdd
+CulcServiceTest::testAdd
 2 + 3 = 5                     &lt;--- デバッグとして、足し算式を表示します。
- [phpunit2] Testsuite: CulcServiceImplTest
- [phpunit2] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.01385 sec
+.
 
-BUILD FINISHED
-
-Total time: 0.6278 seconds
-%
-</pre>
-
-</div>
-<br>
-
-<div class="section">
-<h2 id="h02"><a name="test">test タスク</a></h2>
-<h3>説明</h3>
-<p>
-　S2Base コマンドの service、dao、goya では、UnitTestが生成されます。これらの UnitTest を実行するタスクです。
-</p>
-<h3>実行例</h3>
-<p>
-　s2base.php5 ディレクトリで phing test を実行します。test ディレクトリにある全テストを実行します。
-</p>
-<pre>
-% phing test
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
-
-project &gt; prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project &gt; test:
-     [echo] test directory : test/         &lt;--- test ディレクトリ以下の全テスト
-
-CdDaoTest::testFindAllArray
-CdEntity Object
-(
-    [id:private] => 1
-    [title:private] => S2Dao!!!
-    [content:private] => hello!!
-)
- [phpunit2] Testsuite: CdDaoTest
- [phpunit2] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.20118 sec
-
-CulcServiceImplTest::testAdd
-2 + 3 = 5
- [phpunit2] Testsuite: CulcServiceImplTest
- [phpunit2] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.00723 sec
-
-BUILD FINISHED
-
-Total time: 0.8004 seconds
-%
-</pre>
-
-phing コマンドのオプション -Dプロパティ名 を使用して、test ディレクトリ以下の任意のディレクトリを指定できます。プロパティ名は「 td 」です。
-<pre>
-% phing test -Dtd=modules/Default/dao
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
-
-project &gt; prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project &gt; test:
-     [echo] test directory : test/modules/Default/dao     &lt;--- dao サブディレクトリ以下の全テスト
-
-CdDaoTest::testFindAllArray
-CdEntity Object
-(
-    [id:private] => 1
-    [title:private] => S2Dao!!!
-    [content:private] => hello!!
-)
- [phpunit2] Testsuite: CdDaoTest
- [phpunit2] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.20403 sec
-
-BUILD FINISHED
-
-Total time: 0.7715 seconds
-%
-</pre>
-
-また、プロパティ名に「tt」を使用すると、指定したパスにマッチするテストを実行することができます。
-<pre>
-% phing test -Dtt=**/Default/dao/Cd*
-・・・
-</pre>
-
-</div>
-<br>
-
-<div class="section">
-<h2 id="h02"><a name="gen-dao">gen-dao タスク</a></h2>
-<h3>説明</h3>
-<p>
-　S2Dao に付属の S2DaoSkeletonTask を用いて、app/commons/dao ディレクトリにデータベースの全テーブルの dao と entity を生成します。
-</p>
-<h3>実行例</h3>
-<p>
-　データベースに次のようなサンプルテーブルを複数用意しています。
-</p>
-<pre>
-mysql&gt; show tables;
-+-----------------------+
-| Tables_in_s2container |
-+-----------------------+
-| CD                    |
-| DEPT                  |
-| EMP                   |
-| SHELF                 |
-+-----------------------+
-4 rows in set (0.00 sec)
-
-mysql&gt;
-</pre>
+Time: 0 seconds
 
 
-s2base.php5 ディレクトリで phing gen-dao を実行します。
-<pre>
-% phing gen-dao
-Buildfile: /seasar.php/workspace/s2base.php5/build.xml
-
-project &gt; prepare:
-      [php] Evaluating PHP expression: require_once('config/environment.inc.php')
-      [php] Evaluating PHP expression: require_once('lib/S2Base/S2Base.cmd.php')
-
-project &gt; gen-dao:
-     [gdao] [create] [DAO]: CDDao
-     [gdao] [create] [BEAN]: CDEntity
-     [gdao] [create] [DAO]: DEPTDao
-     [gdao] [create] [BEAN]: DEPTEntity
-     [gdao] [create] [DAO]: EMPDao
-     [gdao] [create] [BEAN]: EMPEntity
-     [gdao] [create] [DAO]: SHELFDao
-     [gdao] [create] [BEAN]: SHELFEntity
-     [gdao] [INFO] see the files
-     [gdao] [file]: app/commons/dao/CDDao.class.php
-     [gdao] [file]: app/commons/dao/CDEntity.class.php
-     [gdao] [file]: app/commons/dao/DEPTDao.class.php
-     [gdao] [file]: app/commons/dao/DEPTEntity.class.php
-     [gdao] [file]: app/commons/dao/EMPDao.class.php
-     [gdao] [file]: app/commons/dao/EMPEntity.class.php
-     [gdao] [file]: app/commons/dao/SHELFDao.class.php
-     [gdao] [file]: app/commons/dao/SHELFEntity.class.php
-
-BUILD FINISHED
-
-Total time: 0.6476 seconds
-%
-% ls app/commons/dao
-CDDao.class.php     DEPTDao.class.php     EMPDao.class.php     SHELFDao.class.php
-CDEntity.class.php  DEPTEntity.class.php  EMPEntity.class.php  SHELFEntity.class.php
+OK (1 test)
 %
 </pre>
 
