@@ -17,6 +17,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
     protected $useCommonsDao;
     protected $useDB;
     protected $useDao;
+    protected $viewFile;
 
     protected $dispatcher;
     protected $controllerClassName;
@@ -60,6 +61,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $this->validate($this->formatActionName);
         $this->actionMethodName = $this->dispatcher->formatActionName($this->actionName);
         $this->validate($this->actionMethodName);
+        $this->viewFile = ActionCommand::getViewFileFromAction($this->actionName);
 
         $this->useDao = $this->isUseDao();
         if ($this->useDao){
@@ -207,7 +209,7 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         print "  action name             : {$this->actionName}" . PHP_EOL;
         print "  format action name      : {$this->formatActionName}" . PHP_EOL;
         print "  action method name      : {$this->actionMethodName}" . PHP_EOL;
-        print "  action template file    : {$this->actionName}" . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX . PHP_EOL;
+        print "  action template file    : {$this->viewFile}" . PHP_EOL;
         print "  service class name      : {$this->serviceClassName}" . PHP_EOL;
         print "  service test class name : {$this->serviceClassName}Test" . PHP_EOL;
         if ($this->useDao) {
@@ -278,11 +280,11 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
             $srcFile = $this->appViewDir
                      . S2BASE_PHP5_DS . 'scripts'
                      . S2BASE_PHP5_DS . $this->controllerName
-                     . S2BASE_PHP5_DS . $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                     . S2BASE_PHP5_DS . $this->viewFile; 
         } else {
             $srcFile = $this->appViewDir
                      . S2BASE_PHP5_DS . $this->controllerName
-                     . S2BASE_PHP5_DS . $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                     . S2BASE_PHP5_DS . $this->viewFile; 
         }
         $viewSuffix = ModuleCommand::getViewSuffixName();
         $tempContent = '';
@@ -316,11 +318,11 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
             $srcFile = $this->appViewDir
                      . S2BASE_PHP5_DS . 'scripts'
                      . S2BASE_PHP5_DS . $this->controllerName
-                     . S2BASE_PHP5_DS . $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                     . S2BASE_PHP5_DS . $this->viewFile; 
         } else {
             $srcFile = $this->appViewDir
                      . S2BASE_PHP5_DS . $this->controllerName
-                     . S2BASE_PHP5_DS . $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                     . S2BASE_PHP5_DS . $this->viewFile;
         }
 
         $viewSuffix = ModuleCommand::getViewSuffixName();
