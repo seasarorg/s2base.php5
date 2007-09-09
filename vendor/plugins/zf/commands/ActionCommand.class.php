@@ -13,6 +13,15 @@ class ActionCommand implements S2Base_GenerateCommand {
     protected $appViewDir;
     protected $testModuleDir;
     protected $testCtlDir;
+    protected $viewFile;
+
+    public static function getViewFileFromAction($actionName) {
+        if (ModuleCommand::isStandardView()) {
+            $actionName = strtolower($actionName);
+            $actionName = preg_replace('/[\._]/', '-', $actionName);
+        }
+        return $actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX;
+    }
 
     public function __construct(){
         $this->dispatcher = new S2Base_ZfDispatcherImpl();
@@ -49,6 +58,7 @@ class ActionCommand implements S2Base_GenerateCommand {
         $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
         $this->actionMethodName = $this->dispatcher->formatActionName($this->actionName);
         $this->validate($this->actionMethodName);
+        $this->viewFile = self::getViewFileFromAction($this->actionName);
         if (!$this->finalConfirm()){
             return;
         }
@@ -66,7 +76,7 @@ class ActionCommand implements S2Base_GenerateCommand {
         print "  controller class name : {$this->controllerClassName}" . PHP_EOL;
         print "  action name           : {$this->actionName}" . PHP_EOL;
         print "  action method name    : {$this->actionMethodName}" . PHP_EOL;
-        print "  action template file  : {$this->actionName}" . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX . PHP_EOL;
+        print "  action template file  : {$this->viewFile}" . PHP_EOL;
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
@@ -114,22 +124,16 @@ class ActionCommand implements S2Base_GenerateCommand {
         self::insertActionMethod($srcFile, $tempContent);
     }
 
-    public static function getViewScriptFromAction($actionName) {
-        $actionName = strtolower($actionName);
-        $actionName = preg_replace('/[\._]/', '-', $actionName);
-        return $actionName;
-    }
-
     protected function prepareHtmlFile(){
         if (ModuleCommand::isStandardView()) {
             $srcFile = $this->appViewDir
                      . S2BASE_PHP5_DS . 'scripts'
                      . S2BASE_PHP5_DS . $this->controllerName
-                     . S2BASE_PHP5_DS . self::getViewScriptFromAction($this->actionName) . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                     . S2BASE_PHP5_DS . $this->viewFile; 
         } else {
             $srcFile = $this->appViewDir
                      . S2BASE_PHP5_DS . $this->controllerName
-                     . S2BASE_PHP5_DS . $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                     . S2BASE_PHP5_DS . $this->viewFile; 
         }
 
         $viewSuffix = ModuleCommand::getViewSuffixName();
