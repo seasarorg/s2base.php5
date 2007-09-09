@@ -225,7 +225,6 @@ class DaoCommand implements S2Base_GenerateCommand {
             print "  table name           : {$this->tableName} " . PHP_EOL;
             print '  columns              : ' . implode(', ',$this->cols) . PHP_EOL;
         }
-        print "  dao dicon file name  : {$this->daoInterfaceName}" . S2BASE_PHP5_DICON_SUFFIX . PHP_EOL;
         return S2Base_StdinManager::isYes('confirm ?');
     }
 
