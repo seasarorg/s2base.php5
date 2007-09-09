@@ -114,12 +114,18 @@ class ActionCommand implements S2Base_GenerateCommand {
         self::insertActionMethod($srcFile, $tempContent);
     }
 
+    public static function getViewScriptFromAction($actionName) {
+        $actionName = strtolower($actionName);
+        $actionName = preg_replace('/[\._]/', '-', $actionName);
+        return $actionName;
+    }
+
     protected function prepareHtmlFile(){
         if (ModuleCommand::isStandardView()) {
             $srcFile = $this->appViewDir
                      . S2BASE_PHP5_DS . 'scripts'
                      . S2BASE_PHP5_DS . $this->controllerName
-                     . S2BASE_PHP5_DS . $this->actionName . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
+                     . S2BASE_PHP5_DS . self::getViewScriptFromAction($this->actionName) . '.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
         } else {
             $srcFile = $this->appViewDir
                      . S2BASE_PHP5_DS . $this->controllerName
