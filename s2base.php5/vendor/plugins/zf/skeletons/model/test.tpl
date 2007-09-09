@@ -1,7 +1,7 @@
 <?php
 class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
-    private $module = "@@MODULE_NAME@@";
-    private $controller = "@@CONTROLLER_NAME@@";
+    private $module = '@@MODULE_NAME@@';
+    private $controller = '@@CONTROLLER_NAME@@';
     private $container;
     private $model;
 
@@ -13,10 +13,11 @@ class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
     }
 
     public function setUp() {
-        print __CLASS__ . "::{$this->getName()}" . PHP_EOL;
+        print __CLASS__ . '::' . $this->getName() . PHP_EOL;
+        S2Base_ZfDb::setDefaultPdoAdapter();
         require_once(S2BASE_PHP5_ROOT . "/app/modules/{$this->module}/models/{$this->controller}/{$this->controller}.inc.php");
         $this->container = S2ContainerApplicationContext::create();
-        $this->model = $this->container->getComponent("@@MODEL_CLASS@@");
+        $this->model = $this->container->getComponent('@@MODEL_CLASS@@');
     }
 
     public function tearDown() {
@@ -24,5 +25,4 @@ class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
         $this->container = null;
         $this->model = null;
     }
-
 }
