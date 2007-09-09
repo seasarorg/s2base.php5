@@ -18,7 +18,7 @@ class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
     }
 
     public function setUp(){
-        print __CLASS__ . "::{$this->getName()}" . PHP_EOL;
+        print __CLASS__ . '::' . $this->getName() . PHP_EOL;
         $fc = Zend_Controller_Front::getInstance();
         $fc->resetInstance();
         S2Base_ZfInitialize::initTest();
