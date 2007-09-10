@@ -46,7 +46,9 @@ class S2Base_Cli_ZfCommandHandler extends S2Base_Cli_AbstractCommandHandler {
         $includePattern[] = '/project.test/';
         $includePattern[] = '/project.var/';
         $includePattern[] = '/project.vendor$/';
-        $includePattern[] = '/project.vendor.plugins/';
+        $includePattern[] = '/project.vendor.s2base/';
+        $includePattern[] = '/project.vendor.plugins$/';
+        $includePattern[] = '/project.vendor.plugins.zf/';
 
         $excludePattern = array('/dummy$/');
 

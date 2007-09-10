@@ -39,10 +39,12 @@ class S2Base_Cli_DefaultCommandHandler extends S2Base_Cli_AbstractCommandHandler
         $includePattern[] = '/project.test/';
         $includePattern[] = '/project.var$/';
         $includePattern[] = '/project.var.logs/';
+        $includePattern[] = '/project.var.db/';
         $includePattern[] = '/project.vendor$/';
         $includePattern[] = '/project.vendor.s2base/';
 
         $excludePattern = array('/dummy$/');
+        $excludePattern[] = '/project.config.s2base_zf.inc.php/';
         $excludePattern[] = '/project.app.commons.view/';
 
         $srcDir = $this->s2baseDir . DIRECTORY_SEPARATOR . 'project';

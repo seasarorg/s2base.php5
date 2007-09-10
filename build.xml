@@ -20,11 +20,10 @@
 
         <!-- sub task -->
         <property name="st" value="command" /> 
-
-        <php expression="require_once(S2BASE_PHP5_VENDOR_DIR . '/s2base/config/environment.inc.php')"/>
     </target>
 
     <target name="command" depends="prepare">
+        <php expression="require_once(S2BASE_PHP5_VENDOR_DIR . '/s2base/config/environment.inc.php')"/>
         <command>
             <!-- default -->
             <fileset dir="${cmd.dir}">
