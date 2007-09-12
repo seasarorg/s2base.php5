@@ -1,9 +1,23 @@
 ﻿
+2007-09-13 S2Base.PHP5-2.0.0RC1
+
+================ S2Base.PHP5-2.0.0RC1 更新履歴 ===================
+
+	* info: Zend Framework-1.0.1にで動作確認を行いました。
+	* info: with ZF プラグインを追加しました。
+	* info: PHPUnit3を使用するようにしました。
+	* info: phingをoptionalとしました。
+	* info: S2Container-1.2.0RC1に含まれるS2ContainerApplicationContextを使用するように
+	コンテナ生成部を変更しました。
+	* info: S2Base.PHP5-2.0.0RC1 初リリース
+
+
 2007-07-01 S2Base.PHP5-1.0.3
+
+================ S2Base.PHP5-1.0.3 更新履歴 ===================
 
 	* info: Zend Framework-1.0.0 で動作確認行いました。
 
-================ S2Base.PHP5-1.0.3 更新履歴 ===================
 
 2007-06-27 S2Base.PHP5-1.0.3
 
