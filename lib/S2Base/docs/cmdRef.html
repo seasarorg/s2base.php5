@@ -1,17 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
-
-
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Language" content="ja">
-<meta http-equiv="Content-Style-Type" content="text/css">
-<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, オープンソースソフトウェア, Java, フレームワーク">
-<meta name="description" content="私たちSeasarプロジェクトはオープンソースという仕組みの元、開発者のゆとりを実現できるプロダクトの開発と提供を通じて、ユーザと開発者とが共に喜びを分かち合える環境実現をお手伝いすることを目指し活動しています。 ">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="ja" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, オープンソースソフトウェア, Java, フレームワーク" />
+<meta name="description" content="私たちSeasarプロジェクトはオープンソースという仕組みの元、開発者のゆとりを実現できるプロダクトの開発と提供を通じて、ユーザと開発者とが共に喜びを分かち合える環境実現をお手伝いすることを目指し活動しています。 " />
 <title>The Seasar Project - S2Base.PHP5</title>
 
-<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection">
-<link rel="stylesheet" type="text/css" href="theme/print.css" media="print"></head><body>
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection" />
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print" />
+</head>
+<body>
 
 <div id="wrapper">
 
@@ -22,15 +22,12 @@
 <div id="logo">
 <h1 id="h01" class="hide">The Seasar Project</h1>
 <a href="http://www.seasar.org/">
-<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390" />
 </a>
 </div>
 
-<div id="tool">
-</div>
-
 <div id="navi">
-<p><font size="-1"><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; ドキュメント &raquo; コマンドリファレンス</font></p>
+<p><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; ドキュメント &raquo; コマンドリファレンス</p>
 </div>
 
 </div><!-- header -->
@@ -42,8 +39,7 @@
 <h3>ドキュメント</h3>
 <ul>
 <li>コマンドリファレンス
-    <font size="-2">
-    <ul>
+    <ul style="font-size:smaller;">
        <li><a href="#dao">dao コマンド</a></li>
        <li><a href="#dicon">dicon コマンド</a></li>
        <li><a href="#entity">entity コマンド</a></li>
@@ -52,7 +48,6 @@
        <li><a href="#module">module コマンド</a></li>
        <li><a href="#service">service コマンド</a></li>
     </ul>
-    </font>
 </li>
 </ul>
 
@@ -64,7 +59,7 @@
 <div id="article">
 
 <div class="section">
-<h2 id="h02"><a name="dao">dao コマンド</a></h2>
+<h2><a id="dao" name="dao">dao コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　S2Dao で必要な dao インタフェース、entity クラス、テストクラスを生成します。
@@ -75,7 +70,7 @@
 　dao コマンドの説明では、<a href="http://s2dao.php5.sandbox.seasar.org/example.html">S2DaoのExample</a>で使用されているサンプルデータを用いて説明します。
 </p>
 <pre>
-mysql> desc CD;
+mysql&gt; desc CD;
 +---------+--------------+------+-----+---------+-------+
 | Field   | Type         | Null | Key | Default | Extra |
 +---------+--------------+------+-----+---------+-------+
@@ -85,7 +80,7 @@ mysql> desc CD;
 +---------+--------------+------+-----+---------+-------+
 3 rows in set (0.00 sec)
 
-mysql> select * from CD;
+mysql&gt; select * from CD;
 +----+----------+---------+
 | ID | TITLE    | CONTENT |
 +----+----------+---------+
@@ -93,9 +88,9 @@ mysql> select * from CD;
 +----+----------+---------+
 1 row in set (0.00 sec)
 
-mysql>
+mysql&gt;
 </pre>
-<br>
+<br />
 
 <p>s2base.php5 ディレクトリで s2base コマンドを実行します。</p>
 <pre>
@@ -216,11 +211,11 @@ class CdDaoTest extends PHPUnit_Framework_TestCase {
     }
 
     public function setUp(){
-        print __CLASS__ . '::' . $this->getName() . PHP_EOL;
-        $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this->module}";
-        require_once($moduleDir . "/{$this->module}.inc.php");
-        $this->container = S2ContainerApplicationContext::create();
-        $this->dao = $this->container->getComponent("CdDao");
+        print __CLASS__ . '::' . $this-&gt;getName() . PHP_EOL;
+        $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this-&gt;module}";
+        require_once($moduleDir . "/{$this-&gt;module}.inc.php");
+        $this-&gt;container = S2ContainerApplicationContext::create();
+        $this-&gt;dao = $this-&gt;container-&gt;getComponent("CdDao");
     }
 
     public function tearDown() {
@@ -247,9 +242,9 @@ PHPUnit 3.1.7 by Sebastian Bergmann.
 CdDaoTest::testFindAllList
 CdEntity Object                          &lt;--- print_r($entity) でデバッグとして表示しています。
 (
-    [id:protected] => 1
-    [title:protected] => S2Dao!!!
-    [content:protected] => hello!!
+    [id:protected] =&gt; 1
+    [title:protected] =&gt; S2Dao!!!
+    [content:protected] =&gt; hello!!
 )
 
 .
@@ -261,10 +256,10 @@ OK (1 test)
 %
 </pre>
 </div>
-<br>
+<br />
 
 <div class="section">
-<h2 id="h02"><a name="dicon">dicon コマンド</a></h2>
+<h2><a id="dicon" name="dicon">dicon コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　XML形式のdiconファイルを生成します。
@@ -326,9 +321,9 @@ sample.dicon は空のダイコンファイルです。
 </pre>
 
 </div>
-<br>
+<br />
 <div class="section">
-<h2 id="h02"><a name="entity">entity コマンド</a></h2>
+<h2><a id="entity" name="entity">entity コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　S2Dao で用いる Entity クラスを作成します。columns でカンマ区切りのカラム名を入力すると、対応するプロパティとアクセッサメソッドを追加します。
@@ -394,39 +389,39 @@ class DvdEntity {
 
     protected $id;
     const id_COLUMN = "id";
-    public function setId($val){$this->id = $val;}
-    public function getId(){return $this->id;}
+    public function setId($val){$this-&gt;id = $val;}
+    public function getId(){return $this-&gt;id;}
 
     protected $title;
     const title_COLUMN = "title";
-    public function setTitle($val){$this->title = $val;}
-    public function getTitle(){return $this->title;}
+    public function setTitle($val){$this-&gt;title = $val;}
+    public function getTitle(){return $this-&gt;title;}
 
     protected $content;
     const content_COLUMN = "content";
-    public function setContent($val){$this->content = $val;}
-    public function getContent(){return $this->content;}
+    public function setContent($val){$this-&gt;content = $val;}
+    public function getContent(){return $this-&gt;content;}
 
     public function __toString() {
         $buf = array();
-        $buf[] = 'id => ' . $this->getId();
-        $buf[] = 'title => ' . $this->getTitle();
-        $buf[] = 'content => ' . $this->getContent();
+        $buf[] = 'id =&gt; ' . $this-&gt;getId();
+        $buf[] = 'title =&gt; ' . $this-&gt;getTitle();
+        $buf[] = 'content =&gt; ' . $this-&gt;getContent();
         return '{' . implode(', ',$buf) . '}';
     }
 }
 %
 </pre>
 </div>
-<br>
+<br />
 
 <div class="section">
-<h2 id="h02"><a name="goya">goya コマンド</a></h2>
+<h2><a id="goya" name="goya">goya コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　goya コマンドはサービス名を決めると、命名規則に従ってサービス、dao、enitity、ダイコンファイル、テストクラスを生成します。
 <a href="#service">service コマンド</a>と<a href="#dao"> dao コマンド</a>を同時に実行することとほぼ同じ処理になります。
-<br>例えば、サービス名を「 emp 」とすると、サービスは EmpService、dao は EmpDao、entity は EmpEntitiy となります。
+<br />例えば、サービス名を「 emp 」とすると、サービスは EmpService、dao は EmpDao、entity は EmpEntitiy となります。
 
 </p>
 <h3>実行例</h3>
@@ -500,17 +495,17 @@ class EmpService {
     public function __construct(){}
 
     public function setEmpDao(EmpDao $dao){
-        $this->empDao = $dao;
+        $this-&gt;empDao = $dao;
     }
 }
 %
 </pre>
 
 </div>
-<br>
+<br />
 
 <div class="section">
-<h2 id="h02"><a name="interceptor">interceptor コマンド</a></h2>
+<h2><a id="interceptor" name="interceptor">interceptor コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　S2Aop の MethodInterceptor を実装するクラスを生成します。
@@ -569,21 +564,21 @@ class HogeInterceptor
 
     /**
      * @param S2Container_MethodInvocation $invocation
-     *    - $invocation->getThis()      : return target object
-     *    - $invocation->getMethod()    : return ReflectionMethod of target method
-     *    - $invocation->getArguments() : return array of method arguments
+     *    - $invocation-&gt;getThis()      : return target object
+     *    - $invocation-&gt;getMethod()    : return ReflectionMethod of target method
+     *    - $invocation-&gt;getArguments() : return array of method arguments
      */
     public function invoke(S2Container_MethodInvocation $invocation) {
-        return $invocation->proceed();
+        return $invocation-&gt;proceed();
     }
 }
 %
 </pre>
 </div>
-<br>
+<br />
 
 <div class="section">
-<h2 id="h02"><a name="module">module コマンド</a></h2>
+<h2><a id="module" name="module">module コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　app/modules ディレクトリと test/modules ディレクトリに<a href="dir.html">モジュールディレクトリ</a>を作成します。
@@ -646,10 +641,10 @@ dao  service
 %
 </pre>
 </div>
-<br>
+<br />
 
 <div class="section">
-<h2 id="h02"><a name="service">service コマンド</a></h2>
+<h2><a id="service" name="service">service コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　サービスクラス、テストクラスを生成します。
@@ -795,7 +790,7 @@ OK (1 test)
 </pre>
 
 </div>
-<br>
+<br />
 </div><!-- article -->
 
 </div><!-- contents_center -->
