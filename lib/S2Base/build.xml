@@ -167,6 +167,12 @@
                     <element key="email" value="s2container-php5@ml.seasar.org"/>
                     <element key="role" value="developer"/>
                 </element>
+                <element>
+                    <element key="handle" value="Delfino"/>
+                    <element key="name" value="Delfino"/>
+                    <element key="email" value="s2container-php5@ml.seasar.org"/>
+                    <element key="role" value="developer"/>
+                </element>
             </mapping>
         </pearpkg>
 
