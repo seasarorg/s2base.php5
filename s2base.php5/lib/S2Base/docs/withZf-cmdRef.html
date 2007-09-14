@@ -1,17 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
-
-
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Language" content="ja">
-<meta http-equiv="Content-Style-Type" content="text/css">
-<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, オープンソースソフトウェア, Java, フレームワーク">
-<meta name="description" content="私たちSeasarプロジェクトはオープンソースという仕組みの元、開発者のゆとりを実現できるプロダクトの開発と提供を通じて、ユーザと開発者とが共に喜びを分かち合える環境実現をお手伝いすることを目指し活動しています。 ">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="ja" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, オープンソースソフトウェア, Java, フレームワーク" />
+<meta name="description" content="私たちSeasarプロジェクトはオープンソースという仕組みの元、開発者のゆとりを実現できるプロダクトの開発と提供を通じて、ユーザと開発者とが共に喜びを分かち合える環境実現をお手伝いすることを目指し活動しています。 " />
 <title>The Seasar Project - S2Base.PHP5</title>
 
-<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection">
-<link rel="stylesheet" type="text/css" href="theme/print.css" media="print"></head><body>
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection" />
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print" /></head><body>
 
 <div id="wrapper">
 
@@ -22,15 +19,12 @@
 <div id="logo">
 <h1 id="h01" class="hide">The Seasar Project</h1>
 <a href="http://www.seasar.org/">
-<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390" />
 </a>
 </div>
 
-<div id="tool">
-</div>
-
 <div id="navi">
-<p><font size="-1"><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; with Zf &raquo; コマンドリファレンス</font></p>
+<p><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; with Zf &raquo; コマンドリファレンス</p>
 </div>
 
 </div><!-- header -->
@@ -42,8 +36,7 @@
 <h3>ドキュメント</h3>
 <ul>
 <li>with Zf
-    <font size="-2">
-    <ul>
+    <ul style="font-size:smaller;">
         <li><a href="withZf-setup.html">セットアップ</a></li>
         <li><a href="withZf-fw.html">Zend Framework との連携</a></li>
         <li>コマンドリファレンス
@@ -60,7 +53,6 @@
           </ul>
         </li>
     </ul>
-    </font>
 </li>
 </ul>
 
@@ -72,7 +64,7 @@
 
 
 <div class="section">
-<h2 id="h02"><a name="action">action コマンド</a></h2>
+<h2><a id="action" name="action">action コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　action コマンドは、アクション名に対して命名規則に従いアクションメソッド、ダイコンファイル、html テンプレートを作成します。
@@ -96,7 +88,7 @@
 4 : goya
 5 : interceptor
 6 : model
-7 : module & controller
+7 : module &amp; controller
 8 : service
 choice ? : 1               &lt;--- 1 : action を選択
 
@@ -133,10 +125,10 @@ choice ? : 0
 %
 </pre>
 </div>
-<br>
+<br />
 
 <div class="section">
-<h2 id="h02"><a name="dao">dao コマンド</a></h2>
+<h2><a id="dao" name="dao">dao コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　S2Dao で必要な dao インタフェース、entity クラス、テストクラスを生成します。
@@ -157,7 +149,7 @@ choice ? : 0
 4 : goya
 5 : interceptor
 6 : model
-7 : module & controller
+7 : module &amp; controller
 8 : service
 choice ? : 2                 &lt;--- 2 : dao を選択
 
@@ -207,10 +199,10 @@ choice ? : 0
 %
 </pre>
 </div>
-<br>
+<br />
 
 <div class="section">
-<h2 id="h02"><a name="entity">entity コマンド</a></h2>
+<h2><a id="entity" name="entity">entity コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　S2Dao で用いる Entity クラスを作成します。columns でカンマ区切りのカラム名を入力すると、対応するプロパティとアクセッサメソッドを追加します。
@@ -231,7 +223,7 @@ choice ? : 0
 4 : goya
 5 : interceptor
 6 : model
-7 : module & controller
+7 : module &amp; controller
 8 : service
 choice ? : 4                 &lt;--- 4 : entity を選択
 
@@ -277,10 +269,10 @@ choice ? : 0
 %
 </pre>
 </div>
-<br>
+<br />
 
 <div class="section">
-<h2 id="h02"><a name="goya">goya コマンド</a></h2>
+<h2><a id="goya" name="goya">goya コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　goya コマンドはアクション名を決めると、命名規則に従ってアクションメソッドの追加、サービス、dao、enitity、ダイコンファイル、テストクラスを生成します。 actionコマンド、service コマンドと dao コマンドを同時に実行することとほぼ同じ処理になります。
@@ -302,7 +294,7 @@ choice ? : 0
 4 : goya
 5 : interceptor
 6 : model
-7 : module & controller
+7 : module &amp; controller
 8 : service
 choice ? : 4                 &lt;--- 4 : goya を選択
 
@@ -363,10 +355,10 @@ choice ? : 0
 %
 </pre>
 </div>
-<br>
+<br />
 
 <div class="section">
-<h2 id="h02"><a name="interceptor">interceptor コマンド</a></h2>
+<h2><a id="interceptor" name="interceptor">interceptor コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　S2Aop の MethodInterceptor を実装するクラスを生成します。 
@@ -418,10 +410,10 @@ choice ? : 0
 %
 </pre>
 </div>
-<br>
+<br />
 
 <div class="section">
-<h2 id="h02"><a name="model">model コマンド</a></h2>
+<h2><a id="model" name="model">model コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　Zend_Db_Table クラスを継承した model クラスとそのテストクラスを生成します。
@@ -442,7 +434,7 @@ choice ? : 0
 4 : goya
 5 : interceptor
 6 : model
-7 : module & controller
+7 : module &amp; controller
 8 : service
 choice ? : 6                 &lt;--- 6 : model を選択
 
@@ -487,10 +479,10 @@ choice ? : 0
 %
 </pre>
 </div>
-<br>
+<br />
 
 <div class="section">
-<h2 id="h02"><a name="module">module &amp; controller コマンド</a></h2>
+<h2><a id="module" name="module">module &amp; controller コマンド</a></h2>
 <h3>説明</h3>
 <p>
 　module &amp; controller コマンドはモジュールディレクトリにアクションコントローラとそのコントローラディレクトリを作成します。
@@ -511,7 +503,7 @@ choice ? : 0
 4 : goya
 5 : interceptor
 6 : model
-7 : module & controller
+7 : module &amp; controller
 8 : service
 choice ? : 7               &lt;--- 7 : module &amp; controller を選択
 
@@ -541,10 +533,10 @@ choice ? : 0
 %
 </pre>
 </div>
-<br>
+<br />
 
 <div class="section">
-<h2 id="h02"><a name="service">service コマンド</a></h2>
+<h2><a id="service" name="service">service コマンド</a></h2>
 <h3>説明</h3>
 <p>
 サービス実装クラス、テストクラスを生成します。
@@ -565,7 +557,7 @@ choice ? : 0
 4 : goya
 5 : interceptor
 6 : model
-7 : module & controller
+7 : module &amp; controller
 8 : service
 choice ? : 8                 &lt;--- 8 : service を選択
 
@@ -598,7 +590,7 @@ choice ? : 0
 %
 </pre>
 </div>
-<br>
+<br />
 
 </div><!-- article -->
 
