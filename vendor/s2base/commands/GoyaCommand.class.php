@@ -268,7 +268,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
 
         $patterns = array("/@@CLASS_NAME@@/",
                           "/@@MODULE_NAME@@/",
-                          "/@@DAO_CLASS@@/",
+                          "/@@DAO_INTERFACE@@/",
                           "/@@SERVICE_CLASS@@/");
         $replacements = array($testClassName,
                               $this->moduleName,
