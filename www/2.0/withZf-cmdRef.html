@@ -1,0 +1,605 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="ja" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, オープンソースソフトウェア, Java, フレームワーク" />
+<meta name="description" content="私たちSeasarプロジェクトはオープンソースという仕組みの元、開発者のゆとりを実現できるプロダクトの開発と提供を通じて、ユーザと開発者とが共に喜びを分かち合える環境実現をお手伝いすることを目指し活動しています。 " />
+<title>The Seasar Project - S2Base.PHP5</title>
+
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection" />
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print" /></head><body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo">
+<h1 id="h01" class="hide">The Seasar Project</h1>
+<a href="http://www.seasar.org/">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390" />
+</a>
+</div>
+
+<div id="navi">
+<p><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; with Zf &raquo; コマンドリファレンス</p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>メニュー</h2>
+
+<h3>ドキュメント</h3>
+<ul>
+<li>with Zf
+    <ul style="font-size:smaller;">
+        <li><a href="withZf-setup.html">セットアップ</a></li>
+        <li><a href="withZf-fw.html">Zend Framework との連携</a></li>
+        <li>コマンドリファレンス
+          <ul>
+              <li><a href="#action">action コマンド</a></li>
+              <li><a href="#dao">dao コマンド</a></li>
+              <li><a href="#entity">entity コマンド</a></li>
+              <li><a href="#goya">goya コマンド</a></li>
+              <li><a href="#interceptor">interceptor コマンド</a></li>
+              <li><a href="#module">model コマンド</a></li>
+              <li><a href="#module">module &amp; controller コマンド</a></li>
+              <li><a href="#service">service コマンド</a></li>
+          </ul>
+        </li>
+    </ul>
+</li>
+</ul>
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+
+<div class="section">
+<h2><a id="action" name="action">action コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　action コマンドは、アクション名に対して命名規則に従いアクションメソッド、ダイコンファイル、html テンプレートを作成します。
+アクション名が「 hello 」の場合、アクションメソッドは helloAction、ダイコンファイルは helloAction.dicon、html テンプレートは hello.html となります。
+
+アクションメソッドは、アクションコントローラに「/** S2BASE_PHP5 ACTION METHOD **/」コメントが記述されている箇所に追加されます。
+</p>
+<h3>実行例</h3>
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : zf
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : action
+2 : dao
+3 : entity
+4 : goya
+5 : interceptor
+6 : model
+7 : module &amp; controller
+8 : service
+choice ? : 1               &lt;--- 1 : action を選択
+
+[ Module list ]
+0 : (exit)
+1 : default
+choice ? : 1
+
+[ Controller list ]
+0 : (exit)
+1 : index
+choice ? : 1
+
+action name ? : foo
+
+
+[ generate information ]
+  module name           : default
+  controller name       : index
+  controller class name : IndexController
+  action name           : foo
+  action method name    : fooAction
+  action template file  : foo.phtml
+
+confirm ? (y/n) : y
+[INFO ] modify : /seasar.php/workspace/s2base.php5/app/modules/default/controllers/IndexController.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/views/scripts/index/foo.phtml
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/validate/foo.ini
+
+[ Command list ]
+0 : (exit)
+・・・
+choice ? : 0
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="dao" name="dao">dao コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　S2Dao で必要な dao インタフェース、entity クラス、テストクラスを生成します。
+</p>
+<h3>実行例</h3>
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : zf
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : action
+2 : dao
+3 : entity
+4 : goya
+5 : interceptor
+6 : model
+7 : module &amp; controller
+8 : service
+choice ? : 2                 &lt;--- 2 : dao を選択
+
+[ Module list ]
+0 : (exit)
+1 : default
+choice ? : 1
+
+[ Controller list ]
+0 : (exit)
+1 : index
+choice ? : 1
+
+use database ? (y/n) : y     &lt;--- データベースのテーブル一覧を取得します。
+
+[ table list ]
+0 : (exit)
+1 : CD
+2 : DEPT
+3 : EMP
+4 : SHELF
+5 : USERS
+choices ? (1,2,--,) : 1      &lt;--- 複数のテーブルを選択した場合は、先頭のテーブルが Entity の
+                                  テーブルに使用されます。残りのテーブルのカラムが Entity のプロパティに追加されます。
+dao interface name [CdDao]? :
+
+entity class name ? [CdEntity] :
+
+[ generate information ]
+  module name          : default
+  controller name      : index
+  dao interface name   : CdDao
+  dao test class name  : CdDaoTest
+  entity class name    : CdEntity
+  table name           : CD
+  columns              : ID, TITLE, CONTENT
+
+confirm ? (y/n) : y
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/dao/CdDao.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/entity/CdEntity.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/default/models/index/dao/CdDaoTest.php
+
+[ Command list ]
+0 : (exit)
+・・・
+choice ? : 0
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="entity" name="entity">entity コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　S2Dao で用いる Entity クラスを作成します。columns でカンマ区切りのカラム名を入力すると、対応するプロパティとアクセッサメソッドを追加します。
+</p>
+<h3>実行例</h3>
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : zf
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : action
+2 : dao
+3 : entity
+4 : goya
+5 : interceptor
+6 : model
+7 : module &amp; controller
+8 : service
+choice ? : 4                 &lt;--- 4 : entity を選択
+
+[ Module list ]
+0 : (exit)
+1 : default
+choice ? : 1
+
+[ Controller list ]
+0 : (exit)
+1 : index
+choice ? : 1
+
+use database ? (y/n) : y     &lt;--- データベースのテーブル一覧を取得します。
+
+[ table list ]
+0 : (exit)
+1 : CD
+2 : DEPT
+3 : EMP
+4 : SHELF
+5 : USERS
+choices ? (1,2,--,) : 2,3    &lt;--- 複数のテーブルを選択した場合は、先頭のテーブルが Entity の
+                                  テーブルに使用されます。残りのテーブルのカラムが Entity のプロパティに追加されます。
+
+entity class name ? [DeptEntity] :
+
+[ generate information ]
+  module name          : default
+  controller name      : index
+  entity class name    : DeptEntity
+  table name           : DEPT
+  columns              : DEPTNO, DNAME, LOC, VERSIONNO, EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM
+
+confirm ? (y/n) : y
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/entity/DeptEntity.php
+
+[ Command list ]
+0 : (exit)
+・・・
+choice ? : 0
+
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="goya" name="goya">goya コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　goya コマンドはアクション名を決めると、命名規則に従ってアクションメソッドの追加、サービス、dao、enitity、ダイコンファイル、テストクラスを生成します。 actionコマンド、service コマンドと dao コマンドを同時に実行することとほぼ同じ処理になります。
+例えばサービス名を「 cdList 」とすると、アクションメソッドは cdListAction、サービスクラスは CdListService、dao クラスは CdListDao、entity クラスは CdListEntitiy となります。
+</p>
+<h3>実行例</h3>
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : zf
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : action
+2 : dao
+3 : entity
+4 : goya
+5 : interceptor
+6 : model
+7 : module &amp; controller
+8 : service
+choice ? : 4                 &lt;--- 4 : goya を選択
+
+[ Module list ]
+0 : (exit)
+1 : default
+choice ? : 1
+
+[ Controller list ]
+0 : (exit)
+1 : index
+choice ? : 1
+
+action name ? : goya
+
+use dao ? (y/n) : y
+
+use database ? (y/n) : y     &lt;--- データベースのテーブル一覧を取得します。
+
+[ table list ]
+0 : (exit)
+1 : CD
+2 : DEPT
+3 : EMP
+4 : SHELF
+5 : USERS
+choices ? (1,2,--,) : 3      &lt;--- 複数のテーブルを選択した場合は、先頭のテーブルが Entity の
+                                  テーブルに使用されます。残りのテーブルのカラムが Entity のプロパティに追加されます。
+
+dao interface name [EmpDao]? :
+
+entity class name ? [EmpEntity] :
+
+[ generate information ]
+  module name             : default
+  controller name         : index
+  action name             : goya
+  format action name      : Goya
+  action method name      : goyaAction
+  action template file    : goya.phtml
+  service class name      : GoyaService
+  service test class name : GoyaServiceTest
+  dao interface name      : EmpDao
+  dao test class name     : EmpDaoTest
+  entity class name       : EmpEntity
+  table name              : EMP
+  columns                 : EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
+
+confirm ? (y/n) : y
+[INFO ] modify : /seasar.php/workspace/s2base.php5/app/modules/default/controllers/IndexController.php
+・・・
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/entity/EmpEntity.php
+
+[ Command list ]
+0 : (exit)
+・・・
+choice ? : 0
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="interceptor" name="interceptor">interceptor コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　S2Aop の MethodInterceptor を実装するクラスを生成します。 
+</p>
+<h3>実行例</h3>
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : zf
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : action
+2 : dao
+3 : entity
+4 : goya
+5 : interceptor
+6 : model
+7 : module &amp; controller
+8 : service
+choice ? : 5                 &lt;--- 5 : interceptor を選択
+
+[ Module list ]
+0 : (exit)
+1 : default
+choice ? : 1
+
+[ Controller list ]
+0 : (exit)
+1 : index
+choice ? : 1
+
+interceptor class name ? : HogeInterceptor
+
+[ generate information ]
+  module name            : default
+  controoler name        : index
+  interceptor class name : HogeInterceptor
+
+confirm ? (y/n) : y
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/interceptor/HogeInterceptor.php
+
+[ Command list ]
+0 : (exit)
+・・・
+choice ? : 0
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="model" name="model">model コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　Zend_Db_Table クラスを継承した model クラスとそのテストクラスを生成します。
+</p>
+<h3>実行例</h3>
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : zf
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : action
+2 : dao
+3 : entity
+4 : goya
+5 : interceptor
+6 : model
+7 : module &amp; controller
+8 : service
+choice ? : 6                 &lt;--- 6 : model を選択
+
+[ Module list ]
+0 : (exit)
+1 : default
+choice ? : 1
+
+[ Controller list ]
+0 : (exit)
+1 : index
+choice ? : 1
+
+use database ? (y/n) : y
+
+[ table list ]
+0 : (exit)
+1 : CD
+2 : DEPT
+3 : EMP
+4 : SHELF
+5 : USERS
+choice ? : 1
+
+model class name ? [CdModel] :
+
+[ generate information ]
+  module name          : default
+  controller name      : index
+  table name           : CD
+  primary key          : ID
+  model class name     : CdModel
+
+confirm ? (y/n) : y
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/model/CdModel.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/default/models/index/model/CdModelTest.php
+
+[ Command list ]
+0 : (exit)
+・・・
+choice ? : 0
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="module" name="module">module &amp; controller コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　module &amp; controller コマンドはモジュールディレクトリにアクションコントローラとそのコントローラディレクトリを作成します。
+</p>
+<h3>実行例</h3>
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : zf
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : action
+2 : dao
+3 : entity
+4 : goya
+5 : interceptor
+6 : model
+7 : module &amp; controller
+8 : service
+choice ? : 7               &lt;--- 7 : module &amp; controller を選択
+
+[ Module list ]
+0 : (exit)
+1 : (new module)           &lt;---Zend Controller のモジュール機能を使用しない場合は
+2 : default                    default を選択します。
+choice ? : 2
+
+controller name ? : index
+
+[ generate information ]
+  module name               : default
+  controller name           : index
+  controller class name     : IndexController
+
+confirm ? (y/n) : y
+
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/
+・・・
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/index/view/index.html
+
+[ Command list ]
+0 : (exit)
+・・・
+choice ? : 0
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="service" name="service">service コマンド</a></h2>
+<h3>説明</h3>
+<p>
+サービス実装クラス、テストクラスを生成します。
+</p>
+<h3>実行例</h3>
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : zf
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : action
+2 : dao
+3 : entity
+4 : goya
+5 : interceptor
+6 : model
+7 : module &amp; controller
+8 : service
+choice ? : 8                 &lt;--- 8 : service を選択
+
+[ Module list ]
+0 : (exit)
+1 : default
+choice ? : 1
+
+[ Controller list ]
+0 : (exit)
+1 : index
+choice ? : 1
+
+service class name ? : BarService
+
+[ generate information ]
+  module name               : default
+  controller name           : index
+  service class name        : BarService
+  service test class name   : BarServiceTest
+
+confirm ? (y/n) : y
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/service/BarService.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/default/models/index/service/BarServiceTest.php
+
+[ Command list ]
+0 : (exit)
+・・・
+choice ? : 0
+%
+</pre>
+</div>
+<br />
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&#169; Copyright The Seasar Foundation and the others 2005-2007, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body></html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="ja" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, オープンソースソフトウェア, Java, フレームワーク" />
+<meta name="description" content="私たちSeasarプロジェクトはオープンソースという仕組みの元、開発者のゆとりを実現できるプロダクトの開発と提供を通じて、ユーザと開発者とが共に喜びを分かち合える環境実現をお手伝いすることを目指し活動しています。 " />
+<title>The Seasar Project - S2Base.PHP5</title>
+
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection" />
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print" /></head><body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo">
+<h1 id="h01" class="hide">The Seasar Project</h1>
+<a href="http://www.seasar.org/">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390" />
+</a>
+</div>
+
+<div id="navi">
+<p><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; サブプロジェクト &raquo; S2Javelin.PHP5</p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>メニュー</h2>
+
+<h3>ドキュメント</h3>
+<ul>
+<li><a href="setup.html">セットアップ</a></li>
+<li><a href="dir.html">ディレクトリ構成</a></li>
+<li><a href="cmdRef.html">コマンドリファレンス</a></li>
+</ul>
+
+<ul>
+<li><a href="withMaple-setup.html">with Maple</a> <em>(ver 3.1)</em></li>
+<li><a href="withAgavi-setup.html">with Agavi</a> <em>(deprecated)</em></li>
+<li><a href="withSymfony-setup.html">with Symfony</a> <em>(ver 1.0.5)</em></li>
+<li><a href="withSmarty-setup.html">with Smarty</a></li>
+<li><a href="withPRADO-setup.html">with PRADO</a></li>
+<li><a href="withZf-setup.html">with Zf</a></li>
+</ul>
+
+<h3>サブプロジェクト</h3>
+<ul>
+<li>S2Javelin.PHP5</li>
+</ul>
+
+
+<h3>リンク</h3>
+<ul>
+    <li><a href="http://www.seasar.org/">Seasar.org</a></li>
+    <li><a href="http://svn.seasar.org/browse/?root=sandbox.s2base.php5">SVN リポジトリブラウザ</a></li>
+    <li><a href="https://www.seasar.org/svn/sandbox/s2base.php5/">SVN リポジトリ</a></li>
+    <li><a href="https://www.seasar.org/issues/browse/BASEPHP">Issue Tracker</a></li>
+    <li><a href="http://s2php5.jp/">s2php5.jp</a>
+        <ul>
+            <li><a href="http://labs.s2php5.jp/s2base">laboratory</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5">wiki</a></li>
+            <li><a href="http://wiki.s2php5.jp/s2base.php5/plugins">plugins</a></li>
+            <li><a href="http://docs.s2php5.jp/s2base/api/">PHPDoc</a></li>
+        </ul>
+    </li>
+</ul>
+
+<h2>PHP プロジェクト</h2>
+
+<h3>Seasar.PHP</h3>
+
+<ul>
+    <li><a href="http://s2container.php5.seasar.org/">S2Container.PHP5</a></li>
+    <li><a href="http://s2dao.php5.seasar.org/">S2Dao.PHP5</a></li>
+</ul>
+
+<h3>Sandbox.PHP</h3>
+
+<ul>
+    <li><a href="http://kunit.jp/maple/">Maple.PHP</a></li>
+    <li><a href="http://s2ana.php5.sandbox.seasar.org/">S2AnA.PHP5</a></li>
+    <li><a href="http://s2base.php5.sandbox.seasar.org/">S2Base.PHP5</a></li>
+</ul>
+
+
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+<h2>S2Javelin.PHP5 プロジェクトへようこそ！</h2>
+<p>
+　S2Javelin.PHP5プロジェクトでは、avaで実装された <a href="http://s2javelin.sandbox.seasar.org/s2javelin.html">S2Javelin</a> に含まれる JavelinTraceInterceptor を PHP5 に移植します。S2JavelinTraceInterceptor によって出力されるトレースログは、 ArrowVision という表示用ツールによりビジュアルに表示することができます。 ArrowVisionは、<a href="http://www.smg.co.jp/service/products/arrow_vision/index.html">エスエムジー株式会社のホームページ</a>から、無償でダウンロードすることができます。
+</p>
+
+</div>
+
+
+<br />
+
+<div class="section">
+<h2>ダウンロード</h2>
+
+<ul>
+
+<li>2006-10-19
+<table summary="Packages">
+<tr>
+<td valign="top">Pear Package : </td>
+<td>
+<a href="download/S2Javelin-1.0.0.tgz">S2Javelin-1.0.0.tgz</a>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+
+</div>
+
+<br />
+<div class="section">
+<h2>動作環境</h2>
+
+<p>　PHP-5.1.* で動作します。以下の環境で開発・動作確認しています。</p>
+<ul>
+    <li>WindowsXP : php-5.1.6-Win32</li>
+    <li>Debian GNU/Linux 3.1 : php-5.1.6</li>
+    <li>CentOS 4.3 : php-5.1.4</li>
+    <li>Mac OS X 10.4.7 : php-5.1.4</li>
+</ul>
+
+</div>
+<br />
+<div class="section">
+<h2>ドキュメント</h2>
+
+<ul>
+<li><a href="#setup">セットアップ</a>
+  <ul>
+    <li><a href="#dicon">dicon 設定</a></li>
+    <li><a href="#log4php">log4php を使用する場合の設定</a></li>
+  </ul>
+</li>
+</ul>
+
+<h3><a id="setup" name="setup">セットアップ</a></h3>
+<h4><a id="dicon" name="dicon">dicon 設定</a></h4>
+<p>
+　s2base.php5/app/commons/dicon/javelin.dicon に S2JavelinTraceInterceptor コンポーネントを定義済みの ダイコンファイルがあります。
+このダイコンファイルをアクションダイコンやサービスダイコンで include し、S2JavelinTraceInterceptor をアスペクトすることができます。
+ログファイルは、logFile プロパティで指定します。デフォルトでは、s2base.php5/var/logs/javelin.jvn です。(拡張子は .jvn として下さい。)
+</p>
+
+<p>javelin.dicon</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;components namespace="javelin"&gt;
+     &lt;component name="javelinTraceInterceptor"
+                class="S2JavelinTraceInterceptor"&gt;
+         &lt;property name="logArgs"&gt;true&lt;/property&gt;
+         &lt;property name="logReturn"&gt;true&lt;/property&gt;
+         &lt;property name="logStackTrace"&gt;false&lt;/property&gt;
+         &lt;property name="logFile"&gt;S2BASE_PHP5_VAR_DIR . "/logs/javelin.jvn"&lt;/property&gt;
+     &lt;/component&gt;
+&lt;/components&gt;
+</pre>
+
+<p>サービスダイコン</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;components&gt;
+    &lt;include path="%S2BASE_PHP5_ROOT%/app/commons/dicon/dao.dicon"/&gt;
+    &lt;include path="%S2BASE_PHP5_ROOT%/app/commons/dicon/javelin.dicon"/&gt;
+    &lt;component class="CdServiceImpl"&gt;
+        &lt;aspect pointcut="addCd"&gt;javelin.javelinTraceInterceptor&lt;/aspect&gt;
+    &lt;/component&gt;
+    &lt;component class="CdDao"&gt;
+        &lt;aspect pointcut="insert"&gt;javelin.javelinTraceInterceptor&lt;/aspect&gt;
+        &lt;aspect&gt;dao.interceptor&lt;/aspect&gt;
+    &lt;/component&gt;
+&lt;/components&gt;
+</pre>
+
+<br />
+<h4><a id="log4php" name="log4php">log4php を使用する場合の設定</a></h4>
+<p>
+　S2Container の<a href="http://s2container.php5.sandbox.seasar.org/extension.html#log">ログ設定</a>で log4php を使用する設定とすると、S2JavelinTraceInterceptor は、シーケンス情報に加えて S2Dao が発行する SQL を取得することができます。
+SQL ログは ArrowVision で表示できます。<br />
+log4php 用の設定ファイルは、s2base.php5/config/log4php.properties にあります。
+</p>
+
+<pre>
+; [[ S2JavelinTraceInterceptor ]]
+log4php.category.S2JavelinTraceInterceptor = "DEBUG, Javelin"
+log4php.appender.Javelin                   = "LoggerAppenderFile"
+log4php.appender.Javelin.File              = "/tmp/javelin.jvn"
+log4php.appender.Javelin.layout            = "S2JavelinPatternLayout"
+log4php.appender.Javelin.layout.ConversionPattern = "%m%n"
+
+; [[ S2Dao Logger ]]
+log4php.category.S2Dao_BasicSelectHandler = "DEBUG, DaoSql"
+log4php.category.S2Dao_InsertAutoHandler  = "DEBUG, DaoSql"
+log4php.category.S2Dao_UpdateAutoHandler  = "DEBUG, DaoSql"
+log4php.category.S2Dao_DeleteAutoHandler  = "DEBUG, DaoSql"
+log4php.appender.DaoSql                   = "LoggerAppenderFile"
+log4php.appender.DaoSql.layout            = "S2JavelinPatternLayout"
+
+; [[ S2Dao Javelin ]]
+log4php.appender.DaoSql.File                     = "/tmp/javelin.jvn"
+log4php.appender.DaoSql.layout.ConversionPattern = "Write ,%d{Y/m/d H:i:s u},,DaoSQL,0,%M,%C,0,public,%t%n
+                                          &lt;&lt;javelin.FieldValue_START&gt;&gt;%n%m%n&lt;&lt;javelin.FieldValue_END&gt;&gt;%n%n"
+</pre>
+ログファイルはデフォルトで /tmp/javelin.jvn となります。S2Container のログ設定や log4php の設定は
+s2base.php/config/environment.inc.php の Log setting で行います。
+
+<pre>
+&lt;?php
+
+・・・
+・・・
+・・・
+
+/**
+ * Log level setting
+ */
+define('S2CONTAINER_PHP5_LOG_LEVEL', S2Container_SimpleLogger::DEBUG);
+・・・
+・・・
+・・・
+
+/**
+ * log4php setting
+ */
+S2Container_S2LogFactory::$LOGGER = S2Container_S2LogFactory::LOG4PHP;
+define('LOG4PHP_DIR', S2BASE_PHP5_ROOT . '/lib/log4php-version/src/log4php');
+define('LOG4PHP_CONFIGURATION', S2BASE_PHP5_ROOT . '/config/log4php.properties');
+require_once(LOG4PHP_DIR . '/LoggerManager.php');
+?&gt;
+</pre>
+S2CONTAINER_PHP5_LOG_LEVEL 定数を DEBUG レベルに設定することで、S2Dao が発行する SQL をロギングすることができます。
+
+
+</div>
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&#169; Copyright The Seasar Foundation and the others 2005-2007, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body></html>

@@ -1,0 +1,805 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="ja" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, オープンソースソフトウェア, Java, フレームワーク" />
+<meta name="description" content="私たちSeasarプロジェクトはオープンソースという仕組みの元、開発者のゆとりを実現できるプロダクトの開発と提供を通じて、ユーザと開発者とが共に喜びを分かち合える環境実現をお手伝いすることを目指し活動しています。 " />
+<title>The Seasar Project - S2Base.PHP5</title>
+
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection" />
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print" />
+</head>
+<body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo">
+<h1 id="h01" class="hide">The Seasar Project</h1>
+<a href="http://www.seasar.org/">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390" />
+</a>
+</div>
+
+<div id="navi">
+<p><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; ドキュメント &raquo; コマンドリファレンス</p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>メニュー</h2>
+
+<h3>ドキュメント</h3>
+<ul>
+<li>コマンドリファレンス
+    <ul style="font-size:smaller;">
+       <li><a href="#dao">dao コマンド</a></li>
+       <li><a href="#dicon">dicon コマンド</a></li>
+       <li><a href="#entity">entity コマンド</a></li>
+       <li><a href="#goya">goya コマンド</a></li>
+       <li><a href="#interceptor">interceptor コマンド</a></li>
+       <li><a href="#module">module コマンド</a></li>
+       <li><a href="#service">service コマンド</a></li>
+    </ul>
+</li>
+</ul>
+
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+<h2><a id="dao" name="dao">dao コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　S2Dao で必要な dao インタフェース、entity クラス、テストクラスを生成します。
+</p>
+
+<h3>実行例</h3>
+<p>
+　dao コマンドの説明では、<a href="http://s2dao.php5.sandbox.seasar.org/example.html">S2DaoのExample</a>で使用されているサンプルデータを用いて説明します。
+</p>
+<pre>
+mysql&gt; desc CD;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| ID      | int(11)      | NO   | PRI |         |       |
+| TITLE   | varchar(100) | YES  |     |         |       |
+| CONTENT | varchar(200) | YES  |     |         |       |
++---------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql&gt; select * from CD;
++----+----------+---------+
+| ID | TITLE    | CONTENT |
++----+----------+---------+
+| 1  | S2Dao!!! | hello!! |
++----+----------+---------+
+1 row in set (0.00 sec)
+
+mysql&gt;
+</pre>
+<br />
+
+<p>s2base.php5 ディレクトリで s2base コマンドを実行します。</p>
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 1     &lt;--- 1 : dao を選択
+
+[ Module list ]
+0 : (exit)
+1 : Default
+choice ? : 1     &lt;--- 1 : Default モジュールを選択
+
+use database ? (y/n) : n                       &lt;--- データベースに接続してテーブル情報を取得
+                                                    するかどうかを選択します。
+dao interface name ? : CdDao                   &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+
+entity class name ? : CdEntity                 &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+
+table name ? [CdEntity] : CD                   &lt;--- データベースのテーブル名を設定。
+
+columns ? [id,name,--, , ] : id,title,content  &lt;--- カンマ区切りでカラム名を入力
+
+[ generate information ]
+  module name         : Default
+  dao interface name  : CdDao
+  dao test class name : CdDaoTest
+  entity class name   : CdEntity
+  table name          : CD
+  columns             : id, title, content
+
+confirm ? (y/n) : y                                 &lt;--- 表示される情報を確認
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dao/CdDao.class.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/dao/CdDaoTest.class.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity/CdEntity.class.php
+
+[ Command list ]
+0 : (exit)
+1 : command
+・・・
+
+%
+</pre>
+
+daoコマンドにより、PHPUnitを用いたUnitTestクラスが作成されます。s2base コマンドに test 引数を付けて実行すると、UnitTestが実行されます。
+<pre>
+% s2base test .+Test     &lt;--- 第3引数に正規表現で実行したいテストを指定できます。
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : test
+[INFO ] test target       : .+Test
+
+PHPUnit 3.1.7 by Sebastian Bergmann.
+
+CdDaoTest::testA
+
+.
+
+Time: 0 seconds
+
+
+OK (1 test)
+%
+</pre>
+
+dao コマンドにより生成されるDaoインタフェースは、デフォルトでいくつかのメソッドが定義済みです。
+<pre>
+% more app/modules/Default/dao/CdDao.php
+&lt;?php
+interface CdDao {
+    const BEAN = "CdEntity";
+
+    public function findAllList();
+    //public function findAllArray();
+    //public function update(CdEntity $entity);
+    //public function insert(CdEntity $entity);
+    //public function delete(CdEntity $entity);
+}
+%
+</pre>
+
+例として、findAllListメソッドを実行してみます。まず、テストクラスにテストメソッドを追加します。
+
+<pre>
+% more test/modules/Default/dao/CdDaoTest.php
+&lt;?php
+class CdDaoTest extends PHPUnit_Framework_TestCase {
+    private $module = "Default";
+    private $container;                      &lt;--- 各テストの前処理でS2Containerオブジェクトが設定されます。
+    private $dao;                            &lt;--- 各テストの前処理でDaoオブジェクトが設定されます。
+
+    public function __construct($name) {
+        parent::__construct($name);
+        S2ContainerApplicationContext::init();
+    }
+
+    public function testFindAllList() {            &lt;--- 追加テストメソッド
+        $rows = $this-&gt;dao-&gt;findAllList();
+        $entity = $rows[0];
+        $this-&gt;assertTrue($entity instanceof CdEntity);
+        $this-&gt;assertEquals($entity-&gt;getId(),'1');
+        $this-&gt;assertEquals($entity-&gt;getTitle(),'S2Dao!!!');
+        $this-&gt;assertEquals($entity-&gt;getContent(),'hello!!');
+        print_r($entity);
+    }
+
+    public function setUp(){
+        print __CLASS__ . '::' . $this-&gt;getName() . PHP_EOL;
+        $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this-&gt;module}";
+        require_once($moduleDir . "/{$this-&gt;module}.inc.php");
+        $this-&gt;container = S2ContainerApplicationContext::create();
+        $this-&gt;dao = $this-&gt;container-&gt;getComponent("CdDao");
+    }
+
+    public function tearDown() {
+        print PHP_EOL;
+        $this-&gt;container = null;
+        $this-&gt;dao = null;
+    }
+}
+%
+</pre>
+
+テストを実行すると、データベースから取得したデータを格納したEntitiyオブジェクトが表示されます。
+<pre>
+% s2base test .+Test
+
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : test
+[INFO ] test target       : .+Test
+
+PHPUnit 3.1.7 by Sebastian Bergmann.
+
+CdDaoTest::testFindAllList
+CdEntity Object                          &lt;--- print_r($entity) でデバッグとして表示しています。
+(
+    [id:protected] =&gt; 1
+    [title:protected] =&gt; S2Dao!!!
+    [content:protected] =&gt; hello!!
+)
+
+.
+
+Time: 0 seconds
+
+
+OK (1 test)
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="dicon" name="dicon">dicon コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　XML形式のdiconファイルを生成します。
+</p>
+<h3>実行例</h3>
+<p>
+　s2base.php5 ディレクトリで s2baseコマンド を実行します。
+</p>
+
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 2     &lt;--- 2 : dicon を選択
+
+[ Module list ]
+0 : (exit)
+1 : Default
+choice ? : 1     &lt;--- 1 : Default モジュールを選択
+
+dicon name ? : sample    &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+
+[ generate information ]
+  module name     : Default
+  dicon file name : sample.dicon
+
+confirm ? (y/n) : y      &lt;--- 表示される情報を確認
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon/sample.dicon
+
+[ Command list ]
+0 : (exit)
+1 : command
+・・・
+
+%
+</pre>
+sample.dicon は空のダイコンファイルです。
+<pre>
+% more app/modules/Default/dicon/sample.dicon
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components21.dtd"&gt;
+&lt;components&gt;
+
+&lt;/components&gt;
+%
+</pre>
+
+</div>
+<br />
+<div class="section">
+<h2><a id="entity" name="entity">entity コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　S2Dao で用いる Entity クラスを作成します。columns でカンマ区切りのカラム名を入力すると、対応するプロパティとアクセッサメソッドを追加します。
+</p>
+<h3>実行例</h3>
+<p>
+　s2base.php5 ディレクトリで s2baseコマンド を実行します。
+</p>
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 3     &lt;--- 3 : entity を選択
+
+[ Module list ]
+0 : (exit)
+1 : Default
+choice ? : 1     &lt;--- 1 : Default モジュールを選択
+
+use database ? (y/n) : n                       &lt;--- データベースに接続してテーブル情報を取得
+                                                    するかどうかを選択します。
+entity class name ? : DvdEntity                &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+
+table name ? [DvdEntity] : DVD                 &lt;--- データベースのテーブル名を設定
+
+columns ? [id,name,--, , ] : id,title,content  &lt;--- カンマ区切りでカラム名を入力
+
+[ generate information ]
+  module name       : Default
+  entity class name : DvdEntity
+  table name        : DVD
+  columns           : id, title, content
+
+confirm ? (y/n) : y                               &lt;--- 表示される情報を確認
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity/DvdEntity.php
+
+[ Command list ]
+0 : (exit)
+1 : command
+・・・
+
+%
+</pre>
+columns で、id、title、content を指定したので、3つのプロパティとそれぞのアクセッサメソッドが実装されます。
+<pre>
+% more app/modules/Default/entity/DvdEntity.php
+&lt;?php
+class DvdEntity {
+    const TABLE = "DVD";
+    public function __construct(){}
+
+    protected $id;
+    const id_COLUMN = "id";
+    public function setId($val){$this-&gt;id = $val;}
+    public function getId(){return $this-&gt;id;}
+
+    protected $title;
+    const title_COLUMN = "title";
+    public function setTitle($val){$this-&gt;title = $val;}
+    public function getTitle(){return $this-&gt;title;}
+
+    protected $content;
+    const content_COLUMN = "content";
+    public function setContent($val){$this-&gt;content = $val;}
+    public function getContent(){return $this-&gt;content;}
+
+    public function __toString() {
+        $buf = array();
+        $buf[] = 'id =&gt; ' . $this-&gt;getId();
+        $buf[] = 'title =&gt; ' . $this-&gt;getTitle();
+        $buf[] = 'content =&gt; ' . $this-&gt;getContent();
+        return '{' . implode(', ',$buf) . '}';
+    }
+}
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="goya" name="goya">goya コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　goya コマンドはサービス名を決めると、命名規則に従ってサービス、dao、enitity、ダイコンファイル、テストクラスを生成します。
+<a href="#service">service コマンド</a>と<a href="#dao"> dao コマンド</a>を同時に実行することとほぼ同じ処理になります。
+<br />例えば、サービス名を「 emp 」とすると、サービスは EmpService、dao は EmpDao、entity は EmpEntitiy となります。
+
+</p>
+<h3>実行例</h3>
+<p>
+　s2base.php5 ディレクトリで s2baseコマンド を実行します。
+</p>
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 4             &lt;--- 4 : goya を選択
+
+[ Module list ]
+0 : (exit)
+1 : Default
+choice ? : 1             &lt;--- 1 : Default モジュールを選択
+
+service name ? : emp     &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+
+use database ? (y/n) : n                      &lt;--- データベースに接続してテーブル情報を取得
+                                                   するかどうかを選択します。
+table name ? [emp] : EMP                      &lt;--- データベースのテーブル名を設定
+
+columns ? [id,name,--, , ] : id,name,dept     &lt;--- カンマ区切りでカラム名を入力
+
+[ generate information ]
+  module name             : Default
+  service name            : emp
+  service class name      : EmpService
+  service test class name : EmpServiceTest
+  dao interface name      : EmpDao
+  dao test class name     : EmpDaoTest
+  entity class name       : EmpEntity
+  entity class extends    : none
+  table name              : EMP
+  columns                 : id, name, dept
+
+confirm ? (y/n) : y                           &lt;--- 表示される情報を確認
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/EmpService.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service/EmpServiceTest.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/dao/EmpDaoTest.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dao/EmpDao.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity/EmpEntity.php
+
+[ Command list ]
+0 : (exit)
+1 : command
+・・・
+%
+</pre>
+
+EmpServiceクラスでは EmpDao へのセッターメソッドが定義済みなので、サービスに dao が自動インジェクションされます。
+<pre>
+% more app/modules/Default/service/EmpService.php
+&lt;?php
+class EmpService {
+    private $empDao;
+
+    public function __construct(){}
+
+    public function setEmpDao(EmpDao $dao){
+        $this-&gt;empDao = $dao;
+    }
+}
+%
+</pre>
+
+</div>
+<br />
+
+<div class="section">
+<h2><a id="interceptor" name="interceptor">interceptor コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　S2Aop の MethodInterceptor を実装するクラスを生成します。
+</p>
+<h3>実行例</h3>
+<p>
+　s2base.php5 ディレクトリで s2base コマンドを実行します。
+</p>
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 5     &lt;--- 5 : interceptor を選択
+
+[ Module list ]
+0 : (exit)
+1 : Default
+choice ? : 1     &lt;--- 1 : Default モジュールを選択
+
+interceptor class name ? : HogeInterceptor     &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+
+[ generate information ]
+  module name            : Default
+  interceptor class name : HogeInterceptor
+
+confirm ? (y/n) : y                            &lt;--- 表示される情報を確認
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/interceptor/HogeInterceptor.php
+
+[ Command list ]
+0 : (exit)
+1 : dao
+・・・
+
+%
+</pre>
+
+S2Container_AbstractInterceptor を継承した interceptor を生成します。参照：<a href="http://s2container.php5.sandbox.seasar.org/aop.html#OriginalInterceptor">独自実装によるInterceptor</a>
+
+<pre>
+% more app/modules/Default/interceptor/HogeInterceptor.php
+&lt;?php
+class HogeInterceptor
+    extends S2Container_AbstractInterceptor {
+
+    /**
+     * @param S2Container_MethodInvocation $invocation
+     *    - $invocation-&gt;getThis()      : return target object
+     *    - $invocation-&gt;getMethod()    : return ReflectionMethod of target method
+     *    - $invocation-&gt;getArguments() : return array of method arguments
+     */
+    public function invoke(S2Container_MethodInvocation $invocation) {
+        return $invocation-&gt;proceed();
+    }
+}
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="module" name="module">module コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　app/modules ディレクトリと test/modules ディレクトリに<a href="dir.html">モジュールディレクトリ</a>を作成します。
+app/modules/モジュールディレクトリには、dao、dicon、entity、interceptor、serviceディレクトリが作成されます。
+</p>
+<h3>実行例</h3>
+<p>
+　s2base.php5 ディレクトリで s2baseコマンド を実行します。
+</p>
+<pre>
+% s2base
+
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 6               &lt;--- 6 : module を選択
+
+module name ? : Default    &lt;--- モジュール名を入力。英数字 [_a-zA-Z0-9] が使用可能です。
+
+[ generate information ]
+  module name : Default    &lt;--- モジュール情報を確認
+
+confirm ? (y/n) : y
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dao
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/dicon
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/entity
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/interceptor
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/dao
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/Default.inc.php
+
+[ Command list ]
+0 : (exit)
+1 : command
+・・・
+
+%
+</pre>
+
+app ディレクトリと test ディレクトリ以下にDefaultモジュールが作成されます。
+<pre>
+% ls app/modules/Default
+Default.inc.php  dao  dicon  entity  interceptor  service
+% ls test/modules/Default
+dao  service
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="service" name="service">service コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　サービスクラス、テストクラスを生成します。
+</p>
+<h3>実行例</h3>
+<p>
+　s2base.php5 ディレクトリで s2base コマンドを実行します。
+</p>
+
+<pre>
+% s2base
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : dao
+2 : dicon
+3 : entity
+4 : goya
+5 : interceptor
+6 : module
+7 : service
+choice ? : 7     &lt;--- 7 : service を選択
+
+[ Module list ]
+0 : (exit)
+1 : Default
+choice ? : 1     &lt;--- 1 : Default モジュールを選択
+
+service interface name ? : CulcService     &lt;--- 英数字 [_a-zA-Z0-9] が使用可能です。
+
+[ generate information ]
+  module name             : Default
+  service class name      : CulcService
+  service test class name : CulcServiceTest
+
+confirm ? (y/n) : y                        &lt;--- 表示される情報を確認
+[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/Default/service/CulcService.php
+[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/Default/service/CulcServiceTest.php
+
+[ Command list ]
+0 : (exit)
+1 : command
+・・・
+
+%
+</pre>
+service コマンドにより PHPUnit を用いた UnitTest クラスが作成されます。
+s2base コマンドに test 引数を付けて実行すると UnitTest を実行できます。
+<pre>
+% s2base test CulcService
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : test
+[INFO ] test target       : CulcService
+
+PHPUnit 3.1.7 by Sebastian Bergmann.
+
+CulcServiceTest::testA
+
+.
+
+Time: 0 seconds
+
+
+OK (1 test)
+%
+</pre>
+例として、サービスクラスに add メソッドを追加します。
+<pre>
+% more app/modules/Default/service/CulcService.php
+&lt;?php
+class CulcService {
+    public function __construct(){}
+
+    public function add($a, $b) {         &lt;--- 足し算メソッドを追加
+        return $a + $b;
+    }
+}
+</pre>
+
+テストクラスに add メソッドをテストするテストメソッドを追加します。
+<pre>
+% more test/modules/Default/service/CulcServiceTest.php
+&lt;?php
+class CulcServiceImplTest extends PHPUnit_Framework_TestCase {
+    private $module = "Default";
+    private $container;                       &lt;--- 各テストの前処理でS2Containerオブジェクトが設定されます。
+    private $service;                         &lt;--- 各テストの前処理でサービスオブジェクトが設定されます。
+
+    public function __construct($name) {
+        parent::__construct($name);
+    }
+
+    public function testAdd() {               &lt;--- テストメソッドを追加
+        $a = 2;
+        $b = 3;
+        $c = $this-&gt;service-&gt;add($a,$b);
+        $this-&gt;assertEquals($c,5);
+        print "$a + $b = $c" . PHP_EOL;
+    }
+
+    public function setUp(){
+        print __CLASS__ . '::' . $this-&gt;getName() . PHP_EOL;
+        $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this-&gt;module}";
+        include_once($moduleDir . "/{$this-&gt;module}.inc.php");
+        $this-&gt;container = S2ContainerApplicationContext::create();
+        $this-&gt;service = $this-&gt;container-&gt;getComponent('CulcService');
+    }
+
+    public function tearDown() {
+        $this-&gt;container = null;
+        $this-&gt;service = null;
+    }
+}
+%
+</pre>
+
+s2base コマンドに test 引数を付けて実行すると UnitTest を実行できます。
+<pre>
+% s2base test CulcService
+[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
+[INFO ] project directory : /seasar.php/workspace/s2base.php5
+[INFO ] project type      : command
+[INFO ] command type      : test
+[INFO ] test target       : CulcService
+
+PHPUnit 3.1.7 by Sebastian Bergmann.
+
+CulcServiceTest::testAdd
+2 + 3 = 5                     &lt;--- デバッグとして、足し算式を表示します。
+.
+
+Time: 0 seconds
+
+
+OK (1 test)
+%
+</pre>
+
+</div>
+<br />
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&#169; Copyright The Seasar Foundation and the others 2005-2007, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body></html>
