@@ -7,10 +7,10 @@
 
     <target name="init-pkg">
         <property name="package.name"    value="S2Base_Command_AutoTest" />
-        <property name="package.version" value="2.0.0RC1" />
+        <property name="package.version" value="2.0.0RC2" />
         <property name="package.url"     value="http://pear.s2php5.jp/s2base" />
         <property name="package.state"   value="beta" />
-        <property name="package.notes"   value="Release 2.0.0RC1" />
+        <property name="package.notes"   value="Release 2.0.0RC2" />
         <property name="package.summary" value="S2Base.PHP5 Command Plugin" />
         <property name="package.description"       value="S2Base.PHP5 Command Plugin" />
         <property name="package.maintainer.handle" value="klove" />
