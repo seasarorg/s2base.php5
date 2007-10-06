@@ -10,5 +10,8 @@
         $dto = $this->create@@ENTITY_CLASS_NAME@@FromRequest($this->getRequest());
         $this->view->assign('dto', $dto);
         $this->_helper->FlashMessenger->addMessage($dto);
+        if (S2Base_ZfValidateSupportPlugin::hasError($this->getRequest())) {
+            $this->_helper->viewRenderer('@@ACTION_NAME@@-input');
+        }
     }
     /** S2BASE_PHP5 ACTION METHOD **/
