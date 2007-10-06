@@ -12,8 +12,18 @@ class MasterMaintCommand implements S2Base_GenerateCommand {
     private $tableNames;
     private $controllerName;
     
+    /**
+     * @see S2Base_GenerateCommand::getName()
+     */
     public function getName(){
         return "master maintenance";
+    }
+
+    /**
+     * @see S2Base_GenerateCommand::isAvailable()
+     */
+    public function isAvailable(){
+        return true;
     }
 
     public function execute(){

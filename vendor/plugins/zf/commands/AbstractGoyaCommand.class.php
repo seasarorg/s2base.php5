@@ -55,7 +55,6 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         }
         list($this->controllerName, $this->controllerClassName, $this->controllerClassFile) = 
             ModuleCommand::getControllerNames($this->dispatcher, $this->moduleName, $this->controllerName);
-        $this->ctlServiceInterfaceName = ModuleCommand::getCtlServiceInterfaceName($this->controllerName);
         $this->actionName = S2Base_StdinManager::getValue('action name ? : ');
         $this->formatActionName = $this->dispatcher->formatName($this->actionName);
         $this->validate($this->formatActionName);
@@ -545,13 +544,6 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
         $this->serviceClassName = $serviceClassName;
     }
 
-    public function getServiceInterfaceName() {
-        return $this->serviceInterfaceName;
-    }
-    public function setServiceInterfaceName($serviceInterfaceName) {
-        $this->serviceInterfaceName = $serviceInterfaceName;
-    }
-
     public function getDaoInterfaceName() {
         return $this->daoInterfaceName;
     }
@@ -641,13 +633,6 @@ abstract class AbstractGoyaCommand implements S2Base_GenerateCommand {
     }
     public function setControllerClassFile($controllerClassFile) {
         $this->controllerClassFile = $controllerClassFile;
-    }
-
-    public function getCtlServiceInterfaceName() {
-        return $this->ctlServiceInterfaceName;
-    }
-    public function setCtlServiceInterfaceName($ctlServiceInterfaceName) {
-        $this->ctlServiceInterfaceName = $ctlServiceInterfaceName;
     }
 
     public function getSrcModuleDir() {

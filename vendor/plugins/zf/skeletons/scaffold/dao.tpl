@@ -1,7 +1,4 @@
 <?php
-/**
- * @S2Aspect('interceptor' => 'dao.interceptor')
- */
 interface @@CLASS_NAME@@ {
     const BEAN = "@@ENTITY_NAME@@";
     
@@ -11,4 +8,3 @@ interface @@CLASS_NAME@@ {
     public function insert(@@ENTITY_NAME@@ $entity);
     public function delete(@@ENTITY_NAME@@ $entity);
 }
-?>

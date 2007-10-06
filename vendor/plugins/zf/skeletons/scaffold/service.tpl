@@ -28,4 +28,3 @@ class @@CLASS_NAME@@ {
         $this->@@DAO_PROPERTY@@ = $dao;
     } 
 }
-?>

@@ -2,6 +2,9 @@
 class SqliteCommand
     implements S2Base_GenerateCommand {
 
+    private $uiCharcode = null;
+    private $dbCharcode = null;
+
     /**
      * @see S2Base_GenerateCommand::getName()
      */    
@@ -44,15 +47,23 @@ class SqliteCommand
     private function sqliteCli(PDO $ds) {
         $sql = '';
         while(true) {
-            print 'sqlite> ';
+            if (trim($sql) === '') {
+                print 'sqlite=# ';
+            } else {
+                print 'sqlite-# ';
+            }
             $val = trim(fgets(STDIN));
             if (trim($sql) === '') {
-                if ($this->isExit($val)){
+                $cmdVal = trim($val);
+                if ($this->isExit($cmdVal)){
                     break;
-                } else if ($this->isDesc($val)) {
+                } else if ($this->isDesc($cmdVal)) {
                     $val = 'select * from sqlite_master;';
-                } else if ($this->isTables($val)) {
-                    $val = 'select tbl_name from sqlite_master;';
+                } else if ($this->isTables($cmdVal)) {
+                    $val = "select tbl_name from sqlite_master where type = 'table';";
+                } else if ($this->isSetCharcode($cmdVal)) {
+                    $this->setCharcode($cmdVal);
+                    continue;
                 }
             }
 
@@ -89,6 +100,36 @@ class SqliteCommand
         return false;
     }
 
+    private function isSetCharcode($val) {
+        if (preg_match('/^set_charcode_(ui|db)\s*=/', strtolower($val))) {
+            return true;
+        }
+        return false;
+    }
+
+    private function setCharcode($val) {
+        $matches = array();
+        if (preg_match('/^set_charcode_(ui|db)\s*=\s*(.+)$/', strtolower($val), $matches)) {
+            if ($matches[1] === 'ui') {
+                $this->uiCharcode = $matches[2];
+                print "[info ] ui charcode set [{$this->uiCharcode}]." . PHP_EOL . PHP_EOL;
+            } else {
+                $this->dbCharcode = $matches[2];
+                print "[info ] db charcode set [{$this->dbCharcode}]." . PHP_EOL . PHP_EOL;
+            }
+        }
+    }
+
+    private function isCharcodeConvertEnable() {
+        return $this->uiCharcode !== null and $this->dbCharcode !== null;
+    }
+
+    private function convertCharcode(&$data) {
+        for($i=0; $i<count($data); $i++) {
+            $data[$i] = mb_convert_encoding($data[$i], $this->uiCharcode, $this->dbCharcode);
+        }
+    }
+
     protected function executeSql(PDO $ds, $sql) {
         try {
             $stmt = $ds->query($sql);
@@ -117,12 +158,21 @@ class SqliteCommand
             for ($i=0; $i < count($result); $i++) {
                 $row = $result[$i];
                 if ($i == 0) {
-                    vprintf($headerFromat, array_keys($row));
+                    $headerData = array_keys($row);
+                    if ($this->isCharcodeConvertEnable()) {
+                        $this->convertCharcode($headerData);
+                    }
+                    vprintf($headerFromat, $headerData);
                     print $justLine;
                 }
-                vprintf($dataFromat, array_values($row));
+                $data = array_values($row);
+                if ($this->isCharcodeConvertEnable()) {
+                    $this->convertCharcode($data);
+                }
+                vprintf($dataFromat, $data);
             }
             print $justLine;
+            print PHP_EOL;
         }
     }
 

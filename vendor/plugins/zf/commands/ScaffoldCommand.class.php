@@ -71,7 +71,7 @@ class ScaffoldCommand extends PagerCommand {
         $this->entityClassName  = ucfirst(EntityCommand::getPropertyNameFromCol($this->tableName)) . S2DaoSkelConst::BeanName;
         $this->extendsEntityClassName = "none";
 
-        $daoInterfaceNameTmp = S2Base_StdinManager::getValue("dao interface name [{$this->daoInterfaceName}]? : ");
+        $daoInterfaceNameTmp = S2Base_StdinManager::getValue("dao interface name ? [{$this->daoInterfaceName}] : ");
         $this->daoInterfaceName = trim($daoInterfaceNameTmp) == '' ? $this->daoInterfaceName : $daoInterfaceNameTmp;
         $this->validate($this->daoInterfaceName);
 
@@ -188,7 +188,7 @@ class ScaffoldCommand extends PagerCommand {
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . '/skeletons/scaffold/action_confirm.tpl');
-        $serviceProp = strtolower(substr($this->serviceInterfaceName,0,1)) . substr($this->serviceInterfaceName,1);
+        $serviceProp = strtolower(substr($this->serviceClassName,0,1)) . substr($this->serviceClassName,1);
         $patterns = array("/@@ACTION_METHOD_NAME@@/",
                           "/@@ACTION_NAME@@/",
                           "/@@ENTITY_CLASS_NAME@@/",
@@ -337,7 +337,7 @@ class ScaffoldCommand extends PagerCommand {
                      . S2BASE_PHP5_DS . $this->controllerName
                      . S2BASE_PHP5_DS . $this->actionName . '-confirm.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
         } else {
-            $srcFile = $this->appCtlDir
+            $srcFile = $this->appViewDir
                      . S2BASE_PHP5_DS . $this->controllerName
                      . S2BASE_PHP5_DS . $this->actionName . '-confirm.' . S2BASE_PHP5_ZF_TPL_SUFFIX; 
         }

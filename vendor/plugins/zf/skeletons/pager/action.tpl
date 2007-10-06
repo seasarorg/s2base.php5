@@ -2,17 +2,15 @@
     public function @@ACTION_METHOD_NAME@@() {
         $listLimit = 10;
         $pageLimit = 5;
-        $support = new S2Dao_PagerSupport($listLimit,
-                           '@@CONDITION_DTO_NAME@@',
-                           '@@CONDITION_DTO_SESSION_KEY@@');
+        $support = new S2Dao_PagerSupport($listLimit, '@@CONDITION_DTO_NAME@@', '@@CONDITION_DTO_SESSION_KEY@@');
         $conditionDto = $support->getPagerCondition();
-        if ($this->getRequest()->has('s2pager_offset') and
-            !S2Base_ZfValidateSupportPlugin::hasError($this->getRequest())){
-            $conditionDto->setOffset($this->getRequest()->getParam('s2pager_offset'));
+        if ($this->_request->has('s2pager_offset') and
+            !S2Base_ZfValidateSupportPlugin::hasError($this->_request)){
+            $conditionDto->setOffset($this->_request->getParam('s2pager_offset'));
         }
-        if ($this->getRequest()->has('s2base_keyword') and
-            !S2Base_ZfValidateSupportPlugin::hasError($this->getRequest())){
-            $conditionDto->setKeyword($this->getRequest()->getParam('s2base_keyword'));
+        if ($this->_request->has('s2base_keyword') and
+            !S2Base_ZfValidateSupportPlugin::hasError($this->_request)){
+            $conditionDto->setKeyword($this->_request->getParam('s2base_keyword'));
             $conditionDto->setOffset(0);
         }
         $dtos = $this->@@SERVICE_PROPERTY@@->getByConditionDto($conditionDto);

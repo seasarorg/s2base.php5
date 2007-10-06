@@ -50,7 +50,6 @@ class AutoTestCommand implements S2Base_GenerateCommand {
                                        S2BASE_PHP5_ROOT . DIRECTORY_SEPARATOR . 'app', $srcFile);
                 if (file_exists($srcFile)) {
                     $srcStamp = filemtime($srcFile);
-                    $srcStamp = $isFirst ? $srcStamp : $srcStamp -1;
                 } else {
                     $srcFile = null;
                     $srcStamp = null;
