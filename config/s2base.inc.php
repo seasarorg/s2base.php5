@@ -72,7 +72,7 @@ S2ContainerClassLoader::import(S2DAO_PHP5);
 /**
  * S2Container DI設定
  */
-define('S2CONTAINER_PHP5_PERMIT_CLASS_INJECTION', true);
+//define('S2CONTAINER_PHP5_AUTO_DI_INTERFACE', false);
 
 /**
  * S2Container DTD 検証設定

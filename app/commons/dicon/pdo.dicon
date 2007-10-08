@@ -3,7 +3,6 @@
 "http://www.seasar.org/dtd/components.dtd">
 <components namespace="pdo">
 
-    <!--
     <component name="dataSource" class="S2Container_PDODataSource">
         <property name="dsn">"mysql:host=localhost; dbname=s2con"</property>
         <property name="user">"root"</property>
@@ -12,11 +11,6 @@
             array(PDO::ATTR_ORACLE_NULLS => PDO::NULL_EMPTY_STRING,
                   PDO::ATTR_AUTOCOMMIT => true);
         </property>
-    </component>
-    -->
-
-    <component name="dataSource" class="S2Container_PDODataSource">
-        <property name="dsn">return 'sqlite:' . S2BASE_PHP5_VAR_DIR . '/db/s2base.db'</property>
     </component>
 
     <!--

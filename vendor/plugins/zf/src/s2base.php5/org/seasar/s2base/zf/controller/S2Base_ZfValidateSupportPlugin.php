@@ -110,8 +110,8 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
         $forceBreak = false;
         $errors = array();
         while ($validateConfig->valid()) {
-            $paramName = strtolower($validateConfig->key());
-            if ($paramName == self::DEFAULT_KEY) {
+            $paramName = $validateConfig->key();
+            if (strtolower($paramName) == self::DEFAULT_KEY) {
                 $validateConfig->next();
                 continue;
             }
@@ -124,7 +124,7 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
                 $paramValue = $request->getParam($paramName);
                 if (!$validator->isValid($paramValue)){
                     if($paramConfig->exception != null) {
-                        throw new S2Base_ZfException($paramConfig->exception);
+                        throw new S2Base_ZfException($paramConfig->exception . " [$paramValue]");
                     }
 
                     if ($paramConfig->$valKey !== null and $paramConfig->$valKey->msg !== null) {
