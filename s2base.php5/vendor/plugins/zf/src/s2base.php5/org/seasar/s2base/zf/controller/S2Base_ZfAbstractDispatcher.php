@@ -53,7 +53,8 @@ abstract class S2Base_ZfAbstractDispatcher extends Zend_Controller_Dispatcher_St
          * Get controller class
          */
         if (!$this->isDispatchable($request)) {
-            if (!$this->getParam('useDefaultControllerAlways')) {
+            $controller = $request->getControllerName();
+            if (!$this->getParam('useDefaultControllerAlways') && !empty($controller)) {
                 require_once 'Zend/Controller/Dispatcher/Exception.php';
                 throw new Zend_Controller_Dispatcher_Exception('Invalid controller specified (' . $request->getControllerName() . ')');
             }
