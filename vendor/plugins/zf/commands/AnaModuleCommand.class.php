@@ -17,10 +17,8 @@ class AnaModuleCommand extends ModuleCommand {
 
         $tempContent = S2Base_CommandUtil::readFile(S2BASE_PHP5_PLUGIN_ZF
                      . "/skeletons/ana-module/controller.tpl");
-        $keys = array("/@@CONTROLLER_CLASS_NAME@@/",
-                      "/@@SERVICE_CLASS_NAME@@/");
-        $reps = array($this->controllerClassName,
-                      $this->ctlServiceInterfaceName);
+        $keys = array("/@@CONTROLLER_CLASS_NAME@@/");
+        $reps = array($this->controllerClassName);
         $tempContent = preg_replace($keys, $reps, $tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }
