@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
-<project name="s2base.php5" default="pear-pkg" basedir="../..">
+<project name="plugin" default="pear-pkg" basedir="../..">
 
     <taskdef name="pkg2-ubs" classname="src.phing.task.Pkg2UriBasedSupportTask"/>
     <taskdef name="pkg2-ls"  classname="src.phing.task.Pkg2LicenseSupportTask"/>
     <taskdef name="pkg2-pvs" classname="src.phing.task.Pkg2PearVersionSupportTask"/>
 
     <target name="init-pkg">
-        <property name="package.name"    value="S2Base_Command_SqliteCli" />
-        <property name="package.version" value="2.0.0RC2" />
+        <property name="package.name"    value="S2Base_Zf_Pager" />
+        <property name="package.version" value="2.0.0RC1" />
         <property name="package.url"     value="http://pear.s2php5.jp/s2base" />
         <property name="package.state"   value="beta" />
-        <property name="package.notes"   value="Release 2.0.0RC2" />
-        <property name="package.summary" value="S2Base.PHP5 Command Plugin" />
-        <property name="package.description"       value="S2Base.PHP5 Command Plugin" />
+        <property name="package.notes"   value="Release 2.0.0RC1" />
+        <property name="package.summary" value="S2Base.PHP5 Zf Plugin" />
+        <property name="package.description"       value="S2Base.PHP5 Zf Plugin" />
         <property name="package.maintainer.handle" value="klove" />
         <property name="package.maintainer.name"   value="klove" />
         <property name="package.maintainer.email"  value="s2container-php5@ml.seasar.org" />
@@ -22,7 +22,8 @@
         <mkdir dir="${project.build.dir}/${project.name}/project" />
         <copy toDir="${project.build.dir}/${project.name}/project">
             <fileset dir="${s2base.root.dir}">
-                <include name="vendor/s2base/commands/SqliteCommand.class.php" />
+                <include name="vendor/plugins/zf/commands/Pager*" />
+                <include name="vendor/plugins/zf/skeletons/pager/*" />
             </fileset>
         </copy>
     </target>
@@ -77,12 +78,11 @@
 
         <!-- URI Based dependency -->
         <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
-                  pkgName="S2Base"
-                  uri="${s2base.package.url}"/>
-
-        <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pkgName="${package.name}"
                   uri="${package.url}/${package.name}-${package.version}"/>
+        <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
+                  pkgName="S2Base"
+                  uri="${s2base.package.url}"/>
         <pkg2-ls  pkgFile="${project.build.dir}/${project.name}/package2.xml"/>
         <pkg2-pvs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pearVersion="1.4.11"/>
@@ -91,8 +91,7 @@
     <target name="pear-pkg" depends="pear-pkg-xml">
         <exec command="pear package package2.xml" 
               dir="${project.build.dir}/${project.name}" />
-        <mkdir dir="${project.basedir}/plugins" />
-        <move toDir="${project.basedir}/plugins/s2base" overwrite="true">
+        <move toDir="${project.basedir}/plugins/zf" overwrite="true">
             <fileset dir="${project.build.dir}/${project.name}">
                 <include name="*.tgz"/>
             </fileset>
@@ -101,8 +100,8 @@
 
     <target name="init" depends="init-pkg">
         <property name="project.name" value="${phing.project.name}" />
-        <property name="s2base.root.dir" value="${project.basedir}/../.." />
         <property name="project.build.dir" value="${project.basedir}/build/plugin" />
+        <property name="s2base.root.dir" value="${project.basedir}/../.." />
         <property name="s2base.pear.base.dir" value="S2Base" />
         <property name="s2base.package.url" value="http://s2base.php5.sandbox.seasar.org/download/S2Base-2.0.0RC1" />
     </target>
