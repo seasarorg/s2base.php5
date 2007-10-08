@@ -10,14 +10,13 @@ class @@MODEL_CLASS@@ extends Zend_Db_Table_Abstract {
 @@WHERE_CLAUSE@@
             $where = implode(' ', $select->getPart(Zend_Db_Select::WHERE));
         }
-        $dto->setCount($this->getCount($select));
+        $dto->setCount($this->getPagerCount($select));
         return $this->fetchAll($where, null, $dto->getLimit(), $dto->getOffset());
     }
 
-    private function getCount(Zend_Db_Select $select) {
-        $select->from($this->_name, array('count(*) as total'));
-        $stmt = $select->query();
-        $result = $stmt->fetchAll();
+    private function getPagerCount(Zend_Db_Select $select) {
+        $select->from($this->_name, array('total' => 'count(*)'));
+        $result = $select->query()->fetchAll();
         return $result[0]['total'];
     }
 }
