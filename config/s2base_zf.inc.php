@@ -114,5 +114,18 @@ class S2Base_ZfInitialize {
         $plugin = new S2Base_ZfValidateSupportPlugin();
         $plugin->addValidateFactory(new S2Base_ZfRegexValidateFactory());
         $fc->registerPlugin($plugin);
+
+        $plugin = new S2Base_ZfAnaSupportPlugin();
+        $plugin->setModuleName('ana')
+               ->setControllerName('index');
+        $fc->registerPlugin($plugin);
+
+        /*
+        S2Base_ZfAclFactory::$ACL_FACTORY_CLASS = 'S2Base_ZfDbAclFactory';
+        $factory = S2Base_ZfAclFactory::getFactory();
+        $factory->setTableName('USERS')
+                ->setIdentityColumn('USERNAME');
+        */
+
     }
 }
