@@ -40,6 +40,7 @@ class S2Base_ZfIniFileAclFactory {
     private $aclIniFile    = null;
     private $groupIniFile  = null;
     private $passwdIniFile = null;
+    private $useGroup = false;
 
     public function setAcl(Zend_Acl $val = null) {
         $this->modulesDir = $val;
@@ -59,6 +60,10 @@ class S2Base_ZfIniFileAclFactory {
 
     public function setPasswdIniFile($val) {
         $this->passwdIniFile = $val;
+    }
+
+    public function setUseGroup($val = true) {
+        $this->useGroup = $val;
     }
 
     public function __construct() {
@@ -96,7 +101,9 @@ class S2Base_ZfIniFileAclFactory {
     }
 
     protected function setupRole() {
-        $this->setupGroup();
+        if ($this->useGroup) {
+            $this->setupGroup();
+        }
         $this->setupUser();
     }
 
@@ -120,7 +127,7 @@ class S2Base_ZfIniFileAclFactory {
             $config = $configs->current();
             if (isset($config->user)) {
                 $this->roles[] = $config->user;
-                if (isset($config->group)) {
+                if (isset($config->group) and $this->useGroup) {
                     $this->acl->addRole(new Zend_Acl_Role($config->user),
                         explode(',', preg_replace('/\s*/', '', $config->group)));
                 } else {
@@ -130,6 +137,11 @@ class S2Base_ZfIniFileAclFactory {
                 throw new Exception("user not found.[id : {$configs->key()}]");
             }
             $configs->next();
+        }
+        $unAuthorizedUserName = S2Base_ZfAnaSupportPlugin::$UNAUTHORIZED_USER_NAME;
+        if ($unAuthorizedUserName !== null and !$this->acl->hasRole($unAuthorizedUserName)) {
+            $this->acl->addRole(new Zend_Acl_Role($unAuthorizedUserName));
+            $this->roles[] = $unAuthorizedUserName;
         }
     }
 

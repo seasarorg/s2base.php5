@@ -24,23 +24,23 @@ class AutoTestCommand implements S2Base_GenerateCommand {
      */
     public function execute(){
         print PHP_EOL . '[INFO ] start monitoring test files. . . . .' . PHP_EOL;
-        $testClasses = array();
+        $testFiles = array();
         $monitorFiles = array();
         $isFirst = true;
         $testDir = S2BASE_PHP5_ROOT . DIRECTORY_SEPARATOR . 'test';
         $args = $_SERVER['argv'];
         while (true) {
             clearstatcache();
-            $testClasses = array();
-            $testClasses = $this->findTestClasses($testDir, $testClasses);
-            $addFiles = array_diff(array_values($testClasses), array_keys($monitorFiles));
-            $delFiles = array_diff(array_keys($monitorFiles), array_values($testClasses));
+            $testFiles = array();
+            $testFiles = $this->findTestClasses($testDir, $testFiles);
+            $addFiles = array_diff(array_keys($testFiles), array_keys($monitorFiles));
+            $delFiles = array_diff(array_keys($monitorFiles), array_keys($testFiles));
 
             foreach ($addFiles as $testFile) {
                 print "[INFO ] test add : $testFile" . PHP_EOL;
                 $stamp = filemtime($testFile);
                 $testStamp = $isFirst ? $stamp : $stamp -1;
-                $testClass = array_search($testFile, $testClasses, true);
+                $testClass = $testFiles[$testFile];
 
                 $srcClass = preg_replace('/Test$/', '', $testClass);
                 $srcFile = $testFile;
@@ -117,7 +117,7 @@ class AutoTestCommand implements S2Base_GenerateCommand {
             else if (is_file($rootItem)) {
                 $matches = array();
                 if (preg_match('/(.+?Test)\..*php$/', $item, $matches)) {
-                    $spool[$matches[1]] = $rootItem;
+                    $spool[$rootItem] = $matches[1];
                 }
             }
             else {

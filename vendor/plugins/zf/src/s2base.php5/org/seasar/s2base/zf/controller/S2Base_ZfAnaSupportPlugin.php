@@ -34,23 +34,14 @@
  */
 class S2Base_ZfAnaSupportPlugin extends Zend_Controller_Plugin_Abstract
 {
-    private $moduleName     = null;
-    private $controllerName = 'index';
-    const LOGIN_ACTION      = 'login';
+    public static $MODULE_NAME        = 'ana';
+    public static $CONTROLLER_NAME    = 'index';
+    public static $UNAUTHORIZED_USER_NAME = 'guest';
+    const LOGIN_ACTION = 'login';
     const ERROR_NONE = 1;
     const ERROR_AUTH = 2;
     const ERROR_ROLE = 3;
-    const ERROR_KEY = __CLASS__;
-
-    public function setModuleName($val) {
-        $this->moduleName = $val;
-        return $this;
-    }
-
-    public function setControllerName($val) {
-        $this->controllerName = $val;
-        return $this;
-    }
+    const ERROR_KEY  = __CLASS__;
 
     public static function hasError(Zend_Controller_Request_Abstract $request) {
         return $request->has(self::ERROR_KEY);
@@ -69,27 +60,19 @@ class S2Base_ZfAnaSupportPlugin extends Zend_Controller_Plugin_Abstract
     }
 
     public function routeShutdown(Zend_Controller_Request_Abstract $request) {
-        if ($request->getModuleName() === $this->moduleName) {
-            S2Container_S2Logger::getLogger(__CLASS__)->info("module [{$this->moduleName}] is unsecured.", __METHOD__);
+        if ($request->getModuleName() === self::$MODULE_NAME) {
+            S2Container_S2Logger::getLogger(__CLASS__)->info('module [' . self::$MODULE_NAME . '] is unsecured.', __METHOD__);
             return;
         }
 
-        if (!Zend_Auth::getInstance()->hasIdentity()) {
-            $msg = 'not authorized.';
-            S2Container_S2Logger::getLogger(__CLASS__)->info($msg, __METHOD__);
-            if ($this->moduleName !== null) {
-                $this->setupRequest($request, self::ERROR_AUTH, $msg);
-            } else {
-                throw new Exception($msg);
-            }
-            return;
+        $identity = self::$UNAUTHORIZED_USER_NAME;
+        if (Zend_Auth::getInstance()->hasIdentity()) {
+            $identity = Zend_Auth::getInstance()->getIdentity();
         }
-
-        $identity = Zend_Auth::getInstance()->getIdentity();
         if (!S2Base_ZfAclFactory::create()->isAllowed($identity, $request->getModuleName())) {
             $msg = "role [{$identity}] denied.";
             S2Container_S2Logger::getLogger(__CLASS__)->info($msg, __METHOD__);
-            if ($this->moduleName !== null) {
+            if (self::$MODULE_NAME !== null) {
                 $this->setupRequest($request, self::ERROR_ROLE, $msg);
             } else {
                 throw new Exception($msg);
@@ -105,8 +88,8 @@ class S2Base_ZfAnaSupportPlugin extends Zend_Controller_Plugin_Abstract
                                  'module'     => $request->getModuleName(),
                                  'controller' => $request->getControllerName(),
                                  'action'     => $request->getActionName()));
-        $request->setModuleName($this->moduleName)
-                ->setControllerName($this->controllerName)
+        $request->setModuleName(self::$MODULE_NAME)
+                ->setControllerName(self::$CONTROLLER_NAME)
                 ->setActionName(self::LOGIN_ACTION);
     }
 }
