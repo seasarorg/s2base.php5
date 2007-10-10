@@ -116,8 +116,9 @@ class S2Base_ZfInitialize {
         $fc->registerPlugin($plugin);
 
         $plugin = new S2Base_ZfAnaSupportPlugin();
-        $plugin->setModuleName('ana')
-               ->setControllerName('index');
+        S2Base_ZfAnaSupportPlugin::$MODULE_NAME     = 'ana';
+        S2Base_ZfAnaSupportPlugin::$CONTROLLER_NAME = 'index';
+        S2Base_ZfAnaSupportPlugin::$UNAUTHORIZED_USER_NAME  = 'guest';
         $fc->registerPlugin($plugin);
 
         /*
@@ -126,6 +127,5 @@ class S2Base_ZfInitialize {
         $factory->setTableName('USERS')
                 ->setIdentityColumn('USERNAME');
         */
-
     }
 }
