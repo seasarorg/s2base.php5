@@ -1,7 +1,13 @@
 ﻿
-2007-10-08 S2Base.PHP5-2.0.0RC1
+2007-10-13 S2Base.PHP5-2.0.0RC2
 
-================ S2Base.PHP5-2.0.0RC1 更新履歴 ===================
+================ S2Base.PHP5-2.0.0RC2 更新履歴 ===================
+
+	* modify: with ZFのvalidatorで、デフォルトのエラーメッセージを変更できる
+	ようにしました。
+
+
+2007-10-08 S2Base.PHP5-2.0.0RC2
 
 	* modify: config/environment.inc.php のS2Container設定の修正しました。
 	* modify: dao生成コマンドのメッセージ修正しました。
@@ -15,6 +21,8 @@
 	camelizeするように修正しました。
 
 2007-09-13 S2Base.PHP5-2.0.0RC1
+
+================ S2Base.PHP5-2.0.0RC1 更新履歴 ===================
 
 	* info: Zend Framework-1.0.1にで動作確認を行いました。
 	* info: with ZF プラグインを追加しました。
