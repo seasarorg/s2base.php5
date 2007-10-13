@@ -45,13 +45,16 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
     const FLOAT_KEY  = 'float';
     const INT_KEY    = 'int';
     const IP_KEY     = 'ip';
+    const NOT_EMPTY_KEY = 'notempty';
 
-    private static $VALIDATE_CLASSES = array(self::ALNUM_KEY  => 'Zend_Validate_Alnum',
-                                             self::ALPHA_KEY  => 'Zend_Validate_Alpha',
-                                             self::DATE_KEY   => 'Zend_Validate_Date',
-                                             self::FLOAT_KEY  => 'Zend_Validate_Float',
-                                             self::INT_KEY    => 'Zend_Validate_Int',
-                                             self::IP_KEY     => 'Zend_Validate_Ip');
+    private static $VALIDATE_CLASSES = array(self::ALNUM_KEY     => 'Zend_Validate_Alnum',
+                                             self::ALPHA_KEY     => 'Zend_Validate_Alpha',
+                                             self::DATE_KEY      => 'Zend_Validate_Date',
+                                             self::FLOAT_KEY     => 'Zend_Validate_Float',
+                                             self::INT_KEY       => 'Zend_Validate_Int',
+                                             self::IP_KEY        => 'Zend_Validate_Ip',
+                                             self::NOT_EMPTY_KEY => 'Zend_Validate_NotEmpty'
+                                            );
 
     private $validators = array();
     private $validateFactories = array();
@@ -176,16 +179,10 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
             case self::FLOAT_KEY:
             case self::INT_KEY:
             case self::IP_KEY:
-                if (isset($this->validators[$valKey])) {
-                    $validator = $this->validators[$valKey];
-                } else {
-                    $valClassName = self::$VALIDATE_CLASSES[$valKey];
-                    Zend_Loader::loadClass($valClassName);
-                    $validator = new $valClassName();
-                    $this->validators[$valKey] = $validator;
-                }
+            case self::NOT_EMPTY_KEY:
+                $validator = $this->getDefaultValidator($valKey, $paramConfig);
                 break;
-             default:
+            default:
                 if (isset($this->validateFactories[$valKey])) {
                     $validator =  $this->validateFactories[$valKey]->getInstance($paramName, $paramConfig);
                     if (! $validator instanceof Zend_Validate_Interface) {
@@ -195,6 +192,18 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
                     throw new S2Base_ZfException("unsupported validate [$valKey]");
                 }
                 break;
+        }
+        return $validator;
+    }
+
+    private function getDefaultValidator($valKey, $paramConfig) {
+        $validator = null;
+        if (isset($this->validators[$valKey])) {
+            $validator = $this->validators[$valKey];
+        } else {
+            $validator = S2Base_ZfAbstractValidateFactory::instantiateDefaultValidator(
+                             self::$VALIDATE_CLASSES[$valKey], $valKey, $paramConfig);
+            $this->validators[$valKey] = $validator;
         }
         return $validator;
     }

@@ -64,7 +64,7 @@ class S2Base_ZfDispatcherImpl extends S2Base_ZfAbstractDispatcher {
 
         $formatedActionName = $this->formatName($actionName);
         $actionMethodName = $this->getActionMethod($request);
-        $modelControllerDir = $this->getModelControllerDir($moduleName);
+        $modelControllerDir = $this->getModelControllerDir($request, $moduleName);
         $actionDicon   = S2BASE_PHP5_ROOT . $modelControllerDir . "/dicon/$actionMethodName.dicon";
         $moduleIncFile = S2BASE_PHP5_ROOT . $modelControllerDir . "/$controllerName.inc.php";
         $actionIncFile = S2BASE_PHP5_ROOT . $modelControllerDir . "/$actionMethodName.inc.php";
@@ -98,7 +98,7 @@ class S2Base_ZfDispatcherImpl extends S2Base_ZfAbstractDispatcher {
         return $container->getComponent($controllerClassName);
     }
 
-    protected function getModelControllerDir($moduleName) {
+    protected function getModelControllerDir(Zend_Controller_Request_Abstract $request, $moduleName) {
         return "/app/modules/$moduleName/models/" . $request->getControllerName();
     }
 
