@@ -32,34 +32,31 @@
  * @package    org.seasar.s2base.zf.validate.factory.impl
  * @author     klove
  */
-class S2Base_ZfRegexValidateFactory extends S2Base_ZfAbstractValidateFactory {
-    const ID = 'regex';
-    private $instance = null;
-    private $validateClassName = 'Zend_Validate_Regex';
+abstract class S2Base_ZfAbstractValidateFactory implements S2Base_ZfValidateFactory {
 
-    /**
-     * @see S2Base_ZfValidateFactory::getId()
-     */
-    public function getId() {
-        return self::ID;
+    public static function instantiateDefaultValidator($valClassName, $valKey, Zend_Config $paramConfig) {
+        Zend_Loader::loadClass($valClassName);
+        $validator = new $valClassName();
+        $valConfig = $paramConfig->$valKey;
+        if ($valConfig instanceof Zend_Config) {
+            self::setDefaultMessage($validator, $valConfig);
+        }
+        return $validator;
     }
 
-    /**
-     * @see S2Base_ZfValidateFactory::getInstance()
-     */
-    public function getInstance($paramName, Zend_Config $config) {
-        $valKey = self::ID;
-        if ($config->$valKey === null or $config->$valKey->pattern === null) {
-            throw new S2Base_ZfException("pattern not found in Regex validation [param : $paramName]");
+    public static function setDefaultMessage(Zend_Validate_Interface $instance, Zend_Config $valConfig) {
+        foreach($valConfig as $key => $msg) {
+            if (!is_string($msg)) {
+                continue;
+            }
+            $matches = array();
+            if (preg_match('/^msg_(.+)/', $key, $matches)) {
+                $ref = new ReflectionClass($instance);
+                if ($ref->hasConstant($matches[1])) {
+                    $instance->setMessage($msg, $ref->getConstant($matches[1]));
+                }
+            }
         }
-        if ($this->instance === null) {
-            Zend_Loader::loadClass($this->validateClassName);
-            $this->instance = new $this->validateClassName($config->$valKey->pattern);
-        } else {
-            $this->instance->setPattern($config->$valKey->pattern);
-        }
-        $this->setDefaultMessage($this->instance, $config->$valKey);
-        return $this->instance;
     }
 }
 ?>
