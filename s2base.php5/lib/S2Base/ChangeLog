@@ -1,11 +1,16 @@
 ﻿
-2007-10-13 S2Base.PHP5-2.0.0RC2
+2007-10-14 S2Base.PHP5-2.0.0RC2
 
 ================ S2Base.PHP5-2.0.0RC2 更新履歴 ===================
 
+	* modify: daoとmodelのテストクラスでpdoインスタンスを用意するようにしました。
+	* modify: moduleの設定ファイル(module.inc.php)で、entityのクラスローダを
+	S2ContainerClassLoaderに変更しました。
+
+2007-10-13 S2Base.PHP5-2.0.0RC2
+
 	* modify: with ZFのvalidatorで、デフォルトのエラーメッセージを変更できる
 	ようにしました。
-
 
 2007-10-08 S2Base.PHP5-2.0.0RC2
 
