@@ -42,10 +42,9 @@
           <ul>
               <li><a href="#init-app">init-app コマンド</a></li>
               <li><a href="#init-module">init-module コマンド</a></li>
-              <li><a href="#init-module">clear-cache コマンド</a></li>
+              <li><a href="#clear-cache">clear-cache コマンド</a></li>
               <li><a href="#dao">dao コマンド</a></li>
               <li><a href="#entity">entity コマンド</a></li>
-              <li><a href="#interceptor">interceptor コマンド</a></li>
               <li><a href="#service">service コマンド</a></li>
           </ul>
         </li>
@@ -90,6 +89,7 @@ application name ? : demo
   application name   : demo
 
 confirm ? (y/n) : y
+
 >> dir+      /work/web/s2sf/apps/demo/config
 >> file+     /work/web/s2sf/apps/demo/config/app.yml
 .......
@@ -174,69 +174,62 @@ choice ? : 0
 <br />
 
 <div class="section">
+<h2><a id="clear-cache" name="clear-cache">clear-cache コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　symfonyのclear-cacheコマンドをラップし、プロジェクトのキャッシュを削除します。
+</p>
+
+</div>
+
+<div class="section">
 <h2><a id="dao" name="dao">dao コマンド</a></h2>
 <h3>説明</h3>
 <p>
-　S2Dao で必要な dao インタフェース、entity クラス、テストクラスを生成します。
+　S2Dao で必要な dao インタフェース、entity クラス、テストクラスを生成します。生成先は sf_root_dir/lib/dao, sf_root_dir/lib/entity, sf_root_dir/test/unit/dao になります。
 </p>
 <h3>実行例</h3>
 <pre>
-% s2base
-[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
-[INFO ] project directory : /seasar.php/workspace/s2base.php5
-[INFO ] project type      : zf
+% s2base             
+[INFO ] s2base  directory : /opt/local/lib/php/S2Base
+[INFO ] project directory : /work/web/s2sf
+[INFO ] project type      : symfony
 [INFO ] command type      : command
 
 [ Command list ]
 0 : (exit)
-1 : action
+1 : clear-cache
 2 : dao
 3 : entity
-4 : goya
-5 : interceptor
-6 : model
-7 : module &amp; controller
-8 : service
+4 : init-app
+5 : init-module
+6 : service
 choice ? : 2                 &lt;--- 2 : dao を選択
-
-[ Module list ]
-0 : (exit)
-1 : default
-choice ? : 1
-
-[ Controller list ]
-0 : (exit)
-1 : index
-choice ? : 1
 
 use database ? (y/n) : y     &lt;--- データベースのテーブル一覧を取得します。
 
 [ table list ]
 0 : (exit)
-1 : CD
-2 : DEPT
-3 : EMP
-4 : SHELF
-5 : USERS
-choices ? (1,2,--,) : 1      &lt;--- 複数のテーブルを選択した場合は、先頭のテーブルが Entity の
-                                  テーブルに使用されます。残りのテーブルのカラムが Entity のプロパティに追加されます。
-dao interface name [CdDao]? :
+1 : groups
+2 : members
+3 : memberships
+choices ? (1,2,--,) : 1     &lt;--- 複数のテーブルを選択した場合は、先頭のテーブルが Entity の
+                                 テーブルに使用されます。残りのテーブルのカラムが Entity のプロパティに追加されます。
 
-entity class name ? [CdEntity] :
+dao interface name [GroupsDao]? : GroupDao
+
+entity class name ? [GroupsEntity] : GroupEntity
 
 [ generate information ]
-  module name          : default
-  controller name      : index
-  dao interface name   : CdDao
-  dao test class name  : CdDaoTest
-  entity class name    : CdEntity
-  table name           : CD
-  columns              : ID, TITLE, CONTENT
+  dao interface name   : GroupDao 
+  dao test class name  : GroupDaoTest 
+  entity class name    : GroupEntity 
 
 confirm ? (y/n) : y
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/dao/CdDao.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/entity/CdEntity.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/default/models/index/dao/CdDaoTest.php
+
+[INFO ] create : /work/web/s2sf/lib/dao/GroupDao.class.php
+[INFO ] create : /work/web/s2sf/lib/entity/GroupEntity.class.php
+[INFO ] create : /work/web/s2sf/test/unit/dao/GroupDaoTest.class.php
 
 [ Command list ]
 0 : (exit)
@@ -255,57 +248,43 @@ choice ? : 0
 </p>
 <h3>実行例</h3>
 <pre>
-% s2base
-[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
-[INFO ] project directory : /seasar.php/workspace/s2base.php5
-[INFO ] project type      : zf
+% s2base 
+[INFO ] s2base  directory : /opt/local/lib/php/S2Base
+[INFO ] project directory : /work/web/s2sf
+[INFO ] project type      : symfony
 [INFO ] command type      : command
 
 [ Command list ]
 0 : (exit)
-1 : action
+1 : clear-cache
 2 : dao
 3 : entity
-4 : goya
-5 : interceptor
-6 : model
-7 : module &amp; controller
-8 : service
-choice ? : 4                 &lt;--- 4 : entity を選択
-
-[ Module list ]
-0 : (exit)
-1 : default
-choice ? : 1
-
-[ Controller list ]
-0 : (exit)
-1 : index
-choice ? : 1
+4 : init-app
+5 : init-module
+6 : service
+choice ? : 3
 
 use database ? (y/n) : y     &lt;--- データベースのテーブル一覧を取得します。
 
 [ table list ]
 0 : (exit)
-1 : CD
-2 : DEPT
-3 : EMP
-4 : SHELF
-5 : USERS
-choices ? (1,2,--,) : 2,3    &lt;--- 複数のテーブルを選択した場合は、先頭のテーブルが Entity の
+1 : groups
+2 : members
+3 : memberships
+choices ? (1,2,--,) : 2      &lt;--- 複数のテーブルを選択した場合は、先頭のテーブルが Entity の
                                   テーブルに使用されます。残りのテーブルのカラムが Entity のプロパティに追加されます。
 
-entity class name ? [DeptEntity] :
+
+entity class name ? [MembersEntity] : MemberEntity
 
 [ generate information ]
-  module name          : default
-  controller name      : index
-  entity class name    : DeptEntity
-  table name           : DEPT
-  columns              : DEPTNO, DNAME, LOC, VERSIONNO, EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM
+  entity class name    : MemberEntity
+  table name           : members
+  columns              : id, name, password, created_at
 
 confirm ? (y/n) : y
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/entity/DeptEntity.php
+
+[INFO ] create : /work/web/s2sf/lib/entity/MemberEntity.class.php
 
 [ Command list ]
 0 : (exit)
@@ -317,269 +296,7 @@ choice ? : 0
 </div>
 <br />
 
-<div class="section">
-<h2><a id="goya" name="goya">goya コマンド</a></h2>
-<h3>説明</h3>
-<p>
-　goya コマンドはアクション名を決めると、命名規則に従ってアクションメソッドの追加、サービス、dao、enitity、ダイコンファイル、テストクラスを生成します。 actionコマンド、service コマンドと dao コマンドを同時に実行することとほぼ同じ処理になります。
-例えばサービス名を「 cdList 」とすると、アクションメソッドは cdListAction、サービスクラスは CdListService、dao クラスは CdListDao、entity クラスは CdListEntitiy となります。
-</p>
-<h3>実行例</h3>
-<pre>
-% s2base
-[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
-[INFO ] project directory : /seasar.php/workspace/s2base.php5
-[INFO ] project type      : zf
-[INFO ] command type      : command
 
-[ Command list ]
-0 : (exit)
-1 : action
-2 : dao
-3 : entity
-4 : goya
-5 : interceptor
-6 : model
-7 : module &amp; controller
-8 : service
-choice ? : 4                 &lt;--- 4 : goya を選択
-
-[ Module list ]
-0 : (exit)
-1 : default
-choice ? : 1
-
-[ Controller list ]
-0 : (exit)
-1 : index
-choice ? : 1
-
-action name ? : goya
-
-use dao ? (y/n) : y
-
-use database ? (y/n) : y     &lt;--- データベースのテーブル一覧を取得します。
-
-[ table list ]
-0 : (exit)
-1 : CD
-2 : DEPT
-3 : EMP
-4 : SHELF
-5 : USERS
-choices ? (1,2,--,) : 3      &lt;--- 複数のテーブルを選択した場合は、先頭のテーブルが Entity の
-                                  テーブルに使用されます。残りのテーブルのカラムが Entity のプロパティに追加されます。
-
-dao interface name [EmpDao]? :
-
-entity class name ? [EmpEntity] :
-
-[ generate information ]
-  module name             : default
-  controller name         : index
-  action name             : goya
-  format action name      : Goya
-  action method name      : goyaAction
-  action template file    : goya.phtml
-  service class name      : GoyaService
-  service test class name : GoyaServiceTest
-  dao interface name      : EmpDao
-  dao test class name     : EmpDaoTest
-  entity class name       : EmpEntity
-  table name              : EMP
-  columns                 : EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
-
-confirm ? (y/n) : y
-[INFO ] modify : /seasar.php/workspace/s2base.php5/app/modules/default/controllers/IndexController.php
-・・・
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/entity/EmpEntity.php
-
-[ Command list ]
-0 : (exit)
-・・・
-choice ? : 0
-%
-</pre>
-</div>
-<br />
-
-<div class="section">
-<h2><a id="interceptor" name="interceptor">interceptor コマンド</a></h2>
-<h3>説明</h3>
-<p>
-　S2Aop の MethodInterceptor を実装するクラスを生成します。 
-</p>
-<h3>実行例</h3>
-<pre>
-% s2base
-[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
-[INFO ] project directory : /seasar.php/workspace/s2base.php5
-[INFO ] project type      : zf
-[INFO ] command type      : command
-
-[ Command list ]
-0 : (exit)
-1 : action
-2 : dao
-3 : entity
-4 : goya
-5 : interceptor
-6 : model
-7 : module &amp; controller
-8 : service
-choice ? : 5                 &lt;--- 5 : interceptor を選択
-
-[ Module list ]
-0 : (exit)
-1 : default
-choice ? : 1
-
-[ Controller list ]
-0 : (exit)
-1 : index
-choice ? : 1
-
-interceptor class name ? : HogeInterceptor
-
-[ generate information ]
-  module name            : default
-  controoler name        : index
-  interceptor class name : HogeInterceptor
-
-confirm ? (y/n) : y
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/interceptor/HogeInterceptor.php
-
-[ Command list ]
-0 : (exit)
-・・・
-choice ? : 0
-%
-</pre>
-</div>
-<br />
-
-<div class="section">
-<h2><a id="model" name="model">model コマンド</a></h2>
-<h3>説明</h3>
-<p>
-　Zend_Db_Table クラスを継承した model クラスとそのテストクラスを生成します。
-</p>
-<h3>実行例</h3>
-<pre>
-% s2base
-[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
-[INFO ] project directory : /seasar.php/workspace/s2base.php5
-[INFO ] project type      : zf
-[INFO ] command type      : command
-
-[ Command list ]
-0 : (exit)
-1 : action
-2 : dao
-3 : entity
-4 : goya
-5 : interceptor
-6 : model
-7 : module &amp; controller
-8 : service
-choice ? : 6                 &lt;--- 6 : model を選択
-
-[ Module list ]
-0 : (exit)
-1 : default
-choice ? : 1
-
-[ Controller list ]
-0 : (exit)
-1 : index
-choice ? : 1
-
-use database ? (y/n) : y
-
-[ table list ]
-0 : (exit)
-1 : CD
-2 : DEPT
-3 : EMP
-4 : SHELF
-5 : USERS
-choice ? : 1
-
-model class name ? [CdModel] :
-
-[ generate information ]
-  module name          : default
-  controller name      : index
-  table name           : CD
-  primary key          : ID
-  model class name     : CdModel
-
-confirm ? (y/n) : y
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/model/CdModel.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/default/models/index/model/CdModelTest.php
-
-[ Command list ]
-0 : (exit)
-・・・
-choice ? : 0
-%
-</pre>
-</div>
-<br />
-
-<div class="section">
-<h2><a id="module" name="module">module &amp; controller コマンド</a></h2>
-<h3>説明</h3>
-<p>
-　module &amp; controller コマンドはモジュールディレクトリにアクションコントローラとそのコントローラディレクトリを作成します。
-</p>
-<h3>実行例</h3>
-<pre>
-% s2base
-[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
-[INFO ] project directory : /seasar.php/workspace/s2base.php5
-[INFO ] project type      : zf
-[INFO ] command type      : command
-
-[ Command list ]
-0 : (exit)
-1 : action
-2 : dao
-3 : entity
-4 : goya
-5 : interceptor
-6 : model
-7 : module &amp; controller
-8 : service
-choice ? : 7               &lt;--- 7 : module &amp; controller を選択
-
-[ Module list ]
-0 : (exit)
-1 : (new module)           &lt;---Zend Controller のモジュール機能を使用しない場合は
-2 : default                    default を選択します。
-choice ? : 2
-
-controller name ? : index
-
-[ generate information ]
-  module name               : default
-  controller name           : index
-  controller class name     : IndexController
-
-confirm ? (y/n) : y
-
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/
-・・・
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/index/view/index.html
-
-[ Command list ]
-0 : (exit)
-・・・
-choice ? : 0
-%
-</pre>
-</div>
-<br />
 
 <div class="section">
 <h2><a id="service" name="service">service コマンド</a></h2>
@@ -590,44 +307,43 @@ choice ? : 0
 <h3>実行例</h3>
 <pre>
 % s2base
-[INFO ] s2base  directory : /seasar.php/workspace/s2base.php5/lib/S2Base/build/s2base.php5
-[INFO ] project directory : /seasar.php/workspace/s2base.php5
-[INFO ] project type      : zf
+[INFO ] s2base  directory : /opt/local/lib/php/S2Base
+[INFO ] project directory : /work/web/s2sf
+[INFO ] project type      : symfony
 [INFO ] command type      : command
 
 [ Command list ]
 0 : (exit)
-1 : action
+1 : clear-cache
 2 : dao
 3 : entity
-4 : goya
-5 : interceptor
-6 : model
-7 : module &amp; controller
-8 : service
-choice ? : 8                 &lt;--- 8 : service を選択
+4 : init-app
+5 : init-module
+6 : service
+choice ? : 6                 &lt;--- 6 : service を選択
+
+[ App list ]
+0 : (exit)
+1 : demo
+choice ? : 1
 
 [ Module list ]
 0 : (exit)
-1 : default
+1 : products
 choice ? : 1
 
-[ Controller list ]
-0 : (exit)
-1 : index
-choice ? : 1
-
-service class name ? : BarService
+service class name ? : ProductsListService
 
 [ generate information ]
-  module name               : default
-  controller name           : index
-  service class name        : BarService
-  service test class name   : BarServiceTest
+  module name             : products
+  service class name      : ProductsListService
+  service test class name : ProductsListServiceTest
 
 confirm ? (y/n) : y
-[INFO ] create : /seasar.php/workspace/s2base.php5/app/modules/default/models/index/service/BarService.php
-[INFO ] create : /seasar.php/workspace/s2base.php5/test/modules/default/models/index/service/BarServiceTest.php
+
+[INFO ] create : /work/web/s2sf/apps/demo/modules/products/service/ProductsListService.class.php
+[INFO ] create : /work/web/s2sf/test/unit/demo/products/service/ProductsListServiceTest.class.php
+
 
 [ Command list ]
 0 : (exit)

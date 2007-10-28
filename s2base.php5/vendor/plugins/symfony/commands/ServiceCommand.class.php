@@ -64,7 +64,7 @@ class ServiceCommand implements S2Base_GenerateCommand {
                    "apps"            . S2BASE_PHP5_DS .
                    $this->appName    . S2BASE_PHP5_DS .
                    "modules"         . S2BASE_PHP5_DS .
-                   $this->moduleName . S2BASE_PHP5_DS .
+                   $this->moduleName . 
                    S2BASE_PHP5_SERVICE_DIR .
                    S2BASE_PHP5_DS . $this->serviceClassName .
                    S2BASE_PHP5_CLASS_SUFFIX;
