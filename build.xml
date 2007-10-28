@@ -38,6 +38,12 @@
         <phing phingfile="${plugins.dir}/zf/zf.xml" inheritRefs="true" target="${st}"/>
     </target>
 
+    <target name="symfony" depends="prepare">
+        <available file="${plugins.dir}/symfony" type="dir" property="plugin.available" />
+        <fail unless="plugin.available" message="Invalid : [ symfony plugin ]" />
+        <phing phingfile="${plugins.dir}/symfony/symfony.xml" inheritRefs="true" target="${st}"/>
+    </target>
+
     <target name="gen-dao" depends="prepare">
         <gdao toDir="app/commons/dao" />
     </target>

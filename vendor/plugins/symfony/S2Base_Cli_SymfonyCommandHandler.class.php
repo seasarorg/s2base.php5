@@ -80,7 +80,7 @@ class S2Base_Cli_SymfonyCommandHandler extends S2Base_Cli_AbstractCommandHandler
             print "[ERROR] could not read file [$confFile] " . PHP_EOL;
             exit;
         }
-        $result = file_put_contents($confFile, "require_once 's2base_sf.inc.php';\n", FILE_APPEND);
+        $result = file_put_contents($confFile, "require_once 'environment.inc.php';\n", FILE_APPEND);
         if ($result === false) {
             print "[ERROR] could not write file [$confFile] " . PHP_EOL;
             exit;
@@ -117,7 +117,8 @@ class S2Base_Cli_SymfonyCommandHandler extends S2Base_Cli_AbstractCommandHandler
         $srcFiles = array(
             'pdo.dicon' => $diconDir,
             'dao.dicon' => $diconDir,
-            's2base_sf.inc.php' => $pluginDir
+            's2base_sf.inc.php' => $pluginDir,
+			'environment.inc.php' => $pluginDir
         );
         foreach ($srcFiles as $item => $srcDir) {
             if (!copy(
