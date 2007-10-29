@@ -1,7 +1,12 @@
 ﻿
-2007-10-14 S2Base.PHP5-2.0.0RC2
+2007-10-29 S2Base.PHP5-2.0.0RC2
 
 ================ S2Base.PHP5-2.0.0RC2 更新履歴 ===================
+
+	* add: with ZFでcontrollerの機能テストが行えるようにしました
+	* add: with Symfonyを追加しました
+
+2007-10-14 S2Base.PHP5-2.0.0RC2
 
 	* modify: daoとmodelのテストクラスでpdoインスタンスを用意するようにしました。
 	* modify: moduleの設定ファイル(module.inc.php)で、entityのクラスローダを
