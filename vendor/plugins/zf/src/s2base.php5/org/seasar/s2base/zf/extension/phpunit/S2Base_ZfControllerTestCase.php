@@ -77,7 +77,7 @@ abstract class S2Base_ZfControllerTestCase extends PHPUnit_Framework_TestCase
     public function assigns($name)
     {
         if (defined('S2BASE_PHP5_USE_SMARTY') and S2BASE_PHP5_USE_SMARTY) {
-            return $this->controller->view->_tpl_vars[$key];
+            return $this->controller->view->_tpl_vars[$name];
         } else {
             return $this->controller->view->$name;
         }
