@@ -1,0 +1,9 @@
+autoload:
+  s2container:
+    name:           S2Container
+    ext:            .class.php
+    path:           "%SF_SYMFONY_LIB_DIR%/../S2Container/S2Container"
+  s2dao:
+    name:           S2Dao
+    ext:            .class.php
+    path:           "%SF_SYMFONY_LIB_DIR%/../S2Dao/S2Dao"

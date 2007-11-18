@@ -1,0 +1,4 @@
+
+all:
+  controller:
+    class: sfS2BasePlugin_FrontWebController

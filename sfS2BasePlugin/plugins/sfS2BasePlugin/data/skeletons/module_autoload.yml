@@ -1,0 +1,13 @@
+autoload:
+  @@MODULE_NAME@@_service:
+    name:           @@MODULE_NAME@@_service
+    ext:            .class.php
+    path:           "%SF_ROOT_DIR%/apps/%SF_APP%/modules/@@MODULE_NAME@@/service"
+  @@MODULE_NAME@@_dao:
+    name:           @@MODULE_NAME@@_dao
+    ext:            .class.php
+    path:           "%SF_ROOT_DIR%/apps/%SF_APP%/modules/@@MODULE_NAME@@/dao"
+  @@MODULE_NAME@@_entity:
+    name:           @@MODULE_NAME@@_entity
+    ext:            .class.php
+    path:           "%SF_ROOT_DIR%/apps/%SF_APP%/modules/@@MODULE_NAME@@/entity"
