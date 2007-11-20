@@ -44,10 +44,7 @@
     <li><a href="#s2module">s2module</a></li>
     <li><a href="#s2service">s2service</a></li>
     <li><a href="#s2dao">s2dao</a></li>
-    <li><a href="#s2gendao">s2gendao</a></li>
     <li><a href="#s2test">s2test</a></li>
-    <li><a href="#s2at">s2at</a></li>
-    <li><a href="#s2sqlite">s2sqlite</a></li>
     </ul>
 </li>
 </ul>
@@ -95,20 +92,17 @@
 %
 % symfony plugin-list
 Installed plugins:
- sfS2BasePlugin                                version   # __uri (__uri)
- symfony                                       version   # pear.symfony-project.com (symfony)
+ sfS2BasePlugin               version   # __uri (__uri)
+ symfony                      version   # pear.symfony-project.com (symfony)
 %
 % symfony -T
 ・・・
 task aliases:
 ・・・
   s2app                      = pake s2_init_app
-  s2at                       = pake s2_auto_test
   s2dao                      = pake s2_init_dao
-  s2gendao                   = pake s2_generate_dao
   s2module                   = pake s2_init_module
   s2service                  = pake s2_init_service
-  s2sqlite                   = pake s2_sqlite_cli
   s2test                     = pake s2_phpunit_test
 %
 %
@@ -236,24 +230,6 @@ Daoクラス名が指定されると、Daoクラス、Entityクラスのクラ�
 </ul>
 
 <br />
-<h3><a id="s2gendao" name="s2gendao">s2gendao</a></h3>
-<h4>コマンドリファレンス</h4>
-<pre>
-% symfony s2gendao [環境指定]
-</pre>
-<ul>
-<li>環境指定<br />
-symfonyの環境を指定します。この値に従ってプロジェクトディレクトリ/config/ディレクトリのpdo.diconが使用されます。
-デフォルト値は [prod] です。
-</li>
-</ul>
-
-<h4>説明</h4>
-<p>
-　環境指定で指定されたpdo.diconを用いて、全テーブルのdaoとentityを作成します。daoとentityのクラスファイルはプロジェクトディレクトリのlib/ディレクトリに生成されます。
-</p>
-
-<br />
 <h3><a id="s2test" name="s2test">s2test</a></h3>
 <h4>コマンドリファレンス</h4>
 <pre>
@@ -272,43 +248,6 @@ UnitTestファイル名に対するパターンマッチに使用するパター
 　テストディレクトリのunitディレクトリ以下のPHPUnit_Test_Caseを実行します。テスト実行前にテストディレクトリのbootstrap/functional.phpファイルをrequireします。
 </p>
 
-<br />
-<h3><a id="s2at" name="s2at">s2at</a></h3>
-<h4>コマンドリファレンス</h4>
-<pre>
-% symfony s2at アプリケーション名
-</pre>
-<ul>
-<li>アプリケーション名<br />
-UnitTestを実行するアプリケーション名。s2atではアプリケーションごとにUnitTestを実行します。
-</li>
-</ul>
-
-<h4>説明</h4>
-<p>
-　テストディレクトリのunitディレクトリ以下のPHPUnit_Test_Caseを自動実行します。
-テストクラスファイルの更新を検知しテストを実行します。また、テストクラスファイルに対応する対象クラスファイルの更新を検知しテストを自動実行します。
-</p>
-
-<br />
-<h3><a id="s2sqlite" name="s2sqlite">s2sqlite</a></h3>
-<h4>コマンドリファレンス</h4>
-<pre>
-% symfony s2qlite [環境指定]
-</pre>
-<ul>
-<li>環境指定<br />
-symfonyの環境を指定します。この値に従ってプロジェクトディレクトリ/config/ディレクトリのpdo.diconが使用されます。
-デフォルト値は [prod] です。
-</li>
-</ul>
-
-<h4>説明</h4>
-<p>
-　環境指定で指定されたpdo.diconのdsnがSqliteの場合に、Sqliteデータベースへの簡易コンソールを起動します。
-</p>
-
-<br />
 </div>
 
 </div><!-- article -->
