@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="ja" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, オープンソースソフトウェア, Java, フレームワーク" />
+<meta name="description" content="私たちSeasarプロジェクトはオープンソースという仕組みの元、開発者のゆとりを実現できるプロダクトの開発と提供を通じて、ユーザと開発者とが共に喜びを分かち合える環境実現をお手伝いすることを目指し活動しています。 " />
+<title>The Seasar Project - S2Base.PHP5</title>
+
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection" />
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print" /></head><body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo">
+<h1 id="h01" class="hide">The Seasar Project</h1>
+<a href="http://www.seasar.org/">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390" />
+</a>
+</div>
+
+<div id="navi">
+<p><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; with Symfony &raquo; コマンドリファレンス</p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>メニュー</h2>
+
+<h3>ドキュメント</h3>
+<ul>
+<li>with Symfony
+    <ul style="font-size:smaller;">
+        <li><a href="withSymfony-setup.html">セットアップ</a></li>
+        <li>コマンドリファレンス
+          <ul>
+              <li><a href="#init-app">init-app コマンド</a></li>
+              <li><a href="#init-module">init-module コマンド</a></li>
+              <li><a href="#clear-cache">clear-cache コマンド</a></li>
+              <li><a href="#dao">dao コマンド</a></li>
+              <li><a href="#entity">entity コマンド</a></li>
+              <li><a href="#service">service コマンド</a></li>
+          </ul>
+        </li>
+    </ul>
+</li>
+</ul>
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+
+<div class="section">
+<h2><a id="init-app" name="init-app">init-app コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　init-app コマンドは symfony の init-app コマンドをラップし、S2Containerを利用する為の設定ファイルを配置します。
+</p>
+<h3>実行例</h3>
+<pre>
+% s2base 
+[INFO ] s2base  directory : /opt/local/lib/php/S2Base
+[INFO ] project directory : /work/web/s2sf
+[INFO ] project type      : symfony
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : clear-cache
+2 : dao
+3 : entity
+4 : init-app
+5 : init-module
+6 : service
+choice ? : 4               &lt;--- 4 : init-app を選択
+
+application name ? : demo
+
+[ generate information ]
+  application name   : demo
+
+confirm ? (y/n) : y
+
+>> dir+      /work/web/s2sf/apps/demo/config
+>> file+     /work/web/s2sf/apps/demo/config/app.yml
+.......
+>> chmod 777 web/uploads/assets
+>> dir+      /work/web/s2sf/test/functional/demo
+[INFO ] create : /work/web/s2sf/apps/demo/lib/S2Base_FrontWebController.class.php
+[INFO ] create : /work/web/s2sf/apps/demo/config/factories.yml
+[INFO ] create : /work/web/s2sf/lib/dao
+[INFO ] create : /work/web/s2sf/lib/entity
+[INFO ] create : /work/web/s2sf/test/unit/dao
+[INFO ] create : /work/web/s2sf/test/unit/TestHelper.php
+
+[ Command list ]
+0 : (exit)
+・・・
+choice ? : 0
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="init-module" name="init-module">init-module コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　init-module コマンドは symfony の init-module コマンドをラップし、S2Containerを呼び出すための Controller や 設定ファイルを配置します。
+</p>
+<h3>実行例</h3>
+<pre>
+% s2base
+[INFO ] s2base  directory : /opt/local/lib/php/S2Base
+[INFO ] project directory : /work/web/s2sf
+[INFO ] project type      : symfony
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : clear-cache
+2 : dao
+3 : entity
+4 : init-app
+5 : init-module
+6 : service
+choice ? : 5               &lt;--- 1 : init-module を選択
+
+[ App list ]
+0 : (exit)
+1 : demo
+choice ? : 1
+
+module name ? : products  
+
+[ generate information ]
+  application name   : demo
+  module name        : products
+
+confirm ? (y/n) : y
+
+>> dir+      /work/web/s2sf/apps/demo/modules/products/actions
+>> file+     /work/web/s2sf/apps/demo/module...ducts/actions/actions.class.php
+>> dir+      /work/web/s2sf/apps/demo/modules/products/config
+>> dir+      /work/web/s2sf/apps/demo/modules/products/lib
+>> dir+      /work/web/s2sf/apps/demo/modules/products/templates
+>> file+     /work/web/s2sf/apps/demo/module...ucts/templates/indexSuccess.php
+>> dir+      /work/web/s2sf/apps/demo/modules/products/validate
+>> file+     /work/web/s2sf/test/functional/demo/productsActionsTest.php
+>> tokens    /work/web/s2sf/test/functional/demo/productsActionsTest.php
+>> tokens    /work/web/s2sf/apps/demo/module...ducts/actions/actions.class.php
+>> tokens    /work/web/s2sf/apps/demo/module...ucts/templates/indexSuccess.php
+[INFO ] create : /work/web/s2sf/apps/demo/modules/products/interceptor
+[INFO ] create : /work/web/s2sf/apps/demo/modules/products/service
+[INFO ] create : /work/web/s2sf/test/unit/demo/products/service
+[INFO ] create : /work/web/s2sf/apps/demo/config/autoload.yml
+
+[ Command list ]
+0 : (exit)
+・・・
+choice ? : 0
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="clear-cache" name="clear-cache">clear-cache コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　symfonyのclear-cacheコマンドをラップし、プロジェクトのキャッシュを削除します。
+</p>
+
+</div>
+
+<div class="section">
+<h2><a id="dao" name="dao">dao コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　S2Dao で必要な dao インタフェース、entity クラス、テストクラスを生成します。生成先は sf_root_dir/lib/dao, sf_root_dir/lib/entity, sf_root_dir/test/unit/dao になります。
+</p>
+<h3>実行例</h3>
+<pre>
+% s2base             
+[INFO ] s2base  directory : /opt/local/lib/php/S2Base
+[INFO ] project directory : /work/web/s2sf
+[INFO ] project type      : symfony
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : clear-cache
+2 : dao
+3 : entity
+4 : init-app
+5 : init-module
+6 : service
+choice ? : 2                 &lt;--- 2 : dao を選択
+
+use database ? (y/n) : y     &lt;--- データベースのテーブル一覧を取得します。
+
+[ table list ]
+0 : (exit)
+1 : groups
+2 : members
+3 : memberships
+choices ? (1,2,--,) : 1     &lt;--- 複数のテーブルを選択した場合は、先頭のテーブルが Entity の
+                                 テーブルに使用されます。残りのテーブルのカラムが Entity のプロパティに追加されます。
+
+dao interface name [GroupsDao]? : GroupDao
+
+entity class name ? [GroupsEntity] : GroupEntity
+
+[ generate information ]
+  dao interface name   : GroupDao 
+  dao test class name  : GroupDaoTest 
+  entity class name    : GroupEntity 
+
+confirm ? (y/n) : y
+
+[INFO ] create : /work/web/s2sf/lib/dao/GroupDao.class.php
+[INFO ] create : /work/web/s2sf/lib/entity/GroupEntity.class.php
+[INFO ] create : /work/web/s2sf/test/unit/dao/GroupDaoTest.class.php
+
+[ Command list ]
+0 : (exit)
+・・・
+choice ? : 0
+%
+</pre>
+</div>
+<br />
+
+<div class="section">
+<h2><a id="entity" name="entity">entity コマンド</a></h2>
+<h3>説明</h3>
+<p>
+　S2Dao で用いる Entity クラスを作成します。columns でカンマ区切りのカラム名を入力すると、対応するプロパティとアクセッサメソッドを追加します。
+</p>
+<h3>実行例</h3>
+<pre>
+% s2base 
+[INFO ] s2base  directory : /opt/local/lib/php/S2Base
+[INFO ] project directory : /work/web/s2sf
+[INFO ] project type      : symfony
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : clear-cache
+2 : dao
+3 : entity
+4 : init-app
+5 : init-module
+6 : service
+choice ? : 3
+
+use database ? (y/n) : y     &lt;--- データベースのテーブル一覧を取得します。
+
+[ table list ]
+0 : (exit)
+1 : groups
+2 : members
+3 : memberships
+choices ? (1,2,--,) : 2      &lt;--- 複数のテーブルを選択した場合は、先頭のテーブルが Entity の
+                                  テーブルに使用されます。残りのテーブルのカラムが Entity のプロパティに追加されます。
+
+
+entity class name ? [MembersEntity] : MemberEntity
+
+[ generate information ]
+  entity class name    : MemberEntity
+  table name           : members
+  columns              : id, name, password, created_at
+
+confirm ? (y/n) : y
+
+[INFO ] create : /work/web/s2sf/lib/entity/MemberEntity.class.php
+
+[ Command list ]
+0 : (exit)
+・・・
+choice ? : 0
+
+%
+</pre>
+</div>
+<br />
+
+
+
+<div class="section">
+<h2><a id="service" name="service">service コマンド</a></h2>
+<h3>説明</h3>
+<p>
+サービス実装クラス、テストクラスを生成します。
+</p>
+<h3>実行例</h3>
+<pre>
+% s2base
+[INFO ] s2base  directory : /opt/local/lib/php/S2Base
+[INFO ] project directory : /work/web/s2sf
+[INFO ] project type      : symfony
+[INFO ] command type      : command
+
+[ Command list ]
+0 : (exit)
+1 : clear-cache
+2 : dao
+3 : entity
+4 : init-app
+5 : init-module
+6 : service
+choice ? : 6                 &lt;--- 6 : service を選択
+
+[ App list ]
+0 : (exit)
+1 : demo
+choice ? : 1
+
+[ Module list ]
+0 : (exit)
+1 : products
+choice ? : 1
+
+service class name ? : ProductsListService
+
+[ generate information ]
+  module name             : products
+  service class name      : ProductsListService
+  service test class name : ProductsListServiceTest
+
+confirm ? (y/n) : y
+
+[INFO ] create : /work/web/s2sf/apps/demo/modules/products/service/ProductsListService.class.php
+[INFO ] create : /work/web/s2sf/test/unit/demo/products/service/ProductsListServiceTest.class.php
+
+
+[ Command list ]
+0 : (exit)
+・・・
+choice ? : 0
+%
+</pre>
+</div>
+<br />
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&#169; Copyright The Seasar Foundation and the others 2005-2007, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body></html>
