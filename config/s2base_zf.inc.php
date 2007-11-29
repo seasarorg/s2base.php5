@@ -3,7 +3,6 @@
 define('S2BASE_PHP5_ZF_TPL_SUFFIX', 'phtml');
 define('S2BASE_PHP5_ZF_DEFAULT_MODULE', 'default');
 define('S2BASE_PHP5_PLUGIN_ZF',S2BASE_PHP5_ROOT . '/vendor/plugins/zf');
-//define('S2BASE_PHP5_LAYOUT', S2BASE_PHP5_ROOT . '/app/commons/view/layout.tpl');
 
 /** ライブラリ設定 */
 require_once('Zend/Loader.php');
@@ -42,6 +41,7 @@ session_save_path(S2BASE_PHP5_VAR_DIR . '/session');
  * Smarty 設定
  */
 //require_once('Smarty/libs/Smarty.class.php');
+//define('S2BASE_PHP5_LAYOUT', S2BASE_PHP5_ROOT . '/app/commons/view/layout.tpl');
 define('S2BASE_PHP5_USE_SMARTY', false);
 
 /** S2Base_Zf 設定 */
@@ -49,8 +49,6 @@ class S2Base_ZfInitialize {
     public static function init() {
         /** Zend_Log 設定 */
             self::initLogger();
-        /** Zend_Cache 設定 */
-            //self::initCache();
         /** Zend_DB DefaultAdaptor 設定 */
             S2Base_ZfDb::setDefaultPdoAdapter();
         /** ViewRenderer 設定 */
@@ -64,10 +62,15 @@ class S2Base_ZfInitialize {
             self::initFrontController($fc);
     }
 
-    public static function initTest() {
+    public static function initFanctionalTest() {
         self::init();
     }
 
+    public static function initUnitTest() {
+            self::initLogger();
+            S2Base_ZfDb::setDefaultPdoAdapter();
+    }
+    
     public static function initLogger() {
         /** Zend_Log 設定 */
         S2Container_S2Logger::$LOGGER_FACTORY = 'S2Container_ZendLoggerFactory';
@@ -78,13 +81,6 @@ class S2Base_ZfInitialize {
         $logger->addWriter($writer);
         $logger->addFilter(new Zend_Log_Filter_Priority(S2BASE_PHP5_ZF_LOG_PRIORITY));
         Zend_Registry::set('logger', $logger);
-    }
-
-    public static function initCache() {
-        if (!defined('S2CONTAINER_PHP5_CACHE_SUPPORT_CLASS')) {
-            define('S2CONTAINER_PHP5_CACHE_SUPPORT_CLASS', 'S2Container_ZendCacheSupport');
-            define('S2CONTAINER_PHP5_ZEND_CACHE_INI', S2BASE_PHP5_ROOT . '/config/cache.ini');
-        }
     }
 
     public static function initViewRenderer() {
