@@ -13,10 +13,13 @@
 ;               default : 現在のコントローラ名
 ; action     = "検証に失敗した場合の遷移先アクション名を指定します。"
 ;               default : 現在のアクション名
-; break      = "1つの検証が失敗した時点で検証処理を終了するかどうかをboole値で設定します。(true | false)"
+; break      = "1つの検証が失敗した時点で検証処理を終了するかどうかをboolean値で設定します。(true | false)"
+;               default : false
+; method     = "リクエストメソッドを指定します。(設定無し | get | post)"
+;               default : 設定無し
+; required   = "リクエストパラメータが存在するかどうかをboolean値で指定します。(true | false)"
 ;               default : false
 ; exception  = "検証に失敗した場合に例外をスローします。例外メッセージを記述します。"
-;
 ;
 ;「リクエストパラメータ名」セクションは、defaultセクションを継承し上記設定項目を引き継ぎます。
 ; validate項目に設定できる検証タイプは次になります。それぞれ、Zend_Validate_*** クラスが使用されます。
@@ -35,10 +38,15 @@
 ;
 ; 例)
 ; [default]
-; action = "bar"
+; action = "hoge"
+; method = "post"
 ;
 ; [foo : default]
 ; validate      = "regex"
 ; regex.pattern = "/^\d+$/"
 ; regex.msg     = "invalid value."
 ;
+; [bar : default]
+; required      = on
+; validate      = "alpha"
+; alpha.msg_NOT_ALPHA = "%value%はアルファベットではありません。"

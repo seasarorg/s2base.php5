@@ -3,7 +3,7 @@ require_once('AbstractGoyaCommand.class.php');
 class GoyaCommand extends AbstractGoyaCommand {
 
     public function getName(){
-        return "goya";
+        return "action with service & dao";
     }
 
     public function isAvailable(){

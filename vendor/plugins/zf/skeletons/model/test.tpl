@@ -17,7 +17,7 @@ class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
         print PHP_EOL . __CLASS__ . '->' . $this->getName() . '()' . PHP_EOL;
-        S2Base_ZfDb::setDefaultPdoAdapter();
+        S2Base_ZfInitialize::initUnitTest();
         require_once(S2BASE_PHP5_ROOT . "/app/modules/{$this->module}/models/{$this->controller}/{$this->controller}.inc.php");
         $this->container = S2ContainerApplicationContext::create();
         $this->model = $this->container->getComponent('@@MODEL_CLASS@@');

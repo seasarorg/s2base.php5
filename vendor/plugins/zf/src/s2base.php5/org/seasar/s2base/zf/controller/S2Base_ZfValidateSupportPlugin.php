@@ -98,9 +98,9 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
     }
 
     public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {
-        $moduleName = $request->getModuleName();
+        $moduleName     = $request->getModuleName();
         $controllerName = $request->getControllerName();
-        $actionName = $request->getActionName();
+        $actionName     = $request->getActionName();
 
         $validateIni = S2BASE_PHP5_ROOT
                      . "/app/modules/$moduleName/models/$controllerName/"
@@ -115,10 +115,40 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
         while ($validateConfig->valid()) {
             $paramName = $validateConfig->key();
             if (strtolower($paramName) == self::DEFAULT_KEY) {
+                $paramConfig = $validateConfig->current();
+                if(!$this->validateRequestMethod($request, $paramConfig)){
+                    if($paramConfig->exception !== null) {
+                        throw new S2Base_ZfException($paramConfig->exception . " [{$request->getMethod()}]");
+                    }
+                    $errors[self::DEFAULT_KEY] = array('value'   => $request->getMethod(),
+                                                       'msg'     => 'invalid request method',
+                                                       'pre_mod' => $moduleName,
+                                                       'pre_ctl' => $controllerName,
+                                                       'pre_act' => $actionName);
+                    $this->setupRequestParams($request, $paramConfig);
+                    break;
+                }
                 $validateConfig->next();
                 continue;
             }
+
             $paramConfig = $validateConfig->current();
+            if(!$this->validateRequired($request, $paramConfig, $paramName)){
+                if($paramConfig->exception != null) {
+                    throw new S2Base_ZfException($paramConfig->exception . " [$paramName]");
+                }
+                $errors[$paramName] = array('value'   => $paramName,
+                                            'msg'     => 'request parameter not found',
+                                            'pre_mod' => $moduleName,
+                                            'pre_ctl' => $controllerName,
+                                            'pre_act' => $actionName);
+                $this->setupRequestParams($request, $paramConfig);
+                if ($paramConfig->break === '1') {
+                    break;
+                }
+                $validateConfig->next();
+                continue;
+            }
 
             $vals = preg_split('/,/', $paramConfig->validate, -1, PREG_SPLIT_NO_EMPTY);
             foreach ($vals as $valKey) {
@@ -141,16 +171,8 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
                                                 'pre_ctl' => $controllerName,
                                                 'pre_act' => $actionName);
 
-                    if($paramConfig->module != null) {
-                        $request->setModuleName($paramConfig->module);
-                    }
-                    if($paramConfig->controller != null) {
-                        $request->setControllerName($paramConfig->controller);
-                    }
-                    if($paramConfig->action != null) {
-                        $request->setActionName($paramConfig->action);
-                    }
-                    if (strtolower($paramConfig->break) == 'true') {
+                    $this->setupRequestParams($request, $paramConfig);
+                    if ($paramConfig->break === '1') {
                         $forceBreak = true;
                         break;
                     }
@@ -197,15 +219,42 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
     }
 
     private function getDefaultValidator($valKey, $paramConfig) {
-        $validator = null;
-        if (isset($this->validators[$valKey])) {
-            $validator = $this->validators[$valKey];
-        } else {
-            $validator = S2Base_ZfAbstractValidateFactory::instantiateDefaultValidator(
-                             self::$VALIDATE_CLASSES[$valKey], $valKey, $paramConfig);
-            $this->validators[$valKey] = $validator;
+        if (!isset($this->validators[$valKey])) {
+            $this->validators[$valKey]= S2Base_ZfAbstractValidateFactory::instantiateDefaultValidator(
+                                            self::$VALIDATE_CLASSES[$valKey], $valKey, $paramConfig);
         }
-        return $validator;
+        return $this->validators[$valKey];
     }
+
+    private function setupRequestParams(Zend_Controller_Request_Abstract $request, Zend_Config $paramConfig) {
+        if($paramConfig->module != null) {
+           $request->setModuleName($paramConfig->module);
+        }
+        if($paramConfig->controller != null) {
+           $request->setControllerName($paramConfig->controller);
+        }
+        if($paramConfig->action != null) {
+           $request->setActionName($paramConfig->action);
+        }
+    }
+
+    private function validateRequestMethod(Zend_Controller_Request_Abstract $request, Zend_Config $paramConfig) {
+        if ($paramConfig->method === null) {
+            return true;
+        } else if (strtolower($request->getMethod()) === strtolower($paramConfig->method)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private function validateRequired(Zend_Controller_Request_Abstract $request, Zend_Config $paramConfig, $paramName) {
+        if ($paramConfig->required === '1' and
+            !$request->has($paramName)) {
+            return false;
+        }
+        return true;
+    }
+
 }
 ?>
