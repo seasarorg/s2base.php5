@@ -9,9 +9,8 @@ try{
     S2Base_ZfInitialize::init();
     Zend_Controller_Front::getInstance()->dispatch();
 }catch(Exception $e){
-    Zend_Registry::get('logger')->crit($e->__toString());
-    $url = Zend_Controller_Front::getInstance()->getBaseUrl() . '/error.html';
-    header("Location: $url");
+    Zend_Registry::get('logger')->crit($e->getMessage());
+    header('Location: ' . Zend_Controller_Front::getInstance()->getBaseUrl() . '/error.html');
 }
 
 Zend_Registry::get('logger')->info('dispatch time : ' . S2Base_ZfStopWatch::stop() . ' seconds');
