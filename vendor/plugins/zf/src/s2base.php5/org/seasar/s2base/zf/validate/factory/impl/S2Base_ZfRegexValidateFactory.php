@@ -32,7 +32,7 @@
  * @package    org.seasar.s2base.zf.validate.factory.impl
  * @author     klove
  */
-class S2Base_ZfRegexValidateFactory implements S2Base_ZfValidateFactory {
+class S2Base_ZfRegexValidateFactory extends S2Base_ZfAbstractValidateFactory {
     const ID = 'regex';
     private $instance = null;
     private $validateClassName = 'Zend_Validate_Regex';
@@ -58,6 +58,7 @@ class S2Base_ZfRegexValidateFactory implements S2Base_ZfValidateFactory {
         } else {
             $this->instance->setPattern($config->$valKey->pattern);
         }
+        $this->setDefaultMessage($this->instance, $config->$valKey);
         return $this->instance;
     }
 }

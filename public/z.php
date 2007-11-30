@@ -9,7 +9,8 @@ try{
     S2Base_ZfInitialize::init();
     Zend_Controller_Front::getInstance()->dispatch();
 }catch(Exception $e){
-    Zend_Registry::get('logger')->crit($e->__toString());
+    Zend_Registry::get('logger')->crit($e->getMessage());
+    header('Location: ' . Zend_Controller_Front::getInstance()->getBaseUrl() . '/error.html');
 }
 
 Zend_Registry::get('logger')->info('dispatch time : ' . S2Base_ZfStopWatch::stop() . ' seconds');
@@ -20,20 +21,16 @@ class S2Base_ZfStopWatch {
     private static $place = 0;
     private function __construct(){}
     public static function start() {
-        self::$start = self::microtime_float();
+        self::$start = microtime(true);
     }
     public static function place($point = true) {
-        $point ? self::$place = self::microtime_float() : self::$place = 0;
+        $point ? self::$place = microtime(true) : self::$place = 0;
     }
     public static function time() {
         $start = self::$place === 0 ? self::$start : self::$place;
-        return self::microtime_float() - $start;
+        return microtime(true) - $start;
     }
     public static function stop() {
-        return self::microtime_float() - self::$start;
-    }
-    public static function microtime_float(){
-        list($usec, $sec) = explode(' ', microtime());
-        return ((float)$usec + (float)$sec);
+        return microtime(true) - self::$start;
     }
 }

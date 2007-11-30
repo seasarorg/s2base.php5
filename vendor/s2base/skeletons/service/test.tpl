@@ -4,15 +4,11 @@ class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
     private $container;
     private $service;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    public function testA() {
     }
 
-    public function testA(){
-    }
-
-    public function setUp(){
-        print __CLASS__ . '::' . $this->getName() . PHP_EOL;
+    public function setUp() {
+        print PHP_EOL . __CLASS__ . '->' . $this->getName() . '()' . PHP_EOL;
         $moduleDir = S2BASE_PHP5_ROOT . "/app/modules/{$this->module}";
         require_once($moduleDir . "/{$this->module}.inc.php");
         $this->container = S2ContainerApplicationContext::create();
@@ -20,7 +16,6 @@ class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
     }
 
     public function tearDown() {
-        print PHP_EOL;
         $this->container = null;
         $this->service = null;
     }

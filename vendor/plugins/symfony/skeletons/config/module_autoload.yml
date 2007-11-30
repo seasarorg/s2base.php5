@@ -1,0 +1,9 @@
+autoload:
+  @@MODULE_NAME@@_service:
+    name:           @@MODULE_NAME@@_service
+    ext:            .class.php
+    path:           "%SF_ROOT_DIR%/apps/%SF_APP%/modules/@@MODULE_NAME@@/service"
+  @@MODULE_NAME@@_interceptor:
+    name:           @@MODULE_NAME@@_interceptor
+    ext:            .class.php
+    path:           "%SF_ROOT_DIR%/apps/%SF_APP%/modules/@@MODULE_NAME@@/interceptor"

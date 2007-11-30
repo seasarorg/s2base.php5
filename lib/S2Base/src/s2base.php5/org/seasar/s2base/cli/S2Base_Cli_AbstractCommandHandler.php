@@ -209,7 +209,7 @@ abstract class S2Base_Cli_AbstractCommandHandler {
             }
             else if (is_file($rootItem)) {
                 $matches = array();
-                if (preg_match('/(.+?Test)\..*php/', $item, $matches)) {
+                if (preg_match('/(.+?Test)\..*php$/', $item, $matches)) {
                     $this->testClasses[$matches[1]] = $rootItem;
                 }
             }

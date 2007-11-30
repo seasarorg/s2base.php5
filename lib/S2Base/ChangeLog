@@ -1,4 +1,40 @@
 ﻿
+2007-11-29 S2Base.PHP5-2.0.0RC2
+
+================ S2Base.PHP5-2.0.0RC2 更新履歴 ===================
+
+	* modify: with ZFのValidatePluginで、リクエストメソッドの検証を追加しました。
+	* modify: with ZFのValidatePluginで、リクエストパラメータのrequired検証を追加しました。
+
+2007-10-29 S2Base.PHP5-2.0.0RC2
+
+	* add: with ZFでcontrollerの機能テストが行えるようにしました
+	* add: with Symfonyを追加しました
+
+2007-10-14 S2Base.PHP5-2.0.0RC2
+
+	* modify: daoとmodelのテストクラスでpdoインスタンスを用意するようにしました。
+	* modify: moduleの設定ファイル(module.inc.php)で、entityのクラスローダを
+	S2ContainerClassLoaderに変更しました。
+
+2007-10-13 S2Base.PHP5-2.0.0RC2
+
+	* modify: with ZFのValidatePluginで、デフォルトのエラーメッセージを変更できる
+	ようにしました。
+
+2007-10-08 S2Base.PHP5-2.0.0RC2
+
+	* modify: config/environment.inc.php のS2Container設定の修正しました。
+	* modify: dao生成コマンドのメッセージ修正しました。
+	* modify: org.seasar.s2base.cli.S2Base_Cli_AbstractCommandHandler
+	findTestClassesメソッドのテストファイル名検出設定を修正しました。
+	* modify: org.seasar.s2base.zf.controller.S2Base_ZfValidateSupportPlugin
+	例外スロー時にリクエストデータをログに含めるように修正しました。
+	* modify: org.seasar.s2base.zf.controller.S2Base_ZfValidateSupportPlugin
+	リクエストパラメータ名を小文字でのみ検証していたので、小文字制限を外しました。
+	* modify: daoとentityの生成で、テーブル名からクラス名を取得する時に「_」を
+	camelizeするように修正しました。
+
 2007-09-13 S2Base.PHP5-2.0.0RC1
 
 ================ S2Base.PHP5-2.0.0RC1 更新履歴 ===================

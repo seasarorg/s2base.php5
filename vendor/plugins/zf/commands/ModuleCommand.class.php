@@ -217,11 +217,13 @@ class ModuleCommand implements S2Base_GenerateCommand {
         $keys = array("/@@CLASS_NAME@@/",
                       "/@@MODULE_NAME@@/",
                       "/@@CONTROLLER_NAME@@/",
-                      "/@@CONTROLLER_CLASS@@/");
+                      "/@@CONTROLLER_CLASS@@/",
+                      "/@@CONTROLLER_CLASS_FILE@@/");
         $reps = array($this->controllerClassName . 'Test',
                       $this->moduleName,
                       $this->controllerName,
-                      $this->controllerClassName);
+                      $this->controllerClassName,
+                      $this->controllerClassFile . S2BASE_PHP5_CLASS_SUFFIX);
         $tempContent = preg_replace($keys, $reps, $tempContent);
         S2Base_CommandUtil::writeFile($srcFile,$tempContent);
     }

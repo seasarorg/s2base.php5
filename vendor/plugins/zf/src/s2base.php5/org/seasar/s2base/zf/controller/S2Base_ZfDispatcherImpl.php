@@ -64,10 +64,10 @@ class S2Base_ZfDispatcherImpl extends S2Base_ZfAbstractDispatcher {
 
         $formatedActionName = $this->formatName($actionName);
         $actionMethodName = $this->getActionMethod($request);
-        $controllerDir = "/app/modules/$moduleName/models/$controllerName";
-        $actionDicon   = S2BASE_PHP5_ROOT . $controllerDir . "/dicon/$actionMethodName.dicon";
-        $moduleIncFile = S2BASE_PHP5_ROOT . $controllerDir . "/$controllerName.inc.php";
-        $actionIncFile = S2BASE_PHP5_ROOT . $controllerDir . "/$actionMethodName.inc.php";
+        $modelControllerDir = $this->getModelControllerDir($request, $moduleName);
+        $actionDicon   = S2BASE_PHP5_ROOT . $modelControllerDir . "/dicon/$actionMethodName.dicon";
+        $moduleIncFile = S2BASE_PHP5_ROOT . $modelControllerDir . "/$controllerName.inc.php";
+        $actionIncFile = S2BASE_PHP5_ROOT . $modelControllerDir . "/$actionMethodName.inc.php";
         $dispatcher    = $this;
 
         if (is_file($moduleIncFile)) {
@@ -96,6 +96,10 @@ class S2Base_ZfDispatcherImpl extends S2Base_ZfAbstractDispatcher {
         }
 
         return $container->getComponent($controllerClassName);
+    }
+
+    protected function getModelControllerDir(Zend_Controller_Request_Abstract $request, $moduleName) {
+        return "/app/modules/$moduleName/models/" . $request->getControllerName();
     }
 
     private function validateModule($value) {
