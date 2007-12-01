@@ -101,17 +101,13 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
         $moduleName     = $request->getModuleName();
         $controllerName = $request->getControllerName();
         $actionName     = $request->getActionName();
-
-        $validateIni = S2BASE_PHP5_ROOT
-                     . "/app/modules/$moduleName/models/$controllerName/"
-                     . self::VALIDATE_DIR
-                     . "/$actionName.ini";
-        if (!is_file($validateIni)) {
+        $forceBreak     = false;
+        $errors         = array();
+        $validateConfig = $this->getValidateConfig($request);
+        if ($validateConfig === null) {
             return;
         }
-        $validateConfig = new Zend_Config_Ini($validateIni, null);
-        $forceBreak = false;
-        $errors = array();
+
         while ($validateConfig->valid()) {
             $paramName = $validateConfig->key();
             if (strtolower($paramName) == self::DEFAULT_KEY) {
@@ -190,6 +186,22 @@ class S2Base_ZfValidateSupportPlugin extends Zend_Controller_Plugin_Abstract
         } else {
             $request->setParam(self::ERR_KEY, false);
         }
+    }
+
+    protected function getValidateConfig(Zend_Controller_Request_Abstract $request) {
+        $moduleName     = $request->getModuleName();
+        $controllerName = $request->getControllerName();
+        $actionName     = $request->getActionName();
+
+        $validateIni = S2BASE_PHP5_ROOT
+                     . "/app/modules/$moduleName/models/$controllerName/"
+                     . self::VALIDATE_DIR
+                     . "/$actionName.ini";
+        if (is_file($validateIni)) {
+            return new Zend_Config_Ini($validateIni, null);
+        }
+
+        return null;
     }
 
     private function getValidatorInstance($valKey, $paramConfig, $paramName) {
