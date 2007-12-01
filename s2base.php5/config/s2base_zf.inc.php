@@ -92,8 +92,7 @@ class S2Base_ZfInitialize {
             S2Base_ZfSmartyViewRenderer::$config['config_dir']  = S2BASE_PHP5_ROOT . '/var/smarty/config';
             S2Base_ZfSmartyViewRenderer::$config['cache_dir']   = S2BASE_PHP5_ROOT . '/var/smarty/cache';
             S2Base_ZfSmartyViewRenderer::$config['caching']     = 0;
-            Zend_Controller_Action_HelperBroker::addHelper(
-                new S2Base_ZfSmartyViewRenderer());
+            Zend_Controller_Action_HelperBroker::addHelper(new S2Base_ZfSmartyViewRenderer());
         } else {
             $view = new Zend_View();
             $view->addBasePath(S2BASE_PHP5_ROOT . '/app/commons/view');
