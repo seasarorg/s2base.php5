@@ -108,15 +108,27 @@ class S2Base_ZfInitialize {
         $fc->setDefaultModule(S2BASE_PHP5_ZF_DEFAULT_MODULE);
         /** プラグイン設定 */
         $plugin = new S2Base_ZfValidateSupportPlugin();
-        $plugin->addValidateFactory(new S2Base_ZfRegexValidateFactory());
+        $plugin->addValidateFactory(new S2Base_ZfBetweenValidateFactory())
+               ->addValidateFactory(new S2Base_ZfGreaterThanValidateFactory())
+               ->addValidateFactory(new S2Base_ZfLessThanValidateFactory())
+               ->addValidateFactory(new S2Base_ZfStringLengthValidateFactory())
+               ->addValidateFactory(new S2Base_ZfMbStringLengthValidateFactory())
+               ->addValidateFactory(new S2Base_ZfArrayValidateFactory())
+               ->addValidateFactory(new S2Base_ZfParamEqualsValidateFactory())
+               ->addValidateFactory(new S2Base_ZfRegexValidateFactory());
         $fc->registerPlugin($plugin);
 
+//               ->addValidateFactory(new S2Base_ZfInArrayValidateFactory())
+//               ->addValidateFactory(new S2Base_ZfEmailAddressValidateFactory())
+//               ->addValidateFactory(new S2Base_ZfHostnameValidateFactory())
+
+/*
         $plugin = new S2Base_ZfAnaSupportPlugin();
         S2Base_ZfAnaSupportPlugin::$MODULE_NAME     = 'ana';
         S2Base_ZfAnaSupportPlugin::$CONTROLLER_NAME = 'index';
         S2Base_ZfAnaSupportPlugin::$UNAUTHORIZED_USER_NAME  = 'guest';
         $fc->registerPlugin($plugin);
-
+*/
         /*
         S2Base_ZfAclFactory::$ACL_FACTORY_CLASS = 'S2Base_ZfDbAclFactory';
         $factory = S2Base_ZfAclFactory::getFactory();
