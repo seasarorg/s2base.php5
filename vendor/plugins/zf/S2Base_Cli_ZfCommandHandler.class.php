@@ -51,9 +51,9 @@ class S2Base_Cli_ZfCommandHandler extends S2Base_Cli_AbstractCommandHandler {
         $includePattern[] = '/project.vendor.plugins.zf/';
 
         $excludePattern = array('/dummy$/');
-        $excludePattern[] = '/project.vendor.plugins.zf/src';
-        $excludePattern[] = '/project.vendor.plugins.zf/test';
-        $excludePattern[] = '/project.vendor.plugins.zf/build.xml';
+        $excludePattern[] = '/project.vendor.plugins.zf.src/';
+        $excludePattern[] = '/project.vendor.plugins.zf.test/';
+        $excludePattern[] = '/project.vendor.plugins.zf.build.xml/';
 
         $srcDir = $this->s2baseDir . DIRECTORY_SEPARATOR . 'project';
         self::dircopy($srcDir, $this->projectDir, $includePattern, $excludePattern);
