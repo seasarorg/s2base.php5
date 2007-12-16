@@ -1,4 +1,16 @@
 <?php
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
+
+function sfS2BasePlugin_util_sfS2BasePluginDir() {
+    return dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . sfS2BasePluginConfig::PLUGIN_NAME;
+}
+
+function sfS2BasePlugin_util_echo_comment($msg) {
+    if (sfS2BasePluginConfig::$LOG_LEVEL === sfS2BasePluginConfig::$LOG_DEBUG) {
+        pake_echo_comment($msg);
+    }
+}
+
 function sfS2BasePlugin_util_filePutContents($path, $contents, $override = false, $modify = true) {
     if (is_file($path)) {
         if ($override) {
@@ -27,13 +39,13 @@ function sfS2BasePlugin_util_getPdoInstance($pdoDicon) {
     if ($cd->hasPropertyDef('password')) {
         $pass = $cd->getPropertyDef('password')->getValue();
     }
-    pake_echo_comment("Dsn            : $dsn");
+    sfS2BasePlugin_util_echo_comment("Dsn            : $dsn");
     return new PDO($dsn, $user, $pass);
 }
 
 function sfS2BasePlugin_util_getTableInfoFromPdoDicon($env) {
     $pdoDicon = sfConfig::get('sf_config_dir') . DIRECTORY_SEPARATOR . 'pdo_' . $env . '.dicon';
-    pake_echo_comment("Pdo Dicon      : $pdoDicon");
+    sfS2BasePlugin_util_echo_comment("Pdo Dicon      : $pdoDicon");
     $pdo = sfS2BasePlugin_util_getPdoInstance($pdoDicon);
     $dbms = S2Dao_DbmsManager::getDbms($pdo);
     $stmt = $pdo->query($dbms->getTableSql());
@@ -62,7 +74,7 @@ function sfS2BasePlugin_util_camelize($value){
         }
         $value = preg_replace('/\s/', '', $value);
         $value = preg_replace('/\s/', '_', $preSpace . $value . $postSpace);
-        $value = strtolower(substr($value,0,1)) . substr($value,1);
+        $value = sfS2BasePlugin_util_lcfirst($value);
     }
     return $value;
 }
@@ -99,3 +111,6 @@ function sfS2BasePlugin_util_getToStringSrc($cols){
     return $src;
 }
 
+function sfS2BasePlugin_util_lcfirst($value){
+    return strtolower(substr($value, 0, 1)) . substr($value, 1);
+}

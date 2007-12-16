@@ -1,17 +1,13 @@
 <?php
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
+
 pake_desc('initialize a new dao with S2Base');
 pake_task('s2_init_dao', 'module_exists');
 pake_alias('s2dao', 's2_init_dao');
 
-require_once('S2Container/S2Container.php');
-require_once('S2Dao/S2Dao.php');
-S2ContainerClassLoader::import(S2CONTAINER_PHP5);
-S2ContainerClassLoader::import(S2DAO_PHP5);
-simpleAutoloader::registerCallable(array('S2ContainerClassLoader', 'load'));
-
 function run_s2_init_dao($task, $args) {
-    $pluginName = basename(realpath(dirname(__FILE__) . '/../..'));
-    $appName = $args[0];
+    $pluginName = sfS2BasePluginConfig::PLUGIN_NAME;
+    $appName    = $args[0];
     $moduleName = $args[1];
 
     if (!isset($args[2])) {
@@ -25,18 +21,18 @@ function run_s2_init_dao($task, $args) {
     $entityClassName = (isset($args[4]) ? preg_replace('/Dao$/', '', $daoInterfaceName) : $tableCamelizedName) . 'Entity';
     $env = isset($args[3]) ? $args[3] : 'prod';
 
-    pake_echo_comment('');
-    pake_echo_comment('sfS2BasePlugin s2_init_dao task');
-    pake_echo_comment('');
-    pake_echo_comment('Environment    : ' . $env);
-    pake_echo_comment("Application    : $appName");
-    pake_echo_comment("Module         : $moduleName");
-    pake_echo_comment("Table Name     : $tableName");
-    pake_echo_comment("Dao Interface  : $daoInterfaceName");
-    pake_echo_comment("Dao Test Class : $daoTestClassName");
-    pake_echo_comment("Entity Class   : $entityClassName");
+    sfS2BasePlugin_util_echo_comment('');
+    sfS2BasePlugin_util_echo_comment('sfS2BasePlugin s2_init_dao task');
+    sfS2BasePlugin_util_echo_comment('');
+    sfS2BasePlugin_util_echo_comment('Environment    : ' . $env);
+    sfS2BasePlugin_util_echo_comment("Application    : $appName");
+    sfS2BasePlugin_util_echo_comment("Module         : $moduleName");
+    sfS2BasePlugin_util_echo_comment("Table Name     : $tableName");
+    sfS2BasePlugin_util_echo_comment("Dao Interface  : $daoInterfaceName");
+    sfS2BasePlugin_util_echo_comment("Dao Test Class : $daoTestClassName");
+    sfS2BasePlugin_util_echo_comment("Entity Class   : $entityClassName");
     $tableInfo = sfS2BasePlugin_util_getTableInfoFromPdoDicon($env);
-    pake_echo_comment('Tables in DB   : ' . implode(', ', array_keys($tableInfo)));
+    sfS2BasePlugin_util_echo_comment('Tables in DB   : ' . implode(', ', array_keys($tableInfo)));
     $columns = array();
     foreach($tableNames as $name) {
         if (!array_key_exists($name, $tableInfo)) {
@@ -46,17 +42,17 @@ function run_s2_init_dao($task, $args) {
         }
     }
     $columns = array_unique($columns);
-    pake_echo_comment('Columns        : ' . implode(', ', $columns));
-    pake_echo_comment('');
+    sfS2BasePlugin_util_echo_comment('Columns        : ' . implode(', ', $columns));
+    sfS2BasePlugin_util_echo_comment('');
 
-    $app_dir = sfConfig::get('sf_app_dir') . $appName;
+    $app_dir    = sfConfig::get('sf_app_dir') . $appName;
     $module_dir = $app_dir . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $moduleName;
-    $dao_dir = $module_dir . DIRECTORY_SEPARATOR . 'dao';
+    $dao_dir    = $module_dir . DIRECTORY_SEPARATOR . 'dao';
     $entity_dir = $module_dir . DIRECTORY_SEPARATOR . 'entity';
     $unit_test_dir = sfConfig::get('sf_test_dir') . DIRECTORY_SEPARATOR . 'unit';
-    $dao_test_dir = $unit_test_dir . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $moduleName . DIRECTORY_SEPARATOR .'dao';
+    $dao_test_dir  = $unit_test_dir . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $moduleName . DIRECTORY_SEPARATOR .'dao';
     $s2_plugin_root_dir = sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . $pluginName;
-    $s2_skeletons_dir = $s2_plugin_root_dir . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'skeletons';
+    $s2_skeletons_dir   = $s2_plugin_root_dir . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'skeletons' . DIRECTORY_SEPARATOR . 's2_init_dao';
 
     /** create dao interface file */
     $contents = file_get_contents($s2_skeletons_dir . DIRECTORY_SEPARATOR . 'dao.tpl');
@@ -99,6 +95,6 @@ function run_s2_init_dao($task, $args) {
     $path     = $entity_dir . DIRECTORY_SEPARATOR . $entityClassName . '.class.php';
     sfS2BasePlugin_util_filePutContents($path, $contents);
 
-    pake_echo_comment('cache clear.');
+    sfS2BasePlugin_util_echo_comment('cache clear.');
     run_clear_cache($task, array($appName));
 }

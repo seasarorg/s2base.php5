@@ -1,4 +1,6 @@
 <?php
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
+
 pake_desc('initialize a new symfony module with S2Base');
 pake_task('s2_init_module', 'app_exists');
 pake_alias('s2module', 's2_init_module');
@@ -8,18 +10,18 @@ function run_s2_init_module($task, $args) {
     run_init_module($task, $args);
 
     /** run init_module task for s2base */
-    pake_echo_comment('initialize a new symfony module with S2Base');
-    $pluginName = basename(realpath(dirname(__FILE__) . '/../..'));
-    $appName = $args[0];
+    sfS2BasePlugin_util_echo_comment('initialize a new symfony module with S2Base');
+    $pluginName = sfS2BasePluginConfig::PLUGIN_NAME;
+    $appName    = $args[0];
     $moduleName = $args[1];
-    $app_dir = sfConfig::get('sf_app_dir') . $appName;
+    $app_dir    = sfConfig::get('sf_app_dir') . $appName;
     $app_config_dir = $app_dir . DIRECTORY_SEPARATOR . 'config';
-    $module_dir = $app_dir . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $moduleName;
-    $unit_test_dir = sfConfig::get('sf_test_dir') . DIRECTORY_SEPARATOR . 'unit';
+    $module_dir     = $app_dir . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $moduleName;
+    $unit_test_dir  = sfConfig::get('sf_test_dir') . DIRECTORY_SEPARATOR . 'unit';
     $module_unit_test_dir = $unit_test_dir . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $moduleName;
 
     $s2_plugin_root_dir = sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . $pluginName;
-    $s2_skeletons_dir   = $s2_plugin_root_dir . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'skeletons';
+    $s2_skeletons_dir   = $s2_plugin_root_dir . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'skeletons' . DIRECTORY_SEPARATOR . 's2_init_module';
 
     /** create service, dao, entity, interceptor directores */
     pake_mkdirs($module_dir . DIRECTORY_SEPARATOR . 'service');

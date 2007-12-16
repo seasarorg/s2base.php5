@@ -1,23 +1,25 @@
 <?php
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
+
 pake_desc('PHPUnit test with S2Base');
 pake_task('s2_phpunit_test', 'app_exists');
 pake_alias('s2test', 's2_phpunit_test');
 
 function run_s2_phpunit_test($task, $args) {
-    $pluginName = basename(realpath(dirname(__FILE__) . '/../..'));
+    $pluginName = sfS2BasePluginConfig::PLUGIN_NAME;
     $app = $args[0];
     require_once(sfConfig::get('sf_test_dir') . '/bootstrap/functional.php');
     isset($args[1]) ? $targetPattern = $args[1] : $targetPattern = '.*Test';
 
-    pake_echo_comment('');
-    pake_echo_comment('sfS2BasePlugin s2_phpunit_test task');
-    pake_echo_comment('');
-    pake_echo_comment("Application    : $app");
-    pake_echo_comment('SF_ROOT_DIR    : ' . SF_ROOT_DIR);
-    pake_echo_comment('SF_ENVIRONMENT : ' . SF_ENVIRONMENT);
-    pake_echo_comment('SF_DEBUG       : ' . (SF_DEBUG ? 'true' : 'false'));
-    pake_echo_comment("Target Pattern : $targetPattern");
-    pake_echo_comment('');
+    sfS2BasePlugin_util_echo_comment('');
+    sfS2BasePlugin_util_echo_comment('sfS2BasePlugin s2_phpunit_test task');
+    sfS2BasePlugin_util_echo_comment('');
+    sfS2BasePlugin_util_echo_comment("Application    : $app");
+    sfS2BasePlugin_util_echo_comment('SF_ROOT_DIR    : ' . SF_ROOT_DIR);
+    sfS2BasePlugin_util_echo_comment('SF_ENVIRONMENT : ' . SF_ENVIRONMENT);
+    sfS2BasePlugin_util_echo_comment('SF_DEBUG       : ' . (SF_DEBUG ? 'true' : 'false'));
+    sfS2BasePlugin_util_echo_comment("Target Pattern : $targetPattern");
+    sfS2BasePlugin_util_echo_comment('');
 
     $testDir = sfConfig::get('sf_test_dir') . '/unit';
 

@@ -1,4 +1,6 @@
 <?php
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
+
 pake_desc('initialize a new symfony application with S2Base');
 pake_task('s2_init_app', 'project_exists');
 pake_alias('s2app', 's2_init_app');
@@ -8,12 +10,12 @@ function run_s2_init_app($task, $args) {
     run_init_app($task, $args);
 
     /** run init_app task for s2base */
-    pake_echo_comment('initialize a new symfony application with S2Base');
-    $pluginName = basename(realpath(dirname(__FILE__) . '/../..'));
+    sfS2BasePlugin_util_echo_comment('initialize a new symfony application with S2Base');
+    $pluginName = sfS2BasePluginConfig::PLUGIN_NAME;
     $appName = $args[0];
     $app_dir = sfConfig::get('sf_app_dir') . $appName;
     $s2_plugin_dir = sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . $pluginName;
-    $s2_skeletons_dir = $s2_plugin_dir . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'skeletons';
+    $s2_skeletons_dir = $s2_plugin_dir . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'skeletons' . DIRECTORY_SEPARATOR . 's2_init_app';
 
     /** craete factory.yml */
     $factoryYml = $app_dir . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'factories.yml';
