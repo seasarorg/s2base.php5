@@ -1,20 +1,22 @@
 <?php
-pake_desc('SQLite CLI with S2Base');
-pake_task('s2_sqlite_cli', 'project_exists');
-pake_alias('s2sqlite', 's2_sqlite_cli');
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
 
-function run_s2_sqlite_cli($task, $args) {
-    $pluginName = basename(realpath(dirname(__FILE__) . '/../..'));
+pake_desc('SQLite CLI with S2Base');
+pake_task('s2_tool_sqlite_cli', 'project_exists');
+pake_alias('s2sqlite', 's2_tool_sqlite_cli');
+
+function run_s2_tool_sqlite_cli($task, $args) {
+    $pluginName = sfS2BaseToolPluginConfig::PLUGIN_NAME;
     $env = isset($args[0]) ? $args[0] : 'prod';
     $pdoDicon = sfConfig::get('sf_config_dir') . DIRECTORY_SEPARATOR . 'pdo_' . $env . '.dicon';
 
-    pake_echo_comment('');
-    pake_echo_comment('sfS2BasePlugin s2_sqlite_cli task');
-    pake_echo_comment('');
-    pake_echo_comment("SF_ENVIRONMENT : $env");
-    pake_echo_comment("Pdo Dicon      : $pdoDicon");
+    sfS2BasePlugin_util_echo_comment('');
+    sfS2BasePlugin_util_echo_comment('sfS2BasePlugin s2_sqlite_cli task');
+    sfS2BasePlugin_util_echo_comment('');
+    sfS2BasePlugin_util_echo_comment("SF_ENVIRONMENT : $env");
+    sfS2BasePlugin_util_echo_comment("Pdo Dicon      : $pdoDicon");
     $pdo = sfS2BasePlugin_util_getPdoInstance($pdoDicon);
-    pake_echo_comment('');
+    sfS2BasePlugin_util_echo_comment('');
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     if ($pdo->getAttribute(PDO::ATTR_DRIVER_NAME) != 'sqlite') {

@@ -1,19 +1,21 @@
 <?php
-pake_desc('PHPUnit auto test with S2Base');
-pake_task('s2_auto_test','app_exists');
-pake_alias('s2at', 's2_auto_test');
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
 
-function run_s2_auto_test($task, $args) {
-    $pluginName = basename(realpath(dirname(__FILE__) . '/../..'));
+pake_desc('PHPUnit auto test with S2Base');
+pake_task('s2_tool_auto_test','app_exists');
+pake_alias('s2at', 's2_tool_auto_test');
+
+function run_s2_tool_auto_test($task, $args) {
+    $pluginName = sfS2BaseToolPluginConfig::PLUGIN_NAME;
     $classSuffix = '.class.php';
     $appName = $args[0];
     $testDir = sfConfig::get('sf_test_dir') . DIRECTORY_SEPARATOR . 'unit';
-    pake_echo_comment('');
-    pake_echo_comment('sfS2BasePlugin s2_auto_test task');
-    pake_echo_comment('');
-    pake_echo_comment("Application    : $appName");
-    pake_echo_comment("Test Directory : $testDir");
-    pake_echo_comment('');
+    sfS2BasePlugin_util_echo_comment('');
+    sfS2BasePlugin_util_echo_comment('sfS2BasePlugin s2_auto_test task');
+    sfS2BasePlugin_util_echo_comment('');
+    sfS2BasePlugin_util_echo_comment("Application    : $appName");
+    sfS2BasePlugin_util_echo_comment("Test Directory : $testDir");
+    sfS2BasePlugin_util_echo_comment('');
 
     $testFiles = array();
     $monitorFiles = array();
