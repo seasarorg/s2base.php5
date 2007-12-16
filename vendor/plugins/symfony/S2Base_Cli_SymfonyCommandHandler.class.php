@@ -53,7 +53,13 @@ class S2Base_Cli_SymfonyCommandHandler extends S2Base_Cli_AbstractCommandHandler
      */
     public function commandHandler(){
         ini_set('include_path','lib' . PATH_SEPARATOR . ini_get('include_path'));
-        require_once($this->projectDir . '/config/config.php');
+        $confFile = $this->projectDir . '/config/config.php';
+        if (file_exists($confFile)) {
+            require_once($confFile);
+        }else {
+            print "[ERROR] config file not found. you must create a with-symfony project. " . PHP_EOL;
+            exit;
+        }
         require_once('S2Base/S2Base.php');
         $pattern = $this->projectDir
                  . DIRECTORY_SEPARATOR . 'vendor'

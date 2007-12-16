@@ -43,7 +43,7 @@
        <li><a href="#dao">dao コマンド</a></li>
        <li><a href="#dicon">dicon コマンド</a></li>
        <li><a href="#entity">entity コマンド</a></li>
-       <li><a href="#goya">goya コマンド</a></li>
+       <li><a href="#goya">service &amp; dao コマンド</a></li>
        <li><a href="#interceptor">interceptor コマンド</a></li>
        <li><a href="#module">module コマンド</a></li>
        <li><a href="#service">service コマンド</a></li>
@@ -105,7 +105,7 @@ mysql&gt;
 1 : dao
 2 : dicon
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : module
 7 : service
@@ -281,7 +281,7 @@ OK (1 test)
 1 : dao
 2 : dicon
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : module
 7 : service
@@ -344,7 +344,7 @@ sample.dicon は空のダイコンファイルです。
 1 : dao
 2 : dicon
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : module
 7 : service
@@ -416,10 +416,10 @@ class DvdEntity {
 <br />
 
 <div class="section">
-<h2><a id="goya" name="goya">goya コマンド</a></h2>
+<h2><a id="goya" name="goya">service &amp; dao コマンド</a></h2>
 <h3>説明</h3>
 <p>
-　goya コマンドはサービス名を決めると、命名規則に従ってサービス、dao、enitity、ダイコンファイル、テストクラスを生成します。
+　service &amp; dao コマンドはサービス名を決めると、命名規則に従ってサービス、dao、enitity、ダイコンファイル、テストクラスを生成します。
 <a href="#service">service コマンド</a>と<a href="#dao"> dao コマンド</a>を同時に実行することとほぼ同じ処理になります。
 <br />例えば、サービス名を「 emp 」とすると、サービスは EmpService、dao は EmpDao、entity は EmpEntitiy となります。
 
@@ -440,11 +440,11 @@ class DvdEntity {
 1 : dao
 2 : dicon
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : module
 7 : service
-choice ? : 4             &lt;--- 4 : goya を選択
+choice ? : 4             &lt;--- 4 : service &amp; dao を選択
 
 [ Module list ]
 0 : (exit)
@@ -526,7 +526,7 @@ class EmpService {
 1 : dao
 2 : dicon
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : module
 7 : service
@@ -601,7 +601,7 @@ app/modules/モジュールディレクトリには、dao、dicon、entity、int
 1 : dao
 2 : dicon
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : module
 7 : service
@@ -666,7 +666,7 @@ dao  service
 1 : dao
 2 : dicon
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : module
 7 : service

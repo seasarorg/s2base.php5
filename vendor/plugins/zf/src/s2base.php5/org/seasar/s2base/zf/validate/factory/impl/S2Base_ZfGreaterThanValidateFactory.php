@@ -33,7 +33,7 @@
  * @author     klove
  */
 class S2Base_ZfGreaterThanValidateFactory extends S2Base_ZfAbstractValidateFactory {
-    const ID = 'greater';
+    const ID = 'greater_than';
     private $instance = null;
     private $validateClassName = 'Zend_Validate_GreaterThan';
 

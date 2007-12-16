@@ -44,7 +44,7 @@
               <li><a href="#action">action コマンド</a></li>
               <li><a href="#dao">dao コマンド</a></li>
               <li><a href="#entity">entity コマンド</a></li>
-              <li><a href="#goya">goya コマンド</a></li>
+              <li><a href="#goya">service &amp; dao コマンド</a></li>
               <li><a href="#interceptor">interceptor コマンド</a></li>
               <li><a href="#module">model コマンド</a></li>
               <li><a href="#module">module &amp; controller コマンド</a></li>
@@ -85,7 +85,7 @@
 1 : action
 2 : dao
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : model
 7 : module &amp; controller
@@ -146,7 +146,7 @@ choice ? : 0
 1 : action
 2 : dao
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : model
 7 : module &amp; controller
@@ -220,7 +220,7 @@ choice ? : 0
 1 : action
 2 : dao
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : model
 7 : module &amp; controller
@@ -272,10 +272,10 @@ choice ? : 0
 <br />
 
 <div class="section">
-<h2><a id="goya" name="goya">goya コマンド</a></h2>
+<h2><a id="goya" name="goya">service &amp; dao コマンド</a></h2>
 <h3>説明</h3>
 <p>
-　goya コマンドはアクション名を決めると、命名規則に従ってアクションメソッドの追加、サービス、dao、enitity、ダイコンファイル、テストクラスを生成します。 actionコマンド、service コマンドと dao コマンドを同時に実行することとほぼ同じ処理になります。
+　service &amp; dao コマンドはアクション名を決めると、命名規則に従ってアクションメソッドの追加、サービス、dao、enitity、ダイコンファイル、テストクラスを生成します。 actionコマンド、service コマンドと dao コマンドを同時に実行することとほぼ同じ処理になります。
 例えばサービス名を「 cdList 」とすると、アクションメソッドは cdListAction、サービスクラスは CdListService、dao クラスは CdListDao、entity クラスは CdListEntitiy となります。
 </p>
 <h3>実行例</h3>
@@ -291,12 +291,12 @@ choice ? : 0
 1 : action
 2 : dao
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : model
 7 : module &amp; controller
 8 : service
-choice ? : 4                 &lt;--- 4 : goya を選択
+choice ? : 4                 &lt;--- 4 : service &amp; dao を選択
 
 [ Module list ]
 0 : (exit)
@@ -308,7 +308,7 @@ choice ? : 1
 1 : index
 choice ? : 1
 
-action name ? : goya
+action name ? : service &amp; dao
 
 use dao ? (y/n) : y
 
@@ -376,7 +376,7 @@ choice ? : 0
 1 : action
 2 : dao
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : model
 7 : module &amp; controller
@@ -431,7 +431,7 @@ choice ? : 0
 1 : action
 2 : dao
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : model
 7 : module &amp; controller
@@ -500,7 +500,7 @@ choice ? : 0
 1 : action
 2 : dao
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : model
 7 : module &amp; controller
@@ -554,7 +554,7 @@ choice ? : 0
 1 : action
 2 : dao
 3 : entity
-4 : goya
+4 : service &amp; dao
 5 : interceptor
 6 : model
 7 : module &amp; controller

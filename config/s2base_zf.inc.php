@@ -92,8 +92,7 @@ class S2Base_ZfInitialize {
             S2Base_ZfSmartyViewRenderer::$config['config_dir']  = S2BASE_PHP5_ROOT . '/var/smarty/config';
             S2Base_ZfSmartyViewRenderer::$config['cache_dir']   = S2BASE_PHP5_ROOT . '/var/smarty/cache';
             S2Base_ZfSmartyViewRenderer::$config['caching']     = 0;
-            Zend_Controller_Action_HelperBroker::addHelper(
-                new S2Base_ZfSmartyViewRenderer());
+            Zend_Controller_Action_HelperBroker::addHelper(new S2Base_ZfSmartyViewRenderer());
         } else {
             $view = new Zend_View();
             $view->addBasePath(S2BASE_PHP5_ROOT . '/app/commons/view');
@@ -115,12 +114,13 @@ class S2Base_ZfInitialize {
                ->addValidateFactory(new S2Base_ZfMbStringLengthValidateFactory())
                ->addValidateFactory(new S2Base_ZfArrayValidateFactory())
                ->addValidateFactory(new S2Base_ZfParamEqualsValidateFactory())
+               ->addValidateFactory(new S2Base_ZfInArrayValidateFactory())
+               ->addValidateFactory(new S2Base_ZfEmailAddressValidateFactory())
+               ->addValidateFactory(new S2Base_ZfHostnameValidateFactory())
                ->addValidateFactory(new S2Base_ZfRegexValidateFactory());
         $fc->registerPlugin($plugin);
 
-//               ->addValidateFactory(new S2Base_ZfInArrayValidateFactory())
-//               ->addValidateFactory(new S2Base_ZfEmailAddressValidateFactory())
-//               ->addValidateFactory(new S2Base_ZfHostnameValidateFactory())
+        Zend_Controller_Action_HelperBroker::addHelper(new S2Base_ZfTokenActionHelper());
 
 /*
         $plugin = new S2Base_ZfAnaSupportPlugin();

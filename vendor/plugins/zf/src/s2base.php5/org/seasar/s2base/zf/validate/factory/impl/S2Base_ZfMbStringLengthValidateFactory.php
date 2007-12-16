@@ -33,7 +33,7 @@
  * @author     klove
  */
 class S2Base_ZfMbStringLengthValidateFactory extends S2Base_ZfAbstractValidateFactory {
-    const ID = 'mbstrlen';
+    const ID = 'mb_strlen';
     private $instance = null;
     private $validateClassName = 'S2Base_ZfMbStringLengthValidate';
 

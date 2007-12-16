@@ -33,7 +33,7 @@
  * @author     klove
  */
 class S2Base_ZfInArrayValidateFactory extends S2Base_ZfAbstractValidateFactory {
-    const ID = 'inarray';
+    const ID = 'in_array';
     private $instance = null;
     private $validateClassName = 'Zend_Validate_InArray';
 
@@ -52,7 +52,7 @@ class S2Base_ZfInArrayValidateFactory extends S2Base_ZfAbstractValidateFactory {
         if ($config->$valKey === null or $config->$valKey->haystack === null) {
             throw new S2Base_ZfException("haystack not found in InArray validation [param : $paramName]");
         }
-        $haystack = implode(',', $config->$valKey->haystack);
+        $haystack = explode(',', $config->$valKey->haystack);
         $strict = true;
         if ($config->$valKey === null or $config->$valKey->strict !== '1') {
             $strict = false;
@@ -60,7 +60,7 @@ class S2Base_ZfInArrayValidateFactory extends S2Base_ZfAbstractValidateFactory {
 
         if ($this->instance === null) {
             Zend_Loader::loadClass($this->validateClassName);
-            $this->instance = new $this->validateClassName($haystatck, $strict);
+            $this->instance = new $this->validateClassName($haystack, $strict);
         } else {
             $this->instance->setHaystack($haystack)
                            ->setStrict($strict);

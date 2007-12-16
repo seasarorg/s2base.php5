@@ -33,7 +33,7 @@
  * @author     klove
  */
 class S2Base_ZfLessThanValidateFactory extends S2Base_ZfAbstractValidateFactory {
-    const ID = 'less';
+    const ID = 'less_than';
     private $instance = null;
     private $validateClassName = 'Zend_Validate_LessThan';
 
