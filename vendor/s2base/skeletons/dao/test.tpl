@@ -20,7 +20,7 @@ class @@CLASS_NAME@@ extends PHPUnit_Framework_TestCase {
         require_once($moduleDir . "/{$this->module}.inc.php");
         $this->container = S2ContainerApplicationContext::create();
         $this->dao = $this->container->getComponent('@@DAO_INTERFACE@@');
-        $this->pdo = $this->container->getComponent("dataSource")->getConnection();
+        $this->pdo = $this->container->getComponent('dataSource')->getConnection();
     }
 
     public function tearDown() {

@@ -1,8 +1,14 @@
 ﻿
-2007-11-29 S2Base.PHP5-2.0.0RC2
+2007-12-16 S2Base.PHP5-2.0.0RC2
 
 ================ S2Base.PHP5-2.0.0RC2 更新履歴 ===================
 
+	* info: ZendFramework-1.0.3で動作確認行いました。
+	* info: S2Container-1.2.0RC2を含めました。
+
+2007-11-29 S2Base.PHP5-2.0.0RC2
+
+	* modify: goyaコマンドの表記を service & dao に変更しました。
 	* modify: with ZFのValidatePluginで、リクエストメソッドの検証を追加しました。
 	* modify: with ZFのValidatePluginで、リクエストパラメータのrequired検証を追加しました。
 

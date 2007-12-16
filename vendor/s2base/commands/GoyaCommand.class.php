@@ -31,7 +31,7 @@ class GoyaCommand implements S2Base_GenerateCommand {
      * @see S2Base_GenerateCommand::getName()
      */
     public function getName(){
-        return "goya";
+        return 'service & dao';
     }
 
     /**
