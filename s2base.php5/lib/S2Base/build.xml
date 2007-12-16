@@ -181,6 +181,7 @@
             <filterchain>
                 <replaceregexp>
                     <regexp pattern="(role=.)data" replace="\1php" ignoreCase="true"/>
+                    <regexp pattern="(role=.)doc" replace="\1php" ignoreCase="true"/>
                 </replaceregexp>
             </filterchain>
         </copy>
