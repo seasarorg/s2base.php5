@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="ja" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="keywords" content="Seasar2, S2Container, DI, AOP, Dependency Injection, Aspect Oriented Programming, The Seasar Foundation, OSS, オープンソースソフトウェア, Java, フレームワーク" />
+<meta name="description" content="私たちSeasarプロジェクトはオープンソースという仕組みの元、開発者のゆとりを実現できるプロダクトの開発と提供を通じて、ユーザと開発者とが共に喜びを分かち合える環境実現をお手伝いすることを目指し活動しています。 " />
+<title>The Seasar Project - S2Base.PHP5</title>
+
+<link rel="stylesheet" type="text/css" href="theme/main.css" media="screen,projection" />
+<link rel="stylesheet" type="text/css" href="theme/print.css" media="print" /></head><body>
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo">
+<h1 id="h01" class="hide">The Seasar Project</h1>
+<a href="http://www.seasar.org/">
+<img src="images/seasar_logo_blue.gif" alt="The Seasar Project" height="180" width="390" />
+</a>
+</div>
+
+<div id="navi">
+<p><a href="index.html">S2Base.PHP5 ホーム</a> &raquo; sfS2BasePlugin</p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+
+<h2>メニュー</h2>
+
+<h3>ドキュメント</h3>
+<ul>
+<li><a href="#env">動作環境</a></li>
+<li><a href="#download">ダウンロード</a></li>
+<li><a href="#install">インストール</a></li>
+<li>コマンド
+    <ul>
+    <li><a href="#s2app">s2app</a></li>
+    <li><a href="#s2module">s2module</a></li>
+    <li><a href="#s2service">s2service</a></li>
+    <li><a href="#s2dao">s2dao</a></li>
+    <li><a href="#s2test">s2test</a></li>
+    </ul>
+</li>
+</ul>
+
+
+</div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+
+<div class="section">
+<h2><a id="env" name="env">動作環境</a></h2>
+<p>
+依存ライブラリは次になります。個別にPEARインストールを行います。
+</p>
+<ul>
+<li>symfony-1.0.8</li>
+<li>PHPUnit-3.1.9</li>
+<li>s2container.php5-1.2.0</li>
+<li>s2dao.php5-1.1.2</li>
+</ul>
+</div>
+
+<br />
+<div class="section">
+<h2><a id="download" name="download">ダウンロード</a></h2>
+<ul>
+<li>2007-12-16 : <a href="download/sfS2BasePlugin-0.8.0Beta.tgz">sfS2BasePlugin-0.8.0Beta.tgz</a></li>
+</ul>
+
+</div>
+
+<br />
+<div class="section">
+<h2><a id="install" name="install">インストール</a></h2>
+<p>
+　<a href="http://www.symfony-project.com/book/1_0/17-Extending-Symfony#Plug-Ins">Symfonyのプラグイン</a>としてインストールします。
+</p>
+<pre>
+% cd /path/to/symfony/project
+% symfony plugin-install sfS2BasePlugin-version.tgz
+>> plugin    installing plugin "plugins\sfS2BasePlugin-version
+>> pear      install ok: channel://__uri/sfS2BasePlugin-version
+%
+% symfony plugin-list
+Installed plugins:
+ sfS2BasePlugin               version   # __uri (__uri)
+ symfony                      version   # pear.symfony-project.com (symfony)
+%
+% symfony -T
+・・・
+task aliases:
+・・・
+  s2app                      = pake s2_init_app
+  s2dao                      = pake s2_init_dao
+  s2module                   = pake s2_init_module
+  s2service                  = pake s2_init_service
+  s2test                     = pake s2_phpunit_test
+%
+%
+</pre>
+<br>
+</div>
+
+<div class="section">
+<h2>コマンド</h2>
+
+<h3><a id="s2app" name="s2app">s2app</a></h3>
+<h4>コマンドリファレンス</h4>
+<pre>
+% symfony s2app アプリケーション名
+</pre>
+<h4>説明</h4>
+<p>
+　symfony付属のappコマンドを実行した後に、次のsfS2BasePlugin用のカスタマイズを行います。
+</p>
+<ul>
+<li>アプリケーションディレクトリのconfig/factories.ymlを編集します。フロントコントローラクラスとして、sfS2BasePlugin_FrontWebControllerクラスを使用する設定とします。
+<pre>
+all:
+  controller:
+    class: sfS2BasePlugin_FrontWebController
+</pre>
+</li>
+<li>アプリケーションディレクトリのlib/ディレクトリに sfS2BasePlugin_FrontWebController.class.php ファイルを用意します。</li>
+<li>プロジェクトディレクトリのconfig/autoload.ymlを編集します。S2Container.PHP5とS2Dao.PHP5の設定を追加します。Symfony、S2Container.PHP5、S2Dao.PHP5 が PEARインストールされている場合の設定となります。
+<pre>
+autoload:
+  s2container:
+    name:           S2Container
+    ext:            .class.php
+    path:           "%SF_SYMFONY_LIB_DIR%/../S2Container/S2Container"
+  s2dao:
+    name:           S2Dao
+    ext:            .class.php
+    path:           "%SF_SYMFONY_LIB_DIR%/../S2Dao/S2Dao"
+</pre>
+<li>プロジェクトディレクトリの lib/ディレクトリに dao.dicon、pdo_prod.dicon、pdo_dev.dicon、pdo_test.diconを用意します。</li>
+<li>プロジェクトディレクトリの data/s2base/ディレクトリに Sqlite データベースの sample.db データベースファイルを用意します。</li>
+<li>テストディレクトリの unit/ディレクトリに アプリケーション名のディレクトリを作成します。</li>
+<li>プロジェクトディレクトリの model/ディレクトリに dao、entity ディレクトリを作成します。</li>
+</ul>
+
+<br />
+<h3><a id="s2module" name="s2module">s2module</a></h3>
+<h4>コマンドリファレンス</h4>
+<pre>
+% symfony s2module アプリケーション名 モジュール名
+</pre>
+<h4>説明</h4>
+<p>
+　symfony付属のmoduleコマンドを実行した後に、次のsfS2BasePlugin用のカスタマイズを行います。
+</p>
+<ul>
+<li>モジュールディレクトリに service、dao、entity ディレクトリを作成します。</li>
+<li>test/unit/ディレクトリにモジュール名のディレクトリを作成し、service、dao ディレクトリを作成します。</li>
+<li>アプリケーションディレクトリの conf/autoload.yml にモジュールディレクトリに作成した service、dao、entityを追記します。
+モジュール名 admin で作成した場合の追加される設定は次になります。
+<pre>
+autoload:
+  admin_service:
+    name:           admin_service
+    ext:            .class.php
+    path:           "%SF_ROOT_DIR%/apps/%SF_APP%/modules/admin/service"
+  admin_dao:
+    name:           admin_dao
+    ext:            .class.php
+    path:           "%SF_ROOT_DIR%/apps/%SF_APP%/modules/admin/dao"
+  admin_entity:
+    name:           admin_entity
+    ext:            .class.php
+    path:           "%SF_ROOT_DIR%/apps/%SF_APP%/modules/admin/entity"
+</pre>
+</li>
+<li>S2ContainerApplicationContextの設定を行う actions.inc.php をモジュールディレクトリ/actions/ディレクトリに用意します。</li>
+<li>actions.class.php に actions.inc.php をrequireする設定を追記します。
+</ul>
+
+<br />
+<h3><a id="s2service" name="s2service">s2service</a></h3>
+<h4>コマンドリファレンス</h4>
+<pre>
+% symfony s2service アプリケーション名 モジュール名 サービスクラス名
+</pre>
+<h4>説明</h4>
+<p>
+　アプリケーションのロジックなどを実装する service クラスを作成します。
+</p>
+<ul>
+<li>サービスクラスとそのUnitTestクラスを作成します。</li>
+<li>symfony キャッシュをクリアします。</li>
+</ul>
+
+<br />
+<h3><a id="s2dao" name="s2dao">s2dao</a></h3>
+<h4>コマンドリファレンス</h4>
+<pre>
+% symfony s2dao アプリケーション名 モジュール名 テーブル名 [環境指定] [Daoクラス名]
+
+% symfony s2dao アプリケーション名 モジュール名 "テーブル名,テーブル名・・・" [環境指定] [Daoクラス名]
+</pre>
+<ul>
+<li>テーブル名<br />
+テーブル名はカンマ区切りで複数のテーブルを指定できます。1番目のテーブルがEntityクラスのテーブル指定に使用されます。2番目以降のテーブルについては、カラム情報がEntityクラスに反映されます。
+</li>
+<li>環境指定<br />
+symfonyの環境を指定します。この値に従ってプロジェクトディレクトリ/config/ディレクトリのpdo.diconが使用されます。
+デフォルト値は [prod] です。
+</li>
+<li>Daoクラス名<br />
+Daoクラス名が指定されると、Daoクラス、Entityクラスのクラス名に反映されます。デフォルト値にはテーブル名が使用されます。
+</li>
+</ul>
+
+<h4>説明</h4>
+<p>
+　S2Dao.PHP5で使用する DaoクラスとEntityクラスを作成します。
+</p>
+<ul>
+<li>Daoクラス、EntityクラスとDaoクラスのUnitTestクラスを作成します。</li>
+<li>symfony キャッシュをクリアします。</li>
+</ul>
+
+<br />
+<h3><a id="s2test" name="s2test">s2test</a></h3>
+<h4>コマンドリファレンス</h4>
+<pre>
+% symfony s2test アプリケーション名 テストパターン
+</pre>
+<ul>
+<li>アプリケーション名<br />
+UnitTestを実行するアプリケーション名。s2testではアプリケーションごとにUnitTestを実行します。
+</li>
+<li>テストパターン<br />
+UnitTestファイル名に対するパターンマッチに使用するパターン。パターンにマッチしたUnitTestが実行されます。デフォルト値は「.*Test」です。
+</li>
+</ul>
+<h4>説明</h4>
+<p>
+　テストディレクトリのunitディレクトリ以下のPHPUnit_Test_Caseを実行します。テスト実行前にテストディレクトリのbootstrap/functional.phpファイルをrequireします。
+</p>
+
+</div>
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>&#169; Copyright The Seasar Foundation and the others 2005-2007, all rights reserved.</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body></html>
