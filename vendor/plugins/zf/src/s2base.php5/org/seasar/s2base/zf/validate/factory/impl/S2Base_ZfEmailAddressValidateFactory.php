@@ -43,6 +43,7 @@ class S2Base_ZfEmailAddressValidateFactory extends S2Base_ZfAbstractValidateFact
 
     public function getInstance($paramName, Zend_Config $config) {
         $valKey = self::ID;
+        Zend_Loader::loadClass('Zend_Validate_Hostname');
         $allowValue = Zend_Validate_Hostname::ALLOW_DNS;
         $validateMx = false;
         $hostnameValidator = $this->instantiateHostnameValidator();

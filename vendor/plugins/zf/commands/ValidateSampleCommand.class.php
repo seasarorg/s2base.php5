@@ -1,5 +1,5 @@
 <?php
-class ValidateTestCommand implements S2Base_GenerateCommand {
+class ValidateSampleCommand implements S2Base_GenerateCommand {
 
     protected $moduleName;
     protected $controllerName;
@@ -20,7 +20,7 @@ class ValidateTestCommand implements S2Base_GenerateCommand {
     }
 
     public function getName(){
-        return "validate test";
+        return "validate (create sample action)";
     }
 
     public function isAvailable(){

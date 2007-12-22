@@ -64,15 +64,15 @@ between.min = 15
 between.max = 20
 between.inclusive = on
 
-[greater : default]
-validate   = "greater"
-greater.msg_NOT_GREATER = "'%value%' は '%min%'より大きくありません。"
-greater.min = 5
+[greater_than : default]
+validate   = "greater_than"
+greater_than.msg_NOT_GREATER = "'%value%' は '%min%'より大きくありません。"
+greater_than.min = 5
 
-[less : default]
-validate   = "less"
-less.msg_NOT_LESS = "'%value%' は '%max%'より小さくありません。"
-less.max = 5
+[less_than : default]
+validate   = "less_than"
+less_than.msg_NOT_LESS = "'%value%' は '%max%'より小さくありません。"
+less_than.max = 5
 
 [strlen_short : default]
 validate   = "strlen"
@@ -88,21 +88,31 @@ strlen.msg_TOO_LONG  = "文字列 '%value%' は 文字列長'%max%'より長い�
 strlen.min = 3
 strlen.max = 6
 
-[mbstrlen_short : default]
-validate   = "mbstrlen"
-mbstrlen.msg_TOO_SHORT = "文字列 '%value%' は 文字列長'%min%'より短いです。"
-mbstrlen.msg_TOO_LONG  = "文字列 '%value%' は 文字列長'%max%'より長いです。"
-mbstrlen.min = 2
-mbstrlen.max = 4
-mbstrlen.encoding = "UTF-8"
+[email : default]
+validate   = "email"
+;email.msg_INVALID ="'%value%' is not a valid email address in the basic format local-part@hostname"
+email.msg_INVALID ="%value%は不正なメールアドレスです。"
 
-[mbstrlen_long : default]
-validate   = "mbstrlen"
-mbstrlen.msg_TOO_SHORT = "文字列 '%value%' は 文字列長'%min%'より短いです。"
-mbstrlen.msg_TOO_LONG  = "文字列 '%value%' は 文字列長'%max%'より長いです。"
-mbstrlen.min = 2
-mbstrlen.max = 4
-mbstrlen.encoding = "UTF-8"
+[host : default]
+validate   = "host"
+;host.msg_INVALID_HOSTNAME = "'%value%' does not match the expected structure for a DNS hostname"
+host.msg_INVALID_HOSTNAME = "%value%はDNSの構造にマッチしないようです。"
+
+[mb_strlen_short : default]
+validate   = "mb_strlen"
+mb_strlen.msg_TOO_SHORT = "文字列 '%value%' は 文字列長'%min%'より短いです。"
+mb_strlen.msg_TOO_LONG  = "文字列 '%value%' は 文字列長'%max%'より長いです。"
+mb_strlen.min = 2
+mb_strlen.max = 4
+mb_strlen.encoding = "UTF-8"
+
+[mb_strlen_long : default]
+validate   = "mb_strlen"
+mb_strlen.msg_TOO_SHORT = "文字列 '%value%' は 文字列長'%min%'より短いです。"
+mb_strlen.msg_TOO_LONG  = "文字列 '%value%' は 文字列長'%max%'より長いです。"
+mb_strlen.min = 2
+mb_strlen.max = 4
+mb_strlen.encoding = "UTF-8"
 
 [array : default]
 validate   = "array"

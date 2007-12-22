@@ -71,15 +71,15 @@ This is @@ACTION_NAME@@ template. <br>
 </tr>
 
 <tr>
-<td nowrap><font size="-1">greater validator</font></td>
-<td><input type="text" name="greater" value="1"/></td>
-<td nowrap><font size="-1" color="red"><?php if(isset($this->errors['validate']['greater']['msg'])){echo $this->errors['validate']['greater']['msg'];} ?></font></td>
+<td nowrap><font size="-1">greater_than validator</font></td>
+<td><input type="text" name="greater_than" value="1"/></td>
+<td nowrap><font size="-1" color="red"><?php if(isset($this->errors['validate']['greater_than']['msg'])){echo $this->errors['validate']['greater_than']['msg'];} ?></font></td>
 </tr>
 
 <tr>
-<td nowrap><font size="-1">less validator</font></td>
-<td><input type="text" name="less" value="10"/></td>
-<td nowrap><font size="-1" color="red"><?php if(isset($this->errors['validate']['less']['msg'])){echo $this->errors['validate']['less']['msg'];} ?></font></td>
+<td nowrap><font size="-1">less_than validator</font></td>
+<td><input type="text" name="less_than" value="10"/></td>
+<td nowrap><font size="-1" color="red"><?php if(isset($this->errors['validate']['less_than']['msg'])){echo $this->errors['validate']['less_than']['msg'];} ?></font></td>
 </tr>
 
 <tr>
@@ -108,14 +108,14 @@ This is @@ACTION_NAME@@ template. <br>
 
 <tr>
 <td nowrap><font size="-1">mbstrl short validator</font></td>
-<td><input type="text" name="mbstrlen_short" value="あ"/></td>
-<td nowrap><font size="-1" color="red"><?php if(isset($this->errors['validate']['mbstrlen_short']['msg'])){echo $this->errors['validate']['mbstrlen_short']['msg'];} ?></font></td>
+<td><input type="text" name="mb_strlen_short" value="あ"/></td>
+<td nowrap><font size="-1" color="red"><?php if(isset($this->errors['validate']['mb_strlen_short']['msg'])){echo $this->errors['validate']['mb_strlen_short']['msg'];} ?></font></td>
 </tr>
 
 <tr>
 <td nowrap><font size="-1">mbstrl long validator</font></td>
-<td><input type="text" name="mbstrlen_long" value="あいうえお"/></td>
-<td nowrap><font size="-1" color="red"><?php if(isset($this->errors['validate']['mbstrlen_long']['msg'])){echo $this->errors['validate']['mbstrlen_long']['msg'];} ?></font></td>
+<td><input type="text" name="mb_strlen_long" value="あいうえお"/></td>
+<td nowrap><font size="-1" color="red"><?php if(isset($this->errors['validate']['mb_strlen_long']['msg'])){echo $this->errors['validate']['mb_strlen_long']['msg'];} ?></font></td>
 </tr>
 
 <tr>

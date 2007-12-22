@@ -32,7 +32,7 @@
  * @package    org.seasar.s2base.zf.validate.factory.impl
  * @author     klove
  */
-class S2Base_ZfHostnameValidateFactory implements S2Base_ZfValidateFactory {
+class S2Base_ZfHostnameValidateFactory extends S2Base_ZfAbstractValidateFactory {
     const ID = 'host';
     protected $instance = null;
     protected $validateClassName = 'Zend_Validate_Hostname';
@@ -54,6 +54,7 @@ class S2Base_ZfHostnameValidateFactory implements S2Base_ZfValidateFactory {
         } else {
             $this->instance->setAllow($allowValue);
         }
+        $this->setDefaultMessage($this->instance, $config->$valKey);
         return $this->instance;
     }
 }
