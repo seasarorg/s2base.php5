@@ -4,7 +4,7 @@ define('S2BASE_PHP5_ZF_TPL_SUFFIX', 'phtml');
 define('S2BASE_PHP5_ZF_DEFAULT_MODULE', 'default');
 define('S2BASE_PHP5_PLUGIN_ZF',S2BASE_PHP5_ROOT . '/vendor/plugins/zf');
 
-/** ライブラリ設定 */
+/** ライブラリ設定
 require_once('Zend/Loader.php');
 require_once('Zend/Registry.php');
 require_once('Zend/Controller/Front.php');
@@ -24,6 +24,8 @@ require_once('Zend/Acl/Resource.php');
 require_once('Zend/Acl/Role.php');
 require_once('Zend/Auth.php');
 require_once('Zend/Auth/Adapter/Interface.php');
+*/
+require_once('zf_core.php');
 
 require_once(S2BASE_PHP5_PLUGIN_ZF . '/s2base_zf.core.php');
 S2ContainerClassLoader::import(S2BASE_PHP5_PLUGIN_ZF . '/classes');
@@ -120,7 +122,7 @@ class S2Base_ZfInitialize {
                ->addValidateFactory(new S2Base_ZfRegexValidateFactory());
         $fc->registerPlugin($plugin);
 
-        Zend_Controller_Action_HelperBroker::addHelper(new S2Base_ZfTokenActionHelper());
+        //Zend_Controller_Action_HelperBroker::addHelper(new S2Base_ZfTokenActionHelper());
 
 /*
         $plugin = new S2Base_ZfAnaSupportPlugin();
