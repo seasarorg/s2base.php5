@@ -40,11 +40,13 @@ class GencoreCommand implements S2Base_GenerateCommand {
         $coreClasses = file(S2BASE_PHP5_ROOT . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'zf_core.txt');
         $classes = array();
         foreach($coreClasses as $coreClass) {
-            if (preg_match('/^#/', trim($coreClass)) or
-                preg_match('/^\/\//', trim($coreClass))) {
+            $coreClass = trim($coreClass);
+            if (preg_match('/^#/', $coreClass) or
+                preg_match('/^\/\//', $coreClass) or
+                $coreClass === '') {
                 continue;
             }
-            $classes[] = trim($coreClass);
+            $classes[] = $coreClass;
         }
         return $classes;
     }

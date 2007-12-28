@@ -16,6 +16,7 @@
         $dtos = $this->@@SERVICE_PROPERTY@@->getByConditionDto($conditionDto);
         $this->view->assign('dtos',$dtos);
 
+        Zend_Session::start();
         $helper = new S2Dao_PagerViewHelper($conditionDto, $pageLimit);
         $this->view->assign('helper', $helper);
 

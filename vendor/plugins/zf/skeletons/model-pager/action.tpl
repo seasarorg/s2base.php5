@@ -15,6 +15,7 @@
             $offset = 0;
         }
 
+        Zend_Session::start();
         $support = new S2Dao_PagerSupport($listLimit, '@@CONDITION_DTO_NAME@@', '@@CONDITION_DTO_SESSION_KEY@@');
         $conditionDto = $support->getPagerCondition();
         $conditionDto->setOffset($offset);
