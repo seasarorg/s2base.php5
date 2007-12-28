@@ -19,12 +19,13 @@ require_once('Zend/View.php');
 require_once('Zend/Log.php');
 require_once('Zend/Log/Writer/Stream.php');
 require_once('Zend/Log/Filter/Priority.php');
+*/
+
 require_once('Zend/Acl.php');
 require_once('Zend/Acl/Resource.php');
 require_once('Zend/Acl/Role.php');
 require_once('Zend/Auth.php');
 require_once('Zend/Auth/Adapter/Interface.php');
-*/
 require_once('zf_core.php');
 
 require_once(S2BASE_PHP5_PLUGIN_ZF . '/s2base_zf.core.php');
@@ -133,8 +134,6 @@ class S2Base_ZfInitialize {
         $factory = S2Base_ZfAclFactory::getFactory();
         $factory->setTableName('USERS')
                 ->setIdentityColumn('USERNAME');
-    }
-
 /*
         $plugin = new S2Base_ZfAnaSupportPlugin();
         S2Base_ZfAnaSupportPlugin::$MODULE_NAME     = 'ana';
