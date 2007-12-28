@@ -122,7 +122,18 @@ class S2Base_ZfInitialize {
                ->addValidateFactory(new S2Base_ZfRegexValidateFactory());
         $fc->registerPlugin($plugin);
 
-        //Zend_Controller_Action_HelperBroker::addHelper(new S2Base_ZfTokenActionHelper());
+        Zend_Controller_Action_HelperBroker::addHelper(new S2Base_ZfTokenActionHelper());
+
+        S2Base_ZfAnaActionHelper::$MODULE_NAME     = 'ana';
+        S2Base_ZfAnaActionHelper::$CONTROLLER_NAME = 'index';
+        S2Base_ZfAnaActionHelper::$UNAUTHORIZED_USER_NAME  = 'guest';
+        Zend_Controller_Action_HelperBroker::addHelper(new S2Base_ZfAnaActionHelper());
+
+        S2Base_ZfAclFactory::$ACL_FACTORY_CLASS = 'S2Base_ZfDbAclFactory';
+        $factory = S2Base_ZfAclFactory::getFactory();
+        $factory->setTableName('USERS')
+                ->setIdentityColumn('USERNAME');
+    }
 
 /*
         $plugin = new S2Base_ZfAnaSupportPlugin();
@@ -131,11 +142,5 @@ class S2Base_ZfInitialize {
         S2Base_ZfAnaSupportPlugin::$UNAUTHORIZED_USER_NAME  = 'guest';
         $fc->registerPlugin($plugin);
 */
-        /*
-        S2Base_ZfAclFactory::$ACL_FACTORY_CLASS = 'S2Base_ZfDbAclFactory';
-        $factory = S2Base_ZfAclFactory::getFactory();
-        $factory->setTableName('USERS')
-                ->setIdentityColumn('USERNAME');
-        */
     }
 }
