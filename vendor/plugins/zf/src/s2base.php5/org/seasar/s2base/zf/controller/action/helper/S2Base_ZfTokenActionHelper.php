@@ -42,6 +42,8 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
     private $actionName     = null;
     private $onetime        = true;
     private $session        = null;
+    private $autoCheck      = true;
+    private $autoAsign      = true;
 
     /**
      * @see Zend_Controller_Action_Helper_Abstract::getName()
@@ -53,12 +55,18 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
     /**
      * @see Zend_Controller_Action_Helper_Abstract::preDispatch()
      */
-    public function preDispatch()
-    {
-        $request = $this->getRequest();
-        if (strtolower($request->getMethod()) !== 'post') {
+    public function preDispatch() {
+        if (strtolower($this->getRequest()->getMethod()) !== 'post') {
             return;
         }
+
+        if ($this->autoCheck) {
+            $this->check();
+        }
+    }
+
+    public function check() {
+        $request    = $this->getRequest();
         $session    = $this->getSession();
         $sessionKey = self::SESSION_TOKEN_KEY;
 
@@ -93,8 +101,13 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
     /**
      * @see Zend_Controller_Action_Helper_Abstract::postDispatch()
      */
-    public function postDispatch()
-    {
+    public function postDispatch() {
+        if ($this->autoAsign) {
+            $this->asign();
+        }
+    }
+
+    public function asign() {
         $sessionKey = self::SESSION_TOKEN_KEY;
         $bodies = $this->getResponse()->getBody(true);
         if ($this->onetime or !isset($this->getSession()->$sessionKey)) {
@@ -103,7 +116,7 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
             $token = $this->getSession()->$sessionKey;
         }
         $updated = false;
-        $pattern = '<form\s+.+?method="POST".*?>';
+        $pattern = '<form\s.*?method="POST".*?>';
         foreach ($bodies as $name => $content) {
             if (preg_match('/(' . $pattern . ')/isu', $content)) {
                 $updated = true;
@@ -142,5 +155,13 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
 
     public function setOnetime($value = true) {
         $this->onetime = $value;
+    }
+
+    public function setAutoCheck($value = true) {
+        $this->autoCheck = $value;
+    }
+
+    public function setAutoAsign($value = true) {
+        $this->autoAsign = $value;
     }
 }

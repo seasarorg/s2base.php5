@@ -61,14 +61,10 @@ class S2Base_ZfDbAclFactory extends S2Base_ZfIniFileAclFactory {
         if ($this->adapter === null) {
             $this->adapter = Zend_Db_Table::getDefaultAdapter();
         }
-        $sql = $this->adapter->quoteInto('SELECT ? FROM ? ', array($this->identityColumn, $this->tableName));
-        //$sql = "SELECT {$this->identityColumn} FROM {$this->tableName}";
-        $this->adapter->setFetchMode(Zend_Db::FETCH_OBJ);
-        $rows = $this->adapter->fetchAll($sql);
-        $column = $this->identityColumn;
-        foreach($rows as $row) {
-            $this->roles[] = $row->$column;
-            $this->acl->addRole(new Zend_Acl_Role($row->$column));
+        $roles = $this->adapter->fetchCol('select ' . $this->identityColumn . ' from ' . $this->tableName);
+        foreach($roles as $role) {
+            $this->roles[] = $role;
+            $this->acl->addRole(new Zend_Acl_Role($role));
         }
     }
 }
