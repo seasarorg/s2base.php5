@@ -33,9 +33,9 @@
  * @author     klove
  */
 class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract {
-    const SESSION_TOKEN_KEY  = 'token';
-    const REQUEST_TOKEN_KEY  = 'token';
-    const TOKEN_NAMESPACE    = __CLASS__;
+    public static $SESSION_TOKEN_KEY  = 'token';
+    public static $REQUEST_TOKEN_KEY  = 'token';
+    public static $TOKEN_NAMESPACE    = __CLASS__;
 
     private $moduleName     = null;
     private $controllerName = null;
@@ -68,13 +68,13 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
     public function check() {
         $request    = $this->getRequest();
         $session    = $this->getSession();
-        $sessionKey = self::SESSION_TOKEN_KEY;
+        $sessionKey = self::$SESSION_TOKEN_KEY;
 
-        if ($request->has(self::REQUEST_TOKEN_KEY) or isset($this->getSession()->$sessionKey) ) {
-            if ($request->getParam(self::REQUEST_TOKEN_KEY) === $this->getSession()->$sessionKey) {
+        if ($request->has(self::$REQUEST_TOKEN_KEY) or isset($this->getSession()->$sessionKey) ) {
+            if ($request->getParam(self::$REQUEST_TOKEN_KEY) === $this->getSession()->$sessionKey) {
                 Zend_Registry::get('logger')->debug('token checked.');
                 if ($this->onetime) {
-                    Zend_Session::namespaceUnset(self::TOKEN_NAMESPACE);
+                    Zend_Session::namespaceUnset(self::$TOKEN_NAMESPACE);
                 }
                 return;
             }
@@ -108,7 +108,7 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
     }
 
     public function asign() {
-        $sessionKey = self::SESSION_TOKEN_KEY;
+        $sessionKey = self::$SESSION_TOKEN_KEY;
         $bodies = $this->getResponse()->getBody(true);
         if ($this->onetime or !isset($this->getSession()->$sessionKey)) {
             $token  = $this->generate();
@@ -120,7 +120,7 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
         foreach ($bodies as $name => $content) {
             if (preg_match('/(' . $pattern . ')/isu', $content)) {
                 $updated = true;
-                $replacement = '$1<input type="hidden" name="' . self::REQUEST_TOKEN_KEY . '" value="' . $token . '" />';
+                $replacement = '$1<input type="hidden" name="' . self::$REQUEST_TOKEN_KEY . '" value="' . $token . '" />';
                 $this->getResponse()->setBody(preg_replace('/(' . $pattern . ')/isu', $replacement, $content), $name);
             }
         }
@@ -132,7 +132,7 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
 
     private function getSession() {
         if ($this->session === null) {
-            $this->session = new Zend_Session_Namespace(self::TOKEN_NAMESPACE);
+            $this->session = new Zend_Session_Namespace(self::$TOKEN_NAMESPACE);
         }
         return $this->session;
     }
