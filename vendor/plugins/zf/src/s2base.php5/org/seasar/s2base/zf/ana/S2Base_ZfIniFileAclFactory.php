@@ -29,7 +29,7 @@
  * @version    Release: 2.0.0
  * @link       http://s2base.php5.seasar.org/
  * @since      Class available since Release 2.0.0
- * @package    org.seasar.s2base.zf.acl
+ * @package    org.seasar.s2base.zf.ana
  * @author     klove
  */
 class S2Base_ZfIniFileAclFactory {
