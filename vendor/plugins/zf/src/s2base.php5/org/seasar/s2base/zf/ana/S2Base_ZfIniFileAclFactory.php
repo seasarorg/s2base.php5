@@ -138,7 +138,7 @@ class S2Base_ZfIniFileAclFactory {
             }
             $configs->next();
         }
-        $unAuthorizedUserName = S2Base_ZfAnaSupportPlugin::$UNAUTHORIZED_USER_NAME;
+        $unAuthorizedUserName = S2Base_ZfAnaActionHelper::$UNAUTHORIZED_USER_NAME;
         if ($unAuthorizedUserName !== null and !$this->acl->hasRole($unAuthorizedUserName)) {
             $this->acl->addRole(new Zend_Acl_Role($unAuthorizedUserName));
             $this->roles[] = $unAuthorizedUserName;

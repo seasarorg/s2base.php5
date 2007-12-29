@@ -19,7 +19,7 @@ class PagerCommand extends AbstractGoyaCommand {
     }
 
     public function getName(){
-        return "goya pager";
+        return "action with service & dao (pager)";
     }
 
     public function isAvailable(){

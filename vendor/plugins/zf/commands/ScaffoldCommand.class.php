@@ -27,7 +27,7 @@ class ScaffoldCommand extends PagerCommand {
     }
     
     public function getName(){
-        return "goya scaffold";
+        return "action with service & dao (scaffold)";
     }
 
     public function isAvailable(){
