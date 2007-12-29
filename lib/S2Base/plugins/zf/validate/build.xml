@@ -42,7 +42,6 @@
                 <include name="vendor/plugins/zf/classes/S2Base_ZfArrayValidate.php" />
                 <include name="vendor/plugins/zf/classes/S2Base_ZfMbStringLengthValidate.php" />
                 <include name="vendor/plugins/zf/classes/S2Base_ZfParamEqualsValidate.php" />
-                <include name="vendor/plugins/zf/classes/S2Base_ZfAbstractValidateFactory.php" />
                 <include name="vendor/plugins/zf/classes/S2Base_ZfArrayValidateFactory.php" />
                 <include name="vendor/plugins/zf/classes/S2Base_ZfBetweenValidateFactory.php" />
                 <include name="vendor/plugins/zf/classes/S2Base_ZfEmailAddressValidateFactory.php" />
@@ -52,7 +51,6 @@
                 <include name="vendor/plugins/zf/classes/S2Base_ZfLessThanValidateFactory.php" />
                 <include name="vendor/plugins/zf/classes/S2Base_ZfMbStringLengthValidateFactory.php" />
                 <include name="vendor/plugins/zf/classes/S2Base_ZfParamEqualsValidateFactory.php" />
-                <include name="vendor/plugins/zf/classes/S2Base_ZfRegexValidateFactory.php" />
                 <include name="vendor/plugins/zf/classes/S2Base_ZfStringLengthValidateFactory.php" />
                 <include name="vendor/plugins/zf/commands/ValidateSampleCommand*" />
                 <include name="vendor/plugins/zf/skeletons/validate/*" />

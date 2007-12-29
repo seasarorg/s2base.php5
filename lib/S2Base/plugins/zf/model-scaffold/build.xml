@@ -10,7 +10,7 @@
         <property name="project.build.dir" value="${project.basedir}/build/plugin" />
         <property name="s2base.root.dir" value="${project.basedir}/../.." />
         <property name="s2base.pear.base.dir" value="S2Base" />
-        <property name="s2base.package.url" value="http://s2base.php5.sandbox.seasar.org/download/S2Base-2.0.0RC1" />
+        <property name="s2base.package.url" value="http://s2base.php5.sandbox.seasar.org/download/S2Base-2.0.0RC2" />
     </target>
 
     <target name="clean" depends="init">
@@ -68,7 +68,7 @@
                 <element>
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
-                    <element key="name" value="S2Base"/>
+                    <element key="name" value="S2Base_Zf_ModelPager"/>
                 </element>
             </mapping>
             <mapping name="maintainers">
@@ -94,6 +94,9 @@
               dir="${project.build.dir}/${project.name}" />
 
         <!-- URI Based dependency -->
+        <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
+                  pkgName="S2Base_Zf_ModelPager"
+                  uri="${package.url}/S2Base_Zf_ModelPager-2.0.0RC2"/>
         <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pkgName="${package.name}"
                   uri="${package.url}/${package.name}-${package.version}"/>
