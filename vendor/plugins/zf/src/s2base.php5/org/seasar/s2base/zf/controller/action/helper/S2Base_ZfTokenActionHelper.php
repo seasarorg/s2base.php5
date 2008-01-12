@@ -36,17 +36,17 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
     /**
      * @var string
      */
-    public static $SESSION_TOKEN_KEY  = 'token';
+    public static $SESSION_TOKEN_KEY = 'token';
 
     /**
      * @var string
      */
-    public static $REQUEST_TOKEN_KEY  = 'token';
+    public static $REQUEST_TOKEN_KEY = 'token';
 
     /**
      * @var string
      */
-    public static $SESSION_NAMESPACE    = __CLASS__;
+    public static $SESSION_NAMESPACE = __CLASS__;
 
     /**
      * @var string
