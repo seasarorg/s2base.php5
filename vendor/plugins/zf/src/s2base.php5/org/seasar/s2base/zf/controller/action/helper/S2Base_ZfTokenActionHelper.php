@@ -46,12 +46,12 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
     /**
      * @var string
      */
-    public static $TOKEN_NAMESPACE    = __CLASS__;
+    public static $SESSION_NAMESPACE    = __CLASS__;
 
     /**
      * @var string
      */
-    private $moduleName     = null;
+    private $moduleName = null;
 
     /**
      * @var string
@@ -61,27 +61,27 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
     /**
      * @var string
      */
-    private $actionName     = null;
+    private $actionName = null;
 
     /**
      * @var boolean
      */
-    private $onetime        = true;
+    private $onetime = true;
 
     /**
      * @var Zend_Session_Namespace
      */
-    private $session        = null;
+    private $session = null;
 
     /**
      * @var boolean
      */
-    private $autoCheck      = true;
+    private $autoCheck = true;
 
     /**
      * @var boolean
      */
-    private $autoAsign      = true;
+    private $autoAsign = true;
 
     /**
      * @see Zend_Controller_Action_Helper_Abstract::getName()
@@ -233,7 +233,7 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
      * 使用したセッションをクリアします。
      */
     public function unsetSession() {
-        Zend_Session::namespaceUnset(self::$TOKEN_NAMESPACE);
+        Zend_Session::namespaceUnset(self::$SESSION_NAMESPACE);
     }
 
     /**
@@ -241,7 +241,7 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
      */
     private function getSession() {
         if ($this->session === null) {
-            $this->session = new Zend_Session_Namespace(self::$TOKEN_NAMESPACE);
+            $this->session = new Zend_Session_Namespace(self::$SESSION_NAMESPACE);
         }
         return $this->session;
     }
