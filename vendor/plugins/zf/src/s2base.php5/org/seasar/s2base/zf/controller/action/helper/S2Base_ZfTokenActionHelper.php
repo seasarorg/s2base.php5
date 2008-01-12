@@ -33,16 +33,54 @@
  * @author     klove
  */
 class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract {
+    /**
+     * @var string
+     */
     public static $SESSION_TOKEN_KEY  = 'token';
+
+    /**
+     * @var string
+     */
     public static $REQUEST_TOKEN_KEY  = 'token';
+
+    /**
+     * @var string
+     */
     public static $TOKEN_NAMESPACE    = __CLASS__;
 
+    /**
+     * @var string
+     */
     private $moduleName     = null;
+
+    /**
+     * @var string
+     */
     private $controllerName = null;
+
+    /**
+     * @var string
+     */
     private $actionName     = null;
+
+    /**
+     * @var boolean
+     */
     private $onetime        = true;
+
+    /**
+     * @var Zend_Session_Namespace
+     */
     private $session        = null;
+
+    /**
+     * @var boolean
+     */
     private $autoCheck      = true;
+
+    /**
+     * @var boolean
+     */
     private $autoAsign      = true;
 
     /**
@@ -53,10 +91,11 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
     }
 
     /**
+     * リクエストメソッドが POST で、自動確認設定が成されている場合にTokenを確認します。
      * @see Zend_Controller_Action_Helper_Abstract::preDispatch()
      */
     public function preDispatch() {
-        if (strtolower($this->getRequest()->getMethod()) !== 'post') {
+        if (!$this->getRequest()->isPost()) {
             return;
         }
 
@@ -65,6 +104,24 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
         }
     }
 
+
+    /**
+     * 自動アサイン設定が成されている場合に、Tokenをアサインします。
+     * @see Zend_Controller_Action_Helper_Abstract::postDispatch()
+     */
+    public function postDispatch() {
+        if ($this->autoAsign) {
+            $this->asign();
+        }
+    }
+
+    /**
+     * リクエストパラメータまたはセッションにTokenが存在した場合に比較確認を行います。
+     * リクエストパラメータとセッションのTokenが不一致の場合、アクション名が指定されていれば、
+     * 指定されたアクション名をリクエストに設定してディスパッチをループします。
+     * アクション名が指定されていない場合は、例外をスローします。
+     * @throw S2Base_ZfException
+     */
     public function check() {
         $request    = $this->getRequest();
         $session    = $this->getSession();
@@ -74,7 +131,7 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
             if ($request->getParam(self::$REQUEST_TOKEN_KEY) === $this->getSession()->$sessionKey) {
                 Zend_Registry::get('logger')->debug('token checked.');
                 if ($this->onetime) {
-                    Zend_Session::namespaceUnset(self::$TOKEN_NAMESPACE);
+                    $this->unsetSession();
                 }
                 return;
             }
@@ -99,69 +156,93 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
     }
 
     /**
-     * @see Zend_Controller_Action_Helper_Abstract::postDispatch()
+     * レスポンスに格納されているHTMLにformタグが存在した場合にTokenを埋め込みます。
      */
-    public function postDispatch() {
-        if ($this->autoAsign) {
-            $this->asign();
-        }
-    }
-
     public function asign() {
         $sessionKey = self::$SESSION_TOKEN_KEY;
         $bodies = $this->getResponse()->getBody(true);
         if ($this->onetime or !isset($this->getSession()->$sessionKey)) {
-            $token  = $this->generate();
+            $token = $this->generate();
         } else {
             $token = $this->getSession()->$sessionKey;
         }
-        $updated = false;
+        $isUpdated = false;
         $pattern = '<form\s.*?method="POST".*?>';
         foreach ($bodies as $name => $content) {
             if (preg_match('/(' . $pattern . ')/isu', $content)) {
-                $updated = true;
+                $isUpdated = true;
                 $replacement = '$1<input type="hidden" name="' . self::$REQUEST_TOKEN_KEY . '" value="' . $token . '" />';
                 $this->getResponse()->setBody(preg_replace('/(' . $pattern . ')/isu', $replacement, $content), $name);
             }
         }
-
-        if ($updated) {
+        if ($isUpdated) {
             $this->getSession()->$sessionKey = $token;
         }
     }
 
+    /**
+     * @return string
+     */
+    public function generate() {
+        return sha1(uniqid(rand(), true));
+    }
+
+    /**
+     * @param string $moduleName
+     */
+    public function setModuleName($moduleName) {
+        $this->moduleName = $moduleName;
+    }
+
+    /**
+     * @param string $controllerName
+     */
+    public function setControllerName($controllerName) {
+        $this->controllerName = $controllerName;
+    }
+
+    /**
+     * @param string $actionName
+     */
+    public function setActionName($actionName) {
+        $this->actionName = $actionName;
+    }
+
+    /**
+     * @param boolean $value
+     */
+    public function setOnetime($value = true) {
+        $this->onetime = $value;
+    }
+
+    /**
+     * @param boolean $value
+     */
+    public function setAutoCheck($value = true) {
+        $this->autoCheck = $value;
+    }
+
+    /**
+     * @param boolean $value
+     */
+    public function setAutoAsign($value = true) {
+        $this->autoAsign = $value;
+    }
+
+    /**
+     * 使用したセッションをクリアします。
+     */
+    public function unsetSession() {
+        Zend_Session::namespaceUnset(self::$TOKEN_NAMESPACE);
+    }
+
+    /**
+     * @return Zend_Session_Namespace
+     */
     private function getSession() {
         if ($this->session === null) {
             $this->session = new Zend_Session_Namespace(self::$TOKEN_NAMESPACE);
         }
         return $this->session;
-    }
-
-    public function generate() {
-        return sha1(uniqid(rand(), true));
-    }
-
-    public function setActionName($actionName) {
-        $this->actionName = $actionName;
-    }
-
-    public function setControllerName($controllerName) {
-        $this->controllerName = $controllerName;
-    }
-
-    public function setModuleName($moduleName) {
-        $this->moduleName = $moduleName;
-    }
-
-    public function setOnetime($value = true) {
-        $this->onetime = $value;
-    }
-
-    public function setAutoCheck($value = true) {
-        $this->autoCheck = $value;
-    }
-
-    public function setAutoAsign($value = true) {
-        $this->autoAsign = $value;
     }
 }
