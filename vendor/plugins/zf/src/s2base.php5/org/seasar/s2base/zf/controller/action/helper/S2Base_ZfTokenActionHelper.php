@@ -181,6 +181,13 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
     }
 
     /**
+     * 使用したセッションをクリアします。
+     */
+    public function unsetSession() {
+        Zend_Session::namespaceUnset(self::$SESSION_NAMESPACE);
+    }
+
+    /**
      * @return string
      */
     public function generate() {
@@ -227,13 +234,6 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
      */
     public function setAutoAsign($value = true) {
         $this->autoAsign = $value;
-    }
-
-    /**
-     * 使用したセッションをクリアします。
-     */
-    public function unsetSession() {
-        Zend_Session::namespaceUnset(self::$SESSION_NAMESPACE);
     }
 
     /**
