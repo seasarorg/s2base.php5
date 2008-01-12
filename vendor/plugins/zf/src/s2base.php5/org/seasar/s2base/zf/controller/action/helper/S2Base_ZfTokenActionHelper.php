@@ -196,44 +196,56 @@ class S2Base_ZfTokenActionHelper extends Zend_Controller_Action_Helper_Abstract 
 
     /**
      * @param string $moduleName
+     * @return S2Base_ZfTokenActionHelper
      */
     public function setModuleName($moduleName) {
         $this->moduleName = $moduleName;
+        return $this;
     }
 
     /**
      * @param string $controllerName
+     * @return S2Base_ZfTokenActionHelper
      */
     public function setControllerName($controllerName) {
         $this->controllerName = $controllerName;
+        return $this;
     }
 
     /**
      * @param string $actionName
+     * @return S2Base_ZfTokenActionHelper
      */
     public function setActionName($actionName) {
         $this->actionName = $actionName;
+        return $this;
     }
 
     /**
      * @param boolean $value
+     * @return S2Base_ZfTokenActionHelper
      */
     public function setOnetime($value = true) {
         $this->onetime = $value;
+        return $this;
     }
 
     /**
      * @param boolean $value
+     * @return S2Base_ZfTokenActionHelper
      */
     public function setAutoCheck($value = true) {
         $this->autoCheck = $value;
+        return $this;
     }
 
     /**
      * @param boolean $value
+     * @return S2Base_ZfTokenActionHelper
      */
     public function setAutoAsign($value = true) {
         $this->autoAsign = $value;
+        return $this;
     }
 
     /**
