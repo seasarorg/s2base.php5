@@ -19,11 +19,6 @@ require_once('Zend/View.php');
 require_once('Zend/Log.php');
 require_once('Zend/Log/Writer/Stream.php');
 require_once('Zend/Log/Filter/Priority.php');
-require_once('Zend/Acl.php');
-require_once('Zend/Acl/Resource.php');
-require_once('Zend/Acl/Role.php');
-require_once('Zend/Auth.php');
-require_once('Zend/Auth/Adapter/Interface.php');
 
 require_once(S2BASE_PHP5_PLUGIN_ZF . '/s2base_zf.core.php');
 S2ContainerClassLoader::import(S2BASE_PHP5_PLUGIN_ZF . '/classes');
