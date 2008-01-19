@@ -37,14 +37,14 @@ abstract class S2Base_ZfAbstractValidateFactory implements S2Base_ZfValidateFact
     public static function instantiateDefaultValidator($valClassName, $valKey, Zend_Config $paramConfig) {
         Zend_Loader::loadClass($valClassName);
         $validator = new $valClassName();
-        $valConfig = $paramConfig->$valKey;
-        if ($valConfig instanceof Zend_Config) {
-            self::setDefaultMessage($validator, $valConfig);
-        }
+        self::setDefaultMessage($validator, $paramConfig->$valKey);
         return $validator;
     }
 
-    public static function setDefaultMessage(Zend_Validate_Interface $instance, Zend_Config $valConfig) {
+    public static function setDefaultMessage(Zend_Validate_Interface $instance, Zend_Config $valConfig = null) {
+        if ($valConfig === null) {
+            return;
+        }
         foreach($valConfig as $key => $msg) {
             if (!is_string($msg)) {
                 continue;
