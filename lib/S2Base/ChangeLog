@@ -1,4 +1,12 @@
 ﻿
+2007-12-31 S2Base.PHP5-2.0.0
+
+================ S2Base.PHP5-2.0.0 更新履歴 ===================
+
+	* fix: withZF S2Base_ZfAbstractValidateFactoryでconfig設定がnullの場合にreturnするようにしました。
+	* modify: withZF アクションコントローラテストのテンプレートで、try-catchで囲むようにしました。
+	* fix: s2base_zf.inc.phpで使用していないZend_クラス群のrequireを停止しました。
+
 2007-12-16 S2Base.PHP5-2.0.0RC2
 
 ================ S2Base.PHP5-2.0.0RC2 更新履歴 ===================
