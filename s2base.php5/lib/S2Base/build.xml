@@ -118,13 +118,13 @@
                     <element key="rel" value="ge"/>
                     <element key="version" value="5.1.0"/>
                 </element>
+<!--
                 <element>
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
                     <element key="name" value="S2Javelin"/>
                     <element key="optional" value="true"/>
                 </element>
-<!--
                 <element>
                     <element key="type" value="pkg"/>
                     <element key="rel" value="has"/>
@@ -200,10 +200,12 @@
         <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pkgName="${package.name}"
                   uri="${s2base.package.url}"/>
+<!--
         <pkg2-ubs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pkgName="S2Javelin"
                   uri="http://s2base.php5.sandbox.seasar.org/download/S2Javelin-1.0.0"/>
-        <pkg2-cbs pkgFile="${project.build.dir}/${project.name}/package2.xml"
+-->
+       <pkg2-cbs pkgFile="${project.build.dir}/${project.name}/package2.xml"
                   pkgName="PHPUnit"
                   channel="pear.phpunit.de"/>
         <pkg2-cbs pkgFile="${project.build.dir}/${project.name}/package2.xml"
