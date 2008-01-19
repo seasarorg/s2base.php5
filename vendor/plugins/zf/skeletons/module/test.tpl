@@ -3,8 +3,12 @@ require_once S2BASE_PHP5_ROOT ."/app/modules/@@MODULE_NAME@@/controllers/@@CONTR
 class @@CLASS_NAME@@ extends S2Base_ZfControllerTestCase {
 
     public function testIndexAction() {
-      $this->get('index');
-      $this->assertResponse(200);
+        try {
+            $this->get('index');
+            $this->assertResponse(200);
+        } catch(Exception $e) {
+            $this->fail($e->getMessage());
+        }
     }
 
     public function setUp() {
