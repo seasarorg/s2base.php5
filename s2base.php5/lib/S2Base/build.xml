@@ -12,8 +12,8 @@
     <target name="init">
         <property name="project.name" value="${phing.project.name}" />
         <property name="package.name" value="S2Base" />
-        <property name="project.version" value="2.0.0RC2" />
-        <property name="project.state" value="beta" />
+        <property name="project.version" value="2.0.0" />
+        <property name="project.state" value="stable" />
         <property name="project.build.dir" value="${project.basedir}/build" />
         <property name="project.src.dir" value="${project.basedir}/src" />
         <property name="license.file" value="Apache_Software_License_2.0.txt" />
