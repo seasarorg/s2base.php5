@@ -1,0 +1,14 @@
+/log
+/apps
+/batch
+/cache
+/config
+/data
+/doc
+/lib
+/symfony
+/test
+/web
+/.projectOptions
+/.cache
+/.project
